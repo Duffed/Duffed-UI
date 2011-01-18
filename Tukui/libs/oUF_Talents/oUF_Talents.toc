@@ -1,8 +1,0 @@
-## Interface: 30300
-## Title: oUF_Talents
-## Author: Fernir
-## Version: 1.0.0
-## Notes: oUF Talents
-## Dependencies: oUF
-
-oUF_Talents.lua

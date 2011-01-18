@@ -70,6 +70,13 @@ function style(self)
 		normal:SetPoint("TOPLEFT")
 		normal:SetPoint("BOTTOMRIGHT")
 	end
+	
+	-- color border if equipped
+    if ( IsEquippedAction(action) ) then
+        _G[name.."Panel"]:SetBackdropBorderColor(0.55, 0.2, 0.2);
+    else
+        _G[name.."Panel"]:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor));
+    end
 end
 
 local function stylesmallbutton(normal, button, icon, name, pet)

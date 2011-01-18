@@ -7,45 +7,53 @@
 local db = TukuiCF["cooldown"]
 if IsAddOnLoaded("OmniCC") or IsAddOnLoaded("ncCooldown") or db.enable ~= true then return end
 
+--constants!
 OmniCC = true --hack to work around detection from other addons for OmniCC
 local ICON_SIZE = 36 --the normal size for an icon (don't change this)
-local FONT_FACE = TukuiCF["media"].font --what font to use
-local FONT_SIZE = 20 --the base font size to use at a scale of 1
-local FONT_COLOR = {1, 1, 1}
-local MIN_SCALE = 0.5 --the minimum scale we want to show cooldown counts at, anything below this will be hidden
-local MIN_DURATION = 2.5 --the minimum duration to show cooldown text for
 local DAY, HOUR, MINUTE = 86400, 3600, 60 --used for formatting text
 local DAYISH, HOURISH, MINUTEISH = 3600 * 23.5, 60 * 59.5, 59.5 --used for formatting text at transition points
 local HALFDAYISH, HALFHOURISH, HALFMINUTEISH = DAY/2 + 0.5, HOUR/2 + 0.5, MINUTE/2 + 0.5 --used for calculating next update times
 
+--configuration settings
+local FONT_FACE = TukuiCF["media"].font --what font to use
+local FONT_SIZE = 20 --the base font size to use at a scale of 1
+local MIN_SCALE = 0.5 --the minimum scale we want to show cooldown counts at, anything below this will be hidden
+local MIN_DURATION = 2.5 --the minimum duration to show cooldown text for
+local EXPIRING_DURATION = db.treshold --the minimum number of seconds a cooldown must be to use to display in the expiring format
+
+local EXPIRING_FORMAT = TukuiDB.RGBPercToHex(1, 0, 0)..'%.1f|r' --format for timers that are soon to expire
+local SECONDS_FORMAT = TukuiDB.RGBPercToHex(1, 1, 0)..'%d|r' --format for timers that have seconds remaining
+local MINUTES_FORMAT = TukuiDB.RGBPercToHex(1, 1, 1)..'%dm|r' --format for timers that have minutes remaining
+local HOURS_FORMAT = TukuiDB.RGBPercToHex(0.4, 1, 1)..'%dh|r' --format for timers that have hours remaining
+local DAYS_FORMAT = TukuiDB.RGBPercToHex(0.4, 0.4, 1)..'%dh|r' --format for timers that have days remaining
+
 --local bindings!
-local format = string.format
 local floor = math.floor
 local min = math.min
-local round = function(x) return floor(x + 0.5) end
 local GetTime = GetTime
 
 --returns both what text to display, and how long until the next update
 local function getTimeText(s)
-	-- format text as seconds with decimal at treshold or below
-	if s < db.treshold + 0.5 then
-		return format("|cffff0000%.1f|r", s), s - format("%.1f", s)
-	--format text as seconds when at 90 seconds or below
-	elseif s < MINUTEISH then
-		local seconds = round(s)
-		return format('|cffffff00%d|r', seconds), s - (seconds - 0.51)
+	--format text as seconds when below a minute
+	if s < MINUTEISH then
+		local seconds = tonumber(TukuiDB.Round(s))
+		if seconds > EXPIRING_DURATION then
+			return SECONDS_FORMAT, seconds, s - (seconds - 0.51)
+		else
+			return EXPIRING_FORMAT, s, 0.051
+		end
 	--format text as minutes when below an hour
 	elseif s < HOURISH then
-		local minutes = round(s/MINUTE)
-		return format('|cffffffff%dm|r', minutes), minutes > 1 and (s - (minutes*MINUTE - HALFMINUTEISH)) or (s - MINUTEISH)
+		local minutes = tonumber(TukuiDB.Round(s/MINUTE))
+		return MINUTES_FORMAT, minutes, minutes > 1 and (s - (minutes*MINUTE - HALFMINUTEISH)) or (s - MINUTEISH)
 	--format text as hours when below a day
 	elseif s < DAYISH then
-		local hours = round(s/HOUR)
-		return format('|cffccccff%dh|r', hours), hours > 1 and (s - (hours*HOUR - HALFHOURISH)) or (s - HOURISH)
+		local hours = tonumber(TukuiDB.Round(s/HOUR))
+		return HOURS_FORMAT, hours, hours > 1 and (s - (hours*HOUR - HALFHOURISH)) or (s - HOURISH)
 	--format text as days
 	else
-		local days = round(s/DAY)
-		return format('|cffcccccc%dh|r', days), days > 1 and (s - (days*DAY - HALFDAYISH)) or (s - DAYISH)
+		local days = tonumber(TukuiDB.Round(s/DAY))
+		return DAYS_FORMAT, days,  days > 1 and (s - (days*DAY - HALFDAYISH)) or (s - DAYISH)
 	end
 end
 
@@ -64,7 +72,7 @@ end
 --adjust font size whenever the timer's parent size changes
 --hide if it gets too tiny
 local function Timer_OnSizeChanged(self, width, height)
-	local fontScale = round(width) / ICON_SIZE
+	local fontScale = TukuiDB.Round(width) / ICON_SIZE
 	if fontScale == self.fontScale then
 		return
 	end
@@ -89,10 +97,15 @@ local function Timer_OnUpdate(self, elapsed)
 		self.nextUpdate = self.nextUpdate - elapsed
 	else
 		local remain = self.duration - (GetTime() - self.start)
-		if round(remain) > 0 then
-			local time, nextUpdate = getTimeText(remain)
-			self.text:SetText(time)
-			self.nextUpdate = nextUpdate
+		if tonumber(TukuiDB.Round(remain)) > 0 then
+			if (self.fontScale * self:GetEffectiveScale() / UIParent:GetScale()) < MIN_SCALE then
+				self.text:SetText('')
+				self.nextUpdate  = 1
+			else
+				local formatStr, time, nextUpdate = getTimeText(remain)
+				self.text:SetFormattedText(formatStr, time)
+				self.nextUpdate = nextUpdate
+			end
 		else
 			Timer_Stop(self)
 		end
@@ -111,7 +124,7 @@ local function Timer_Create(self)
 	timer:SetScript('OnUpdate', Timer_OnUpdate)
 
 	local text = timer:CreateFontString(nil, 'OVERLAY')
-	text:SetPoint('CENTER', TukuiDB.Scale(2), TukuiDB.Scale(0))
+	text:SetPoint('CENTER', TukuiDB.Scale(2), 0)
 	text:SetJustifyH("CENTER")
 	timer.text = text
 
@@ -123,7 +136,7 @@ local function Timer_Create(self)
 end
 
 --hook the SetCooldown method of all cooldown frames
---ActionButton1Cooldown is used here since its likely to always exist 
+--ActionButton1Cooldown is used here since its likely to always exist
 --and I'd rather not create my own cooldown frame to preserve a tiny bit of memory
 hooksecurefunc(getmetatable(ActionButton1Cooldown).__index, 'SetCooldown', function(self, start, duration)
 	if self.noOCC then return end

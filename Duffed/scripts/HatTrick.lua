@@ -9,7 +9,6 @@ local loc = {
 	cloaktip = "Toggles cloak model.",
 }
 
-
 local hcheck = CreateFrame("CheckButton", "HelmCheckBox", PaperDollFrame, "OptionsCheckButtonTemplate")
 hcheck:ClearAllPoints()
 hcheck:SetWidth(22)
@@ -22,7 +21,6 @@ hcheck:SetScript("OnEnter", function ()
 end)
 hcheck:SetScript("OnLeave", function () GameTooltip:Hide() end)
 hcheck:SetToplevel(true)
-
 
 local ccheck = CreateFrame("CheckButton", "CloakCheckBox", PaperDollFrame, "OptionsCheckButtonTemplate")
 ccheck:ClearAllPoints()
@@ -37,10 +35,8 @@ end)
 ccheck:SetScript("OnLeave", function () GameTooltip:Hide() end)
 ccheck:SetToplevel(true)
 
-
 hcheck:SetChecked(ShowingHelm())
 ccheck:SetChecked(ShowingCloak())
-
 
 hooksecurefunc("ShowHelm", function(v)
 	hcheck:SetChecked(v)

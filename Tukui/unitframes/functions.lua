@@ -496,18 +496,12 @@ do
 		end
 	end
 
-	TukuiDB.UpdateCPoints = function(self, event, unit)
-		if unit == PlayerFrame.unit and unit ~= self.CPoints.unit then
-			self.CPoints.unit = unit
-		end
-	end
-
 	TukuiDB.UpdateReputationColor = function(self, event, unit, bar)
 		local name, id = GetWatchedFactionInfo()
 		bar:SetStatusBarColor(FACTION_BAR_COLORS[id].r, FACTION_BAR_COLORS[id].g, FACTION_BAR_COLORS[id].b)
 	end
 
-	TukuiDB.UpdatePetInfo = function(self,event)
+	TukuiDB.UpdateName = function(self,event)
 		if self.Name then self.Name:UpdateTag(self.unit) end
 	end
 
@@ -680,5 +674,23 @@ do
 		end
 		
 		self.AuraWatch = auras
+	end
+	
+	function updateAuraTrackerTime(self, elapsed)
+		if (self.active) then
+			self.timeleft = self.timeleft - elapsed
+
+			if (self.timeleft <= 5) then
+				self.text:SetTextColor(1, 0, 0) -- red
+			else
+				self.text:SetTextColor(1, 1, 1) -- white
+			end
+			
+			if (self.timeleft <= 0) then
+				self.icon:SetTexture("")
+				self.text:SetText("")
+			end	
+			self.text:SetFormattedText("%.1f", self.timeleft)
+		end
 	end
 end

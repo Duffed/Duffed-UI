@@ -164,7 +164,7 @@ if TukuiCF["datatext"].wowtime and TukuiCF["datatext"].wowtime > 0 then
 		if btn == 'RightButton'  then
 			ToggleTimeManager()
 		else
-			ToggleCalendar()
+			GameTimeFrame:Click()
 		end
 	end)
 	Update(Stat, 10)

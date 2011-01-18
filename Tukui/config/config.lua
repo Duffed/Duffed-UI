@@ -6,7 +6,7 @@
 }
 
 TukuiCF["duffed"] = {
-	["everythingclasscolored"] = true, 		-- Castbar, Datatext & Filger classcolored
+	["everythingclasscolored"] = false, 		-- Castbar, Datatext & Filger classcolored
 	["filgerbarcolor"] = {
 		["classcolor"] = false,				-- Filger bars classcolored
 		["color"] = {.8, .1, .1, .9}, 		-- use this if classcolor = false
@@ -93,7 +93,12 @@ TukuiCF["castbar"] = {
 
 TukuiCF["arena"] = {
 	["unitframes"] = true,                 	-- enable tukz arena unitframes (requirement : tukui unitframes enabled)
-	["spelltracker"] = true,               	-- enable tukz enemy spell tracker (an afflicted3 or interruptbar alternative)
+}
+
+TukuiCF["pvp"] = {
+	["interrupt"] = true,					-- enable interrupt icons (interruptbar alternative)
+	["drinkannouncement"] = true,			-- drink announcement for arena
+	["ccannouncement"] = true,				-- Announce CC/Buffs/Debuffs (config in AddOns/Stuff/Config.lua)
 }
 
 TukuiCF["actionbar"] = {
@@ -166,6 +171,7 @@ TukuiCF["datatext"] = {
 	["avd"] = 0,                           	-- show your current avoidance against the level of the mob your targeting
 	["armor"] = 0,                         	-- show your armor value against the level mob you are currently targeting
 	["currency"] = 0,						-- show your tracked currency on panels
+	["mmenu"] = 0,							-- Use a datatext instead of the button for mMenu (mMenu AddOn required)
 	
 	["reputation"] = 5, 					-- show tracked reputation.
 	["experience"] = 0, 					-- show experience.
@@ -240,20 +246,13 @@ end
 -- Per Character Name Config (overwrite general and class)
 -- Name need to be case sensitive
 ----------------------------------------------------------------------------
-if TukuiDB.myname == "Sappy" then 
-	TukuiCF["actionbar"].rightbarmouseover = true
-end
 
--- Settings for a Char you are leveling (lvl 2-79) (shown keybindings & Xp instead of rep)
+-- Settings for a Char you are leveling (lvl 2-84) (shown keybindings & Xp instead of rep)
 if UnitLevel("player") < 85 then -- 
 	TukuiCF["actionbar"].hotkey = true
 	TukuiCF["datatext"].experience = 5
 	TukuiCF["datatext"].reputation = 0
-	if TukuiDB.myname == "Ticky" then
-		TukuiCF.actionbar.bar3mouseover = true
-	end
-	-- TukuiCF["actionbar"].rightbarmouseover = true
-	-- TukuiCF["unitframes"].enable = true
+	if TukuiDB.myname == "Ticky" then TukuiCF.actionbar.bar3mouseover = true end
 end
 
 -- Settings for a Lvl 1 Character(Banktwink e.g.)
@@ -263,6 +262,9 @@ if UnitLevel("player") == 1 then
 	TukuiCF["actionbar"].hotkey = false
 end
 
-if TukuiDB.myname == "Sacerdus" then 
+if TukuiDB.myname == "Sacerdus" or TukuiDB.myname == "Snurq" then 
 	TukuiCF["actionbar"].shapeshiftmouseover = false
+	TukuiCF["datatext"].reputation = 0
+	TukuiCF["datatext"].experience = 0
+	TukuiCF["datatext"].mmenu = 5
 end

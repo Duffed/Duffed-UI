@@ -1,11 +1,14 @@
 ## Interface: 40000
 ## Title: |cffce3a19Duffed|r
-## Notes: Duffed's Trickkiste
+## Notes: Stuff
 ## Author: Duffed
-## Version: 1.0
-
---DamnZoneText.lua
-frame.lua
-HatTrick.lua
-BlizzOptions.lua
-settings.lua
+## OptionalDeps: Tukui
+Config.lua
+scripts\Settings.lua
+scripts\Stuff.lua
+scripts\BlizzOptions.lua
+scripts\HatTrick.lua
+scripts\aura_announcement.lua
+scripts\drink_announcement.lua
+scripts\targethp.lua
+scripts\tbtimer.lua

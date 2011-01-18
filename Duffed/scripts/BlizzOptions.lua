@@ -1,21 +1,17 @@
 --[[
-	
 	BetterBlizzOptions
 	Author: Antiarc
 	All rights reserved.
-
 ]]
 
 local Centerja = CreateFrame("FRAME")
 Centerja:RegisterEvent("PLAYER_ENTERING_WORLD");
 Centerja:SetScript("OnEvent", function()
-
 	InterfaceOptionsFrame:SetPoint("CENTER", UIParent,0,0)
 	ChatConfigFrame:SetPoint("CENTER", UIParent,0,0)
 	AudioOptionsFrame:SetPoint("CENTER", UIParent,0,0)
 	GameMenuFrame:SetPoint("CENTER", UIParent,0,0)
 	VideoOptionsFrame:SetPoint("CENTER", UIParent,0,0)
-
 end)
 
 local function makeMovable(frame)
@@ -34,8 +30,8 @@ local function makeMovable(frame)
 end
 
 local grip = CreateFrame("Button", "BetterBlizzOptionsResizeGrip", InterfaceOptionsFrame)
-grip:SetNormalTexture("Interface\\AddOns\\Duffed\\Tex\\ResizeGrip")
-grip:SetHighlightTexture("Interface\\AddOns\\Duffed\\Tex\\ResizeGrip")
+grip:SetNormalTexture("Interface\\AddOns\\Duffed\\media\\ResizeGrip")
+grip:SetHighlightTexture("Interface\\AddOns\\Duffed\\media\\ResizeGrip")
 grip:SetWidth(16)
 grip:SetHeight(16)
 grip:SetScript("OnMouseDown", function(self)

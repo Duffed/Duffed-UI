@@ -3,6 +3,7 @@ if TukuiCF["unitframes"].enable ~= true or TukuiDB.myclass ~= "PRIEST" then retu
 
 local font = TukuiCF["media"].font
 local ws = GetSpellInfo(6788)
+local sos = GetSpellInfo(89488)
 
 local function BarPanel(height, width, x, y, anchorPoint, anchorPointRel, anchor, level, parent, strata)
 	local Panel = CreateFrame("Frame", _, parent)
@@ -26,6 +27,16 @@ local function UpdateBar(self)
 	local timeLeft = self.EndTime-GetTime()
 	local roundedt = math.floor(timeLeft*10.5)/10
 	self.Bar:SetValue(timeLeft/duration)
+	
+	-- for 4.0.6 priest changes of strength of soul, color the weakened soul bar.
+	-- if priest is immune to interrupt/silence/dispel, color it green.
+	-- if priest is not immune to interrupt/silence/dispel, color it red.
+	if (self.Player and UnitBuff("player", sos)) or (self.Target and UnitBuff("target", sos)) then
+		self.Bar:SetStatusBarColor(89/255, 157/255, 30/255)
+	else
+		self.Bar:SetStatusBarColor(81/255, 13/255, 13/255)
+	end
+	
 	if roundedt % 1 == 0 then 
 		self.Time:SetText(roundedt .. ".0")
 	else 

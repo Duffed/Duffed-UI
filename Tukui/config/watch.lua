@@ -48,6 +48,8 @@ TukuiDB.remindbuffs = {
 	DEATHKNIGHT = {
 		57330, -- horn of Winter
 		31634, -- Shaman Strength of Earth Totem
+		6673, -- battle Shout
+		93435, -- roar of courage (hunter pet)
 	},
 }
 
@@ -55,8 +57,8 @@ TukuiDB.remindbuffs = {
 -- the spellIDs to track on screen in arena.
 --------------------------------------------------------------------------------------------
 
-if TukuiCF["arena"].spelltracker == true then
-	TukuiDB.spelltracker = {
+if TukuiCF["pvp"].interrupt == true then
+	TukuiDB.interrupt = {
 		[1766] = 10, -- kick
 		[6552] = 10, -- pummel
 		[2139] = 24, -- counterspell
@@ -64,19 +66,14 @@ if TukuiCF["arena"].spelltracker == true then
 		[34322] = 27, -- fear priest
 		[47476] = 120, -- strangulate
 		[47528] = 10, -- mindfreeze
+		[57994] = 6, -- wind shear
+		[72] = 12, -- shield bash
 		[29166] = 180, -- innervate
-		[49039] = 120, -- Lichborne
-		[54428] = 60, -- Divine Plea
-		[1022] = 180, -- Hand of Protection
-		[16190] = 300, -- Mana Tide Totem
-		[51514] = 45, -- Hex
-		[2094] = 120, -- Blind
-		[72] = 12, -- fucking prot warrior shield bash
-		[33206] = 144, -- pain sup
 		[15487] = 45, -- silence priest
-		[34490] = 20, -- i hate hunter silencing shot
-		[85285] = 10, -- paladin got a kick now? lol
-		[80965] = 10, -- Feral kick 
+		[34490] = 20, -- silencing shot
+		[85285] = 10, -- rebuke
+		[80964] = 10, -- feral skull bash (cat)
+		[80965] = 10, -- feral skull bash (bear)
 	}
 end
 

@@ -27,7 +27,10 @@
 	<Script file="libs\oUF_ThreatBar\oUF_ThreatBar.lua"/>
 	<Script file="libs\oUF_TotemBar\oUF_TotemBar.lua"/>
 	<Script file="libs\oUF_Trinkets\oUF_Trinkets.lua"/>
-	<Script file="libs\oUF_RaidDebuffs\oUF_RaidDebuffs.lua"/>	
+	<Script file="libs\oUF_RaidDebuffs\oUF_RaidDebuffs.lua"/>
+	<Script file="libs\oUF_ClassIcons\oUF_ClassIcons.lua"/>
+	<Script file="libs\oUF_AuraTracker\oUF_AuraTracker.lua"/>
+	<Script file="libs\oUF_Talents\oUF_Talents.lua"/>
 	
 	<Script file="modules\autodisable.lua"/>
 	<Script file="config\watch.lua"/>
@@ -39,7 +42,6 @@
 	<Script file="modules\durability.lua"/>
 	<Script file="modules\vehicle.lua"/>
 	<Script file="modules\capturebar.lua"/>
-	<Script file="modules\altpowerbar.lua"/>
 	<Script file="modules\gm.lua"/>
 	<Script file="modules\commands.lua"/>
 	<Script file="modules\quests.lua"/>
@@ -95,7 +97,6 @@
 	<Script file="scripts\cooldown.lua"/>
 	<Script file="scripts\nameplates.lua"/>
 	<Script file="scripts\bags.lua"/>
-	<Script file="scripts\arenatrack.lua"/>
 	<Script file="scripts\loot.lua"/>
 	<Script file="scripts\lootroll.lua"/>
 	<Script file="scripts\map.lua"/>
@@ -108,7 +109,9 @@
 	<Include file="unitframes\templates.xml"/>
 	<Script file="unitframes\tags.lua"/>
 	<Script file="unitframes\layout.lua"/>
-			
+	
+	<Script file="pvp\interrupticons.lua"/>
+
 	<Script file="class\priest.lua"/>
 	<Script file="class\hunter.lua"/>
 	<Script file="class\mage.lua"/>

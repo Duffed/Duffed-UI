@@ -26,6 +26,7 @@ local function add(spell)
 	if addon.MatchBySpellName and type(spell) == 'number' then
 		spell = GetSpellInfo(spell)
 	end
+	
 	debuff_data[spell] = addon.priority
 	addon.priority = addon.priority + 1
 end
@@ -40,7 +41,6 @@ function addon:ResetDebuffData()
 	wipe(debuff_data)
 	addon.priority = 10
 end
-
 
 local DispellColor = {
 	['Magic']	= {.2, .6, 1},
@@ -216,6 +216,7 @@ local function Update(self, event, unit)
 		
 		if addon.ShowDispelableDebuff and debuffType then
 			if addon.FilterDispellableDebuff then
+				DispellPriority[debuffType] = DispellPriority[debuffType] + addon.priority --Make Dispell buffs on top of Boss Debuffs
 				priority = DispellFilter[debuffType] and DispellPriority[debuffType]
 			else
 				priority = DispellPriority[debuffType]
@@ -233,6 +234,14 @@ local function Update(self, event, unit)
 	end
 	
 	UpdateDebuff(self, _name, _icon, _count, _dtype, _duration, _endTime)
+	
+	--Reset the DispellPriority
+	DispellPriority = {
+		['Magic']	= 4,
+		['Curse']	= 3,
+		['Disease']	= 2,
+		['Poison']	= 1,
+	}	
 end
 
 local function Enable(self)

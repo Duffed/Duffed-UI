@@ -14,6 +14,7 @@ local TrinketUpdate = function(self, elapsed)
 		usedTrinkets[self.guid] = false
 		local unit = arenaGUID[self.guid]
 		if unit and arenaFrame[unit] then
+		arenaFrame[unit].Trinket.Icon:SetVertexColor(0,.6,0) -- green
 			if arenaFrame[unit].Trinket.trinketUpAnnounce then
 				SendChatMessage("Trinket ready: "..UnitName(unit).." "..UnitClass(unit), "PARTY")
 			end
@@ -35,6 +36,7 @@ local TrinketUsed = function(guid, time)
 	local unit = arenaGUID[guid]
 	if unit and arenaFrame[unit] then
 		CooldownFrame_SetTimer(arenaFrame[unit].Trinket.cooldownFrame, GetTime(), time, 1)
+		arenaFrame[unit].Trinket.Icon:SetVertexColor(.6,0,0) -- green
 		if arenaFrame[unit].Trinket.trinketUseAnnounce then
 			message = time == 120 and "Trinket used: " or "WotF used: "
 			SendChatMessage(message..UnitName(unit).." "..UnitClass(unit), "PARTY")
@@ -67,7 +69,8 @@ local Update = function(self, event, ...)
 		if type == "seen" then
 			if UnitExists(unit) and UnitIsPlayer(unit) and arenaFrame[unit] then
 				arenaGUID[UnitGUID(unit)] = unit
-				arenaFrame[unit].Trinket.Icon:SetTexture(GetTrinketIcon(unit))
+				arenaFrame[unit].Trinket.Icon:SetTexture("Interface\\AddOns\\Tukui\\media\\textures\\blank")
+				arenaFrame[unit].Trinket.Icon:SetVertexColor(0,.6,0) -- green
 			end
 		end
 	elseif event == "PLAYER_ENTERING_WORLD" then

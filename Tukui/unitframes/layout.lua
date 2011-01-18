@@ -98,6 +98,9 @@ local function Shared(self, unit)
 			health.Smooth = true
 		end
 		
+		-- Raidicon repositioning
+		RaidIcon:SetPoint("TOP", health, "TOP", 0, 9)
+		
 		if db.unicolor == true then
 			health.colorTapping = false
 			health.colorDisconnected = false
@@ -187,29 +190,29 @@ local function Shared(self, unit)
 		TukuiDB.CreatePanel(power.border, 1,1, "TOPLEFT", power, "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 		power.border:SetPoint("BOTTOMRIGHT", power, "BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 		
-		if (unit == "player") then
-			-- alt power bar
-			local AltPowerBar = CreateFrame("StatusBar", "TukuiAltPowerBar", self.Health)
-			AltPowerBar:SetFrameLevel(self.Health:GetFrameLevel() + 1)
-			AltPowerBar:SetHeight(3)
-			AltPowerBar:SetStatusBarTexture(TukuiCF.media.normTex)
-			AltPowerBar:GetStatusBarTexture():SetHorizTile(false)
-			AltPowerBar:SetStatusBarColor(1, 0, 0)
+		-- alt power bar
+		local AltPowerBar = CreateFrame("StatusBar", "TukuiAltPowerBar", self.Health)
+		AltPowerBar:SetFrameLevel(self.Health:GetFrameLevel() + 1)
+		AltPowerBar:SetHeight(3)
+		AltPowerBar:SetStatusBarTexture(TukuiCF.media.normTex)
+		AltPowerBar:GetStatusBarTexture():SetHorizTile(false)
+		AltPowerBar:SetStatusBarColor(1, 0, 0)
 
-			AltPowerBar:SetPoint("LEFT")
-			AltPowerBar:SetPoint("RIGHT")
-			AltPowerBar:SetPoint("TOP", self.Health, "TOP")
-			
-			AltPowerBar:SetBackdrop({
-			  bgFile = TukuiCF["media"].blank, 
-			  edgeFile = TukuiCF["media"].blank, 
-			  tile = false, tileSize = 0, edgeSize = 1, 
-			  insets = { left = 0, right = 0, top = 0, bottom = TukuiDB.Scale(-1)}
-			})
-			AltPowerBar:SetBackdropColor(0, 0, 0)
-
-			self.AltPowerBar = AltPowerBar
+		AltPowerBar:SetPoint("LEFT")
+		AltPowerBar:SetPoint("RIGHT")
+		AltPowerBar:SetPoint("TOP", self.Health, "TOP")
 		
+		AltPowerBar:SetBackdrop({
+		  bgFile = TukuiCF["media"].blank, 
+		  edgeFile = TukuiCF["media"].blank, 
+		  tile = false, tileSize = 0, edgeSize = 1, 
+		  insets = { left = 0, right = 0, top = 0, bottom = TukuiDB.Scale(-1)}
+		})
+		AltPowerBar:SetBackdropColor(0, 0, 0)
+
+		self.AltPowerBar = AltPowerBar
+		
+		if (unit == "player") then		
 			-- combat icon
 			local Combat = health:CreateTexture(nil, "OVERLAY")
 			Combat:SetHeight(TukuiDB.Scale(19))
@@ -234,7 +237,7 @@ local function Shared(self, unit)
 			status:SetTextColor(0.69, 0.31, 0.31, 0)
 			self.Status = status
 			self:Tag(status, "[pvp]")
-			
+
 			-- leader icon
 			local Leader = InvFrame:CreateTexture(nil, "OVERLAY")
 			Leader:SetHeight(TukuiDB.Scale(14))
@@ -550,10 +553,15 @@ local function Shared(self, unit)
 					
 					-- border
 					TotemBar[i].border = CreateFrame("Frame", nil, TotemBar[i])
-					TukuiDB.CreatePanel(TotemBar[i].border,1,1,"TOPLEFT", TotemBar[i], "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-					TotemBar[i].border:SetPoint("BOTTOMRIGHT", TotemBar[i], "BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
-					TukuiDB.CreateShadow(TotemBar[i].border)
-				end
+					TukuiDB.CreatePanel(TotemBar[i].border,(TotemBar[i]:GetWidth()+4),TotemBar[i]:GetHeight()+4,"TOPLEFT", TotemBar[i], "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+				end				
+					-- Shadow
+					TotemShadow = CreateFrame("Frame", nil, TotemBar[1])
+					TotemShadow:SetWidth((TotemBar[1]:GetWidth()*4)+9+4)
+					TotemShadow:SetHeight(TotemBar[1]:GetHeight()+4)
+					TotemShadow:SetPoint("TOPLEFT", TotemBar[1], "TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
+					TukuiDB.CreateShadow(TotemShadow)
+				
 				self.TotemBar = TotemBar
 			end
 			
@@ -609,7 +617,6 @@ local function Shared(self, unit)
 			CPoints[4]:SetVertexColor(0.65, 0.63, 0.35)
 			CPoints[5]:SetVertexColor(0.33, 0.59, 0.33)
 			self.CPoints = CPoints
-			self:RegisterEvent("UNIT_COMBO_POINTS", TukuiDB.UpdateCPoints)
 		end
 
 		if (unit == "target" and db.targetauras) or (unit == "player" and db.playerauras) then
@@ -671,9 +678,9 @@ local function Shared(self, unit)
 					castbar:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground1, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
 				end
 			elseif unit == "target" then
-				castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0,380)
+				castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0,TukuiDB.Scale(380))
 				castbar:SetHeight(TukuiDB.Scale(18))
-				castbar:SetWidth(240)
+				castbar:SetWidth(TukuiDB.Scale(240))
 			end
 						
 			castbar.CustomTimeText = TukuiDB.CustomCastTimeText
@@ -1079,7 +1086,7 @@ local function Shared(self, unit)
 		end
 		
 		-- update pet name, this should fix "UNKNOWN" pet names on pet unit.
-		self:RegisterEvent("UNIT_PET", TukuiDB.UpdatePetInfo)
+		self:RegisterEvent("UNIT_PET", TukuiDB.UpdateName)
 	end
 
 
@@ -1164,11 +1171,8 @@ local function Shared(self, unit)
 			castbar:SetFrameLevel(10)
 			castbar:SetPoint("TOP", UIParent, "TOP", 0,-320)
 			-- castbar:SetPoint("TOPRIGHT", health, "TOPRIGHT", -22, 0)	
-			-- castbar:SetAlpha(0.6)
-			
-				-- castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0,380)
-				castbar:SetHeight(TukuiDB.Scale(20))
-				castbar:SetWidth(240)
+			castbar:SetHeight(TukuiDB.Scale(20))
+			castbar:SetWidth(240)
 				
 			castbar.border = CreateFrame("Frame", nil, castbar)
 			TukuiDB.CreatePanel(castbar.border,1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
@@ -1275,9 +1279,9 @@ local function Shared(self, unit)
 		
 		-- health 
 		local health = CreateFrame('StatusBar', nil, self)
-		health:SetHeight(TukuiDB.Scale(22))
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("TOPRIGHT")
+		health:SetHeight(TukuiDB.Scale(18))
+		health:SetPoint("TOPLEFT",0,-15)
+		health:SetPoint("TOPRIGHT",0,-15)
 		health:SetStatusBarTexture(normTex)
 
 		health.frequentUpdates = true
@@ -1290,8 +1294,8 @@ local function Shared(self, unit)
 		local healthBG = health:CreateTexture(nil, 'BORDER')
 		healthBG:SetAllPoints(health)
 
-		health.value = TukuiDB.SetFontString(health, font1,12)
-		health.value:SetPoint("LEFT", TukuiDB.Scale(2), 0)
+		health.value = TukuiDB.SetFontString(health, font1, 12, "THINOUTLINE")
+		health.value:SetPoint("BOTTOMLEFT", health, "TOPLEFT", TukuiDB.Scale(2), 3)
 		health.PostUpdate = TukuiDB.PostUpdateHealth
 				
 		self.Health = health
@@ -1301,6 +1305,9 @@ local function Shared(self, unit)
 		if db.showsmooth == true then
 			health.Smooth = true
 		end
+		
+		-- Raidicon repositioning
+		RaidIcon:SetPoint("TOP", health, "TOP", 0, 9)
 		
 		if db.unicolor == true then
 			health.colorDisconnected = false
@@ -1333,8 +1340,8 @@ local function Shared(self, unit)
 		powerBG:SetTexture(normTex)
 		powerBG.multiplier = 0.3
 		
-		power.value = TukuiDB.SetFontString(health, font1, 12, "OUTLINE")
-		power.value:SetPoint("RIGHT", TukuiDB.Scale(-2), 0)
+		power.value = TukuiDB.SetFontString(health, font1, 12, "THINOUTLINE")
+		power.value:SetPoint("BOTTOMRIGHT", health, "TOPRIGHT", TukuiDB.Scale(-2), 3)
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
 				
@@ -1353,22 +1360,45 @@ local function Shared(self, unit)
 		
 		-- names
 		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
+		Name:SetPoint("BOTTOM", health, "TOP", 0, 4)
 		Name:SetJustifyH("CENTER")
-		Name:SetFont(font1, 12, "OUTLINE")
+		Name:SetFont(font1, 12, "THINOUTLINE")
 		Name:SetShadowColor(0, 0, 0)
 		Name:SetShadowOffset(1.25, -1.25)
+		Name.frequentUpdates = 0.2
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
 		self.Name = Name
 		
 		-- create buff at left of unit if they are boss units
 		if (unit and unit:find("boss%d")) then
+			-- alt power bar
+			local AltPowerBar = CreateFrame("StatusBar", "TukuiAltPowerBar", self.Health)
+			AltPowerBar:SetFrameLevel(self.Health:GetFrameLevel() + 1)
+			AltPowerBar:SetHeight(3)
+			AltPowerBar:SetStatusBarTexture(TukuiCF.media.normTex)
+			AltPowerBar:GetStatusBarTexture():SetHorizTile(false)
+			AltPowerBar:SetStatusBarColor(1, 0, 0)
+
+			AltPowerBar:SetPoint("LEFT")
+			AltPowerBar:SetPoint("RIGHT")
+			AltPowerBar:SetPoint("TOP", self.Health, "TOP")
+			
+			AltPowerBar:SetBackdrop({
+			  bgFile = TukuiCF["media"].blank, 
+			  edgeFile = TukuiCF["media"].blank, 
+			  tile = false, tileSize = 0, edgeSize = 1, 
+			  insets = { left = 0, right = 0, top = 0, bottom = TukuiDB.Scale(-1)}
+			})
+			AltPowerBar:SetBackdropColor(0, 0, 0)
+
+			self.AltPowerBar = AltPowerBar
+
 			local buffs = CreateFrame("Frame", nil, self)
-			buffs:SetHeight(26)
+			buffs:SetHeight(22)
 			buffs:SetWidth(252)
-			buffs:SetPoint("RIGHT", health, "LEFT", TukuiDB.Scale(-4), TukuiDB.Scale(-2))
-			buffs.size = 26
+			buffs:SetPoint("RIGHT", health, "LEFT", TukuiDB.Scale(-4), TukuiDB.Scale(-3))
+			buffs.size = 25
 			buffs.num = 3
 			buffs.spacing = 2
 			buffs.initialAnchor = 'RIGHT'
@@ -1378,39 +1408,72 @@ local function Shared(self, unit)
 			self.Buffs = buffs
 		end
 
-		-- create debuff for arena units
-		if (unit and unit:find("arena%d")) then
-			local debuffs = CreateFrame("Frame", nil, self)
-			debuffs:SetHeight(22)
-			debuffs:SetWidth(200)
-			debuffs:SetPoint('LEFT', health, 'RIGHT', TukuiDB.Scale(4), TukuiDB.Scale(-2))
-			debuffs.size = 26
-			debuffs.num = 5
-			debuffs.spacing = 2
-			debuffs.initialAnchor = 'LEFT'
-			debuffs["growth-x"] = "RIGHT"
-			debuffs.PostCreateIcon = TukuiDB.PostCreateAura
-			debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
-			self.Debuffs = debuffs	
-		end
+		-- create debuff
+		local debuffs = CreateFrame("Frame", nil, self)
+		debuffs:SetHeight(22)
+		debuffs:SetWidth(200)
+		debuffs:SetPoint('LEFT', health, 'RIGHT', TukuiDB.Scale(4), TukuiDB.Scale(-3))
+		debuffs.size = 25
+		debuffs.num = 5
+		debuffs.spacing = 2
+		debuffs.initialAnchor = 'LEFT'
+		debuffs["growth-x"] = "RIGHT"
+		debuffs.PostCreateIcon = TukuiDB.PostCreateAura
+		debuffs.PostUpdateIcon = TukuiDB.PostUpdateAura
+		self.Debuffs = debuffs	
 				
 		-- trinket feature via trinket plugin
 		if (TukuiCF.arena.unitframes) and (unit and unit:find('arena%d')) then
+			-- Auratracker Frame
+			local AuraTracker = CreateFrame("Frame", nil, self)
+			AuraTracker:SetHeight(39)
+			AuraTracker:SetWidth(39)
+			AuraTracker:SetPoint("BOTTOMRIGHT", health.border, "BOTTOMLEFT", -4, 0)
+			TukuiDB.SetTemplate(AuraTracker)
+			TukuiDB.CreateShadow(AuraTracker)
+			self.AuraTracker = AuraTracker
+			
+			AuraTracker.icon = AuraTracker:CreateTexture(nil, "OVERLAY")
+			AuraTracker.icon:SetAllPoints(AuraTracker)
+			AuraTracker.icon:SetPoint("TOPLEFT", AuraTracker, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+			AuraTracker.icon:SetPoint("BOTTOMRIGHT", AuraTracker, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
+			
+			AuraTracker.text = TukuiDB.SetFontString(AuraTracker, font1, 12, "THINOUTLINE")
+			AuraTracker.text:SetPoint("CENTER", AuraTracker, 0, 0)
+			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
+			
+			-- ClassIcon			
+			local class = AuraTracker:CreateTexture(nil, "ARTWORK")
+			class:SetAllPoints(AuraTracker.icon)
+			self.ClassIcon = class
+		
+			-- Trinket Frame
 			local Trinketbg = CreateFrame("Frame", nil, self)
-			Trinketbg:SetHeight(26)
-			Trinketbg:SetWidth(26)
-			Trinketbg:SetPoint("RIGHT", health, "LEFT", -6, TukuiDB.Scale(-2))				
-			TukuiDB.SetTemplate(Trinketbg)
-			Trinketbg:SetFrameLevel(0)
+			Trinketbg:SetHeight(9)
+			Trinketbg:SetWidth(9)
+			Trinketbg:SetPoint("TOPRIGHT", health, "TOPRIGHT", 1,1)
+			Trinketbg:SetBackdrop({
+				edgeFile = TukuiCF["media"].blank, 
+				tile = false, tileSize = 0, edgeSize = 1, 
+				insets = { left = -1, right = -1, top = -1, bottom = -1}
+			})
+			Trinketbg:SetBackdropBorderColor(0,0,0)
+			Trinketbg:SetFrameLevel(health:GetFrameLevel()+1)
 			self.Trinketbg = Trinketbg
 			
-			local Trinket = CreateFrame("Frame", nil, Trinketbg)
-			Trinket:SetAllPoints(Trinketbg)
-			Trinket:SetPoint("TOPLEFT", Trinketbg, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-			Trinket:SetPoint("BOTTOMRIGHT", Trinketbg, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-			Trinket:SetFrameLevel(1)
+			local Trinket = CreateFrame("Frame", nil, self)
+			Trinket:SetPoint("TOPLEFT", Trinketbg, TukuiDB.Scale(1), TukuiDB.Scale(-1))
+			Trinket:SetPoint("BOTTOMRIGHT", Trinketbg, TukuiDB.Scale(-1), TukuiDB.Scale(1))
+			Trinket:SetFrameLevel(Trinketbg:GetFrameLevel()+1)
 			Trinket.trinketUseAnnounce = true
 			self.Trinket = Trinket
+			
+			-- Spec info
+			Talents = TukuiDB.SetFontString(health.border, font1, 12)
+			Talents:SetPoint("TOPRIGHT", health.border, "BOTTOMRIGHT", -2, -3)
+			Talents:SetTextColor(1,1,1,.6)
+			self.Talents = Talents
 		end
 		
 		-- Arena/Boss castbar
@@ -1426,6 +1489,7 @@ local function Shared(self, unit)
 			TukuiDB.CreatePanel(castbar.border,1,1,"TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 			castbar.border:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
 			TukuiDB.CreateShadow(castbar.border)
+			castbar.border:SetFrameLevel(9)
 
 			castbar.Text = TukuiDB.SetFontString(castbar, font1, 12)
 			castbar.Text:SetPoint("LEFT", castbar, "LEFT", 4,0)
@@ -1434,17 +1498,16 @@ local function Shared(self, unit)
 			castbar.CustomDelayText = TukuiDB.CustomCastDelayText
 			castbar.PostCastStart = TukuiDB.CheckCast
 			castbar.PostChannelStart = TukuiDB.CheckChannel
+			
+			-- icon
+			castbar.button = CreateFrame("Frame", nil, castbar)
+			TukuiDB.CreatePanel(castbar.button, TukuiDB.Scale(13), TukuiDB.Scale(13), "BOTTOMRIGHT", castbar, "BOTTOMLEFT",TukuiDB.Scale(-5),-2)
+			TukuiDB.CreateShadow(castbar.button)
 
-			-- if db.cbicons == true then
-				castbar.button = CreateFrame("Frame", nil, castbar)
-				TukuiDB.CreatePanel(castbar.button, TukuiDB.Scale(13), TukuiDB.Scale(13), "BOTTOMRIGHT", castbar, "BOTTOMLEFT",TukuiDB.Scale(-5),-2)
-				TukuiDB.CreateShadow(castbar.button)
-
-				castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-				castbar.icon:SetPoint("TOPLEFT", castbar.button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-				castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
-				castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
-			-- end
+			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+			castbar.icon:SetPoint("TOPLEFT", castbar.button, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+			castbar.icon:SetPoint("BOTTOMRIGHT", castbar.button, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
 
 			self.Castbar = castbar
 			self.Castbar.Time = castbar.time
@@ -1570,9 +1633,9 @@ if TukuiCF.arena.unitframes then
 		if i == 1 then
 			arena[i]:SetPoint("BOTTOM", UIParent, "BOTTOM", 260, 590)
 		else
-			arena[i]:SetPoint("BOTTOM", arena[i-1], "TOP", 0, 10)
+			arena[i]:SetPoint("BOTTOM", arena[i-1], "TOP", 0, 27)
 		end
-		arena[i]:SetSize(TukuiDB.Scale(200), TukuiDB.Scale(43))
+		arena[i]:SetSize(TukuiDB.Scale(200), TukuiDB.Scale(38))
 	end
 end
 
@@ -1592,18 +1655,9 @@ if db.showboss then
 		if i == 1 then
 			boss[i]:SetPoint("BOTTOM", UIParent, "BOTTOM", 260, 590)
 		else
-			boss[i]:SetPoint('BOTTOM', boss[i-1], 'TOP', 0, 10)             
+			boss[i]:SetPoint('BOTTOM', boss[i-1], 'TOP', 0, 27)             
 		end
-		boss[i]:SetSize(TukuiDB.Scale(200), TukuiDB.Scale(43))
-		
-		--Special PowerBar for Boss frames
-		local pf = _G["Boss"..i.."TargetFramePowerBarAlt"]
-		pf:ClearAllPoints()
-		pf:SetPoint("LEFT", _G["oUF_Boss"..i], "RIGHT", 10, 0)
-		pf:SetParent(_G["oUF_Boss"..i])
-		pf.ClearAllPoints = TukuiDB.dummy
-		pf.SetPoint = TukuiDB.dummy
-		pf.SetParent = TukuiDB.dummy
+		boss[i]:SetSize(TukuiDB.Scale(200), TukuiDB.Scale(38))
 	end
 end
 
@@ -1651,16 +1705,26 @@ local party = oUF:SpawnHeader("oUF_noParty", nil, "party", "showParty", true)
 ------------------------------------------------------------------------
 
 local testui = TestUI or function() end
-TestUI = function()
-	testui()
-	UnitAura = function()
-		-- name, rank, texture, count, dtype, duration, timeLeft, caster
-		return 'penancelol', 'Rank 2', 'Interface\\Icons\\Spell_Holy_Penance', random(5), 'Magic', 0, 0, "player"
-	end
-	if(oUF) then
-		for i, v in pairs(oUF.units) do
-			if(v.UNIT_AURA) then
-				v:UNIT_AURA("UNIT_AURA", v.unit)
+TestUI = function(msg)
+	if msg == "a" or msg == "arena" then
+		oUF_Arena1:Show(); oUF_Arena1.Hide = function() end; oUF_Arena1.unit = "player"
+		oUF_Arena2:Show(); oUF_Arena2.Hide = function() end; oUF_Arena2.unit = "player"
+		oUF_Arena3:Show(); oUF_Arena3.Hide = function() end; oUF_Arena3.unit = "player"
+	elseif msg == "boss" or msg == "b" then
+		oUF_Boss1:Show(); oUF_Boss1.Hide = function() end; oUF_Boss1.unit = "player"
+		oUF_Boss2:Show(); oUF_Boss2.Hide = function() end; oUF_Boss2.unit = "player"
+		oUF_Boss3:Show(); oUF_Boss3.Hide = function() end; oUF_Boss3.unit = "player"
+	else
+		testui()
+		UnitAura = function()
+			-- name, rank, texture, count, dtype, duration, timeLeft, caster
+			return 80167, 'Rank 1', 'Interface\\Icons\\Spell_Holy_Penance', random(5), 'Magic', 0, 0, "player"
+		end
+		if(oUF) then
+			for i, v in pairs(oUF.units) do
+				if(v.UNIT_AURA) then
+					v:UNIT_AURA("UNIT_AURA", v.unit)
+				end
 			end
 		end
 	end

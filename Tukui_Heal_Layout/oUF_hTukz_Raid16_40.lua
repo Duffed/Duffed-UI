@@ -18,7 +18,7 @@ local function Shared(self, unit)
 	local health = CreateFrame('StatusBar', nil, self)
 	health:SetPoint("TOPLEFT")
 	health:SetPoint("TOPRIGHT")
-	health:SetHeight(TukuiDB.Scale(28*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
+	health:SetHeight(TukuiDB.Scale(35*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
 	health:SetStatusBarTexture(normTex)
 	self.Health = health
 	
@@ -243,7 +243,7 @@ oUF:Factory(function(self)
 			-- 'initial-width', TukuiDB.Scale(76*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale),
 			'initial-width', TukuiDB.Scale(68*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale),
 			-- 'initial-height', TukuiDB.Scale(31*TukuiCF["unitframes"].gridscale*TukuiDB.raidscalele),
-			'initial-height', TukuiDB.Scale(31*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale),
+			'initial-height', TukuiDB.Scale(38*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale),
 			"showParty", true,
 			"showPlayer", TukuiCF["unitframes"].showplayerinparty, 
 			"showRaid", true, 
@@ -267,11 +267,11 @@ oUF:Factory(function(self)
 		local pets = {} 
 			pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
 			pets[1]:SetPoint('TOPLEFT', raid, 'TOPLEFT', 0, 31*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale + TukuiDB.Scale(8))
-			pets[1]:SetSize(TukuiDB.Scale(68*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale), TukuiDB.Scale(31*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
+			pets[1]:SetSize(TukuiDB.Scale(68*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale), TukuiDB.Scale(38*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
 		for i =2, 4 do 
 			pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
 			pets[i]:SetPoint('LEFT', pets[i-1], 'RIGHT', TukuiDB.Scale(8), 0)
-			pets[i]:SetSize(TukuiDB.Scale(68*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale), TukuiDB.Scale(31*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
+			pets[i]:SetSize(TukuiDB.Scale(68*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale), TukuiDB.Scale(38*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
 		end
 		
 		local ShowPet = CreateFrame("Frame")

@@ -1,0 +1,6 @@
+## Interface: 40000
+## Title: thek: Castbar
+## Author: °-°
+## Notes: rewritten default castbars
+config.lua
+core.lua

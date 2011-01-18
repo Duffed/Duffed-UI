@@ -1,0 +1,8 @@
+## Interface: 40000
+## Title: Filger (|cffce3a19Tukui|r)
+## Notes: Filtert ein paar Dinge... :P
+## Author: Nils Ruesch
+## Version: 090411
+## RequiredDeps: Tukui
+## SavedVariables: configmode
+Filger.lua

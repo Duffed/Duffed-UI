@@ -1,0 +1,14 @@
+﻿## Interface: 40000
+## Author: Tukz
+## Project Collaborators: Elv22
+## Credits to: Caith, Caellian, Shestak, Haste, Tekkub, Alza, Roth, P3lim, Tulla, Hungtar, hankthetank, Ishtara and others...
+## Special Thanks to: Admins, Moderator and VIP's from tukui.org
+## Version: 12.64 (Duffed UI v4.55)
+## Title: |cffC495DDTukui|r
+## Notes: UI of awesomeness!
+## SavedVariables: TukuiData, TukuiArena
+## SavedVariablesPerCharacter: TukuiInstallv1200, TukuiUFpos
+## OptionalDeps: Tukui_ConfigUI, Recount, Omen, Skada, DXE, Blizzard_CombatText, OptionHouse, ACP, Who Framed Watcher Wabbit, Skinner, Aurora, !ClassColors, HealBot, Fux, OmniCC, ncCooldown, TinyDPS
+## X-oUF: oUF
+
+Tukui.xml

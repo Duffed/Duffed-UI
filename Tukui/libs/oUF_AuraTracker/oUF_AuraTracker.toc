@@ -1,0 +1,9 @@
+## Interface: 30100
+## Title: oUF AuraTracker
+## Notes: Adds auras to oUF portraits.
+## Author: smoke (Thizzelle)
+## Version: 1.0
+## X-Category: UnitFrame
+## Dependencies: oUF
+
+oUF_AuraTracker.lua

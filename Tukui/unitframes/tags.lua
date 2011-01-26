@@ -108,7 +108,6 @@ local utf8sub = function(string, i, dots)
 	end
 end
 
-
 oUF.TagEvents['Tukui:getnamecolor'] = 'UNIT_HAPPINESS'
 oUF.Tags['Tukui:getnamecolor'] = function(unit)
 	local reaction = UnitReaction(unit, 'player')

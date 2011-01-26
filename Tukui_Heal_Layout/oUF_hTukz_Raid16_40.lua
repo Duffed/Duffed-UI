@@ -266,7 +266,7 @@ oUF:Factory(function(self)
 		
 		local pets = {} 
 			pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
-			pets[1]:SetPoint('TOPLEFT', raid, 'TOPLEFT', 0, 31*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale + TukuiDB.Scale(8))
+			pets[1]:SetPoint('TOPLEFT', raid, 'TOPLEFT', 0, 38*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale + TukuiDB.Scale(8))
 			pets[1]:SetSize(TukuiDB.Scale(68*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale), TukuiDB.Scale(38*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale))
 		for i =2, 4 do 
 			pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 

@@ -86,8 +86,15 @@ local function Shared(self, unit)
 		healthBG:SetAllPoints()
 		healthBG:SetTexture(.1, .1, .1)
 	
-		health.value = TukuiDB.SetFontString(panel, font1, 12, "THINOUTLINE")
-		health.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
+		if unit == "player" then
+			-- health.value = TukuiDB.SetFontString(panel, font1, 12, "THINOUTLINE")
+			-- health.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
+			health.value = TukuiDB.SetFontString(health, font1, 12, "THINOUTLINE")
+			health.value:SetPoint("RIGHT", health, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
+		elseif unit == "target" then
+			health.value = TukuiDB.SetFontString(health, font1, 12, "THINOUTLINE")
+			health.value:SetPoint("LEFT", health, "LEFT", TukuiDB.Scale(4), TukuiDB.Scale(0))
+		end
 		health.PostUpdate = TukuiDB.PostUpdateHealth
 				
 		self.Health = health
@@ -99,7 +106,7 @@ local function Shared(self, unit)
 		end
 		
 		-- Raidicon repositioning
-		RaidIcon:SetPoint("TOP", health, "TOP", 0, 9)
+		RaidIcon:SetPoint("TOP", health, "TOP", 0, 12)
 		
 		if db.unicolor == true then
 			health.colorTapping = false
@@ -129,7 +136,11 @@ local function Shared(self, unit)
 		powerBG.multiplier = 0.3
 		
 		power.value = TukuiDB.SetFontString(panel, font1, 12,"THINOUTLINE")
-		power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), TukuiDB.Scale(0))
+		if unit == "player" then
+			power.value:SetPoint("LEFT", panel, "LEFT", TukuiDB.Scale(4), TukuiDB.Scale(0))
+		elseif unit == "target" then
+			power.value:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
+		end
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
 				
@@ -228,12 +239,12 @@ local function Shared(self, unit)
 			FlashInfo:SetToplevel(true)
 			FlashInfo:SetAllPoints(panel)
 			FlashInfo.ManaLevel = TukuiDB.SetFontString(FlashInfo, font1, 12, "THINOUTLINE")
-			FlashInfo.ManaLevel:SetPoint("CENTER", panel, "CENTER", 0, 0)
+			FlashInfo.ManaLevel:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
 			self.FlashInfo = FlashInfo
 			
 			-- pvp status text
 			local status = TukuiDB.SetFontString(panel, font1, 12, "THINOUTLINE")
-			status:SetPoint("CENTER", panel, "CENTER", 0, TukuiDB.Scale(0))
+			status:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
 			status:SetTextColor(0.69, 0.31, 0.31, 0)
 			self.Status = status
 			self:Tag(status, "[pvp]")
@@ -404,10 +415,8 @@ local function Shared(self, unit)
 				solarBar:SetStatusBarColor(.80, .82,  .60)
 				eclipseBar.SolarBar = solarBar
 
-				local eclipseBarText = eclipseBar:CreateFontString(nil, 'OVERLAY')
-				eclipseBarText:SetPoint('TOP', panel)
-				eclipseBarText:SetPoint('BOTTOM', panel)
-				eclipseBarText:SetFont(font1, 12)
+				local eclipseBarText = TukuiDB.SetFontString(eclipseBar, font1, 12, "THINOUTLINE")
+				eclipseBarText:SetPoint("RIGHT", panel, "RIGHT", TukuiDB.Scale(-4), TukuiDB.Scale(0))
 				eclipseBar.PostUpdatePower = TukuiDB.EclipseDirection
 				
 				-- hide "low mana" text on load if eclipseBar is show
@@ -1295,7 +1304,7 @@ local function Shared(self, unit)
 		healthBG:SetAllPoints(health)
 
 		health.value = TukuiDB.SetFontString(health, font1, 12, "THINOUTLINE")
-		health.value:SetPoint("BOTTOMLEFT", health, "TOPLEFT", TukuiDB.Scale(2), 3)
+		health.value:SetPoint("LEFT", health, "LEFT", TukuiDB.Scale(2), TukuiDB.Scale(0))
 		health.PostUpdate = TukuiDB.PostUpdateHealth
 				
 		self.Health = health
@@ -1341,7 +1350,7 @@ local function Shared(self, unit)
 		powerBG.multiplier = 0.3
 		
 		power.value = TukuiDB.SetFontString(health, font1, 12, "THINOUTLINE")
-		power.value:SetPoint("BOTTOMRIGHT", health, "TOPRIGHT", TukuiDB.Scale(-2), 3)
+		power.value:SetPoint("BOTTOMRIGHT", health, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(3))
 		power.PreUpdate = TukuiDB.PreUpdatePower
 		power.PostUpdate = TukuiDB.PostUpdatePower
 				
@@ -1360,8 +1369,8 @@ local function Shared(self, unit)
 		
 		-- names
 		local Name = health:CreateFontString(nil, "OVERLAY")
-		Name:SetPoint("BOTTOM", health, "TOP", 0, 4)
-		Name:SetJustifyH("CENTER")
+		Name:SetPoint("BOTTOMLEFT", health, "TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(3))
+		Name:SetJustifyH("LEFT")
 		Name:SetFont(font1, 12, "THINOUTLINE")
 		Name:SetShadowColor(0, 0, 0)
 		Name:SetShadowOffset(1.25, -1.25)
@@ -1424,6 +1433,7 @@ local function Shared(self, unit)
 				
 		-- trinket feature via trinket plugin
 		if (TukuiCF.arena.unitframes) and (unit and unit:find('arena%d')) then
+			RaidIcon:Hide()
 			-- Auratracker Frame
 			local AuraTracker = CreateFrame("Frame", nil, self)
 			AuraTracker:SetHeight(39)
@@ -1631,7 +1641,7 @@ if TukuiCF.arena.unitframes then
 	for i = 1, 5 do
 		arena[i] = oUF:Spawn("arena"..i, "oUF_Arena"..i)
 		if i == 1 then
-			arena[i]:SetPoint("BOTTOM", UIParent, "BOTTOM", 260, 590)
+			arena[i]:SetPoint("BOTTOM", UIParent, "BOTTOM", 330, 550)
 		else
 			arena[i]:SetPoint("BOTTOM", arena[i-1], "TOP", 0, 27)
 		end
@@ -1653,7 +1663,7 @@ if db.showboss then
 	for i = 1, MAX_BOSS_FRAMES do
 		boss[i] = oUF:Spawn("boss"..i, "oUF_Boss"..i)
 		if i == 1 then
-			boss[i]:SetPoint("BOTTOM", UIParent, "BOTTOM", 260, 590)
+			boss[i]:SetPoint("BOTTOM", UIParent, "BOTTOM", 330, 550)
 		else
 			boss[i]:SetPoint('BOTTOM', boss[i-1], 'TOP', 0, 27)             
 		end

@@ -1,3 +1,24 @@
+-- Move UI Slash cmd (/moveui)
+function TukuiMoveUI(msg)
+	if msg == "reset" then
+		TukuiMoveTooltip("reset")
+		TukuiMoveMinimap("reset")
+		TukuiMovePlayerAuras("reset")
+		TukuiMoveShapeshift("reset")
+		TukuiMoveWatchFrame("reset")
+	else
+		TukuiMoveTooltip()
+		TukuiMoveMinimap()
+		TukuiMovePlayerAuras()
+		TukuiMoveShapeshift()
+		TukuiMoveWatchFrame()
+		SlashCmdList['OUF_MOVABLEFRAMES']()
+	end
+end
+SLASH_TUKUIMOVEUI1 = "/moveui"
+SLASH_TUKUIMOVEUI2 = "/move"
+SlashCmdList["TUKUIMOVEUI"] = TukuiMoveUI
+
 -- enable or disable an addon via command
 SlashCmdList.DISABLE_ADDON = function(s) DisableAddOn(s) ReloadUI() end
 SLASH_DISABLE_ADDON1 = "/disable"

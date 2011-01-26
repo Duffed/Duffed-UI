@@ -1,6 +1,6 @@
 ## Interface: 40000
 ## Title: |cffce3a19Duffed|r
-## Notes: Stuff
+## Notes: Duffed's Trickkiste
 ## Author: Duffed
 ## OptionalDeps: Tukui
 Config.lua

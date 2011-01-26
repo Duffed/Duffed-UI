@@ -313,6 +313,17 @@ TukuiDB.SetFontString = function(parent, fontName, fontHeight, fontStyle)
 	return fs
 end
 
+TukuiDB.TotemBarOrientation = function(revert)
+	local position = TukuiShiftBar:GetPoint()
+	if position:match("TOP") then
+		revert = true
+	else
+		revert = false
+	end
+	
+	return revert
+end
+
 TukuiDB.Round = function(number, decimals)
 	if not decimals then decimals = 0 end
     return (("%%.%df"):format(decimals)):format(number)

@@ -42,22 +42,27 @@ end
 if TukuiCF["chat"].enable == true then
 	if TukuiCF["chat"].leftchatborder == true then
 		local chatbg = CreateFrame("Frame", "ChatBG1", UIParent)
-		TukuiDB.CreatePanel(chatbg, TukuiDB.Scale(430), TukuiDB.Scale(126), "BOTTOMLEFT", UIParent,5,5)
-		chatbg:ClearAllPoints()
-		chatbg:SetPoint("TOPLEFT",ChatFrame1,"TOPLEFT",-5,5)
+		TukuiDB.CreatePanel(chatbg, TukuiDB.Scale(430), TukuiDB.Scale(126), "TOPLEFT",ChatFrame1,"TOPLEFT",-5,29)
 		chatbg:SetPoint("BOTTOMRIGHT",ChatFrame1,"BOTTOMRIGHT",5,-5)
 		chatbg:SetBackdropColor(unpack(TukuiCF["media"].tooltipbackdrop))
-		chatbg:SetFrameStrata("BACKGROUND")
 		TukuiDB.CreateShadow(chatbg)
+		
+		local tabchat1 = CreateFrame("Frame", "ChatBG1Tabs", UIParent)
+		TukuiDB.CreatePanel(tabchat1, 1, TukuiDB.Scale(20), "TOPLEFT", chatbg, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-5))
+		tabchat1:SetPoint("TOPRIGHT", chatbg, "TOPRIGHT", TukuiDB.Scale(-28), TukuiDB.Scale(-5))
+		TukuiDB.CreateShadow(tabchat1)
 	end
 	if TukuiCF["chat"].rightchatborder == true then
 		local chatbg2 = CreateFrame("Frame", "ChatBG2", UIParent)
-		TukuiDB.CreatePanel(chatbg2,TukuiDB.Scale(430), TukuiDB.Scale(126), "BOTTOMRIGHT", UIParent,-5,5)
-		chatbg2:SetPoint("TOPLEFT",ChatFrame4,"TOPLEFT",-5,5)
+		TukuiDB.CreatePanel(chatbg2,TukuiDB.Scale(430), TukuiDB.Scale(126), "TOPLEFT",ChatFrame4,"TOPLEFT",-5,29)
 		chatbg2:SetPoint("BOTTOMRIGHT",ChatFrame4,"BOTTOMRIGHT",5,-5)
 		chatbg2:SetBackdropColor(unpack(TukuiCF["media"].tooltipbackdrop))
-		chatbg2:SetFrameStrata("BACKGROUND")
 		TukuiDB.CreateShadow(chatbg2)
+		
+		local tabchat2 = CreateFrame("Frame", "ChatBG2Tabs", UIParent)
+		TukuiDB.CreatePanel(tabchat2, 1, TukuiDB.Scale(20), "TOPLEFT", chatbg2, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-5))
+		tabchat2:SetPoint("TOPRIGHT", chatbg2, "TOPRIGHT", TukuiDB.Scale(-28), TukuiDB.Scale(-5))
+		TukuiDB.CreateShadow(tabchat2)
 	end
 end
 
@@ -100,11 +105,11 @@ if TukuiMinimap then
 		TukuiDB.CreatePanel(zonepanel, TukuiMinimap:GetWidth() + 4, 19, "TOP", TukuiMinimap, "BOTTOM", 0, TukuiDB.Scale(-3))
 		TukuiDB.CreateShadow(ZonePanel)
 		
-		TukuiDB.CreatePanel(minimapstatsleft, ((TukuiMinimap:GetWidth() + 4) / 2) - 2, 19, "TOPLEFT", ZonePanel, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-		TukuiDB.CreatePanel(minimapstatsright, ((TukuiMinimap:GetWidth() + 4) / 2) -2, 19, "TOPRIGHT", ZonePanel, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(minimapstatsleft, (TukuiMinimap:GetWidth() / 2) - 2, 19, "TOPLEFT", ZonePanel, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(minimapstatsright, (TukuiMinimap:GetWidth() / 2) -2, 19, "TOPRIGHT", ZonePanel, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 	else
-		TukuiDB.CreatePanel(minimapstatsleft, ((TukuiMinimap:GetWidth() + 4) / 2) - 1, 19, "TOPLEFT", TukuiMinimap, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-		TukuiDB.CreatePanel(minimapstatsright, ((TukuiMinimap:GetWidth() + 4) / 2) -1, 19, "TOPRIGHT", TukuiMinimap, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(minimapstatsleft, (TukuiMinimap:GetWidth() / 2) - 1, 19, "TOPLEFT", TukuiMinimap, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(minimapstatsright, (TukuiMinimap:GetWidth() / 2) -1, 19, "TOPRIGHT", TukuiMinimap, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 	end
 	TukuiDB.CreateShadow(minimapstatsright)
 	TukuiDB.CreateShadow(minimapstatsleft)

@@ -38,7 +38,7 @@ TukuiCF["unitframes"] = {
 	["targetauras"] = true,                	-- enable auras on target unit frame
 	["highThreshold"] = 80,                	-- hunter high threshold
 	["lowThreshold"] = 20,                 	-- global low threshold, for low mana warning.
-	["targetpowerpvponly"] = true,         	-- enable power text on pvp target only
+	["targetpowerpvponly"] = false,         	-- enable power text on pvp target only
 	["totdebuffs"] = true,                 	-- enable tot debuffs (high reso only)
 	["focusdebuffs"] = true,               	-- enable focus debuffs 
 	["showfocustarget"] = true,            	-- show focus target
@@ -111,6 +111,7 @@ TukuiCF["actionbar"] = {
 		["mouseover"] = false, 				-- Horizontal Petbar mouseover
 	},
 	["macrotext"] = false,					-- Show/Hide Macro Text on Buttons
+	["shapeshiftborder"] = false,			-- Border around the Shapeshift-Bar
 
 	["enable"] = true,                     	-- enable tukz action bars
 	["hotkey"] = false,                     -- enable hotkey display because it was a lot requested
@@ -188,8 +189,8 @@ TukuiCF["datatext"] = {
 TukuiCF["chat"] = {
 	-- Duffed ui specific
 	["background"] = false, 				-- turn on/off the black background (mouseover)
-	["leftchatborder"] = false, 				-- left chat border
-	["rightchatborder"] = false, 			-- right chat border
+	["leftchatborder"] = true, 				-- left chat border
+	["rightchatborder"] = true, 			-- right chat border
 	
 	["enable"] = true,                     	-- blah
 	["whispersound"] = true,               	-- play a sound when receiving whisper
@@ -263,7 +264,7 @@ if UnitLevel("player") == 1 then
 end
 
 if TukuiDB.myname == "Sacerdus" or TukuiDB.myname == "Snurq" then 
-	TukuiCF["actionbar"].shapeshiftmouseover = false
+	-- TukuiCF["actionbar"].shapeshiftmouseover = false
 	TukuiCF["datatext"].reputation = 0
 	TukuiCF["datatext"].experience = 0
 	TukuiCF["datatext"].mmenu = 5

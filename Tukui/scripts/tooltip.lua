@@ -3,7 +3,7 @@
 local db = TukuiCF["tooltip"]
 if not db.enable then return end
 
-local TukuiTooltip = CreateFrame("Frame", nil, UIParent)
+local TukuiTooltip = CreateFrame("Frame", "TukuiTooltip", UIParent)
 
 local _G = getfenv(0)
 
@@ -25,6 +25,24 @@ local classification = {
 
 local NeedBackdropBorderRefresh = false
 
+local anchor = CreateFrame("Frame", "TukuiTooltipAnchor", UIParent)
+anchor:SetSize(200, TukuiInfoRight:GetHeight())
+anchor:SetFrameStrata("TOOLTIP")
+anchor:SetFrameLevel(20)
+anchor:SetClampedToScreen(true)
+anchor:SetAlpha(0)
+if ChatBG2 then
+	anchor:SetPoint("TOPRIGHT", ChatBG2, "TOPRIGHT", 0, 0)
+else
+	anchor:SetPoint("BOTTOMRIGHT", ChatFrame4, "TOPRIGHT", 0, 10)
+end
+TukuiDB.SetTemplate(anchor)
+anchor:SetBackdropBorderColor(1, 0, 0, 1)
+anchor:SetMovable(true)
+anchor.text = TukuiDB.SetFontString(anchor, TukuiCF.media.uffont, 12)
+anchor.text:SetPoint("CENTER")
+anchor.text:SetText("Move Tooltip")
+
 hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 	if db.cursor == true then
 		if IsAddOnLoaded("Tukui_Heal_Layout") and parent ~= UIParent then
@@ -37,18 +55,13 @@ hooksecurefunc("GameTooltip_SetDefaultAnchor", function(self, parent)
 		if InCombatLockdown() and db.hidecombat == true then
 			self:Hide()
 		else
-			if TukuiCF["actionbar"].rightbars < 1 then
-				if not db.belowrightbars == true then
-					self:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 2,-75)
-				else
-					self:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4,160)
-				end
-			elseif TukuiCF["actionbar"].rightbars > 0 then
-				if not db.belowrightbars == true then
-					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0,4)
-				else
-					self:SetPoint("TOPRIGHT", TukuiActionBarBackgroundRight, "BOTTOMRIGHT", 0,-7)
-				end
+			-- avoids flicker when mouseover unitframes with open bags
+			if TukuiCF["bags"].enable == true and TukuiBags and TukuiBags:IsShown() then
+				self:ClearAllPoints()
+				self:SetPoint("BOTTOMRIGHT", TukuiBags, "TOPRIGHT", 0, TukuiDB.Scale(4))
+			else
+				self:ClearAllPoints()
+				self:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", 0, TukuiDB.Scale(5))
 			end
 		end
 	end
@@ -72,18 +85,13 @@ GameTooltip:HookScript("OnUpdate",function(self, ...)
 		if InCombatLockdown() and db.hidecombat == true then
 			self:Hide()
 		else
-			if TukuiCF["actionbar"].rightbars < 1 then
-				if not db.belowrightbars == true then
-					self:SetPoint("TOPRIGHT", Minimap, "BOTTOMRIGHT", 2,-75)
-				else
-					self:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4,160)
-				end
-			elseif TukuiCF["actionbar"].rightbars > 0 then
-				if not db.belowrightbars == true then
-					self:SetPoint("BOTTOMRIGHT", TukuiActionBarBackgroundRight, "TOPRIGHT", 0,4)
-				else
-					self:SetPoint("TOPRIGHT", TukuiActionBarBackgroundRight, "BOTTOMRIGHT", 0,-7)
-				end
+			-- moves tooltip when opening bags
+			if TukuiCF["bags"].enable == true and TukuiBags and TukuiBags:IsShown() then
+				self:ClearAllPoints()
+				self:SetPoint("BOTTOMRIGHT", TukuiBags, "TOPRIGHT", 0, TukuiDB.Scale(4))
+			else
+				self:ClearAllPoints()
+				self:SetPoint("BOTTOMRIGHT", anchor, "TOPRIGHT", 0, TukuiDB.Scale(5))
 			end
 		end
 	end
@@ -325,6 +333,7 @@ TukuiTooltip:SetScript("OnEvent", function(self)
 	for _, tt in pairs(Tooltips) do
 		tt:HookScript("OnShow", SetStyle)
 	end
+	
 	ItemRefTooltip:HookScript("OnTooltipSetItem", SetStyle)
 	
 	TukuiDB.SetTemplate(FriendsTooltip)
@@ -345,3 +354,40 @@ TukuiTooltip:SetScript("OnEvent", function(self)
 		hooksecurefunc(GameTooltip, "SetShapeshift", CombatHideActionButtonsTooltip)
 	end
 end)
+
+------------------------------------------------------------------------
+-- make auras movable on screen
+------------------------------------------------------------------------
+
+local move = false
+function TukuiMoveTooltip(msg)
+	-- don't allow moving while in combat
+	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
+	
+	local anchor = TukuiTooltipAnchor
+	anchor:SetUserPlaced(true)
+	
+	if msg == "reset" then
+		anchor:ClearAllPoints()
+		if ChatBG2 then
+			anchor:SetPoint("TOPRIGHT", ChatBG2, "TOPRIGHT", 0, 0)
+		else
+			anchor:SetPoint("BOTTOMRIGHT", ChatFrame4, "TOPRIGHT", 0, 10)
+		end
+	else
+		if move == false then
+			move = true
+			anchor:SetAlpha(1)
+			anchor:EnableMouse(true)
+			anchor:RegisterForDrag("LeftButton", "RightButton")
+			anchor:SetScript("OnDragStart", function(self) self:StartMoving() end)
+			anchor:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+		elseif move == true then
+			move = false
+			anchor:SetAlpha(0)
+			anchor:EnableMouse(false)
+		end
+	end
+end
+SLASH_MOVETOOLTIP1 = "/mtt"
+SlashCmdList["MOVETOOLTIP"] = TukuiMoveTooltip

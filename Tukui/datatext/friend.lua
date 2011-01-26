@@ -7,14 +7,14 @@ if TukuiCF["datatext"].friends and TukuiCF["datatext"].friends > 0 then
 	Stat:EnableMouse(true)
 	Stat:SetFrameStrata("BACKGROUND")
 	Stat:SetFrameLevel(3)
-	
+
 	local tthead = {r=0.4,g=0.78,b=1}
 	local ttsubh = {r=0.75,g=0.9,b=1}
 
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
 	Text:SetFont(TukuiCF.media.font, TukuiCF["datatext"].fontsize)
 	TukuiDB.PP(TukuiCF["datatext"].friends, Text)
-	
+
 	local menuFrame = CreateFrame("Frame", "TukuiFriendRightClickMenu", UIParent, "UIDropDownMenuTemplate")
 	local menuList = {
 		{ text = GAMEOPTIONS_MENU, isTitle = true,notCheckable=true},
@@ -107,10 +107,9 @@ if TukuiCF["datatext"].friends and TukuiCF["datatext"].friends > 0 then
 							for k,v in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do if class == v then class = k end end
 						end
 						classc, levelc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class], GetQuestDifficultyColor(level)
-						if classc == nil then classc = GetQuestDifficultyColor(level) end
 						if UnitInParty(name) or UnitInRaid(name) then grouped = "|cffaaaaaa*|r" else grouped = "" end
 						GameTooltip:AddDoubleLine(format("|cff%02x%02x%02x%d|r %s%s%s",levelc.r*255,levelc.g*255,levelc.b*255,level,name,grouped," "..status),zone,classc.r,classc.g,classc.b,zone_r,zone_g,zone_b)
-						
+
 						menuCountInvites = menuCountInvites + 1
 						menuCountWhispers = menuCountWhispers + 1
  
@@ -125,13 +124,13 @@ if TukuiCF["datatext"].friends and TukuiCF["datatext"].friends > 0 then
 						presenceID, givenName, surname, toonName, toonID, client, isOnline, _, isAFK, isDND = BNGetFriendInfo(i)
 						local realID = (BATTLENET_NAME_FORMAT):format(givenName, surname)
 						if not isOnline then break end
-						
+
 						menuCountWhispers = menuCountWhispers + 1
-						
+
 						local playerRealm = GetRealmName()
 						local playerFaction, localeFaction = UnitFactionGroup("player")
 						if playerFaction == "Horde" then playerFaction = 0 else playerFaction = 1 end
-						
+
 						if(isAFK) then
 							status = "[AFK]"
 						else 
@@ -143,10 +142,7 @@ if TukuiCF["datatext"].friends and TukuiCF["datatext"].friends > 0 then
 						end
 						if client == "WoW" then
 							local hasFocus, toonName, client, realmName, faction, race, class, guild, zoneName, level = BNGetToonInfo(toonID)
-							for k,v in pairs(LOCALIZED_CLASS_NAMES_MALE) do if class == v then class = k end end
-							if GetLocale() ~= "enUS" then -- feminine class localization (unsure if it's really needed)
-								for k,v in pairs(LOCALIZED_CLASS_NAMES_FEMALE) do if class == v then class = k end end
-							end
+							if level == "" then level = "0" end -- extremly rare bug, sometime a bugged battle.net friend list cannot level of friend, resulting a lua error.
 							classc, levelc = (CUSTOM_CLASS_COLORS or RAID_CLASS_COLORS)[class], GetQuestDifficultyColor(level)
 							if classc == nil then classc = GetQuestDifficultyColor(level) end
 							if UnitInParty(name) or UnitInRaid(name) then grouped = "|cffaaaaaa*|r" else grouped = "" end
@@ -156,7 +152,7 @@ if TukuiCF["datatext"].friends and TukuiCF["datatext"].friends > 0 then
 								if GetRealmName() == realmName then realm_r, realm_g, realm_b = 0.3, 1.0, 0.3 else realm_r, realm_g, realm_b = 0.65, 0.65, 0.65 end
 								GameTooltip:AddDoubleLine("  "..zoneName, realmName, zone_r, zone_g, zone_b, realm_r, realm_g, realm_b)
 							end
-							
+
 							if playerRealm == realmName then
 								if playerFaction == faction then
 										if UnitInParty(toonName) or UnitInRaid(toonName) then

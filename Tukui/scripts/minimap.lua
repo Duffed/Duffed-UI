@@ -1,19 +1,25 @@
 --------------------------------------------------------------------
--- MINIMAP BORDER
+-- Tukui Minimap Script
 --------------------------------------------------------------------
 
-local TukuiMinimap = CreateFrame("Frame", "TukuiMinimap", Minimap)
-TukuiMinimap:RegisterEvent("ADDON_LOADED")
-
-TukuiDB.CreatePanel(TukuiMinimap, 144, 144, "CENTER", Minimap, "CENTER", -0, 0)
-TukuiMinimap:ClearAllPoints()
-TukuiMinimap:SetPoint("TOPLEFT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
-TukuiMinimap:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+local TukuiMinimap = CreateFrame("Frame", "TukuiMinimap", UIParent)
+TukuiDB.CreatePanel(TukuiMinimap, 1, 1, "CENTER", UIParent, "CENTER", 0, 0)
+TukuiMinimap:RegisterEvent("PLAYER_ENTERING_WORLD")
+TukuiMinimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-9), TukuiDB.Scale(-9))
+TukuiMinimap:SetSize(TukuiDB.Scale(144), TukuiDB.Scale(144))
+TukuiMinimap:SetClampedToScreen(true)
+TukuiMinimap:SetMovable(true)
+TukuiDB.Kill(MinimapCluster)
+TukuiMinimap.text = TukuiDB.SetFontString(TukuiMinimap, TukuiCF.media.uffont, 12)
+TukuiMinimap.text:SetPoint("CENTER")
+TukuiMinimap.text:SetText("Move Minimap")
 TukuiDB.CreateShadow(TukuiMinimap)
 
+-- Parent Minimap into our Map frame.
+Minimap:SetParent(TukuiMinimap)
 Minimap:ClearAllPoints()
-Minimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-9), TukuiDB.Scale(-9))
-Minimap:SetSize(TukuiDB.Scale(144), TukuiDB.Scale(144))
+Minimap:SetPoint("TOPLEFT", TukuiDB.Scale(2), TukuiDB.Scale(-2))
+Minimap:SetPoint("BOTTOMRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(2))
 
 -- Hide Border
 MinimapBorder:Hide()
@@ -57,30 +63,31 @@ MiniMapInstanceDifficulty:ClearAllPoints()
 MiniMapInstanceDifficulty:SetParent(Minimap)
 MiniMapInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, 0)
 
--- Guild group ..thing! :)
-GuildInstanceDifficulty:ClearAllPoints()
-GuildInstanceDifficulty:SetParent(Minimap)
-GuildInstanceDifficulty:SetPoint("TOPLEFT", Minimap, "TOPLEFT", 0, 0)
-
--- GhostFrame under minimap
-GhostFrameContentsFrame:SetWidth(TukuiDB.Scale(148))
-GhostFrameContentsFrame:ClearAllPoints()
-GhostFrameContentsFrame:SetPoint("CENTER")
-GhostFrameContentsFrame.SetPoint = TukuiDB.dummy
-GhostFrame:SetFrameStrata("HIGH")
-GhostFrame:SetFrameLevel(10)
-GhostFrame:ClearAllPoints()
-GhostFrame:SetPoint("TOP", Minimap, "BOTTOM", 0, TukuiDB.Scale(-27))
-GhostFrameContentsFrameIcon:SetAlpha(0)
-GhostFrameContentsFrameText:ClearAllPoints()
-GhostFrameContentsFrameText:SetPoint("CENTER")
-
+-- Reposition lfg icon at bottom-left
 local function UpdateLFG()
 	MiniMapLFGFrame:ClearAllPoints()
 	MiniMapLFGFrame:SetPoint("BOTTOMRIGHT", Minimap, "BOTTOMRIGHT", TukuiDB.Scale(2), TukuiDB.Scale(1))
 	MiniMapLFGFrameBorder:Hide()
 end
 hooksecurefunc("MiniMapLFG_UpdateIsShown", UpdateLFG)
+
+-- reskin LFG dropdown
+TukuiDB.SetTemplate(LFDSearchStatus)
+
+-- for t13+, if we move map we need to point LFDSearchStatus according to our Minimap position.
+local function UpdateLFGTooltip()
+	local position = TukuiMinimap:GetPoint()
+	LFDSearchStatus:ClearAllPoints()
+	if position:match("BOTTOMRIGHT") then
+		LFDSearchStatus:SetPoint("BOTTOMRIGHT", MiniMapLFGFrame, "BOTTOMLEFT", 0, 0)
+	elseif position:match("BOTTOM") then
+		LFDSearchStatus:SetPoint("BOTTOMLEFT", MiniMapLFGFrame, "BOTTOMRIGHT", 0, 0)
+	elseif position:match("LEFT") then		
+		LFDSearchStatus:SetPoint("TOPLEFT", MiniMapLFGFrame, "TOPRIGHT", 0, 0)
+	else
+		LFDSearchStatus:SetPoint("TOPRIGHT", MiniMapLFGFrame, "TOPLEFT", 0, 0)	
+	end
+end
 
 -- Enable mouse scrolling
 Minimap:EnableMouseWheel(true)
@@ -92,15 +99,26 @@ Minimap:SetScript("OnMouseWheel", function(self, d)
 	end
 end)
 
+-- Set Square Map Mask
+Minimap:SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
+
+-- For others mods with a minimap button, set minimap buttons position in square mode.
+function GetMinimapShape() return 'SQUARE' end
+
+-- do some stuff on addon loaded or player login event
+TukuiMinimap:RegisterEvent("PLAYER_LOGIN")
+TukuiMinimap:RegisterEvent("ADDON_LOADED")
 TukuiMinimap:SetScript("OnEvent", function(self, event, addon)
-	if addon == "Blizzard_TimeManager" then
+	if event == "PLAYER_LOGIN" then
+		UpdateLFGTooltip()
+	elseif addon == "Blizzard_TimeManager" then
 		-- Hide Game Time
 		TukuiDB.Kill(TimeManagerClockButton)
 	end
 end)
 
 ----------------------------------------------------------------------------------------
--- Right click menu
+-- Right click menu, used to show micro menu
 ----------------------------------------------------------------------------------------
 
 local menuFrame = CreateFrame("Frame", "MinimapRightClickMenu", UIParent, "UIDropDownMenuTemplate")
@@ -144,20 +162,10 @@ Minimap:SetScript("OnMouseUp", function(self, btn)
 	end
 end)
 
-
--- Set Square Map Mask
-Minimap:SetMaskTexture('Interface\\ChatFrame\\ChatFrameBackground')
-
--- For others mods with a minimap button, set minimap buttons position in square mode.
-function GetMinimapShape() return 'SQUARE' end
-
--- reskin LFG dropdown
-TukuiDB.SetTemplate(LFDSearchStatus)
-
 ----------------------------------------------------------------------------------------
 -- Animation Coords and Current Zone. Awesome feature by AlleyKat.
 ----------------------------------------------------------------------------------------
-if not TukuiCF["datatext"].zonepanel == true then
+
 -- Set Anim func
 local set_anim = function (self,k,x,y)
 	self.anim = self:CreateAnimationGroup("Move_In")
@@ -186,7 +194,7 @@ m_zone:SetFrameLevel(5)
 m_zone:SetFrameStrata("LOW")
 m_zone:SetPoint("TOPRIGHT",Minimap,TukuiDB.Scale(-2),TukuiDB.Scale(-2))
 
-set_anim(m_zone,true,0,TukuiDB.Scale(60))
+set_anim(m_zone,true,0,TukuiDB.Scale(30))
 m_zone:Hide()
 
 local m_zone_text = m_zone:CreateFontString(nil,"Overlay")
@@ -200,7 +208,7 @@ local m_coord = CreateFrame("Frame",nil,UIParent)
 TukuiDB.CreatePanel(m_coord, 40, 20, "BOTTOMLEFT", Minimap, "BOTTOMLEFT", TukuiDB.Scale(2),TukuiDB.Scale(2))
 m_coord:SetFrameStrata("LOW")
 
-set_anim(m_coord,true,TukuiDB.Scale(320),0)
+set_anim(m_coord,true,TukuiDB.Scale(90),0)
 m_coord:Hide()	
 
 local m_coord_text = m_coord:CreateFontString(nil,"Overlay")
@@ -292,4 +300,41 @@ a:SetScript("OnUpdate",function(self,t)
 	self:Hide()
 	zone_Update()
 end)
+
+------------------------------------------------------------------------
+-- make Minimap movable on screen
+------------------------------------------------------------------------
+
+local move = false
+function TukuiMoveMinimap(msg)
+	-- don't allow moving while in combat
+	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
+	
+	local anchor = TukuiMinimap
+	anchor:SetUserPlaced(true)
+	
+	if msg == "reset" then
+		anchor:ClearAllPoints()
+		anchor:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", TukuiDB.Scale(-9), TukuiDB.Scale(-9))
+	else
+		if move == false then
+			move = true
+			Minimap:Hide()
+			anchor:SetBackdropBorderColor(1,0,0,1)
+			anchor:SetBackdropColor(unpack(TukuiCF.media.backdropcolor))
+			anchor:EnableMouse(true)
+			anchor:RegisterForDrag("LeftButton", "RightButton")
+			anchor:SetScript("OnDragStart", function(self) self:StartMoving() end)
+			anchor:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+		elseif move == true then
+			move = false
+			Minimap:Show()
+			anchor:SetBackdropBorderColor(unpack(TukuiCF.media.bordercolor))
+			anchor:SetBackdropColor(unpack(TukuiCF.media.backdropcolor))
+			anchor:EnableMouse(false)
+			UpdateLFGTooltip()
+		end
+	end
 end
+SLASH_MOVEMINIMAP1 = "/mmm"
+SlashCmdList["MOVEMINIMAP"] = TukuiMoveMinimap

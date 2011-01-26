@@ -14,27 +14,10 @@ TukuiShift:SetHeight(58)
 local ssmover = CreateFrame("Frame", "ssmoverholder", UIParent)
 ssmover:SetAllPoints(TukuiShift)
 TukuiDB.SetTemplate(ssmover)
+ssmover:SetBackdropBorderColor(1,0,0)
 ssmover:SetAlpha(0)
 TukuiShift:SetMovable(true)
-TukuiShift:SetUserPlaced(true)
-local ssmove = false
-local function showmovebutton()
-	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
-	if ssmove == false then
-		ssmove = true
-		ssmover:SetAlpha(1)
-		TukuiShift:EnableMouse(true)
-		TukuiShift:RegisterForDrag("LeftButton", "RightButton")
-		TukuiShift:SetScript("OnDragStart", function(self) self:StartMoving() end)
-		TukuiShift:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
-	elseif ssmove == true then
-		ssmove = false
-		ssmover:SetAlpha(0)
-		TukuiShift:EnableMouse(false)
-	end
-end
-SLASH_SHOWMOVEBUTTON1 = "/mss"
-SlashCmdList["SHOWMOVEBUTTON"] = showmovebutton
+TukuiShift:SetClampedToScreen(true) 
 
 -- hide it if not needed and stop executing code
 if TukuiCF.actionbar.hideshapeshift then TukuiShift:Hide() return end
@@ -73,12 +56,12 @@ bar:SetScript("OnEvent", function(self, event, ...)
 				button:SetPoint("BOTTOMLEFT", TukuiShift, 0, TukuiDB.Scale(29))
 			else
 				local previous = _G["ShapeshiftButton"..i-1]
-				button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.Scale(4), 0)
+				button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.buttonspacing, 0)
 			end
 			local _, name = GetShapeshiftFormInfo(i)
 			if name then
 				button:Show()
-			end
+			end		
 		end
 		RegisterStateDriver(self, "visibility", States[TukuiDB.myclass] or "hide")
 	elseif event == "UPDATE_SHAPESHIFT_FORMS" then
@@ -96,28 +79,78 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			end
 		end
 		TukuiDB.TukuiShiftBarUpdate()
+		ShapeShiftBorder:SetSize(((ShapeshiftButton1:GetWidth()+TukuiDB.buttonspacing)*GetNumShapeshiftForms())+TukuiDB.Scale(4), ShapeshiftButton1:GetHeight()+TukuiDB.Scale(8))
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		TukuiDB.StyleShift()
+		ShapeShiftBorder:SetSize(((ShapeshiftButton1:GetWidth()+TukuiDB.buttonspacing)*GetNumShapeshiftForms())+TukuiDB.Scale(4), ShapeshiftButton1:GetHeight()+TukuiDB.Scale(8))
+
+		-- Mouseover
+		if TukuiCF["actionbar"].shapeshiftmouseover == true then
+			local function mouseover(alpha)
+				for i = 1, NUM_SHAPESHIFT_SLOTS do
+					local sb = _G["ShapeshiftButton"..i]
+					sb:SetAlpha(alpha)
+				end
+			end
+			
+			for i = 1, NUM_SHAPESHIFT_SLOTS do		
+				_G["ShapeshiftButton"..i]:SetAlpha(0)
+				_G["ShapeshiftButton"..i]:HookScript("OnEnter", function(self) mouseover(1) end)
+				_G["ShapeshiftButton"..i]:HookScript("OnLeave", function(self) mouseover(0) end)
+			end
+			ShapeShiftBorder:EnableMouse(true)
+			ShapeShiftBorder:HookScript("OnEnter", function(self) mouseover(1) end)
+			ShapeShiftBorder:HookScript("OnLeave", function(self) mouseover(0) end)
+		end
 	else
 		TukuiDB.TukuiShiftBarUpdate()
 	end
 end)
 
--- Mouseover
-local function mouseoverstance(alpha)
-	for i=1, 10 do
-		local pb = _G["ShapeshiftButton"..i]
-		pb:SetAlpha(alpha)
-	end
+-- Border
+local ssborder = CreateFrame("Frame", "ShapeShiftBorder", ShapeshiftButton1)
+if TukuiCF["actionbar"].shapeshiftborder ~= true then -- this config entry isnt added yet ..you can if u want and ..read this :>
+	ssborder:SetAlpha(0)
+else
+	TukuiDB.SetTemplate(ssborder)
+	TukuiDB.CreateShadow(ssborder)
 end
+ssborder:SetFrameLevel(1)
+ssborder:SetFrameStrata("BACKGROUND")
+ssborder:SetPoint("LEFT", TukuiDB.Scale(-4), 0)
+-----------------------------------------------------------
+-- make shapeshift bar movable
+-----------------------------------------------------------
 
-if TukuiCF["actionbar"].shapeshiftmouseover == true then
-	TukuiShift:HookScript("OnEnter", function(self) mouseoverstance(1) end)
-	TukuiShift:HookScript("OnLeave", function(self) mouseoverstance(0) end)
-	for i=1, 10 do
-		local pb = _G["ShapeshiftButton"..i]
-		pb:SetAlpha(0)
-		pb:HookScript("OnEnter", function(self) mouseoverstance(1) end)
-		pb:HookScript("OnLeave", function(self) mouseoverstance(0) end)
+local move = false
+function TukuiMoveShapeshift(msg)
+	-- don't allow moving while in combat
+	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
+	
+	TukuiShift:SetUserPlaced(true)
+	
+	if msg == "reset" then
+		TukuiShift:ClearAllPoints()
+		TukuiShift:SetPoint("TOPLEFT", UIParent, 2, -2)
+	else
+		if move == false then
+			move = true
+			ssmover:SetAlpha(1)
+			TukuiShift:EnableMouse(true)
+			TukuiShift:RegisterForDrag("LeftButton", "RightButton")
+			TukuiShift:SetScript("OnDragStart", function(self) self:StartMoving() end)
+			TukuiShift:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+		elseif move == true then
+			move = false
+			ssmover:SetAlpha(0)
+			TukuiShift:EnableMouse(false)
+			
+			-- used for shaman totembar update
+			if TukuiDB.myclass == "SHAMAN" then
+				TukuiDB.TotemOrientationDown = TukuiDB.TotemBarOrientation()
+			end
+		end
 	end
 end
+SLASH_SHOWMOVEBUTTON1 = "/mss"
+SlashCmdList["SHOWMOVEBUTTON"] = TukuiMoveShapeshift

@@ -58,12 +58,18 @@ local function SetChatStyle(frame)
 	tab:SetAlpha(1)
 	tab.SetAlpha = UIFrameFadeRemoveFrame
 	
-	-- hide text when setting chat
-	_G[chat.."TabText"]:Hide()
+	if TukuiCF["chat"].leftchatborder ~= true then
+		-- hide text when setting chat
+		_G[chat.."TabText"]:Hide()
 	
-	-- now show text if mouse is found over tab.
-	tab:HookScript("OnEnter", function() _G[chat.."TabText"]:Show() end)
-	tab:HookScript("OnLeave", function() _G[chat.."TabText"]:Hide() end)
+		-- now show text if mouse is found over tab.
+		tab:HookScript("OnEnter", function() _G[chat.."TabText"]:Show() end)
+		tab:HookScript("OnLeave", function() _G[chat.."TabText"]:Hide() end)
+		
+		_G[chat]:SetFading(true)
+	else
+		_G[chat]:SetFading(false)
+	end
 	
 	_G[chat.."TabText"]:SetTextColor(1,1,1)
 	_G[chat.."TabText"].SetTextColor = TukuiDB.dummy
@@ -74,11 +80,6 @@ local function SetChatStyle(frame)
 	
 	-- Removes crap from the bottom of the chatbox so it can go to the bottom of the screen.
 	_G[chat]:SetClampedToScreen(false)
-			
-	-- Stop the chat chat from fading out
-	if TukuiCF["chat"].leftchatborder == true then
-		_G[chat]:SetFading(false)
-	end
 	
 	-- move the chat edit box
 	_G[chat.."EditBox"]:ClearAllPoints();
@@ -218,7 +219,7 @@ local function SetupChatPosAndFont(self)
 	BNToastFrame:HookScript("OnShow", function(self)
 		self:ClearAllPoints()
 		if ChatBG1 then
-			self:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 0, TukuiDB.Scale(10))
+			self:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 0, TukuiDB.Scale(1))
 		else
 			self:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, TukuiDB.Scale(10))
 		end
@@ -352,22 +353,31 @@ function TukuiDB.ChatCopyButtons()
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G[format("ChatFrame%d",  i)]
 		local button = CreateFrame("Button", format("ButtonCF%d", i), cf)
-		button:SetPoint("TOPRIGHT", 0, 0)
-		button:SetHeight(TukuiDB.Scale(20))
-		button:SetWidth(TukuiDB.Scale(20))
-		button:SetAlpha(0.1)
+		TukuiDB.CreatePanel(button, TukuiDB.Scale(20), TukuiDB.Scale(20), "TOPRIGHT", 0, TukuiDB.Scale(24))
 		TukuiDB.SetTemplate(button)
 		
 		local buttontext = button:CreateFontString(nil,"OVERLAY",nil)
-		buttontext:SetFont(TukuiCF.media.font,12,"OUTLINE")
-		buttontext:SetText(panelcolor.."C")
+		buttontext:SetFont(TukuiCF.media.font,12)
+		buttontext:SetText("C")
 		buttontext:SetPoint("CENTER", TukuiDB.Scale(1), 0)
 		buttontext:SetJustifyH("CENTER")
 		buttontext:SetJustifyV("CENTER")
 				
 		button:SetScript("OnMouseUp", function(self) Copy(cf) end)
-		button:SetScript("OnEnter", function() button:SetAlpha(1) end)
-		button:SetScript("OnLeave", function() button:SetAlpha(0.1) end)
+		button:SetScript("OnEnter", function() button:SetAlpha(1) buttontext:SetText(panelcolor.."C") end)
+		
+		if TukuiCF["chat"].leftchatborder ~= true then
+			button:SetAlpha(0.1)
+			button:SetScript("OnLeave", function() button:SetAlpha(0.1) buttontext:SetText("C") end)
+			button:SetPoint("TOPRIGHT", 0, TukuiDB.Scale(0))
+		else
+			if i == 2 then
+				button:SetPoint("TOPRIGHT", 0, TukuiDB.Scale(48))
+			end
+			TukuiDB.CreateShadow(button)
+			button:SetAlpha(1)
+			button:SetScript("OnLeave", function() buttontext:SetText("C") end)
+		end
 	end
 end
 TukuiDB.ChatCopyButtons()

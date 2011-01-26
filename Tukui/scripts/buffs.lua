@@ -1,30 +1,63 @@
+-- Consolidate buffs moved to map
 ConsolidatedBuffs:ClearAllPoints()
 ConsolidatedBuffs:SetPoint("LEFT", Minimap, "LEFT", TukuiDB.Scale(0), TukuiDB.Scale(0))
 ConsolidatedBuffs:SetSize(16, 16)
 ConsolidatedBuffsIcon:SetTexture(nil)
 ConsolidatedBuffs.SetPoint = TukuiDB.dummy
 
--- to adjust it easier
-local xbuff = -160		-- 175
-local ybuff = -7		-- 22
-
 if TukuiCF.unitframes.playerauras == true then return end
 
-local mainhand, _, _, offhand = GetWeaponEnchantInfo()
+local header = CreateFrame("Frame", "TukuiAurasHeader", UIParent)
+header:SetFrameLevel(0)
+header:SetFrameStrata("BACKGROUND")
+header:SetSize(540, 170)
+header:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-157), TukuiDB.Scale(-9))
+header:SetClampedToScreen(true)
+header:SetMovable(true)
+TukuiDB.SetTemplate(header)
+header:SetBackdropBorderColor(0,0,0,0)
+header:SetBackdropColor(0,0,0,0)
+header.text = TukuiDB.SetFontString(header, TukuiCF.media.uffont, 12)
+header.text:SetPoint("CENTER")
+header.text:SetText("Move Player Auras")
+header.text:SetAlpha(0)
+
 local rowbuffs = 16
+local revert = false
 
-TemporaryEnchantFrame:ClearAllPoints()
-TemporaryEnchantFrame:SetPoint("TOPRIGHT", Minimap, "TOPRIGHT", 0, TukuiDB.Scale(-16))
-TemporaryEnchantFrame.SetPoint = TukuiDB.dummy
+local function GetOrientation()
+	local position = header:GetPoint()
+	if position:match("LEFT") then
+		revert = true
+		TempEnchant1:ClearAllPoints()
+		TempEnchant2:ClearAllPoints()
+		TempEnchant3:ClearAllPoints()
+		TempEnchant1:SetPoint("TOPLEFT", header, 0, 0)
+		TempEnchant2:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(4), 0)
+		TempEnchant3:SetPoint("LEFT", TempEnchant2, "RIGHT", TukuiDB.Scale(4), 0)
+		BuffFrame_Update()
+	else
+		revert = false
+		TempEnchant1:ClearAllPoints()
+		TempEnchant2:ClearAllPoints()
+		TempEnchant3:ClearAllPoints()
+		TempEnchant1:SetPoint("TOPRIGHT", header, 0, 0)
+		TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-4), 0)
+		TempEnchant3:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-4), 0)
+		BuffFrame_Update()
+	end
+end
 
-TempEnchant1:ClearAllPoints()
-TempEnchant2:ClearAllPoints()
-TempEnchant1:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(xbuff), TukuiDB.Scale(ybuff))
-TempEnchant2:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-4), 0)
+header:RegisterEvent("PLAYER_LOGIN")
+header:SetScript("OnEvent", function(self)
+	GetOrientation()
+end)
 
+-- I want buff show over this frame if too many are show
 WorldStateAlwaysUpFrame:SetFrameStrata("BACKGROUND")
 WorldStateAlwaysUpFrame:SetFrameLevel(0)
 
+-- skin our weapons buffs
 for i = 1, 3 do
 	local f = CreateFrame("Frame", nil, _G["TempEnchant"..i])
 	TukuiDB.CreatePanel(f, 30, 30, "CENTER", _G["TempEnchant"..i], "CENTER", 0, 0)	
@@ -40,6 +73,7 @@ for i = 1, 3 do
 	TukuiDB.CreateShadow(_G["TempEnchant"..i])
 end
 
+-- style our "normal" buffs/debuffs
 local function StyleBuffs(buttonName, index, debuff)
 	local buff		= _G[buttonName..index]
 	local icon		= _G[buttonName..index.."Icon"]
@@ -71,28 +105,33 @@ local function StyleBuffs(buttonName, index, debuff)
 	if border then border:Hide() end
 end
 
+-- find how much weapon buffs we have
+local function GetNumberWeaponBuff()
+	local mainhand, _, _, offhand, _, _, hand3 = GetWeaponEnchantInfo()
+	local number
+	
+	if (mainhand and offhand and hand3) and not UnitHasVehicleUI("player") then 
+		number = 3
+	elseif ((mainhand and offhand) or (mainhand and hand3) or (offhand and hand3)) and not UnitHasVehicleUI("player") then 
+		number = 2
+	elseif ((mainhand and not offhand and not hand3) or (offhand and not mainhand and not hand3) or (hand3 and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then 
+		number = 1
+	else
+		number = 0
+	end
+
+	return number
+end
+
+-- align
 local function UpdateBuffAnchors()
-	buttonName = "BuffButton"
-	local buff, previousBuff, aboveBuff;
+	local buttonName = "BuffButton"
+	local buff, previousBuff, aboveBuff
 	local numBuffs = 0;
-	local index;
-	for index=1, BUFF_ACTUAL_DISPLAY do
-		local buff = _G[buttonName..index]
-		StyleBuffs(buttonName, index, false)
-		
-		-- Leaving this here just in case someone want to use it
-		-- This enable buff border coloring according to Type
-		--[[
-		local dtype = select(5, UnitBuff("player",index))		
-		local color
-		if (dtype ~= nil) then
-			color = DebuffTypeColor[dtype]
-		else
-			color = DebuffTypeColor["none"]
-		end
-		_G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
-		--]]
-		
+	for i=1, BUFF_ACTUAL_DISPLAY do
+		local buff = _G[buttonName..i]
+		StyleBuffs(buttonName, i, false)
+				
 		if ( buff.consolidated ) then
 			if ( buff.parent == BuffFrame ) then
 				buff:SetParent(ConsolidatedBuffsContainer)
@@ -100,37 +139,66 @@ local function UpdateBuffAnchors()
 			end
 		else
 			numBuffs = numBuffs + 1
-			index = numBuffs
 			buff:ClearAllPoints()
-			if ( (index > 1) and (mod(index, rowbuffs) == 1) ) then
-				if ( index == rowbuffs+1 ) then
-					buff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(xbuff), TukuiDB.Scale(-92))
+			if ( (numBuffs > 1) and (mod(numBuffs, rowbuffs) == 1) ) then
+				if revert then
+					if ( numBuffs == rowbuffs+1 ) then
+						buff:SetPoint("TOPLEFT", header, 0, TukuiDB.Scale(-69))
+					else
+						buff:SetPoint("TOPLEFT", header)
+					end
 				else
-					buff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(xbuff), TukuiDB.Scale(ybuff))
+					if ( numBuffs == rowbuffs+1 ) then
+						buff:SetPoint("TOPRIGHT", header, 0, TukuiDB.Scale(-69))
+					else
+						buff:SetPoint("TOPRIGHT", header)
+					end				
 				end
-				aboveBuff = buff;
-			elseif ( index == 1 ) then
-				local mainhand, _, _, offhand, _, _, hand3 = GetWeaponEnchantInfo()
-				if (mainhand and offhand and hand3) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-4), 0)
-				elseif ((mainhand and offhand) or (mainhand and hand3) or (offhand and hand3)) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-4), 0)
-				elseif ((mainhand and not offhand and not hand3) or (offhand and not mainhand and not hand3) or (hand3 and not mainhand and not offhand)) and not UnitHasVehicleUI("player") then
-					buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-4), 0)
+				aboveBuff = buff
+			elseif ( numBuffs == 1 ) then
+				local weaponbuffs = GetNumberWeaponBuff()
+		
+				if revert then
+					if weaponbuffs == 3 then
+						buff:SetPoint("LEFT", TempEnchant3, "RIGHT", TukuiDB.Scale(4), 0)
+					elseif weaponbuffs == 2 then
+						buff:SetPoint("LEFT", TempEnchant2, "RIGHT", TukuiDB.Scale(4), 0)
+					elseif weaponbuffs == 1 then
+						buff:SetPoint("LEFT", TempEnchant1, "RIGHT", TukuiDB.Scale(4), 0)
+					else
+						buff:SetPoint("TOPLEFT", header)
+					end				
 				else
-					buff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(xbuff), TukuiDB.Scale(ybuff))
+					if weaponbuffs == 3 then
+						buff:SetPoint("RIGHT", TempEnchant3, "LEFT", TukuiDB.Scale(-4), 0)
+					elseif weaponbuffs == 2 then
+						buff:SetPoint("RIGHT", TempEnchant2, "LEFT", TukuiDB.Scale(-4), 0)
+					elseif weaponbuffs == 1 then
+						buff:SetPoint("RIGHT", TempEnchant1, "LEFT", TukuiDB.Scale(-4), 0)
+					else
+						buff:SetPoint("TOPRIGHT", header)
+					end
 				end
 			else
-				buff:SetPoint("RIGHT", previousBuff, "LEFT", TukuiDB.Scale(-4), 0)
+				if revert then
+					buff:SetPoint("LEFT", previousBuff, "RIGHT", TukuiDB.Scale(4), 0)
+				else
+					buff:SetPoint("RIGHT", previousBuff, "LEFT", TukuiDB.Scale(-4), 0)
+				end
 			end
 			previousBuff = buff
 		end		
 	end
 end
+hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", UpdateBuffAnchors)
 
 local function UpdateDebuffAnchors(buttonName, index)
-	local debuff = _G[buttonName..index];
+	local debuff = _G[buttonName..index]
+	
+	-- style it!
 	StyleBuffs(buttonName, index, true)
+	
+	-- color it by debuffType!
 	local dtype = select(5, UnitDebuff("player",index))      
 	local color
 	if (dtype ~= nil) then
@@ -139,24 +207,29 @@ local function UpdateDebuffAnchors(buttonName, index)
 		color = DebuffTypeColor["none"]
 	end
 	_G[buttonName..index.."Panel"]:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
+	
+	-- now move it!
 	debuff:ClearAllPoints()
-	if index == 1 then
-		debuff:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(xbuff), TukuiDB.Scale(ybuff+(-140)))
+	if revert then
+		if index == 1 then
+			debuff:SetPoint("TOPLEFT", header, 0, TukuiDB.Scale(-136))
+		else
+			debuff:SetPoint("LEFT", _G[buttonName..(index-1)], "RIGHT", TukuiDB.Scale(4), 0)
+		end	
 	else
-		debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-4), 0)
+		if index == 1 then
+			debuff:SetPoint("TOPRIGHT", header, 0, TukuiDB.Scale(-136))
+		else
+			debuff:SetPoint("RIGHT", _G[buttonName..(index-1)], "LEFT", TukuiDB.Scale(-4), 0)
+		end
 	end
+	
 end
-
-local f = CreateFrame("Frame")
-f:SetScript("OnEvent", function() mainhand, _, _, offhand = GetWeaponEnchantInfo() end)
-f:RegisterEvent("UNIT_INVENTORY_CHANGED")
-f:RegisterEvent("PLAYER_EVENTERING_WORLD")
-
-hooksecurefunc("BuffFrame_UpdateAllBuffAnchors", UpdateBuffAnchors)
 hooksecurefunc("DebuffButton_UpdateAnchors", UpdateDebuffAnchors)
 
+-- format
 SecondsToTimeAbbrev = function(time)
-local hr, m, s, text
+	local hr, m, s, text
 	if time <= 0 then text = ""
 	elseif(time < 3600 and time > 60) then
 		hr = floor(time / 3600)
@@ -176,3 +249,44 @@ local hr, m, s, text
 	text = format("|cffffffff".."%s", text)
 	return text
 end
+
+------------------------------------------------------------------------
+-- make auras movable on screen
+------------------------------------------------------------------------
+
+local move = false
+function TukuiMovePlayerAuras(msg)
+	-- don't allow moving while in combat
+	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
+	
+	local anchor = header
+	local text = header.text
+	anchor:SetUserPlaced(true)
+	
+	if msg == "reset" then
+		anchor:ClearAllPoints()
+		anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-157), TukuiDB.Scale(-9))
+		GetOrientation()
+	else		
+		if move == false then
+			move = true
+			anchor:SetBackdropBorderColor(1,0,0,1)
+			anchor:SetBackdropColor(unpack(TukuiCF.media.backdropcolor))
+			text:SetAlpha(1)
+			anchor:EnableMouse(true)
+			anchor:RegisterForDrag("LeftButton", "RightButton")
+			anchor:SetScript("OnDragStart", function(self) self:StartMoving() end)
+			anchor:SetScript("OnDragStop", function(self) self:StopMovingOrSizing() end)
+		elseif move == true then
+			move = false
+			anchor:SetBackdropBorderColor(0,0,0,0)
+			anchor:SetBackdropColor(0,0,0,0)
+			text:SetAlpha(0)
+			anchor:EnableMouse(false)
+			GetOrientation()
+			BuffFrame_Update()
+		end
+	end
+end
+SLASH_MOVEPLAYERAURA1 = "/maura"
+SlashCmdList["MOVEPLAYERAURA"] = TukuiMovePlayerAuras

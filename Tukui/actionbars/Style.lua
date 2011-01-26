@@ -5,7 +5,7 @@ local media = TukuiCF["media"]
 local securehandler = CreateFrame("Frame", nil, nil, "SecureHandlerBaseTemplate")
 local replace = string.gsub
 
-function style(self)
+local function style(self)
 	local name = self:GetName()
 	
 	--> fixing a taint issue while changing totem flyout button in combat.
@@ -72,11 +72,11 @@ function style(self)
 	end
 	
 	-- color border if equipped
-    if ( IsEquippedAction(action) ) then
-        _G[name.."Panel"]:SetBackdropBorderColor(0.55, 0.2, 0.2);
-    else
-        _G[name.."Panel"]:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor));
-    end
+    -- if IsEquippedAction(action) then
+        -- _G[name.."Panel"]:SetBackdropBorderColor(0.55, 0.2, 0.2);
+    -- else
+        -- _G[name.."Panel"]:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor));
+    -- end
 end
 
 local function stylesmallbutton(normal, button, icon, name, pet)
@@ -114,9 +114,11 @@ local function stylesmallbutton(normal, button, icon, name, pet)
 		end
 	end
 	
-	normal:ClearAllPoints()
-	normal:SetPoint("TOPLEFT")
-	normal:SetPoint("BOTTOMRIGHT")
+	if normal then
+		normal:ClearAllPoints()
+		normal:SetPoint("TOPLEFT")
+		normal:SetPoint("BOTTOMRIGHT")
+	end
 end
 
 function TukuiDB.StyleShift()
@@ -126,6 +128,9 @@ function TukuiDB.StyleShift()
 		local icon  = _G[name.."Icon"]
 		local normal  = _G[name.."NormalTexture"]
 		stylesmallbutton(normal, button, icon, name)
+		if TukuiCF["actionbar"].shapeshiftborder == true then
+			button:SetSize(TukuiDB.buttonsize, TukuiDB.buttonsize)
+		end
 	end
 end
 
@@ -138,8 +143,6 @@ function TukuiDB.StylePet()
 		stylesmallbutton(normal, button, icon, name, true)
 	end
 end
-
-
 
 local function updatehotkey(self, actionButtonType)
 	local hotkey = _G[self:GetName() .. 'HotKey']
@@ -166,7 +169,7 @@ local function updatehotkey(self, actionButtonType)
 end
 
 -- rescale cooldown spiral to fix texture.
-local buttonNames = { "ActionButton",  "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarLeftButton", "MultiBarRightButton", "ShapeshiftButton", "PetActionButton"}
+local buttonNames = { "ActionButton",  "MultiBarBottomLeftButton", "MultiBarBottomRightButton", "MultiBarLeftButton", "MultiBarRightButton", "ShapeshiftButton", "PetActionButton", "MultiCastActionButton"}
 for _, name in ipairs( buttonNames ) do
 	for index = 1, 12 do
 		local buttonName = name .. tostring(index)
@@ -264,6 +267,7 @@ local function styleflyout(self)
 	end
 end
 
+-- rework the mouseover, pushed, checked texture to match Tukui theme.
 do
 	for i = 1, 12 do
 		TukuiDB.StyleButton(_G["ActionButton"..i], true)
@@ -297,3 +301,199 @@ end
 hooksecurefunc("ActionButton_Update", style)
 hooksecurefunc("ActionButton_UpdateHotkeys", updatehotkey)
 hooksecurefunc("ActionButton_UpdateFlyout", styleflyout)
+
+---------------------------------------------------------------
+-- Totem Style, they need a lot more work than "normal" buttons
+-- Because of this, we skin it via separate styling codes
+-- Special thank's to DarthAndroid
+---------------------------------------------------------------
+
+-- don't continue executing code in this file is not playing a shaman.
+if not TukuiDB.myclass == "SHAMAN" then return end
+
+local TotemBar = CreateFrame("Frame")
+TotemBar:RegisterEvent("PLAYER_LOGIN")
+TotemBar:SetScript("OnEvent", function(self)
+	TukuiDB.TotemOrientationDown = TukuiDB.TotemBarOrientation()
+end)
+
+-- Tex Coords for empty buttons
+SLOT_EMPTY_TCOORDS = {
+	[EARTH_TOTEM_SLOT] = {
+		left	= 66 / 128,
+		right	= 96 / 128,
+		top		= 3 / 256,
+		bottom	= 33 / 256,
+	},
+	[FIRE_TOTEM_SLOT] = {
+		left	= 67 / 128,
+		right	= 97 / 128,
+		top		= 100 / 256,
+		bottom	= 130 / 256,
+	},
+	[WATER_TOTEM_SLOT] = {
+		left	= 39 / 128,
+		right	= 69 / 128,
+		top		= 209 / 256,
+		bottom	= 239 / 256,
+	},
+	[AIR_TOTEM_SLOT] = {
+		left	= 66 / 128,
+		right	= 96 / 128,
+		top		= 36 / 256,
+		bottom	= 66 / 256,
+	},
+}
+
+local function StyleTotemFlyout(flyout)
+	-- remove blizzard flyout texture
+	flyout.top:SetTexture(nil)
+	flyout.middle:SetTexture(nil)
+	
+	-- Skin buttons
+	local last = nil
+	
+	for _,button in ipairs(flyout.buttons) do
+		TukuiDB.SetTemplate(button)
+		local icon = select(1,button:GetRegions())
+		icon:SetTexCoord(.09,.91,.09,.91)
+		icon:SetDrawLayer("ARTWORK")
+		icon:SetPoint("TOPLEFT",button,"TOPLEFT",TukuiDB.Scale(2),TukuiDB.Scale(-2))
+		icon:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",TukuiDB.Scale(-2),TukuiDB.Scale(2))			
+		if not InCombatLockdown() then
+			button:SetSize(TukuiDB.Scale(30),TukuiDB.Scale(30))
+			button:ClearAllPoints()
+			if TukuiDB.TotemOrientationDown then
+				button:SetPoint("TOP",last,"BOTTOM",0,TukuiDB.Scale(-4))
+			else
+				button:SetPoint("BOTTOM",last,"TOP",0,TukuiDB.Scale(4))
+			end
+		end			
+		if button:IsVisible() then last = button end
+		button:SetBackdropBorderColor(flyout.parent:GetBackdropBorderColor())
+		TukuiDB.StyleButton(button)
+	end
+	
+	if TukuiDB.TotemOrientationDown then
+		flyout.buttons[1]:SetPoint("TOP",flyout,"TOP")
+	else
+		flyout.buttons[1]:SetPoint("BOTTOM",flyout,"BOTTOM")
+	end
+	
+	if flyout.type == "slot" then
+		local tcoords = SLOT_EMPTY_TCOORDS[flyout.parent:GetID()]
+		flyout.buttons[1].icon:SetTexCoord(tcoords.left,tcoords.right,tcoords.top,tcoords.bottom)
+	end
+	
+	-- Skin Close button
+	local close = MultiCastFlyoutFrameCloseButton
+	TukuiDB.SetTemplate(close)	
+	close:GetHighlightTexture():SetTexture([[Interface\Buttons\ButtonHilight-Square]])
+	close:GetHighlightTexture():SetPoint("TOPLEFT",close,"TOPLEFT",TukuiDB.Scale(1),TukuiDB.Scale(-1))
+	close:GetHighlightTexture():SetPoint("BOTTOMRIGHT",close,"BOTTOMRIGHT",TukuiDB.Scale(-1),TukuiDB.Scale(1))
+	close:GetNormalTexture():SetTexture(nil)
+	close:ClearAllPoints()
+	if TukuiDB.TotemOrientationDown then
+		close:SetPoint("TOPLEFT",last,"BOTTOMLEFT",0,TukuiDB.Scale(-4))
+		close:SetPoint("TOPRIGHT",last,"BOTTOMRIGHT",0,TukuiDB.Scale(-4))
+	else
+		close:SetPoint("BOTTOMLEFT",last,"TOPLEFT",0,TukuiDB.Scale(4))
+		close:SetPoint("BOTTOMRIGHT",last,"TOPRIGHT",0,TukuiDB.Scale(4))	
+	end
+	close:SetHeight(4*2)
+	
+	flyout:ClearAllPoints()
+	if TukuiDB.TotemOrientationDown then
+		flyout:SetPoint("TOP",flyout.parent,"BOTTOM",0,TukuiDB.Scale(-4))
+	else
+		flyout:SetPoint("BOTTOM",flyout.parent,"TOP",0,TukuiDB.Scale(4))
+	end
+end
+hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout",function(self) StyleTotemFlyout(self) end)
+	
+local function StyleTotemOpenButton(button, parent)
+	button:GetHighlightTexture():SetTexture(nil)
+	button:GetNormalTexture():SetTexture(nil)
+	button:SetHeight(TukuiDB.Scale(16))
+	button:ClearAllPoints()
+	if TukuiDB.TotemOrientationDown then
+		button:SetPoint("TOPLEFT", parent, "BOTTOMLEFT")
+		button:SetPoint("TOPRIGHT", parent, "BOTTOMRIGHT")	
+	else
+		button:SetPoint("BOTTOMLEFT", parent, "TOPLEFT")
+		button:SetPoint("BOTTOMRIGHT", parent, "TOPRIGHT")
+	end
+	if not button.visibleBut then
+		button.visibleBut = CreateFrame("Frame",nil,button)
+		button.visibleBut:SetHeight(TukuiDB.Scale(8))
+		button.visibleBut:SetWidth(TukuiDB.Scale(button:GetWidth() + 2))
+		button.visibleBut:SetPoint("CENTER")
+		button.visibleBut.highlight = button.visibleBut:CreateTexture(nil,"HIGHLIGHT")
+		button.visibleBut.highlight:SetTexture([[Interface\Buttons\ButtonHilight-Square]])
+		button.visibleBut.highlight:SetPoint("TOPLEFT",button.visibleBut,"TOPLEFT",TukuiDB.Scale(1),TukuiDB.Scale(-1))
+		button.visibleBut.highlight:SetPoint("BOTTOMRIGHT",button.visibleBut,"BOTTOMRIGHT",TukuiDB.Scale(-1),TukuiDB.Scale(1))
+		TukuiDB.SetTemplate(button.visibleBut)
+	end	
+end
+hooksecurefunc("MultiCastFlyoutFrameOpenButton_Show",function(button,_, parent) StyleTotemOpenButton(button, parent) end)
+
+-- the color we use for border
+local bordercolors = {
+	{.23,.45,.13},   -- Earth
+	{.58,.23,.10},   -- Fire
+	{.19,.48,.60},   -- Water
+	{.42,.18,.74},   -- Air
+}
+
+local function StyleTotemSlotButton(button, index)
+	TukuiDB.SetTemplate(button)
+	button.overlayTex:SetTexture(nil)
+	button.background:SetDrawLayer("ARTWORK")
+	button.background:ClearAllPoints()
+	button.background:SetPoint("TOPLEFT",button,"TOPLEFT",TukuiDB.Scale(2),TukuiDB.Scale(-2))
+	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",TukuiDB.Scale(-2),TukuiDB.Scale(2))
+	button:SetSize(30, 30)
+	button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+	TukuiDB.StyleButton(button)
+end
+hooksecurefunc("MultiCastSlotButton_Update",function(self, slot) StyleTotemSlotButton(self,tonumber( string.match(self:GetName(),"MultiCastSlotButton(%d)"))) end)
+
+-- Skin the actual totem buttons
+local function StyleTotemActionButton(button, index)
+	local icon = select(1,button:GetRegions())
+	icon:SetTexCoord(.09,.91,.09,.91)
+	icon:SetDrawLayer("ARTWORK")
+	icon:SetPoint("TOPLEFT",button,"TOPLEFT",TukuiDB.Scale(2),TukuiDB.Scale(-2))
+	icon:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",TukuiDB.Scale(-2),TukuiDB.Scale(2))
+	button.overlayTex:SetTexture(nil)
+	button.overlayTex:Hide()
+	button:GetNormalTexture():SetTexture(nil)
+	button.SetNormalTexture = TukuiDB.dummy
+	if not InCombatLockdown() and button.slotButton then
+		button:ClearAllPoints()
+		button:SetAllPoints(button.slotButton)
+		button:SetFrameLevel(button.slotButton:GetFrameLevel()+1)
+	end
+	button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
+	button:SetBackdropColor(0,0,0,0)
+	TukuiDB.StyleButton(button, true)
+end
+hooksecurefunc("MultiCastActionButton_Update",function(actionButton, actionId, actionIndex, slot) StyleTotemActionButton(actionButton,actionIndex) end)
+
+-- Skin the summon and recall buttons
+local function StyleTotemSpellButton(button, index)
+	if not button then return end
+	local icon = select(1,button:GetRegions())
+	icon:SetTexCoord(.09,.91,.09,.91)
+	icon:SetDrawLayer("ARTWORK")
+	icon:SetPoint("TOPLEFT",button,"TOPLEFT",TukuiDB.Scale(2),TukuiDB.Scale(-2))
+	icon:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",TukuiDB.Scale(-2),TukuiDB.Scale(2))
+	TukuiDB.SetTemplate(button)
+	button:GetNormalTexture():SetTexture(nil)
+	if not InCombatLockdown() then button:SetSize(TukuiDB.Scale(30), TukuiDB.Scale(30)) end
+	_G[button:GetName().."Highlight"]:SetTexture(nil)
+	_G[button:GetName().."NormalTexture"]:SetTexture(nil)
+	TukuiDB.StyleButton(button)
+end
+hooksecurefunc("MultiCastSummonSpellButton_Update", function(self) StyleTotemSpellButton(self,0) end)
+hooksecurefunc("MultiCastRecallSpellButton_Update", function(self) StyleTotemSpellButton(self,5) end)

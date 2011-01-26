@@ -34,7 +34,7 @@ TukuiCF["media"] = {
 	["backdropcolor"] = { .02, .02, .02, 1 }, -- background color of tukui panels
 	["buttonhover"] = [[Interface\AddOns\Tukui\media\textures\button_hover]],
 	-- Duffed ui specific
-	["tooltipbackdrop"] = { .05,.05,.05,0.75 }, -- background color of tukui tooltip, addons and chat
+	["tooltipbackdrop"] = { .05,.05,.05,0.85 }, -- background color of tukui tooltip, addons and chat
 	
 	-- sound
 	["whisper"] = [[Interface\AddOns\Tukui\media\sounds\whisper.mp3]],

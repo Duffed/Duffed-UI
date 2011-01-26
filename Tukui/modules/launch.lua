@@ -15,8 +15,6 @@ local function install()
 	SetCVar("nameplateShowFriendlyTotems", 0)
 	SetCVar("nameplateShowEnemies", 1)
 	SetCVar("nameplateShowEnemyPets", 1)
-	-- SetCVar("nameplateShowEnemyGuardians", 1)
-	-- SetCVar("nameplateShowEnemyTotems", 1)
 	SetCVar("ShowClassColorInNameplate", 1)
 	SetCVar("screenshotQuality", 10)
 	SetCVar("cameraDistanceMax", 50)
@@ -35,27 +33,11 @@ local function install()
 	SetCVar("autoQuestProgress", 1)
 	SetCVar("showLootSpam", 1)
 	SetCVar("guildMemberNotify", 1)
-	-- SetCVar("chatBubblesParty", 0)
-	-- SetCVar("chatBubbles", 0)	
-	-- SetCVar("UnitNameOwn", 0)
-	-- SetCVar("UnitNameNPC", 0)
-	-- SetCVar("UnitNameNonCombatCreatureName", 0)
-	-- SetCVar("UnitNamePlayerGuild", 1)
-	-- SetCVar("UnitNamePlayerPVPTitle", 1)
-	-- SetCVar("UnitNameFriendlyPlayerName", 0)
-	-- SetCVar("UnitNameFriendlyPetName", 0)
-	-- SetCVar("UnitNameFriendlyGuardianName", 0)
-	-- SetCVar("UnitNameFriendlyTotemName", 0)
-	-- SetCVar("UnitNameEnemyPlayerName", 1)
-	-- SetCVar("UnitNameEnemyPetName", 1)
-	-- SetCVar("UnitNameEnemyGuardianName", 1)
-	-- SetCVar("UnitNameEnemyTotemName", 1)
 	SetCVar("UberTooltips", 1)
 	SetCVar("removeChatDelay", 1)
 	SetCVar("showVKeyCastbar", 1)
 	SetCVar("colorblindMode", 0)
-	-- SetCVar("bloatthreat", 0)
-	-- SetCVar("alwaysShowActionBars", 0)
+	SetCVar("autoLootDefault", 1)
 	
 	-- setting this the creator or tukui only, because a lot of people don't like this change.		
 	if TukuiDB.myname == "Tukz" then	
@@ -72,7 +54,7 @@ local function install()
 		FCF_SetLocked(ChatFrame3, 1)
 		FCF_DockFrame(ChatFrame3)
 
-		FCF_OpenNewWindow(LOOT)
+		FCF_OpenNewWindow("Loot/Trade")
 		FCF_UnDockFrame(ChatFrame4)
 		FCF_SetLocked(ChatFrame4, 1)
 		ChatFrame4:Show()
@@ -88,15 +70,11 @@ local function install()
 			-- move general bottom left or Loot (if found) on right.
 			if i == 1 then
 				frame:ClearAllPoints()
-				frame:SetSize(TukuiDB.Scale(402), TukuiDB.Scale(118))
+				frame:SetSize(TukuiDB.Scale(402), TukuiDB.Scale(117))
 				frame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 9, 9)
 			elseif i == 4 then
 				frame:ClearAllPoints()
-				if TukuiCF["chat"].rightchatborder == true then
-					frame:SetSize(TukuiDB.Scale(402), TukuiDB.Scale(118))
-				else
-					frame:SetSize(TukuiDB.Scale(320), TukuiDB.Scale(80))
-				end
+				frame:SetSize(TukuiDB.Scale(402), TukuiDB.Scale(117))
 				frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -9, 9)
 				frame:SetJustifyH("RIGHT")
 			end
@@ -114,7 +92,6 @@ local function install()
 		
 		ChatFrame_RemoveAllMessageGroups(ChatFrame1)
 		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_trade) -- erf, it seem we need to localize this now
-		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_general) -- erf, it seem we need to localize this now
 		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_defense) -- erf, it seem we need to localize this now
 		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_recrutment) -- erf, it seem we need to localize this now
 		ChatFrame_RemoveChannel(ChatFrame1, tukuilocal.chat_lfg) -- erf, it seem we need to localize this now
@@ -160,6 +137,7 @@ local function install()
 				
 		-- Setup the right chat
 		ChatFrame_RemoveAllMessageGroups(ChatFrame4);
+		ChatFrame_AddChannel(ChatFrame4, tukuilocal.chat_trade) -- erf, it seem we need to localize this now
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_XP_GAIN")
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_HONOR_GAIN")
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_FACTION_CHANGE")
@@ -188,8 +166,6 @@ local function install()
 		ToggleChatColorNamesByClassGroup(true, "CHANNEL4")
 		ToggleChatColorNamesByClassGroup(true, "CHANNEL5")
 	end
-		   
-	TukuiInstallv1200 = true
 	
 	-- reset unitframe position
 	if TukuiCF["unitframes"].positionbychar == true then
@@ -197,7 +173,20 @@ local function install()
 	else
 		TukuiData.ufpos = {}
 	end
-			
+	
+	-- reset movable stuff into original position
+	TukuiMinimap:SetUserPlaced(false)
+	TukuiAurasHeader:SetUserPlaced(false)
+	TukuiWatchFrameAnchor:SetUserPlaced(false)
+	TukuiTooltipAnchor:SetUserPlaced(false)
+	TukuiShiftBar:SetUserPlaced(false)
+	
+	-- reset saved variables on char
+	TukuiDataPerChar = {}
+	
+	-- tell savedvariable that we installed Tukui perfectly
+	TukuiDataPerChar.install = true
+	
 	ReloadUI()
 end
 
@@ -224,7 +213,7 @@ StaticPopupDialogs["INSTALL_UI"] = {
 	button1 = ACCEPT,
 	button2 = CANCEL,
     OnAccept = install,
-	OnCancel = function() TukuiInstallv1100 = true TukuiData.SetcVar = true end,
+	OnCancel = function() TukuiDataPerChar.install = true end,
     timeout = 0,
     whileDead = 1,
 }
@@ -247,6 +236,10 @@ local TukuiOnLogon = CreateFrame("Frame")
 TukuiOnLogon:RegisterEvent("PLAYER_ENTERING_WORLD")
 TukuiOnLogon:SetScript("OnEvent", function(self, event)
 	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+	
+	-- create empty saved vars if they doesn't exist.
+	if (TukuiData == nil) then TukuiData = {} end
+	if (TukuiDataPerChar == nil) then TukuiDataPerChar = {} end
 
 	if TukuiDB.getscreenresolution == "800x600"
 		or TukuiDB.getscreenresolution == "1024x768"
@@ -263,8 +256,7 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 		if TukuiCF["general"].uiscale > 1 then TukuiCF["general"].uiscale = 1 end
 		if TukuiCF["general"].uiscale < 0.64 then TukuiCF["general"].uiscale = 0.64 end
 		SetCVar("uiScale", TukuiCF["general"].uiscale)
-		if TukuiInstallv1200 ~= true then
-			if (TukuiData == nil) then TukuiData = {} end
+		if not TukuiDataPerChar.install then
 			StaticPopup_Show("INSTALL_UI")
 		end
 	end
@@ -276,7 +268,6 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 	print(tukuilocal.core_welcome1..TukuiDB.version)
 	print(tukuilocal.core_welcome2)
 	if IsAddOnLoaded("thek_Castbar") and TukuiCF["unitframes"].enable == false then
-		print(" ")
 		print("Move Castbar with |cffce3a19/tcb")
 	end
 end)
@@ -290,18 +281,15 @@ local function UIHelp()
 	print(" ")
 	print(tukuilocal.core_uihelp1)
 	print(tukuilocal.core_uihelp2)
-	print(tukuilocal.core_uihelp3)
-	print(tukuilocal.core_uihelp4)
 	print(tukuilocal.core_uihelp5)
 	print(tukuilocal.core_uihelp6)
 	print(tukuilocal.core_uihelp7)
 	print(tukuilocal.core_uihelp8)
 	print(tukuilocal.core_uihelp9)
 	print(tukuilocal.core_uihelp10)
-	print(tukuilocal.core_uihelp11)
-	--print(tukuilocal.core_uihelp12)  -- temp disabled, don't know yet if i'll readd this feature
-	print(tukuilocal.core_uihelp13)
 	print(tukuilocal.core_uihelp15)
+	print("|cffFF0000/moveui|r - Unlock Minimap, Buffs, Shapeshiftbar, Unitframes, Tooltip & Watchframe")
+	print("|cffFF0000/moveui reset|r - Reset Positions (/moveui except Unitframes).")
 	print(" ")
 	print(tukuilocal.core_uihelp14)
 end

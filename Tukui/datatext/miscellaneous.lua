@@ -170,7 +170,7 @@ if TukuiCF["datatext"].zonepanel == true then
 	
 	-- Coords Frame inside minimap
 	local coordsframe = CreateFrame("Frame", "Coords_Frame", UIParent)
-	TukuiDB.CreatePanel(coordsframe, TukuiMinimap:GetWidth() - 4, 18, "BOTTOM", TukuiMinimap, "BOTTOM", 0, TukuiDB.Scale(4))
+	TukuiDB.CreatePanel(coordsframe, TukuiMinimap:GetWidth() - 8, 18, "BOTTOM", TukuiMinimap, "BOTTOM", 0, TukuiDB.Scale(4))
 	coordsframe:SetBackdropColor(unpack(TukuiCF.media.tooltipbackdrop))
 	coordsframe:SetFrameLevel(5)
 	coordsframe:SetAlpha(0)

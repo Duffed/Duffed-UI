@@ -165,7 +165,7 @@ end)
 ----------------------------------------------------------------------------------------
 -- Animation Coords and Current Zone. Awesome feature by AlleyKat.
 ----------------------------------------------------------------------------------------
-
+if TukuiCF["datatext"].zonepanel ~= true then
 -- Set Anim func
 local set_anim = function (self,k,x,y)
 	self.anim = self:CreateAnimationGroup("Move_In")
@@ -300,7 +300,7 @@ a:SetScript("OnUpdate",function(self,t)
 	self:Hide()
 	zone_Update()
 end)
-
+end
 ------------------------------------------------------------------------
 -- make Minimap movable on screen
 ------------------------------------------------------------------------

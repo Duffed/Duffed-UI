@@ -102,11 +102,11 @@ if TukuiMinimap then
 	
 	if TukuiCF["datatext"].zonepanel == true then
 		local zonepanel = CreateFrame("Frame", "ZonePanel", TukuiMinimap)
-		TukuiDB.CreatePanel(zonepanel, TukuiMinimap:GetWidth() + 4, 19, "TOP", TukuiMinimap, "BOTTOM", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(zonepanel, TukuiMinimap:GetWidth(), 19, "TOP", TukuiMinimap, "BOTTOM", 0, TukuiDB.Scale(-3))
 		TukuiDB.CreateShadow(ZonePanel)
 		
-		TukuiDB.CreatePanel(minimapstatsleft, (TukuiMinimap:GetWidth() / 2) - 2, 19, "TOPLEFT", ZonePanel, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
-		TukuiDB.CreatePanel(minimapstatsright, (TukuiMinimap:GetWidth() / 2) -2, 19, "TOPRIGHT", ZonePanel, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(minimapstatsleft, (TukuiMinimap:GetWidth() / 2) - 1, 19, "TOPLEFT", ZonePanel, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
+		TukuiDB.CreatePanel(minimapstatsright, (TukuiMinimap:GetWidth() / 2) -1, 19, "TOPRIGHT", ZonePanel, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))
 	else
 		TukuiDB.CreatePanel(minimapstatsleft, (TukuiMinimap:GetWidth() / 2) - 1, 19, "TOPLEFT", TukuiMinimap, "BOTTOMLEFT", 0, TukuiDB.Scale(-3))
 		TukuiDB.CreatePanel(minimapstatsright, (TukuiMinimap:GetWidth() / 2) -1, 19, "TOPRIGHT", TukuiMinimap, "BOTTOMRIGHT", 0, TukuiDB.Scale(-3))

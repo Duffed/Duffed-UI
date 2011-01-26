@@ -176,9 +176,9 @@ local function install()
 	
 	-- reset movable stuff into original position
 	TukuiMinimap:SetUserPlaced(false)
-	TukuiAurasHeader:SetUserPlaced(false)
+	if TukuiCF.unitframes.playerauras ~= true then TukuiAurasHeader:SetUserPlaced(false) end
 	TukuiWatchFrameAnchor:SetUserPlaced(false)
-	TukuiTooltipAnchor:SetUserPlaced(false)
+	if TukuiCF["tooltip"].enable == true then TukuiTooltipAnchor:SetUserPlaced(false) end
 	TukuiShiftBar:SetUserPlaced(false)
 	
 	-- reset saved variables on char

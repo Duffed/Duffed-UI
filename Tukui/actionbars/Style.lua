@@ -55,15 +55,18 @@ local function style(self)
 	HotKey.ClearAllPoints = TukuiDB.dummy
 	HotKey.SetPoint = TukuiDB.dummy
  
-	if not TukuiCF["actionbar"].hotkey == true then
+	if TukuiCF["actionbar"].hotkey ~= true then
 		HotKey:SetText("")
 		HotKey:Hide()
 		HotKey.Show = TukuiDB.dummy
 	end
-	if not TukuiCF["actionbar"].macrotext == true then
+	
+	if TukuiCF["actionbar"].macrotext == false then
 		Btname:SetText("")
 		Btname:Hide()
 		Btname.Show = TukuiDB.dummy
+	else
+		Btname:SetWidth(TukuiDB.buttonsize)
 	end
  
 	if normal then
@@ -71,13 +74,6 @@ local function style(self)
 		normal:SetPoint("TOPLEFT")
 		normal:SetPoint("BOTTOMRIGHT")
 	end
-	
-	-- color border if equipped
-    -- if IsEquippedAction(action) then
-        -- _G[name.."Panel"]:SetBackdropBorderColor(0.55, 0.2, 0.2);
-    -- else
-        -- _G[name.."Panel"]:SetBackdropBorderColor(unpack(TukuiCF["media"].bordercolor));
-    -- end
 end
 
 local function stylesmallbutton(normal, button, icon, name, pet)

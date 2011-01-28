@@ -31,10 +31,6 @@ local function style(self)
 	Count:SetPoint("BOTTOMRIGHT", 0, TukuiDB.Scale(2))
 	Count:SetFont(TukuiCF["media"].font, 12, "OUTLINE")
  
-	Btname:SetText("")
-	Btname:Hide()
-	Btname.Show = TukuiDB.dummy
- 
 	if not _G[name.."Panel"] then
 		-- resize all button not matching TukuiDB.buttonsize
 		if self:GetHeight() ~= TukuiDB.buttonsize then
@@ -63,6 +59,11 @@ local function style(self)
 		HotKey:SetText("")
 		HotKey:Hide()
 		HotKey.Show = TukuiDB.dummy
+	end
+	if not TukuiCF["actionbar"].macrotext == true then
+		Btname:SetText("")
+		Btname:Hide()
+		Btname.Show = TukuiDB.dummy
 	end
  
 	if normal then

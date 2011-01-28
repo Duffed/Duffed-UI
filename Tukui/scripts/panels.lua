@@ -51,6 +51,10 @@ if TukuiCF["chat"].enable == true then
 		TukuiDB.CreatePanel(tabchat1, 1, TukuiDB.Scale(20), "TOPLEFT", chatbg, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-5))
 		tabchat1:SetPoint("TOPRIGHT", chatbg, "TOPRIGHT", TukuiDB.Scale(-28), TukuiDB.Scale(-5))
 		TukuiDB.CreateShadow(tabchat1)
+		
+		local copy1 = CreateFrame("Frame", nil, tabchat1)
+		TukuiDB.CreatePanel(copy1, TukuiDB.Scale(20), TukuiDB.Scale(20), "LEFT", tabchat1, "RIGHT", TukuiDB.Scale(3), 0)
+		TukuiDB.CreateShadow(copy1)
 	end
 	if TukuiCF["chat"].rightchatborder == true then
 		local chatbg2 = CreateFrame("Frame", "ChatBG2", UIParent)
@@ -63,6 +67,10 @@ if TukuiCF["chat"].enable == true then
 		TukuiDB.CreatePanel(tabchat2, 1, TukuiDB.Scale(20), "TOPLEFT", chatbg2, "TOPLEFT", TukuiDB.Scale(5), TukuiDB.Scale(-5))
 		tabchat2:SetPoint("TOPRIGHT", chatbg2, "TOPRIGHT", TukuiDB.Scale(-28), TukuiDB.Scale(-5))
 		TukuiDB.CreateShadow(tabchat2)
+		
+		local copy2 = CreateFrame("Frame", nil, tabchat2)
+		TukuiDB.CreatePanel(copy2, TukuiDB.Scale(20), TukuiDB.Scale(20), "LEFT", tabchat2, "RIGHT", TukuiDB.Scale(3), 0)
+		TukuiDB.CreateShadow(copy2)
 	end
 end
 

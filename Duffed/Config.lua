@@ -1,6 +1,6 @@
 dStuff = {
 	ccannouncement = false,		-- Announce CC/Buffs/Debuffs
-	tbtimer = true,				-- Show Watchframe when entering tb (abuse :<)
+	tbtimer = false,			-- Show Watchframe when entering tb (abuse :<)
 	drinkannouncement = true,	-- drink announcement for arena
 }
 

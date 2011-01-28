@@ -6,6 +6,7 @@ function TukuiMoveUI(msg)
 		TukuiMovePlayerAuras("reset")
 		TukuiMoveShapeshift("reset")
 		TukuiMoveWatchFrame("reset")
+		TukuiMoveBnetFrame("reset")
 	else
 		TukuiMoveTooltip()
 		TukuiMoveMinimap()
@@ -13,6 +14,7 @@ function TukuiMoveUI(msg)
 		TukuiMoveShapeshift()
 		TukuiMoveWatchFrame()
 		SlashCmdList['OUF_MOVABLEFRAMES']()
+		TukuiMoveBnetFrame()
 	end
 end
 SLASH_TUKUIMOVEUI1 = "/moveui"

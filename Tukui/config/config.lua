@@ -98,7 +98,7 @@ TukuiCF["arena"] = {
 TukuiCF["pvp"] = {
 	["interrupt"] = true,					-- enable interrupt icons (interruptbar alternative)
 	["drinkannouncement"] = true,			-- drink announcement for arena
-	["ccannouncement"] = true,				-- Announce CC/Buffs/Debuffs (config in AddOns/Stuff/Config.lua)
+	["ccannouncement"] = false,				-- Announce CC/Buffs/Debuffs (config in AddOns/Stuff/Config.lua)
 }
 
 TukuiCF["actionbar"] = {
@@ -249,7 +249,7 @@ end
 ----------------------------------------------------------------------------
 
 -- Settings for a Char you are leveling (lvl 2-84) (shown keybindings & Xp instead of rep)
-if UnitLevel("player") < 85 then -- 
+if UnitLevel("player") < MAX_PLAYER_LEVEL then
 	TukuiCF["actionbar"].hotkey = true
 	TukuiCF["datatext"].experience = 5
 	TukuiCF["datatext"].reputation = 0
@@ -264,8 +264,8 @@ if UnitLevel("player") == 1 then
 end
 
 if TukuiDB.myname == "Sacerdus" or TukuiDB.myname == "Snurq" then 
-	-- TukuiCF["actionbar"].shapeshiftmouseover = false
 	TukuiCF["datatext"].reputation = 0
 	TukuiCF["datatext"].experience = 0
 	TukuiCF["datatext"].mmenu = 5
+	TukuiCF["pvp"].ccannouncement = true
 end

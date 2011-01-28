@@ -21,13 +21,13 @@ TukuiWatchFrameAnchor.text:SetAlpha(0)
 
 -- set default position according to how many right bars we have
 if TukuiCF.actionbar.rightbars == 3 then
-	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-150), TukuiDB.Scale(-200))
+	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-150), TukuiDB.Scale(-230))
 elseif TukuiCF.actionbar.rightbars == 2 then
-	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-120), TukuiDB.Scale(-200))
+	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-120), TukuiDB.Scale(-230))
 elseif TukuiCF.actionbar.rightbars == 1 then
-	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-90), TukuiDB.Scale(-200))
+	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-90), TukuiDB.Scale(-230))
 else
-	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-30), TukuiDB.Scale(-200))
+	TukuiWatchFrameAnchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-30), TukuiDB.Scale(-230))
 end
 
 -- width of the watchframe according to our Blizzard cVar.
@@ -79,7 +79,6 @@ local function setup()
 	WatchFrameCollapseExpandButton:SetParent(TukuiWatchFrame)
 	WatchFrameTitle:Hide()
 	WatchFrameTitle.Show = TukuiDB.dummy
-	TukuiDB.Kill(WatchFrameCollapseExpandButton)	
 end
 
 ------------------------------------------------------------------------
@@ -113,13 +112,13 @@ function TukuiMoveWatchFrame(msg)
 	
 	if msg == "reset" then
 		if TukuiCF.actionbar.rightbars == 3 then
-			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-150), TukuiDB.Scale(-200))
+			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-150), TukuiDB.Scale(-230))
 		elseif TukuiCF.actionbar.rightbars == 2 then
-			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-120), TukuiDB.Scale(-200))
+			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-120), TukuiDB.Scale(-230))
 		elseif TukuiCF.actionbar.rightbars == 1 then
-			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-90), TukuiDB.Scale(-200))
+			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-90), TukuiDB.Scale(-230))
 		else
-			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-30), TukuiDB.Scale(-200))
+			anchor:SetPoint("TOPRIGHT", UIParent, TukuiDB.Scale(-30), TukuiDB.Scale(-230))
 		end
 	else
 		if move == false then

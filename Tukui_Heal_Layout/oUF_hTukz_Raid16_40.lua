@@ -86,6 +86,10 @@ local function Shared(self, unit)
 	TukuiDB.CreateShadow(panel)
 	self.panel = panel
 	
+	--Mouseover glow (u wont see the tooltip
+	-- self:SetScript("OnEnter", function() panel.shadow:SetBackdropBorderColor(.0, .7, .0, .7) end)
+	-- self:SetScript("OnLeave", function() panel.shadow:SetBackdropBorderColor(TukuiCF["media"].tooltipbackdrop) end)
+	
 	local name = health:CreateFontString(nil, "OVERLAY")
     name:SetPoint("TOP",0,-1) name:SetPoint("LEFT") name:SetPoint("RIGHT")
 	name:SetFont(font2, 12*TukuiCF["unitframes"].gridscale*TukuiDB.raidscale)

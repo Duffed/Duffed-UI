@@ -83,7 +83,7 @@ function TukuiDB.CreateShadow(f)
 		insets = { left = mult, right = mult, top = mult, bottom = mult },
 	})
 	shadow:SetBackdropColor(0, 0, 0, 0)
-	shadow:SetBackdropBorderColor(0, 0, 0, .75)
+	shadow:SetBackdropBorderColor(TukuiCF["media"].tooltipbackdrop)
 	f.shadow = shadow
 end
 

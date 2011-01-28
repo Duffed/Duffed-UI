@@ -76,7 +76,7 @@ local function install()
 				frame:ClearAllPoints()
 				frame:SetSize(TukuiDB.Scale(402), TukuiDB.Scale(117))
 				frame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -9, 9)
-				frame:SetJustifyH("RIGHT")
+				if TukuiCF["chat"].rightchatborder ~= true then frame:SetJustifyH("RIGHT") end
 			end
 				
 			-- save new default position and dimension

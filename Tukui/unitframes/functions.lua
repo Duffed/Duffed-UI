@@ -195,14 +195,16 @@ end
 
 TukuiDB.PostUpdatePower = function(power, unit, min, max)
 	local self = power:GetParent()
-	local pType, pToken = UnitPowerType(unit)
+	local pType, pToken, altR, altG, altB = UnitPowerType(unit)
 	local color = TukuiDB.oUF_colors.power[pToken]
 
 	if color then
 		power.value:SetTextColor(color[1], color[2], color[3])
+	else
+		power.value:SetTextColor(altR, altG, altB, 1)
 	end
 
-	if not UnitIsPlayer(unit) and not UnitPlayerControlled(unit) or not UnitIsConnected(unit) then
+	if (not UnitIsPlayer(unit) and not UnitPlayerControlled(unit) or not UnitIsConnected(unit)) and not (self.unit and self.unit:find("boss%d")) then
 		power.value:SetText()
 	elseif UnitIsDead(unit) or UnitIsGhost(unit) then
 		power.value:SetText()

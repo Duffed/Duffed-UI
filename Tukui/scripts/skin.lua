@@ -91,7 +91,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"Logout", 
 			"Quit", 
 			"Continue", 
-			"MacOptions"
+			"MacOptions",
 		}
 		
 		for i = 1, getn(BlizzardMenuButtons) do
@@ -139,6 +139,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"InterfaceOptionsFrameCancel",
 			"ReadyCheckFrameYesButton",
 			"ReadyCheckFrameNoButton",
+			"WatchFrameCollapseExpandButton",
 		}
 		
 		for i = 1, getn(BlizzardButtons) do

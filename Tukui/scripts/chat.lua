@@ -83,8 +83,13 @@ local function SetChatStyle(frame)
 	
 	-- move the chat edit box
 	_G[chat.."EditBox"]:ClearAllPoints();
-	_G[chat.."EditBox"]:SetPoint("TOPLEFT", TukuiInfoLeft, TukuiDB.Scale(2), TukuiDB.Scale(-2))
-	_G[chat.."EditBox"]:SetPoint("BOTTOMRIGHT", TukuiInfoLeft, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	if not ChatBG1Tabs then
+		_G[chat.."EditBox"]:SetPoint("TOPLEFT", TukuiInfoLeft, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		_G[chat.."EditBox"]:SetPoint("BOTTOMRIGHT", TukuiInfoLeft, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	else
+		_G[chat.."EditBox"]:SetPoint("TOPLEFT", ChatBG1Tabs, TukuiDB.Scale(2), TukuiDB.Scale(-2))
+		_G[chat.."EditBox"]:SetPoint("BOTTOMRIGHT", ChatBG1Tabs, TukuiDB.Scale(-2), TukuiDB.Scale(2))
+	end
 	
 	-- Hide textures
 	if not TukuiCF["chat"].background == true then
@@ -148,7 +153,11 @@ local function SetChatStyle(frame)
 	local EditBoxBackground = CreateFrame("frame", "TukuiChatchatEditBoxBackground", _G[chat.."EditBox"])
 	TukuiDB.CreatePanel(EditBoxBackground, 1, 1, "LEFT", _G[chat.."EditBox"], "LEFT", 0, 0)
 	EditBoxBackground:ClearAllPoints()
-	EditBoxBackground:SetAllPoints(TukuiInfoLeft)
+	if not ChatBG1Tabs then
+		EditBoxBackground:SetAllPoints(TukuiInfoLeft)
+	else
+		EditBoxBackground:SetAllPoints(ChatBG1Tabs)
+	end
 	EditBoxBackground:SetFrameStrata("LOW")
 	EditBoxBackground:SetFrameLevel(1)
 	
@@ -185,9 +194,9 @@ local function SetupChat(self)
 		FCFTab_UpdateAlpha(frame)
 		
 		--
-		if i == 4 then
+		if i == 4 and TukuiCF["chat"].rightchatborder ~= true then
 			frame:SetJustifyH("RIGHT")
-		end
+		end			
 	end
 				
 	-- Remember last channel
@@ -214,16 +223,6 @@ local function SetupChatPosAndFont(self)
 			FCF_SetChatWindowFontSize(nil, chat, fontSize)
 		end
 	end
-			
-	-- reposition battle.net popup over chat #1
-	BNToastFrame:HookScript("OnShow", function(self)
-		self:ClearAllPoints()
-		if ChatBG1 then
-			self:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 0, TukuiDB.Scale(1))
-		else
-			self:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, TukuiDB.Scale(10))
-		end
-	end)
 end
 
 TukuiChat:RegisterEvent("ADDON_LOADED")
@@ -353,12 +352,14 @@ function TukuiDB.ChatCopyButtons()
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G[format("ChatFrame%d",  i)]
 		local button = CreateFrame("Button", format("ButtonCF%d", i), cf)
-		TukuiDB.CreatePanel(button, TukuiDB.Scale(20), TukuiDB.Scale(20), "TOPRIGHT", 0, TukuiDB.Scale(24))
-		TukuiDB.SetTemplate(button)
+		button:SetSize(TukuiDB.Scale(20), TukuiDB.Scale(20))
+		button:SetPoint("TOPRIGHT", 0, TukuiDB.Scale(24))
 		
 		local buttontext = button:CreateFontString(nil,"OVERLAY",nil)
 		buttontext:SetFont(TukuiCF.media.font,12)
 		buttontext:SetText("C")
+		buttontext:SetShadowColor(0, 0, 0)
+		buttontext:SetShadowOffset(1.25, -1.25)
 		buttontext:SetPoint("CENTER", TukuiDB.Scale(1), 0)
 		buttontext:SetJustifyH("CENTER")
 		buttontext:SetJustifyV("CENTER")
@@ -374,14 +375,17 @@ function TukuiDB.ChatCopyButtons()
 			if i == 2 then
 				button:SetPoint("TOPRIGHT", 0, TukuiDB.Scale(48))
 			end
-			TukuiDB.CreateShadow(button)
 			button:SetAlpha(1)
 			button:SetScript("OnLeave", function() buttontext:SetText("C") end)
+		end
+		if i == 4 and TukuiCF["chat"].rightchatborder ~= false and GetChannelName("Trade/Loot") then
+			button:SetPoint("TOPRIGHT", 0, TukuiDB.Scale(24))
+			button:SetAlpha(1)
+			button:SetScript("OnLeave", function() button:SetAlpha(1) buttontext:SetText("C") end)
 		end
 	end
 end
 TukuiDB.ChatCopyButtons()
-
 
 ------------------------------------------------------------------------
 --	Enhance/rewrite a Blizzard feature, chatframe mousewheel.

@@ -204,11 +204,10 @@ local function Shared(self, unit)
 		-- alt power bar
 		local AltPowerBar = CreateFrame("StatusBar", "TukuiAltPowerBar", self.Health)
 		AltPowerBar:SetFrameLevel(self.Health:GetFrameLevel() + 1)
-		AltPowerBar:SetHeight(3)
 		AltPowerBar:SetStatusBarTexture(TukuiCF.media.normTex)
 		AltPowerBar:GetStatusBarTexture():SetHorizTile(false)
-		AltPowerBar:SetStatusBarColor(1, 0, 0)
-
+		AltPowerBar:SetStatusBarColor(0, .7, 0)
+		AltPowerBar:SetHeight(3)
 		AltPowerBar:SetPoint("LEFT")
 		AltPowerBar:SetPoint("RIGHT")
 		AltPowerBar:SetPoint("TOP", self.Health, "TOP")
@@ -217,7 +216,7 @@ local function Shared(self, unit)
 		  bgFile = TukuiCF["media"].blank, 
 		  edgeFile = TukuiCF["media"].blank, 
 		  tile = false, tileSize = 0, edgeSize = 1, 
-		  insets = { left = 0, right = 0, top = 0, bottom = TukuiDB.Scale(-1)}
+		  insets = { left = 0, right = 0, top = 0, bottom = 0}
 		})
 		AltPowerBar:SetBackdropColor(0, 0, 0)
 

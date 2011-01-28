@@ -425,8 +425,8 @@ local CLASS_FILTERS = {
             },
             player = {
                 CreateSpellEntry( 10060 ), -- Power Infusion
-                CreateSpellEntry( 588 ), -- Inner Fire
-				CreateSpellEntry( 73413 ), -- Inner Will
+                -- CreateSpellEntry( 588 ), -- Inner Fire
+				-- CreateSpellEntry( 73413 ), -- Inner Will
                 CreateSpellEntry( 47585 ), -- Dispersion
 				CreateSpellEntry( 81700 ), -- Archangel
 				CreateSpellEntry( 14751 ), -- Chakra
@@ -1000,8 +1000,8 @@ do
 			local time = bar:CreateFontString( nil, "OVERLAY", nil );
 			time:SetFont( unpack( MASTER_FONT ) );
 			time:SetJustifyH( "RIGHT" );
-			time:SetPoint( "TOPLEFT", name, "TOPRIGHT", 0, 0 );
-			time:SetPoint( "BOTTOMRIGHT", bar, "BOTTOMRIGHT", -TEXT_MARGIN, 2 );
+			time:SetPoint( "LEFT", name, "RIGHT", 0, 0 );
+			time:SetPoint( "RIGHT", bar, "RIGHT", -TEXT_MARGIN, 0 );
 			result.time = time;
 			
 			result.SetIcon = SetIcon;
@@ -1159,14 +1159,6 @@ end
 local _, playerClass = UnitClass( "player" );
 local classFilter = CLASS_FILTERS[ playerClass ];
 
-local yOffset = 7
-_, TukuiDB.myclass = UnitClass("player") 
-if (TukuiDB.myclass == "SHAMAN" or TukuiDB.myclass == "DEATHKNIGHT" or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK" or TukuiDB.myclass == "DRUID") and IgnoreFocusFrame ~= true then
-	yOffset = 7+6
-elseif (TukuiDB.myclass == "SHAMAN" or TukuiDB.myclass == "DEATHKNIGHT" or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK" or TukuiDB.myclass == "DRUID") and IgnoreFocusFrame == true then
-	yOffset = 7+12
-end
-
 local targetDataSource = CreateUnitAuraDataSource( "target" );
 local playerDataSource = CreateUnitAuraDataSource( "player" );
 local trinketDataSource = CreateUnitAuraDataSource( "player" );
@@ -1182,15 +1174,23 @@ if ( classFilter ) then
 end
 trinketDataSource:AddFilter( TRINKET_FILTER, TRINKET_BAR_COLOR );
 
+local yOffset = 7
+_, TukuiDB.myclass = UnitClass("player") 
+if (TukuiDB.myclass == "SHAMAN" or TukuiDB.myclass == "DEATHKNIGHT" or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK" or TukuiDB.myclass == "DRUID") and IgnoreFocusFrame ~= true then
+	yOffset = 7+6
+elseif (TukuiDB.myclass == "SHAMAN" or TukuiDB.myclass == "DEATHKNIGHT" or TukuiDB.myclass == "PALADIN" or TukuiDB.myclass == "WARLOCK" or TukuiDB.myclass == "DRUID") and IgnoreFocusFrame == true then
+	yOffset = 7+12
+end
+local xOffset = 0
+if TukuiCF["unitframes"].portraits.enable == true then xOffset = -62 end
+
 local playerFrame = CreateAuraBarFrame( playerDataSource, oUF_Tukz_player );
 playerFrame:SetHiddenHeight( -yOffset );
 
-if IgnoreFocusFrame and TukuiCF["unitframes"].portraits.enable == true then
-	playerFrame:SetPoint( "BOTTOMLEFT", oUF_Tukz_player, "TOPLEFT", -62, yOffset );
-elseif (not IgnoreFocusFrame) and TukuiCF["unitframes"].portraits.enable == true then
-	playerFrame:SetPoint( "BOTTOMLEFT", oUF_Tukz_player, "TOPLEFT", -62, 2*yOffset + oUF_Tukz_focus:GetHeight() );
+if IgnoreFocusFrame then
+	playerFrame:SetPoint( "BOTTOMLEFT", oUF_Tukz_player, "TOPLEFT", xOffset, yOffset )
 else
-	playerFrame:SetPoint( "BOTTOMLEFT", oUF_Tukz_player, "TOPLEFT", 0, yOffset);
+	playerFrame:SetPoint( "BOTTOMLEFT", oUF_Tukz_player, "TOPLEFT", xOffset, 2*yOffset + oUF_Tukz_focus:GetHeight())
 end
 playerFrame:SetPoint( "BOTTOMRIGHT", oUF_Tukz_player, "TOPRIGHT", 0, yOffset );
 	

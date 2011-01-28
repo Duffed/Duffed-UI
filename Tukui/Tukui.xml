@@ -37,7 +37,6 @@
 	<Script file="modules\colors.lua"/>	
 	<Script file="modules\functions.lua"/>
 	<Script file="modules\launch.lua"/>
-	<Script file="modules\temp.lua"/>
 	<Script file="modules\watchframe.lua"/>
 	<Script file="modules\durability.lua"/>
 	<Script file="modules\vehicle.lua"/>
@@ -57,7 +56,7 @@
 	<Script file="modules\item.lua"/>
 	<Script file="modules\kill.lua"/>
 	<Script file="modules\spam.lua"/>
-	
+
 	<Script file="scripts\raidUtility.lua"/>
 	<Script file="scripts\font.lua"/>
 	<Script file="scripts\buffs.lua"/>
@@ -91,6 +90,7 @@
 	<Script file="actionbars\BarTotem.lua"/>
 	<Script file="actionbars\BarPet.lua"/>
 	
+	<script file="scripts\bnetframe.lua"/>
 	<Script file="scripts\actionbar.lua"/>
 	<Script file="scripts\chat.lua"/>
 	<Script file="scripts\tooltip.lua"/>
@@ -115,4 +115,5 @@
 	<Script file="class\priest.lua"/>
 	<Script file="class\hunter.lua"/>
 	<Script file="class\mage.lua"/>
+	<Script file="modules\temp.lua"/>
 </Ui>

@@ -53,7 +53,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button:ClearAllPoints()
 			button:SetParent(self)
 			if i == 1 then
-				button:SetPoint("BOTTOMLEFT", TukuiShift, 0, TukuiDB.Scale(29))
+				button:SetPoint("TOPLEFT", TukuiShift, 0, TukuiDB.Scale(0))
 			else
 				local previous = _G["ShapeshiftButton"..i-1]
 				button:SetPoint("LEFT", previous, "RIGHT", TukuiDB.buttonspacing, 0)

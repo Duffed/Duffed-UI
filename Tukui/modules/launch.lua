@@ -180,6 +180,7 @@ local function install()
 	TukuiWatchFrameAnchor:SetUserPlaced(false)
 	if TukuiCF["tooltip"].enable == true then TukuiTooltipAnchor:SetUserPlaced(false) end
 	TukuiShiftBar:SetUserPlaced(false)
+	TukuiBnetHolder:SetUserPlaced(false)
 	
 	-- reset saved variables on char
 	TukuiDataPerChar = {}

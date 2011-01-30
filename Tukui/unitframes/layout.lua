@@ -215,10 +215,11 @@ local function Shared(self, unit)
 		AltPowerBar:SetBackdrop({
 		  bgFile = TukuiCF["media"].blank, 
 		  edgeFile = TukuiCF["media"].blank, 
-		  tile = false, tileSize = 0, edgeSize = 1, 
+		  tile = false, tileSize = 0, edgeSize = 0, 
 		  insets = { left = 0, right = 0, top = 0, bottom = 0}
 		})
-		AltPowerBar:SetBackdropColor(0, 0, 0)
+		AltPowerBar:SetBackdropColor(.1, .1, .1)
+		AltPowerBar:SetBackdropBorderColor(0, 0, 0, 0)
 
 		self.AltPowerBar = AltPowerBar
 		

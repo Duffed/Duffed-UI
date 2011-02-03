@@ -88,7 +88,9 @@ TukuiCF["castbar"] = {
 		target = { 0.1, 0.6, 0.1, 1 },		-- (only thekCastbar) target castbar color
 		focus = { 1, 1, 1, 1 }, 			-- (only thekCastbar) focus castbar color
 		notinterruptable = {1, 0, 0, 0.7},	-- Castbarcolor if cast is not interruptable
-	},		
+	},
+	["target-y-offset"] = 380,				-- Target Castbar offset from the BOTTOM
+	["focus-y-offset"] = -320,				-- Focus Castbar offset from the TOP
 }
 
 TukuiCF["arena"] = {
@@ -208,7 +210,7 @@ TukuiCF["tooltip"] = {
 }
 
 TukuiCF["merchant"] = {
-	["sellgrays"] = true,                  	-- automaticly sell grays?
+	["sellgrays"] = false,                  	-- automaticly sell grays?
 	["autorepair"] = true,                 	-- automaticly repair?
 }
 

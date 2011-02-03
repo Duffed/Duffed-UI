@@ -687,7 +687,7 @@ local function Shared(self, unit)
 					castbar:SetPoint("BOTTOMRIGHT", TukuiPetActionBarBackground1, "TOPRIGHT", TukuiDB.Scale(-2), TukuiDB.Scale(5))
 				end
 			elseif unit == "target" then
-				castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0,TukuiDB.Scale(380))
+				castbar:SetPoint("BOTTOM", UIParent, "BOTTOM", 0,TukuiDB.Scale(TukuiCF["castbar"]["target-y-offset"]))
 				castbar:SetHeight(TukuiDB.Scale(18))
 				castbar:SetWidth(TukuiDB.Scale(240))
 			end
@@ -1178,7 +1178,7 @@ local function Shared(self, unit)
 			castbar:SetHeight(TukuiDB.Scale(2))
 			castbar:SetStatusBarTexture(normTex)
 			castbar:SetFrameLevel(10)
-			castbar:SetPoint("TOP", UIParent, "TOP", 0,-320)
+			castbar:SetPoint("TOP", UIParent, "TOP", 0,TukuiDB.Scale(TukuiCF["castbar"]["focus-y-offset"]))
 			-- castbar:SetPoint("TOPRIGHT", health, "TOPRIGHT", -22, 0)	
 			castbar:SetHeight(TukuiDB.Scale(20))
 			castbar:SetWidth(240)

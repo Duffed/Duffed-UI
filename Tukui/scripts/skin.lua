@@ -72,8 +72,15 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		}
  
 		for i = 1, getn(ChatMenus) do
+		TukuiDB.CreateShadow(_G[ChatMenus[i]])
 			if _G[ChatMenus[i]] == _G["ChatMenu"] then
-				_G[ChatMenus[i]]:HookScript("OnShow", function(self) TukuiDB.SetTemplate(self) self:ClearAllPoints() self:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, TukuiDB.Scale(30)) end)
+				_G[ChatMenus[i]]:HookScript("OnShow", function(self) TukuiDB.SetTemplate(self) self:ClearAllPoints()
+					if ChatBG1 then
+						self:SetPoint("BOTTOMRIGHT", ChatBG1, "TOPRIGHT", 0, TukuiDB.Scale(3))
+					else
+						self:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, TukuiDB.Scale(30))
+					end
+				end)
 			else
 				_G[ChatMenus[i]]:HookScript("OnShow", function(self) TukuiDB.SetTemplate(self) end)
 			end

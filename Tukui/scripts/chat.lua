@@ -364,7 +364,13 @@ function TukuiDB.ChatCopyButtons()
 		buttontext:SetJustifyH("CENTER")
 		buttontext:SetJustifyV("CENTER")
 				
-		button:SetScript("OnMouseUp", function(self) Copy(cf) end)
+		button:SetScript("OnMouseUp", function(self, btn)
+			if btn == "RightButton" then
+				ToggleFrame(ChatMenu)
+			else
+				Copy(cf)
+			end
+		end)
 		button:SetScript("OnEnter", function() button:SetAlpha(1) buttontext:SetText(panelcolor.."C") end)
 		
 		if TukuiCF["chat"].leftchatborder ~= true then

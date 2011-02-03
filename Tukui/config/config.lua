@@ -6,7 +6,7 @@
 }
 
 TukuiCF["duffed"] = {
-	["everythingclasscolored"] = false, 		-- Castbar, Datatext & Filger classcolored
+	["everythingclasscolored"] = true, 		-- Castbar, Datatext & Filger classcolored
 	["filgerbarcolor"] = {
 		["classcolor"] = false,				-- Filger bars classcolored
 		["color"] = {.8, .1, .1, .9}, 		-- use this if classcolor = false
@@ -105,6 +105,7 @@ TukuiCF["pvp"] = {
 
 TukuiCF["actionbar"] = {
 	-- Duffed ui specific
+	["bottom48"] = true,					-- 48 Buttons at the Bottom (2 large rows) .. name "bottom48" is bad, i know.
 	["swapbar1and3"] = false,				-- Swap Bar 1 and 3 so ur Mainbar will be on top
 	["bar3mouseover"] = false, 				-- third bar at the bottom mouseover? (not possible if swapbar1and3 = true ..yet)
 	["petbaralwaysvisible"] = true, 		-- Vertical Pet bar visible even if rightbarsmouseover = true
@@ -243,7 +244,7 @@ TukuiCF["others"] = {
 -- Class need to be UPPERCASE
 ----------------------------------------------------------------------------
 if TukuiDB.myclass == "PRIEST" then
-	-- do some config!
+	TukuiCF["duffed"].everythingclasscolored = false	-- disable classcolor for priest cause white/white is boring D:
 end
 ----------------------------------------------------------------------------
 -- Per Character Name Config (overwrite general and class)

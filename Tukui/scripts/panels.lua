@@ -30,7 +30,11 @@ barbg:SetFrameLevel(1)
 -- bar 3 Border
 local barf3 = CreateFrame("Frame", "ActionBar3Background", UIParent)
 TukuiDB.CreatePanel(barf3, 1, 1, "BOTTOM", TukuiActionBarBackground, "TOP", 0,TukuiDB.Scale(4))
-barf3:SetWidth((TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 13))
+if TukuiCF["actionbar"].bottom48 == true then
+	barf3:SetWidth((TukuiDB.buttonsize * 24) + (TukuiDB.buttonspacing * 25))
+else
+	barf3:SetWidth((TukuiDB.buttonsize * 12) + (TukuiDB.buttonspacing * 13))
+end
 barf3:SetHeight((TukuiDB.buttonsize * 1) + (TukuiDB.buttonspacing * 2))
 barf3:Hide()
 

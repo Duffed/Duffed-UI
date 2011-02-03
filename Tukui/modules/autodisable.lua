@@ -19,6 +19,10 @@ if TukuiCF["actionbar"].swapbar1and3 == true then
 	TukuiCF["actionbar"].bar3mouseover = false
 end
 
+if TukuiCF["actionbar"].bottom48 == true and TukuiCF["actionbar"].rightbars > 1 then
+	TukuiCF["actionbar"].rightbars = 1
+end
+
 ------------------------------------------------------------------------
 -- Everything classcolored
 ------------------------------------------------------------------------

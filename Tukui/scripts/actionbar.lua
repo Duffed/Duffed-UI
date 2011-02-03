@@ -219,13 +219,26 @@ if db.rightbars == 3 then
 	
 	TukuiBar3:Show()
 	MultiBarBottomRightButton1:ClearAllPoints()
-	MultiBarBottomRightButton1:SetPoint("TOPLEFT", TukuiActionBarBackgroundRight, "TOPLEFT", TukuiDB.Scale(4), TukuiDB.Scale(-4))
+	MultiBarBottomRightButton1:SetPoint("TOP", TukuiActionBarBackgroundRight, "TOP", TukuiDB.Scale(0), TukuiDB.Scale(-4))
 	for i= 2, 12 do
 		local b = _G["MultiBarBottomRightButton"..i]
 		local b2 = _G["MultiBarBottomRightButton"..i-1]
 		b:ClearAllPoints()
 		b:SetPoint("TOP", b2, "BOTTOM", 0, -TukuiDB.buttonspacing)
 	end  
+end
+
+-- 48 Buttons at the Bottom
+if TukuiCF["actionbar"].bottom48 == true then
+	TukuiBar5:Show()
+	MultiBarLeftButton1:ClearAllPoints()
+	MultiBarLeftButton1:SetPoint("LEFT", ActionBar3Background, "CENTER", TukuiDB.Scale(4), TukuiDB.Scale(0))
+	for i= 2, 12 do
+		local b = _G["MultiBarLeftButton"..i]
+		local b2 = _G["MultiBarLeftButton"..i-1]
+		b:ClearAllPoints()
+		b:SetPoint("LEFT", b2, "RIGHT", TukuiDB.buttonspacing, 0)
+	end
 end
 
 -- now look for others shit, if found, set bar or override settings bar above.
@@ -390,20 +403,17 @@ if db.rightbarmouseover == true and db.rightbars > 0 then
 		pb:SetAlpha(0)
 		pb:HookScript("OnEnter", function(self) mouseoverpet(1) rightbaralpha(1) end)
 		pb:HookScript("OnLeave", function(self) mouseoverpet(0) rightbaralpha(0) end)
-			if (db.rightbars > 0) and db.bottomrows == 1 and TukuiCF.lowversion ~= true then 
+			if db.rightbars > 2 then
 				local pb = _G["MultiBarBottomRightButton"..i]
 				pb:SetAlpha(0)
 				pb:HookScript("OnEnter", function(self) mouseoverpet(1) rightbaralpha(1) end)
 				pb:HookScript("OnLeave", function(self) mouseoverpet(0) rightbaralpha(0) end)
+			end
+			if db.rightbars > 1 then
 				local pb = _G["MultiBarLeftButton"..i]
 				pb:SetAlpha(0)
 				pb:HookScript("OnEnter", function(self) mouseoverpet(1) rightbaralpha(1) end)
 				pb:HookScript("OnLeave", function(self) mouseoverpet(0) rightbaralpha(0) end)
-			else
-				local pb = _G["MultiBarLeftButton"..i]
-				pb:SetAlpha(0)
-				pb:HookScript("OnEnter", function(self) mouseoverpet(1) rightbaralpha(1) end)
-				pb:HookScript("OnLeave", function(self) mouseoverpet(0) rightbaralpha(0) end)	
 			end
 	end
 	if not TukuiCF["actionbar"]["petbarhorizontal"].enable == true then

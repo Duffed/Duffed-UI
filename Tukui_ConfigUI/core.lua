@@ -22,6 +22,7 @@ local ALLOWED_GROUPS = {
 	["buffreminder"]=1,
 	["pvp"]=1,
 	["castbar"]=1,
+	["classtimer"]=1,
 }
 
 --List of "Table Names" that we do not want to show in the config
@@ -63,6 +64,12 @@ local function Local(o)
 	if o == "TukuiConfigUIpvpdrinkannouncement"  then o = "Announce 'drinking' in  Arena" end
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end
 	if o == "TukuiConfigUIpvpsayinterrupt"  then o = "Announce when u interrupt someone" end
+	
+	if o == "TukuiConfigUIclasstimer" then o = "ClassTimer" end
+	if o == "TukuiConfigUIclasstimerplayercolor" then o = "Player-Bar Color" end
+	if o == "TukuiConfigUIclasstimertargetbuffcolor" then o = "Target-Buffs Color" end
+	if o == "TukuiConfigUIclasstimertargetdebuffcolor" then o = "Target-Debuffs Color" end
+	if o == "TukuiConfigUIclasstimertrinketcolor" then o = "Player-Trinket(Procs) Color" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end
@@ -392,11 +399,6 @@ function CreateTukuiConfigUI()
 		ShowGroup("general")
 		TukuiConfigUI:Show()
 		return
-	end
-	
-	local version = tonumber(T.version)
-	if version < 12.59 then
-		print(TukuiL.option_update)
 	end
 	
 	-- MAIN FRAME

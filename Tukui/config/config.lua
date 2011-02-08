@@ -60,6 +60,23 @@ C["unitframes"] = {
 	["classbar"] = true,                                -- enable tukui classbar over player unit
 }
 
+C["actionbar"] = {
+	["swapbar1and3"] = false,							-- Swap Bar 1 and 3 (Mainbar with the third at the Top)
+	["rightbarsmouseover"] = true, 						-- Right Bars on mouseover
+	["shapeshiftborder"] = true,						-- Create a Border around the shapeshift buttons
+	["shapeshiftmouseover"] = false,					-- Shapeshiftbar on mouseover
+	["petbaralwaysvisible"] = true,						-- Always show petbar even if rightbarsmouseover = true
+	["macrotext"] = false,								-- display macro text on buttons
+
+	["enable"] = true,                                  -- enable tukui action bars
+	["hotkey"] = false,                                 -- enable hotkey display because it was a lot requested
+	["hideshapeshift"] = false,                         -- hide shapeshift or totembar because it was a lot requested.
+	["showgrid"] = true,                                -- show grid on empty button
+	["buttonsize"] = 27,                                -- normal buttons size
+	["petbuttonsize"] = 29,                             -- pet & stance buttons size
+	["buttonspacing"] = 4,                              -- buttons spacing
+}
+
 C["castbar"] = {
 	["color"] = { 0.9, 0.9, 0.9, 0.9 },					-- Castbar color for everything except player (player uses datatext.color value)
 	["target-y-offset"] = 380,							-- Target Castbar offset from the BOTTOM
@@ -76,21 +93,11 @@ C["pvp"] = {
 	["sayinterrupt"] = true,							-- Announce when u interrupt someone
 }
 
-C["actionbar"] = {
-	["swapbar1and3"] = false,							-- Swap Bar 1 and 3 (Mainbar with the third at the Top)
-	["rightbarsmouseover"] = true, 						-- Right Bars on mouseover
-	["shapeshiftborder"] = true,						-- Create a Border around the shapeshift buttons
-	["shapeshiftmouseover"] = false,					-- Shapeshiftbar on mouseover
-	["petbaralwaysvisible"] = true,						-- Always show petbar even if rightbarsmouseover = true
-	["macrotext"] = false,								-- display macro text on buttons
-
-	["enable"] = true,                                  -- enable tukui action bars
-	["hotkey"] = false,                                 -- enable hotkey display because it was a lot requested
-	["hideshapeshift"] = false,                         -- hide shapeshift or totembar because it was a lot requested.
-	["showgrid"] = true,                                -- show grid on empty button
-	["buttonsize"] = 27,                                -- normal buttons size
-	["petbuttonsize"] = 29,                             -- pet & stance buttons size
-	["buttonspacing"] = 4,                              -- buttons spacing
+C["classtimer"] = {
+	["playercolor"] = {.2, .2, .2, 1 },
+	["targetbuffcolor"] = { 70/255, 150/255, 70/255, 1 },
+	["targetdebuffcolor"] = { 150/255, 30/255, 30/255, 1 },
+	["trinketcolor"] = {75/255, 75/255, 75/255, 1 },
 }
 
 C["bags"] = {

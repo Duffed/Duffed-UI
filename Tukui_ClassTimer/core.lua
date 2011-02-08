@@ -12,10 +12,6 @@ local CreateSpellEntry = function( id, castByAnyone, color, unitType, castSpellI
 	return { id = id, castByAnyone = castByAnyone, color = color, unitType = unitType or 0, castSpellId = castSpellId };
 end
 
-local CreateColor = function( red, green, blue, alpha )
-	return { red / 255, green / 255, blue / 255, alpha };
-end
-
 -- Configuration starts here:
 
 -- (Duffed UI) Ignore the Focus Frame? So it will overlap (true/false)
@@ -45,7 +41,7 @@ local SPARK = false;
 local CAST_SEPARATOR = true;
 
 -- Sets cast separator color
-local CAST_SEPARATOR_COLOR = CreateColor( 1, 1, 1, 0.5 );
+local CAST_SEPARATOR_COLOR = { 0, 0, 0, .5 }
 
 -- Sets distance between right edge of bar and name and left edge of bar and time left
 local TEXT_MARGIN = 5;
@@ -66,7 +62,7 @@ local PERMANENT_AURA_VALUE = 1;
 	red, green, blue - range from 0 to 255
 	alpha - range from 0 to 1
 ]]--
-local PLAYER_BAR_COLOR = {.2, .2, .2, 1};
+local PLAYER_BAR_COLOR = C["classtimer"].playercolor
 
 --[[ Player debuff color
 	red, green, blue - range from 0 to 255
@@ -78,18 +74,18 @@ local PLAYER_DEBUFF_COLOR = nil;
 	red, green, blue - range from 0 to 255
 	alpha - range from 0 to 1
 ]]--
-local TARGET_BAR_COLOR = CreateColor( 70, 150, 70, 1 );
+local TARGET_BAR_COLOR = C["classtimer"].targetbuffcolor
 --[[ Target debuff color
 	red, green, blue - range from 0 to 255
 	alpha - range from 0 to 1
 ]]--
-local TARGET_DEBUFF_COLOR = CreateColor( 150, 30, 30, 1 );
+local TARGET_DEBUFF_COLOR = C["classtimer"].targetdebuffcolor
 
 --[[ Trinket bar color
 	red, green, blue - range from 0 to 255
 	alpha - range from 0 to 1
 ]]--
-local TRINKET_BAR_COLOR = CreateColor( 75, 75, 75, 1 );
+local TRINKET_BAR_COLOR = C["classtimer"].trinketcolor
 
 --[[ Sort direction
 	false - ascending

@@ -569,21 +569,21 @@ local function Shared(self, unit)
 			buffs:SetHeight(26)
 			buffs:SetWidth(playerwidth+6)
 			buffs.size = 22
-			buffs.num = 9
+			buffs.spacing = 3
+			buffs.num = playerwidth/(buffs.size+buffs.spacing)
 			
 			debuffs:SetHeight(26)
 			debuffs:SetWidth(playerwidth+6)
 			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", -4, 1)
 			debuffs.size = 22
+			debuffs.spacing = 3
 			debuffs.num = 27
 						
-			buffs.spacing = 3
 			buffs.initialAnchor = 'TOPLEFT'
 			buffs.PostCreateIcon = T.PostCreateAura
 			buffs.PostUpdateIcon = T.PostUpdateAura
 			self.Buffs = buffs	
 						
-			debuffs.spacing = 3
 			debuffs.initialAnchor = 'TOPRIGHT'
 			debuffs["growth-y"] = "UP"
 			debuffs["growth-x"] = "LEFT"
@@ -805,7 +805,7 @@ local function Shared(self, unit)
 		end
 		
 		-- Lines
-		if C["unitframes"].totandpetlines == true then
+		if C["unitframes"].totandpetlines == true and playerwidth > 155 then
 			line1 = CreateFrame("Frame", nil, health)
 			line1:CreatePanel("Default", 18, 2, "RIGHT", health.border, "LEFT", -1, 0)
 			line1:SetFrameLevel(0)
@@ -841,7 +841,7 @@ local function Shared(self, unit)
 	if (unit == "pet") then
 		-- health bar panel
 		local health = CreateFrame('StatusBar', nil, self)
-		health:Height(18)
+		health:Height(16)
 		health:SetPoint("TOPLEFT")
 		health:SetPoint("TOPRIGHT")
 		health:SetStatusBarTexture(normTex)
@@ -920,7 +920,7 @@ local function Shared(self, unit)
 		end
 		
 		-- Lines
-		if (C["unitframes"].totandpetlines == true) then
+		if (C["unitframes"].totandpetlines == true and playerwidth > 155) then
 			line1 = CreateFrame("Frame", nil, health)
 			line1:CreatePanel("Default", 18, 2, "LEFT", health.border, "RIGHT", 1, 0)
 			line1:SetFrameLevel(0)

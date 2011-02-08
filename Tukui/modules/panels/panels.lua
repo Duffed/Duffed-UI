@@ -64,21 +64,23 @@ local iright = CreateFrame("Frame", "TukuiInfoRight", TukuiBar1)
 iright:CreatePanel("Default", T.InfoLeftRightWidth, 19, "BOTTOMLEFT", UIParent, "BOTTOM", 12, 4)
 iright:SetFrameLevel(2)
 
--- HORIZONTAL LINE LEFT
-local ltoabl = CreateFrame("Frame", "TukuiLineToABLeft", TukuiBar1)
-ltoabl:CreatePanel("Default", 10, 2, "RIGHT", ileft, "LEFT", 0, 0)
+if C["actionbar"].buttonsize > 26 then
+	-- HORIZONTAL LINE LEFT
+	local ltoabl = CreateFrame("Frame", "TukuiLineToABLeft", TukuiBar1)
+	ltoabl:CreatePanel("Default", 10, 2, "RIGHT", ileft, "LEFT", 0, 0)
 
--- HORIZONTAL LINE RIGHT
-local ltoabr = CreateFrame("Frame", "TukuiLineToABRight", TukuiBar1)
-ltoabr:CreatePanel("Default", 10, 2, "LEFT", iright, "RIGHT", 0, 0)
+	-- HORIZONTAL LINE RIGHT
+	local ltoabr = CreateFrame("Frame", "TukuiLineToABRight", TukuiBar1)
+	ltoabr:CreatePanel("Default", 10, 2, "LEFT", iright, "RIGHT", 0, 0)
 
--- LEFT VERTICAL LINE
-local ileftlv = CreateFrame("Frame", "TukuiInfoLeftLineVertical", TukuiBar1)
-ileftlv:CreatePanel("Default", 2, 13, "BOTTOM", ltoabl, "LEFT", 0, -1)
+	-- LEFT VERTICAL LINE
+	local ileftlv = CreateFrame("Frame", "TukuiInfoLeftLineVertical", TukuiBar1)
+	ileftlv:CreatePanel("Default", 2, 13, "BOTTOM", ltoabl, "LEFT", 0, -1)
 
--- RIGHT VERTICAL LINE
-local irightlv = CreateFrame("Frame", "TukuiInfoRightLineVertical", TukuiBar1)
-irightlv:CreatePanel("Default", 2, 13, "BOTTOM", ltoabr, "RIGHT", 0, -1)
+	-- RIGHT VERTICAL LINE
+	local irightlv = CreateFrame("Frame", "TukuiInfoRightLineVertical", TukuiBar1)
+	irightlv:CreatePanel("Default", 2, 13, "BOTTOM", ltoabr, "RIGHT", 0, -1)
+end
 
 if C["chat"].background == true then
 	-- Chat 1 Background

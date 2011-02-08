@@ -205,14 +205,12 @@ local function SetupChatPosAndFont(self)
 		else
 			FCF_SetChatWindowFontSize(nil, chat, fontSize)
 		end
-		
-		if point == "BOTTOMRIGHT" and C.chat.background ~= true then
-			chat:SetJustifyH("RIGHT") 
-		end
-		
+				
 		--Check if chat exists in the bottomright corner
-		if C.chat.background == true and point == "BOTTOMRIGHT" and chat:IsShown() then
+		if ChatBG2 and point == "BOTTOMRIGHT" and chat:IsShown() then
 			ChatBG2:Show()
+		elseif point == "BOTTOMRIGHT" and chat:IsShown() then
+			chat:SetJustifyH("RIGHT") 
 		end
 	end
 			

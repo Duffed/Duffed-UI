@@ -46,7 +46,7 @@ if C["datatext"].power and C["datatext"].power > 0 then
 			tp_pwr = L.datatext_playersp
 		end
 		if int < 0 then
-			Text:SetText(pwr.." ".. tp_pwr)      
+			Text:SetText(pwr.." "..T.panelcolor.. tp_pwr)      
 			int = 1
 		end
 	end

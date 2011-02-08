@@ -6,64 +6,43 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 -- this install Tukui with default settings.
 local function install()
 	SetCVar("buffDurations", 1)
+	SetCVar("consolidateBuffs", 0)
+	SetCVar("lootUnderMouse", 1)
+	SetCVar("autoSelfCast", 1)
 	SetCVar("mapQuestDifficulty", 1)
 	SetCVar("scriptErrors", 1)
+	SetCVar("nameplateShowFriends", 0)
+	SetCVar("nameplateShowFriendlyPets", 0)
+	SetCVar("nameplateShowFriendlyGuardians", 0)
+	SetCVar("nameplateShowFriendlyTotems", 0)
+	SetCVar("nameplateShowEnemies", 1)
+	SetCVar("nameplateShowEnemyPets", 1)
 	SetCVar("ShowClassColorInNameplate", 1)
-	SetCVar("screenshotQuality", 8)
+	SetCVar("screenshotQuality", 10)
+	SetCVar("cameraDistanceMax", 50)
+	SetCVar("cameraDistanceMaxFactor", 3.4)
 	SetCVar("chatMouseScroll", 1)
 	SetCVar("chatStyle", "im")
 	SetCVar("WholeChatWindowClickable", 0)
 	SetCVar("ConversationMode", "inline")
+	SetCVar("CombatDamage", 1)
+	SetCVar("CombatHealing", 1)
 	SetCVar("showTutorials", 0)
 	SetCVar("showNewbieTips", 0)
 	SetCVar("Maxfps", 120)
 	SetCVar("autoDismountFlying", 1)
 	SetCVar("autoQuestWatch", 1)
 	SetCVar("autoQuestProgress", 1)
+	SetCVar("showLootSpam", 1)
+	SetCVar("guildMemberNotify", 1)
 	SetCVar("UberTooltips", 1)
 	SetCVar("removeChatDelay", 1)
 	SetCVar("showVKeyCastbar", 1)
+	SetCVar("colorblindMode", 0)
+	SetCVar("autoLootDefault", 1)
 	SetCVar("bloatthreat", 0)
 	SetCVar("bloattest", 0)
-	SetCVar("showArenaEnemyFrames", 0)
-	
-	-- setting this the creator or tukui only, because a lot of people don't like this.		
-	if T.myname == "Tukz" then	
-		SetCVar("secureAbilityToggle", 0)
-		SetCVar("colorblindMode", 0)
-		SetCVar("showLootSpam", 1)
-		SetCVar("guildMemberNotify", 1)
-		SetCVar("chatBubblesParty", 0)
-		SetCVar("chatBubbles", 0)	
-		SetCVar("UnitNameOwn", 0)
-		SetCVar("UnitNameNPC", 0)
-		SetCVar("UnitNameNonCombatCreatureName", 0)
-		SetCVar("UnitNamePlayerGuild", 1)
-		SetCVar("UnitNamePlayerPVPTitle", 1)
-		SetCVar("UnitNameFriendlyPlayerName", 0)
-		SetCVar("UnitNameFriendlyPetName", 0)
-		SetCVar("UnitNameFriendlyGuardianName", 0)
-		SetCVar("UnitNameFriendlyTotemName", 0)
-		SetCVar("UnitNameEnemyPlayerName", 1)
-		SetCVar("UnitNameEnemyPetName", 1)
-		SetCVar("UnitNameEnemyGuardianName", 1)
-		SetCVar("UnitNameEnemyTotemName", 1)
-		SetCVar("CombatDamage", 1)
-		SetCVar("CombatHealing", 1)
-		SetCVar("nameplateShowFriends", 0)
-		SetCVar("nameplateShowFriendlyPets", 0)
-		SetCVar("nameplateShowFriendlyGuardians", 0)
-		SetCVar("nameplateShowFriendlyTotems", 0)
-		SetCVar("nameplateShowEnemies", 1)
-		SetCVar("nameplateShowEnemyPets", 1)
-		SetCVar("nameplateShowEnemyGuardians", 1)
-		SetCVar("nameplateShowEnemyTotems", 1)	
-		SetCVar("consolidateBuffs", 0)
-		SetCVar("lootUnderMouse", 1)
-		SetCVar("autoSelfCast", 1)
-		SetCVar("cameraDistanceMax", 50)
-		SetCVar("cameraDistanceMaxFactor", 3.4)
-	end
+	SetCVar("bloatnameplates", 0)
 	
 	-- Var ok, now setting chat frames if using Tukui chats.	
 	if (C.chat.enable == true) and (not IsAddOnLoaded("Prat") or not IsAddOnLoaded("Chatter")) then					
@@ -75,7 +54,7 @@ local function install()
 		FCF_SetLocked(ChatFrame3, 1)
 		FCF_DockFrame(ChatFrame3)
 
-		FCF_OpenNewWindow(LOOT)
+		FCF_OpenNewWindow(LOOT.."/"..L.chat_trade)
 		FCF_UnDockFrame(ChatFrame4)
 		FCF_SetLocked(ChatFrame4, 1)
 		ChatFrame4:Show()
@@ -86,25 +65,25 @@ local function install()
 			local chatName = FCF_GetChatWindowInfo(chatFrameId)
 			
 			-- set the size of chat frames
-			frame:Size(T.InfoLeftRightWidth + 1, 111)
+			frame:Size(350, 117)
 			
 			-- tell wow that we are using new size
-			SetChatWindowSavedDimensions(chatFrameId, T.Scale(T.InfoLeftRightWidth + 1), T.Scale(111))
+			SetChatWindowSavedDimensions(chatFrameId, 350, T.Scale(111))
 			
 			-- move general bottom left or Loot (if found) on right
 			if i == 1 then
 				frame:ClearAllPoints()
-				frame:Point("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, 6)
-			elseif i == 4 and chatName == LOOT then
+				frame:Point("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 9, 9)
+			elseif i == 4 and chatName == LOOT.."/"..L.chat_trade then
 				frame:ClearAllPoints()
-				frame:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 6)
+				frame:Point("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -9, 9)
 			end
 					
 			-- save new default position and dimension
 			FCF_SavePositionAndDimensions(frame)
 			
 			-- set default tukui font size
-			FCF_SetChatWindowFontSize(nil, frame, 12)
+			FCF_SetChatWindowFontSize(nil, frame, 13)
 			
 			-- rename windows general and combat log
 			if i == 1 then FCF_SetWindowName(frame, "G, S & W") end
@@ -113,7 +92,6 @@ local function install()
 		
 		ChatFrame_RemoveAllMessageGroups(ChatFrame1)
 		ChatFrame_RemoveChannel(ChatFrame1, L.chat_trade) -- erf, it seem we need to localize this now
-		ChatFrame_RemoveChannel(ChatFrame1, L.chat_general) -- erf, it seem we need to localize this now
 		ChatFrame_RemoveChannel(ChatFrame1, L.chat_defense) -- erf, it seem we need to localize this now
 		ChatFrame_RemoveChannel(ChatFrame1, L.chat_recrutment) -- erf, it seem we need to localize this now
 		ChatFrame_RemoveChannel(ChatFrame1, L.chat_lfg) -- erf, it seem we need to localize this now
@@ -159,11 +137,13 @@ local function install()
 				
 		-- Setup the right chat
 		ChatFrame_RemoveAllMessageGroups(ChatFrame4)
+		ChatFrame_AddChannel(ChatFrame4, L.chat_trade) -- erf, it seem we need to localize this now
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_XP_GAIN")
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_HONOR_GAIN")
 		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_FACTION_CHANGE")
 		ChatFrame_AddMessageGroup(ChatFrame4, "LOOT")
 		ChatFrame_AddMessageGroup(ChatFrame4, "MONEY")
+		ChatFrame_AddMessageGroup(ChatFrame4, "SKILL")
 				
 		-- enable classcolor automatically on login and on each character without doing /configure each time.
 		ToggleChatColorNamesByClassGroup(true, "SAY")
@@ -293,12 +273,12 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 				local w = T.eyefinity / ratio
 				
 				width = w
-				height = h			
+				height = h
 			end
 			
 			UIParent:SetSize(width, height)
 			UIParent:ClearAllPoints()
-			UIParent:SetPoint("CENTER")		
+			UIParent:SetPoint("CENTER")
 		end
 		
 		-- install default if we never ran Tukui on this character.

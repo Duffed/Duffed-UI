@@ -4,12 +4,11 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 --------------------------------------------------------------------
 
 local TukuiMinimap = CreateFrame("Frame", "TukuiMinimap", UIParent)
-TukuiMinimap:CreatePanel("Default", 1, 1, "CENTER", UIParent, "CENTER", 0, 0)
+TukuiMinimap:CreatePanel("Default", 144, 144, "TOPRIGHT", UIParent, "TOPRIGHT", -9, -9)
 TukuiMinimap:RegisterEvent("ADDON_LOADED")
-TukuiMinimap:SetPoint("TOPRIGHT", UIParent, "TOPRIGHT", T.Scale(-24), T.Scale(-22))
-TukuiMinimap:SetSize(T.Scale(144), T.Scale(144))
 TukuiMinimap:SetClampedToScreen(true)
 TukuiMinimap:SetMovable(true)
+TukuiMinimap:CreateShadow("Default")
 TukuiMinimap.text = T.SetFontString(TukuiMinimap, C.media.uffont, 12)
 TukuiMinimap.text:SetPoint("CENTER")
 TukuiMinimap.text:SetText(L.move_minimap)
@@ -178,7 +177,7 @@ end)
 ----------------------------------------------------------------------------------------
 -- Mouseover map, displaying zone and coords
 ----------------------------------------------------------------------------------------
-
+if C["datatext"].zonepanel == true then return end
 local m_zone = CreateFrame("Frame",nil,UIParent)
 m_zone:CreatePanel("Default", 0, 20, "TOPLEFT", Minimap, "TOPLEFT", 2,-2)
 m_zone:SetFrameLevel(5)

@@ -26,11 +26,11 @@ if not C["datatext"].hit == nil or C["datatext"].hit > 0 then
 
 		if int < 0 then
 			if attackpwr > spellpwr and select(2, UnitClass("Player")) ~= "HUNTER" then
-				Text:SetText(format("%.2f", GetCombatRatingBonus(6)).."% Hit")
+				Text:SetText(format("%.2f", GetCombatRatingBonus(6)).."%"..T.panelcolor.." Hit")
 			elseif select(2, UnitClass("Player")) == "HUNTER" then
-				Text:SetText(format("%.2f", GetCombatRatingBonus(7)).."% Hit")
+				Text:SetText(format("%.2f", GetCombatRatingBonus(7)).."%"..T.panelcolor.." Hit")
 			else
-				Text:SetText(format("%.2f", GetCombatRatingBonus(8)).."% Hit")
+				Text:SetText(format("%.2f", GetCombatRatingBonus(8)).."%"..T.panelcolor.." Hit")
 			end
 			int = 1
 		end

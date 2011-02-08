@@ -14,4 +14,4 @@ T.incombat = UnitAffectingCombat("player")
 T.patch = GetBuildInfo()
 T.level = UnitLevel("player")
 T.TotemOrientationDown = false
-T.InfoLeftRightWidth = 370
+T.InfoLeftRightWidth = 345

@@ -21,7 +21,7 @@ ssmover:SetTemplate("Default")
 ssmover:SetFrameStrata("HIGH")
 ssmover:SetBackdropBorderColor(1,0,0)
 ssmover:SetAlpha(0)
-ssmover.text = T.SetFontString(ssmover, C.media.uffont, 12)
+ssmover.text = T.SetFontString(ssmover, C.media.font, 12)
 ssmover.text:SetPoint("CENTER")
 ssmover.text:SetText(L.move_shapeshift)
 
@@ -85,9 +85,42 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			end
 		end
 		T.TukuiShiftBarUpdate()
+		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+C["actionbar"].buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		T.StyleShift()
+		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+C["actionbar"].buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
+		
+		-- Mouseover
+		if C["actionbar"].shapeshiftmouseover == true then
+			local function mouseover(alpha)
+				for i = 1, NUM_SHAPESHIFT_SLOTS do
+					local sb = _G["ShapeshiftButton"..i]
+					sb:SetAlpha(alpha)
+				end
+			end
+			
+			for i = 1, NUM_SHAPESHIFT_SLOTS do		
+				_G["ShapeshiftButton"..i]:SetAlpha(0)
+				_G["ShapeshiftButton"..i]:HookScript("OnEnter", function(self) mouseover(1) end)
+				_G["ShapeshiftButton"..i]:HookScript("OnLeave", function(self) mouseover(0) end)
+			end
+			ShapeShiftBorder:EnableMouse(true)
+			ShapeShiftBorder:HookScript("OnEnter", function(self) mouseover(1) end)
+			ShapeShiftBorder:HookScript("OnLeave", function(self) mouseover(0) end)
+		end
 	else
 		T.TukuiShiftBarUpdate()
 	end
 end)
+
+-- Border
+local ssborder = CreateFrame("Frame", "ShapeShiftBorder", ShapeshiftButton1)
+if C["actionbar"].shapeshiftborder ~= true then -- this config entry isnt added yet ..you can if u want and ..read this :>
+	ssborder:SetAlpha(0)
+else
+	ssborder:SetTemplate("Default")
+	ssborder:CreateShadow("Default")
+end
+ssborder:SetFrameLevel(1)
+ssborder:SetFrameStrata("BACKGROUND")
+ssborder:Point("LEFT", -4, 0)

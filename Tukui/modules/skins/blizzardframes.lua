@@ -98,7 +98,13 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
  
 		for i = 1, getn(ChatMenus) do
 			if _G[ChatMenus[i]] == _G["ChatMenu"] then
-				_G[ChatMenus[i]]:HookScript("OnShow", function(self) self:SetTemplate("Default") self:ClearAllPoints() self:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, T.Scale(30)) end)
+				_G[ChatMenus[i]]:HookScript("OnShow", function(self) self:SetTemplate("Default") self:ClearAllPoints() 
+					if ChatBG1 then
+						self:Point("BOTTOMRIGHT", ChatBG1, "TOPRIGHT", 0, 3)
+					else
+						self:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 30)
+					end
+				end)
 			else
 				_G[ChatMenus[i]]:HookScript("OnShow", function(self) self:SetTemplate("Default") end)
 			end
@@ -169,6 +175,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"ColorPickerCancelButton",
 			"StackSplitOkayButton",
 			"StackSplitCancelButton",
+			"WatchFrameCollapseExpandButton",
 		}
 		
 		for i = 1, getn(BlizzardButtons) do

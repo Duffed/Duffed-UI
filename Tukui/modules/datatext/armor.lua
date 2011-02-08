@@ -15,7 +15,7 @@ if C["datatext"].armor and C["datatext"].armor > 0 then
 
 	local function Update(self)
 		baseArmor , effectiveArmor, armor, posBuff, negBuff = UnitArmor("player");
-		Text:SetText((effectiveArmor).." "..L.datatext_armor)
+		Text:SetText((T.panelcolor..effectiveArmor).."|r "..L.datatext_armor)
 		--Setup Armor Tooltip
 		self:SetAllPoints(Text)
 	end
@@ -28,7 +28,11 @@ if C["datatext"].armor and C["datatext"].armor > 0 then
 	Stat:SetScript("OnEnter", function(self)
 		if not InCombatLockdown() then
 			local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)	
-			GameTooltip:SetOwner(panel, anchor, xoff, yoff)
+			if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
+				GameTooltip:SetOwner(panel, anchor, xoff, yoff)
+			else
+				GameTooltip:SetOwner(self, anchor, xoff, yoff)
+			end
 			GameTooltip:ClearLines()
 			GameTooltip:AddLine(L.datatext_mitigation)
 			local lv = 83

@@ -23,7 +23,7 @@ if C["datatext"].micromenu and C["datatext"].micromenu > 0 then
 	T.PP(C["datatext"].micromenu, Text)
 
 	local function OnEvent(self, event, ...)
-		Text:SetText(MAINMENU_BUTTON)
+		Text:SetText(T.panelcolor..MAINMENU_BUTTON)
 		self:SetAllPoints(Text)
 	end
 

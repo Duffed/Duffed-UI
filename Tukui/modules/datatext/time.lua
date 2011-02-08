@@ -76,7 +76,12 @@ if C["datatext"].wowtime and C["datatext"].wowtime > 0 then
 
 	Stat:SetScript("OnEnter", function(self)
 		local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
-		OnLoad = function(self) RequestRaidInfo() end,	
+		OnLoad = function(self) RequestRaidInfo() end
+		if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
+			GameTooltip:SetOwner(panel, anchor, xoff, yoff)
+		else
+			GameTooltip:SetOwner(self, anchor, xoff, yoff)
+		end
 		GameTooltip:SetOwner(panel, anchor, xoff, yoff)
 		GameTooltip:ClearLines()
 		local pvp = GetNumWorldPVPAreas()

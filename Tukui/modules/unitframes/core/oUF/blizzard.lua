@@ -79,7 +79,7 @@ function oUF:DisableBlizzard(unit, object)
 		enableTargetUpdate(object)
 	elseif(unit:match'(boss)%d?$' == 'boss') then
 		enableTargetUpdate(object)
-
+		
 		local id = unit:match'boss(%d)'
 		if(id) then
 			baseName = 'Boss' .. id .. 'TargetFrame'
@@ -88,13 +88,15 @@ function oUF:DisableBlizzard(unit, object)
 				HandleFrame(('Boss%dTargetFrame'):format(i))
 			end
 		end
-	elseif(unit:match'(party)%d?$' == 'party') then
-		local id = unit:match'party(%d)'
-		if(id) then
-			baseName = 'PartyMemberFrame' .. id
-		else
-			for i=1, 4 do
-				HandleFrame(('PartyMemberFrame%d'):format(i))
+	if IsAddOnLoaded("Tukui_Raid") or IsAddOnLoaded("Tukui_Raid_Healing") then
+		elseif(unit:match'(party)%d?$' == 'party') then
+			local id = unit:match'party(%d)'
+			if(id) then
+				baseName = 'PartyMemberFrame' .. id
+			else
+				for i=1, 4 do
+					HandleFrame(('PartyMemberFrame%d'):format(i))
+				end
 			end
 		end
 	end

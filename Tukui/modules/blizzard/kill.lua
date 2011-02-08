@@ -14,6 +14,7 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 			CompactPartyFrame:Kill()
 			CompactRaidFrameManager:Kill()
 			CompactRaidFrameContainer:Kill()
+			SetCVar("useCompactPartyFrames", 1)
 		end	
 	else
 		if addon == "Blizzard_AchievementUI" then

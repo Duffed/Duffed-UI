@@ -87,7 +87,11 @@ Stat:SetScript("OnEnter", function(self)
 		self.tooltip = true
 		local bandwidth = GetAvailableBandwidth()
 		local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
-		GameTooltip:SetOwner(panel, anchor, xoff, yoff)
+		if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
+			GameTooltip:SetOwner(panel, anchor, xoff, yoff)
+		else
+			GameTooltip:SetOwner(self, anchor, xoff, yoff)
+		end
 		GameTooltip:ClearLines()
 		if bandwidth ~= 0 then
 			GameTooltip:AddDoubleLine(L.datatext_bandwidth , string.format(bandwidthString, bandwidth),0.69, 0.31, 0.31,0.84, 0.75, 0.65)

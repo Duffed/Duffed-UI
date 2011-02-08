@@ -19,7 +19,7 @@ if C["datatext"].bags and C["datatext"].bags > 0 then
 			free, total = free + GetContainerNumFreeSlots(i), total + GetContainerNumSlots(i)
 		end
 		used = total - free
-		Text:SetText(L.datatext_bags..used.."/"..total)
+		Text:SetText(T.panelcolor..L.datatext_bags.."|r"..used.."/"..total)
 		self:SetAllPoints(Text)
 	end
           

@@ -4,6 +4,7 @@ if not C["unitframes"].enable == true or C["unitframes"].gridonly == true then r
 local font2 = C["media"].uffont
 local font1 = C["media"].font
 local normTex = C["media"].normTex
+local fontsize = C["media"].uffontsize
 
 local function Shared(self, unit)
 	self.colors = T.oUF_colors
@@ -26,13 +27,12 @@ local function Shared(self, unit)
 	health.bg = health:CreateTexture(nil, 'BORDER')
 	health.bg:SetAllPoints(health)
 	health.bg:SetTexture(normTex)
-	health.bg:SetTexture(0.3, 0.3, 0.3)
 	health.bg.multiplier = 0.3
 	self.Health.bg = health.bg
 		
 	health.value = health:CreateFontString(nil, "OVERLAY")
 	health.value:SetPoint("RIGHT", health, -3, 1)
-	health.value:SetFont(font2, 12*T.raidscale, "THINOUTLINE")
+	health.value:SetFont(font2, fontsize*T.raidscale, "THINOUTLINE")
 	health.value:SetTextColor(1,1,1)
 	health.value:SetShadowOffset(1, -1)
 	self.Health.value = health.value
@@ -44,12 +44,14 @@ local function Shared(self, unit)
 	if C.unitframes.unicolor == true then
 		health.colorDisconnected = false
 		health.colorClass = false
-		health:SetStatusBarColor(.3, .3, .3, 1)
-		health.bg:SetVertexColor(.1, .1, .1, 1)		
+		health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
+		health.bg:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
+		health.bg:SetTexture(.6, .6, .6)	
 	else
 		health.colorDisconnected = true
 		health.colorClass = true
-		health.colorReaction = true			
+		health.colorReaction = true	
+		health.bg:SetTexture(.1, .1, .1)		
 	end
 	
 	local power = CreateFrame("StatusBar", nil, self)
@@ -78,7 +80,7 @@ local function Shared(self, unit)
 	
 	local name = health:CreateFontString(nil, "OVERLAY")
     name:SetPoint("LEFT", health, 3, 0)
-	name:SetFont(font2, 12*T.raidscale, "THINOUTLINE")
+	name:SetFont(font2, fontsize*T.raidscale, "THINOUTLINE")
 	name:SetShadowOffset(1, -1)
 	self:Tag(name, "[Tukui:namemedium]")
 	self.Name = name
@@ -141,13 +143,6 @@ local function Shared(self, unit)
 	self.DebuffHighlightBackdrop = true
 	self.DebuffHighlightFilter = true
 	
-	--local picon = self.Health:CreateTexture(nil, 'OVERLAY')
-	--picon:SetPoint('CENTER', self.Health)
-	--picon:SetSize(16, 16)
-	--picon:SetTexture[[Interface\AddOns\Tukui\medias\textures\picon]]
-	--picon.Override = T.Phasing
-	--self.PhaseIcon = picon
-	
 	if C["unitframes"].showrange == true then
 		local range = {insideAlpha = 1, outsideAlpha = C["unitframes"].raidalphaoor}
 		self.Range = range
@@ -179,6 +174,13 @@ local function Shared(self, unit)
 			maxOverflow = 1,
 		}
 	end
+	
+	-- border
+	border = CreateFrame("Frame", nil, self)
+	border:CreatePanel("Default", 1 , 1, "TOPLEFT", health, "TOPLEFT", -2, 2)
+	border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+	border:CreateShadow("Default")
+	self.panel = border
 
 	return self
 end
@@ -195,16 +197,20 @@ oUF:Factory(function(self)
 	]],
 	'initial-width', T.Scale(150*T.raidscale),
 	'initial-height', T.Scale(32*T.raidscale),	
-	"showParty", true, "showPlayer", C["unitframes"].showplayerinparty, "showRaid", true, "groupFilter", "1,2,3,4,5,6,7,8", "groupingOrder", "1,2,3,4,5,6,7,8", "groupBy", "GROUP", "yOffset", T.Scale(-4))
-	raid:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 15, -300*T.raidscale)
+	"showParty", true, "showPlayer", C["unitframes"].showplayerinparty, "showRaid", true, "groupFilter", "1,2,3,4,5,6,7,8", "groupingOrder", "1,2,3,4,5,6,7,8", "groupBy", "GROUP", "yOffset", T.Scale(-8))
+	if ChatBG1 then
+		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)
+	else
+		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
+	end
 	
 	local pets = {} 
 		pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
-		pets[1]:SetPoint('TOPLEFT', raid, 'TOPLEFT', 0, -240*T.raidscale)
+		pets[1]:SetPoint('BOTTOMLEFT', raid, 'TOPLEFT', 0, 24*T.raidscale)
 		pets[1]:Size(150*T.raidscale, 32*T.raidscale)
 	for i =2, 4 do 
 		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetPoint('TOP', pets[i-1], 'BOTTOM', 0, -8)
+		pets[i]:SetPoint('BOTTOM', pets[i-1], 'TOP', 0, 8)
 		pets[i]:Size(150*T.raidscale, 32*T.raidscale)
 	end
 		
@@ -221,13 +227,10 @@ oUF:Factory(function(self)
 			local numraid = GetNumRaidMembers()
 			local numparty = GetNumPartyMembers()
 			if numparty > 0 and numraid == 0 or numraid > 0 and numraid <= 5 then
-				raid:SetPoint("TOPLEFT", UIParent, "TOPLEFT", 15, -300*T.raidscale)
 				for i,v in ipairs(pets) do v:Enable() end
 			elseif numraid > 5 and numraid <= 10 then
-				raid:SetPoint('TOPLEFT', UIParent, 15, -260*T.raidscale)
 				for i,v in ipairs(pets) do v:Disable() end
 			elseif numraid > 10 and numraid <= 15 then
-				raid:SetPoint('TOPLEFT', UIParent, 16, -170*T.raidscale)
 				for i,v in ipairs(pets) do v:Disable() end
 			elseif numraid > 15 then
 				for i,v in ipairs(pets) do v:Disable() end

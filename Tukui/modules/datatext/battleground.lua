@@ -22,7 +22,7 @@ bgframe:SetScript("OnEnter", function(self)
 				GameTooltip:ClearLines()
 				GameTooltip:Point("BOTTOM", self, "TOP", 0, 1)
 				GameTooltip:ClearLines()
-				GameTooltip:AddLine(L.datatext_ttstatsfor.."[|cffCC0033"..name.."|r]")
+				GameTooltip:AddLine(L.datatext_ttstatsfor.."["..T.panelcolor..name.."|r]")
 				GameTooltip:AddLine' '
 				GameTooltip:AddDoubleLine(L.datatext_ttkillingblows, killingBlows,1,1,1)
 				GameTooltip:AddDoubleLine(L.datatext_tthonorkills, honorableKills,1,1,1)
@@ -86,15 +86,15 @@ local function Update(self, t)
 		for i=1, numScores do
 			local name, killingBlows, honorableKills, deaths, honorGained, faction, race, class, classToken, damageDone, healingDone, bgRating, ratingChange = GetBattlefieldScore(i)
 			if healingDone > damageDone then
-				dmgtxt = (L.datatext_healing..healingDone)
+				dmgtxt = (L.datatext_healing..T.panelcolor..healingDone)
 			else
-				dmgtxt = (L.datatext_damage..damageDone)
+				dmgtxt = (L.datatext_damage..T.panelcolor..damageDone)
 			end
 			if ( name ) then
 				if ( name == T.myname ) then
-					Text2:SetText(L.datatext_honor..format('%d', honorGained))
+					Text2:SetText(L.datatext_honor..format('%d', T.panelcolor..honorGained))
 					Text1:SetText(dmgtxt)
-					Text3:SetText(L.datatext_killingblows..killingBlows)
+					Text3:SetText(L.datatext_killingblows..T.panelcolor..killingBlows)
 				end   
 			end
 		end 

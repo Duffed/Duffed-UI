@@ -3,11 +3,11 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 local FormatTime = function(s)
 	local day, hour, minute = 86400, 3600, 60
 	if s >= day then
-		return format("|cffeeeeee%d d|r", ceil(s / day))
+		return format("%d"..T.panelcolor.."d|r", ceil(s / day))
 	elseif s >= hour then
-		return format("|cffeeeeee%d h|r", ceil(s / hour))
+		return format("%d"..T.panelcolor.."h|r", ceil(s / hour))
 	elseif s >= minute then
-		return format("|cffeeeeee%d m|r", ceil(s / minute))
+		return format("%d"..T.panelcolor.."m|r", ceil(s / minute))
 	elseif s >= minute / 12 then
 		return floor(s)
 	end
@@ -22,13 +22,13 @@ local function UpdateTime(self, elapsed)
 		else
 			local time = FormatTime(self.expiration)
 			if self.expiration <= 86400.5 and self.expiration > 3600.5 then
-				self.time:SetText("|cffcccccc"..time.."|r")
+				self.time:SetText("|cffffffff"..time.."|r")
 			elseif self.expiration <= 3600.5 and self.expiration > 60.5 then
-				self.time:SetText("|cffcccccc"..time.."|r")
+				self.time:SetText("|cffffffff"..time.."|r")
 			elseif self.expiration <= 60.5 and self.expiration > 10.5 then
-				self.time:SetText("|cffE8D911"..time.."|r")
+				self.time:SetText("|cffffffff"..time.."|r")
 			elseif self.expiration <= 10.5 then
-				self.time:SetText("|cffff0000"..time.."|r")
+				self.time:SetText("|cffe90000"..time.."|r")
 			end
 		end
 	end
@@ -48,6 +48,7 @@ local function UpdateWeapons(button, slot, active, expiration)
 		button.bg:SetFrameLevel(button:GetFrameLevel() - 1)
 		button.bg:SetFrameStrata(button:GetFrameStrata())
 		button.bg:SetAlpha(0)
+		button.bg:CreateShadow("Default")
 	end
 	
 	if active then
@@ -75,9 +76,8 @@ local function UpdateAuras(header, button, weapon)
 		button.count:SetPoint("BOTTOMRIGHT", -1, 1)
 		button.count:SetFont(C.media.font, 12, "OUTLINE")
 
-		button.time = button:CreateFontString(nil, "ARTWORK")
+		button.time = T.SetFontString(button, C.media.font, 12)
 		button.time:SetPoint("BOTTOM", 0, -17)
-		button.time:SetFont(C.media.font, 12, "OUTLINE")
 
 		button:SetScript("OnUpdate", UpdateTime)
 		
@@ -85,6 +85,7 @@ local function UpdateAuras(header, button, weapon)
 		button.bg:CreatePanel("Default", 30, 30, "CENTER", button, "CENTER", 0, 0)
 		button.bg:SetFrameLevel(button:GetFrameLevel() - 1)
 		button.bg:SetFrameStrata(button:GetFrameStrata())
+		button.bg:CreateShadow("Default")
 	end
 	
 	local name, _, texture, count, dtype, duration, expiration = UnitAura(header:GetAttribute("unit"), button:GetID(), header:GetAttribute("filter"))
@@ -183,8 +184,8 @@ local function CreateAuraHeader(filter, ...)
 	return header
 end
 
-ScanAuras(CreateAuraHeader("HELPFUL", "TOPRIGHT", -184, -24))
-ScanAuras(CreateAuraHeader("HARMFUL", "TOPRIGHT", -184, -160))
+ScanAuras(CreateAuraHeader("HELPFUL", "TOPRIGHT", Minimap, "TOPLEFT", -11, 0))
+ScanAuras(CreateAuraHeader("HARMFUL", "TOPRIGHT", Minimap, "BOTTOMLEFT", -11, 5))
 
 -- create our aura
 local start = CreateFrame("Frame")

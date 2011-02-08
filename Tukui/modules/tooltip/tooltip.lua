@@ -31,10 +31,10 @@ anchor:SetFrameStrata("TOOLTIP")
 anchor:SetFrameLevel(20)
 anchor:SetClampedToScreen(true)
 anchor:SetAlpha(0)
-if C.chat.background and TukuiChatBackgroundRight then
-	anchor:SetPoint("BOTTOMRIGHT", TukuiChatBackgroundRight, "TOPRIGHT", 0, -TukuiInfoRight:GetHeight())
+if ChatBG2 then
+	anchor:SetPoint("BOTTOMRIGHT", ChatBG2, "TOPRIGHT", 0, -TukuiInfoRight:GetHeight())
 else
-	anchor:SetPoint("BOTTOMRIGHT", TukuiInfoRight)
+	anchor:Point("BOTTOMRIGHT", ChatFrame4, "TOPRIGHT", 0, 10)
 end
 anchor:SetTemplate("Default")
 anchor:SetBackdropBorderColor(1, 0, 0, 1)
@@ -68,18 +68,6 @@ local function UpdateTooltip(self)
 		self:Hide()
 	end
 	
-	if name and (TukuiPlayerBuffs or TukuiPlayerDebuffs) then
-		if (TukuiPlayerBuffs:GetPoint():match("LEFT") or TukuiPlayerDebuffs:GetPoint():match("LEFT")) and (name:match("TukuiPlayerBuffs") or name:match("TukuiPlayerDebuffs")) then
-			self:SetAnchorType("ANCHOR_BOTTOMRIGHT", x, -x)
-		end
-	end
-		
-	if (owner == MiniMapBattlefieldFrame or owner == MiniMapMailFrame) and TukuiMinimap then
-		if TukuiMinimap:GetPoint():match("LEFT") then 
-			self:SetAnchorType("ANCHOR_TOPRIGHT", x, -x)
-		end
-	end
-	
 	if self:GetAnchorType() == "ANCHOR_NONE" and TukuiTooltipAnchor then
 		local point = TukuiTooltipAnchor:GetPoint()
 		if point == "TOPLEFT" then
@@ -95,13 +83,8 @@ local function UpdateTooltip(self)
 			self:ClearAllPoints()
 			self:SetPoint("BOTTOMLEFT", TukuiTooltipAnchor, "TOPLEFT", 0, x)		
 		elseif point == "BOTTOMRIGHT" or point == "RIGHT" then
-			if TukuiBags and TukuiBags:IsShown() then
-				self:ClearAllPoints()
-				self:SetPoint("BOTTOMRIGHT", TukuiBags, "TOPRIGHT", 0, x)			
-			else
-				self:ClearAllPoints()
-				self:SetPoint("BOTTOMRIGHT", TukuiTooltipAnchor, "TOPRIGHT", 0, x)
-			end
+			self:ClearAllPoints()
+			self:SetPoint("BOTTOMRIGHT", TukuiTooltipAnchor, "TOPRIGHT", 0, x)
 		else
 			self:ClearAllPoints()
 			self:SetPoint("BOTTOM", TukuiTooltipAnchor, "TOP", 0, x)		
@@ -358,6 +341,7 @@ end
 local SetStyle = function(self)
 	self:SetTemplate("Default")
 	BorderColor(self)
+	self:CreateShadow("Default")
 end
 
 TukuiTooltip:RegisterEvent("PLAYER_ENTERING_WORLD")

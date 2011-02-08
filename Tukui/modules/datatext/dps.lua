@@ -14,7 +14,7 @@ if C["datatext"].dps_text and C["datatext"].dps_text > 0 then
      
 	local dText = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
 	dText:SetFont(C.media.font, C["datatext"].fontsize)
-	dText:SetText("0.0 ",L.datatext_dps)
+	dText:SetText(T.panelcolor.."0.0 |r",L.datatext_dps)
 
 	T.PP(C["datatext"].dps_text, dText)
 
@@ -33,7 +33,7 @@ if C["datatext"].dps_text and C["datatext"].dps_text > 0 then
 			cmbt_time = cmbt_time + elap
 		end
        
-		dText:SetText(getDPS())
+		dText:SetText(T.panelcolor..getDPS())
 	end)
      
 	function DPS_FEED:PLAYER_LOGIN()
@@ -78,7 +78,7 @@ if C["datatext"].dps_text and C["datatext"].dps_text > 0 then
 	end
 
 	function DPS_FEED:PLAYER_REGEN_ENABLED()
-		dText:SetText(getDPS())
+		dText:SetText(T.panelcolor..getDPS())
 	end
 	
 	function DPS_FEED:PLAYER_REGEN_DISABLED()

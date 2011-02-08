@@ -20,7 +20,7 @@ T.PP = function(p, obj)
 	if p == 1 then
 		obj:SetParent(left)
 		obj:SetHeight(left:GetHeight())
-		obj:SetPoint("LEFT", left, 30, 0)
+		obj:SetPoint("LEFT", left, 20, 0)
 		obj:SetPoint('TOP', left)
 		obj:SetPoint('BOTTOM', left)
 	elseif p == 2 then
@@ -31,13 +31,13 @@ T.PP = function(p, obj)
 	elseif p == 3 then
 		obj:SetParent(left)
 		obj:SetHeight(left:GetHeight())
-		obj:SetPoint("RIGHT", left, -30, 0)
+		obj:SetPoint("RIGHT", left, -20, 0)
 		obj:SetPoint('TOP', left)
 		obj:SetPoint('BOTTOM', left)
 	elseif p == 4 then
 		obj:SetParent(right)
 		obj:SetHeight(right:GetHeight())
-		obj:SetPoint("LEFT", right, 30, 0)
+		obj:SetPoint("LEFT", right, 20, 0)
 		obj:SetPoint('TOP', right)
 		obj:SetPoint('BOTTOM', right)
 	elseif p == 5 then
@@ -48,7 +48,7 @@ T.PP = function(p, obj)
 	elseif p == 6 then
 		obj:SetParent(right)
 		obj:SetHeight(right:GetHeight())
-		obj:SetPoint("RIGHT", right, -30, 0)
+		obj:SetPoint("RIGHT", right, -20, 0)
 		obj:SetPoint('TOP', right)
 		obj:SetPoint('BOTTOM', right)
 	end
@@ -72,13 +72,9 @@ T.DataTextTooltipAnchor = function(self)
 	local panel = self:GetParent()
 	local anchor = "ANCHOR_TOP"
 	local xoff = 0
-	local yoff = T.Scale(6)
+	local yoff = T.Scale(4)
 	
-	if panel == TukuiInfoLeft then
-		anchor = "ANCHOR_TOPLEFT"
-	elseif panel == TukuiInfoRight then
-		anchor = "ANCHOR_TOPRIGHT"
-	elseif panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
+	if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
 		local position = TukuiMinimap:GetPoint()
 		if position:match("LEFT") then
 			anchor = "ANCHOR_BOTTOMRIGHT"
@@ -291,6 +287,14 @@ function T.ShortValue(v)
 		return v
 	end
 end
+
+-- Classcolored Datatext
+if C["datatext"].classcolored == true then
+	C["datatext"].color = T.oUF_colors.class[T.myclass]
+end
+-- convert datatext color from rgb decimal to hex 
+local dr, dg, db = unpack(C["datatext"].color)
+T.panelcolor = ("|cff%.2x%.2x%.2x"):format(dr * 255, dg * 255, db * 255)
 ------------------------------------------------------------------------
 --	unitframes Functions
 ------------------------------------------------------------------------
@@ -403,23 +407,23 @@ T.PostUpdateHealth = function(health, unit, min, max)
 				if C["unitframes"].showtotalhpmp == true then
 					health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
 				else
-					health.value:SetFormattedText("|cffAF5050%d|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", min, r * 255, g * 255, b * 255, floor(min / max * 100))
+					health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
 				end
-			elseif unit == "target" or (unit and unit:find("boss%d")) then
+			elseif unit == "target" or unit == "focus" or (unit and unit:find("boss%d")) then
 				if C["unitframes"].showtotalhpmp == true then
 					health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
 				else
-					health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
+					health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%s%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
 				end
-			elseif (unit and unit:find("arena%d")) or unit == "focus" or unit == "focustarget" then
+			elseif (unit and unit:find("arena%d")) then
 				health.value:SetText("|cff559655"..ShortValue(min).."|r")
 			else
 				health.value:SetText("|cff559655-"..ShortValueNegative(max-min).."|r")
 			end
 		else
 			if unit == "player" and health:GetAttribute("normalUnit") ~= "pet" then
-				health.value:SetText("|cff559655"..max.."|r")
-			elseif unit == "target" or unit == "focus"  or unit == "focustarget" or (unit and unit:find("arena%d")) then
+				health.value:SetText("|cff559655"..ShortValue(max).."|r")
+			elseif unit == "target" or unit == "focus" or (unit and unit:find("arena%d")) then
 				health.value:SetText("|cff559655"..ShortValue(max).."|r")
 			else
 				health.value:SetText(" ")
@@ -467,16 +471,6 @@ T.PostUpdatePetColor = function(health, unit, min, max)
 	end
 end
 
-T.PostNamePosition = function(self)
-	self.Name:ClearAllPoints()
-	if (self.Power.value:GetText() and UnitIsEnemy("player", "target") and C["unitframes"].targetpowerpvponly == true) or (self.Power.value:GetText() and C["unitframes"].targetpowerpvponly == false) then
-		self.Name:SetPoint("CENTER", self.panel, "CENTER", 0, 0)
-	else
-		self.Power.value:SetAlpha(0)
-		self.Name:SetPoint("LEFT", self.panel, "LEFT", 4, 0)
-	end
-end
-
 T.PreUpdatePower = function(power, unit)
 	local _, pType = UnitPowerType(unit)
 	
@@ -488,14 +482,16 @@ end
 
 T.PostUpdatePower = function(power, unit, min, max)
 	local self = power:GetParent()
-	local pType, pToken = UnitPowerType(unit)
+	local pType, pToken, altR, altG, altB = UnitPowerType(unit)
 	local color = T.oUF_colors.power[pToken]
 
 	if color then
 		power.value:SetTextColor(color[1], color[2], color[3])
+	else
+		power.value:SetTextColor(altR, altG, altB, 1)
 	end
 
-	if not UnitIsPlayer(unit) and not UnitPlayerControlled(unit) or not UnitIsConnected(unit) then
+	if (not UnitIsPlayer(unit) and not UnitPlayerControlled(unit) or not UnitIsConnected(unit)) and not (self.unit and self.unit:find("boss%d")) then
 		power.value:SetText()
 	elseif UnitIsDead(unit) or UnitIsGhost(unit) then
 		power.value:SetText()
@@ -512,7 +508,7 @@ T.PostUpdatePower = function(power, unit, min, max)
 					if C["unitframes"].showtotalhpmp == true then
 						power.value:SetFormattedText("%s |cffD7BEA5|||r %s", ShortValue(max - (max - min)), ShortValue(max))
 					else
-						power.value:SetFormattedText("%d%%", floor(min / max * 100))
+						power.value:SetFormattedText("%s%%", floor(min / max * 100))
 					end
 				elseif (unit and unit:find("arena%d")) or unit == "focus" or unit == "focustarget" then
 					power.value:SetText(ShortValue(min))
@@ -533,9 +529,6 @@ T.PostUpdatePower = function(power, unit, min, max)
 				power.value:SetText(min)
 			end
 		end
-	end
-	if self.Name then
-		if unit == "target" then T.PostNamePosition(self, power) end
 	end
 end
 
@@ -669,11 +662,15 @@ end
 
 local CheckInterrupt = function(self, unit)
 	if unit == "vehicle" then unit = "player" end
-
-	if self.interrupt and UnitCanAttack("player", unit) then
+	if self.interrupt then -- and UnitCanAttack("player", unit)
 		self:SetStatusBarColor(1, 0, 0, 0.5)	
 	else
-		self:SetStatusBarColor(0.31, 0.45, 0.63, 0.5)		
+		if unit == "player" then
+			r,g,b = unpack(C["datatext"].color)
+			self:SetStatusBarColor(r, g, b, .7)
+		else
+			self:SetStatusBarColor(unpack(C["castbar"].color))
+		end
 	end
 end
 
@@ -739,7 +736,6 @@ T.EclipseDisplay = function(self, login)
 	if eb:IsShown() then
 		txt:Show()
 		self.FlashInfo:Hide()
-		self.shadow:Point("TOPLEFT", -4, 12)
 		if T.lowversion then
 			if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 34) end
 		else
@@ -748,7 +744,6 @@ T.EclipseDisplay = function(self, login)
 	else
 		txt:Hide()
 		self.FlashInfo:Show()
-		self.shadow:Point("TOPLEFT", -4, 4)
 		if T.lowversion then
 			if self.Buffs then self.Buffs:SetPoint("TOPLEFT", self, "TOPLEFT", 0, 26) end
 		else
@@ -775,6 +770,8 @@ T.UpdateName = function(self,event)
 end
 
 local UpdateManaLevelDelay = 0
+local ifire = GetSpellInfo(588)
+local iwill = GetSpellInfo(73413)
 T.UpdateManaLevel = function(self, elapsed)
 	UpdateManaLevelDelay = UpdateManaLevelDelay + elapsed
 	if self.parent.unit ~= "player" or UpdateManaLevelDelay < 0.2 or UnitIsDeadOrGhost("player") or UnitPowerType("player") ~= 0 then return end
@@ -786,8 +783,19 @@ T.UpdateManaLevel = function(self, elapsed)
 		self.ManaLevel:SetText("|cffaf5050"..L.unitframes_ouf_lowmana.."|r")
 		Flash(self, 0.3)
 	else
-		self.ManaLevel:SetText()
 		StopFlash(self)
+		-- need this for armor swap in arena
+		if T.myclass == "PRIEST" and C["unitframes"].priestarmor then
+			if UnitBuff("player", ifire) then
+				self.ManaLevel:SetText(ifire)
+			elseif UnitBuff("player", iwill) then
+				self.ManaLevel:SetText(iwill)
+			else
+				self.ManaLevel:SetText()
+			end
+		else
+			self.ManaLevel:SetText()
+		end
 	end
 end
 

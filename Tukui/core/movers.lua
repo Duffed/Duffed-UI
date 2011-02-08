@@ -13,6 +13,7 @@ T.MoverFrames = {
 	TukuiWatchFrameAnchor,
 	TukuiGMFrameAnchor,
 	TukuiVehicleAnchor,
+	TukuiBnetHolder,
 }
 
 -- used to exec various code if we enable or disable moving
@@ -60,7 +61,7 @@ local function exec(self, enable)
 		end
 	end
 	
-	if self == TukuiTooltipAnchor or self == TukuiRollAnchor or self == TukuiAchievementHolder or self == TukuiVehicleAnchor then
+	if self == TukuiTooltipAnchor or self == TukuiRollAnchor or self == TukuiAchievementHolder or self == TukuiVehicleAnchor or self == TukuiBnetHolder then
 		if enable then
 			self:SetAlpha(1)
 		else
@@ -115,7 +116,7 @@ local function moving()
 	
 	for i = 1, getn(T.MoverFrames) do
 		if T.MoverFrames[i] then		
-			if enable then			
+			if enable then
 				T.MoverFrames[i]:EnableMouse(true)
 				T.MoverFrames[i]:RegisterForDrag("LeftButton", "RightButton")
 				T.MoverFrames[i]:SetScript("OnDragStart", function(self) 
@@ -131,6 +132,7 @@ local function moving()
 				exec(T.MoverFrames[i], enable)			
 				if T.MoverFrames[i].text then 
 					T.MoverFrames[i].text:Show() 
+					T.MoverFrames[i].text:SetFont(C["media"].font, 12)
 				end
 			else			
 				T.MoverFrames[i]:EnableMouse(false)

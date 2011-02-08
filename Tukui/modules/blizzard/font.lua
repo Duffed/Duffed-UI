@@ -71,7 +71,11 @@ TukuiFonts:SetScript("OnEvent", function(self, event, addon)
 	SetFont(SystemFont_Tiny,                    NORMAL, 12)
 	SetFont(Tooltip_Med,                        NORMAL, 12)
 	SetFont(Tooltip_Small,                      NORMAL, 12)
+if C.general.blizzardsct then
 	SetFont(CombatTextFont,                     COMBAT, 100, "OUTLINE") -- number here just increase the font quality.
+else
+	SetFont(CombatTextFont,                     NORMAL, 100, "OUTLINE") -- number here just increase the font quality.
+end
 	SetFont(SystemFont_Shadow_Huge1,            NORMAL, 20, "THINOUTLINE")
 	SetFont(ZoneTextString,                     NORMAL, 32, "OUTLINE")
 	SetFont(SubZoneTextString,                  NORMAL, 25, "OUTLINE")
@@ -86,3 +90,7 @@ TukuiFonts:SetScript("OnEvent", function(self, event, addon)
 	self:UnregisterAllEvents()
 	self = nil
 end)
+
+-- overwrite blizzards entering- and leaving combat string
+ENTERING_COMBAT = "+Combat"
+LEAVING_COMBAT = "-Combat"

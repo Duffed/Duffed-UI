@@ -1,20 +1,11 @@
 local T, C, L = unpack(select(2, ...))
 
 C["media"] = {
-	-- fonts (ENGLISH, SPANISH)
+	-- fonts
 	["font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
 	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
-	
-	-- fonts (DEUTSCH)
-	["de_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["de_uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["de_dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\normal_font.ttf]], -- general font of dmg / sct
-	
-	-- fonts (FRENCH)
-	["fr_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["fr_uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["fr_dmgfont"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of dmg / sct
+	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of dmg / sct
+	["uffontsize"] = 8,
 	
 	-- fonts (RUSSIAN)
 	["ru_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
@@ -37,9 +28,9 @@ C["media"] = {
 	["bubbleTex"] = [[Interface\AddOns\Tukui\medias\textures\bubbleTex]], -- unitframes combo points
 	["copyicon"] = [[Interface\AddOns\Tukui\medias\textures\copy]], -- copy icon
 	["blank"] = [[Interface\AddOns\Tukui\medias\textures\blank]], -- the main texture for all borders/panels
-	["bordercolor"] = { .6,.6,.6 }, -- border color of tukui panels
-	["altbordercolor"] = { .4,.4,.4 }, -- alternative border color, mainly for unitframes text panels.
-	["backdropcolor"] = { .1,.1,.1 }, -- background color of tukui panels
+	["bordercolor"] = { .2,.2,.2 }, -- border color of tukui panels
+	["altbordercolor"] = { .2,.2,.2 }, -- alternative border color, mainly for unitframes text panels.
+	["backdropcolor"] = { .05,.05,.05 }, -- background color of tukui panels
 	["buttonhover"] = [[Interface\AddOns\Tukui\medias\textures\button_hover]],
 	
 	-- sound

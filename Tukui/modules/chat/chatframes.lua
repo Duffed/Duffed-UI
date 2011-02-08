@@ -66,16 +66,20 @@ local function SetChatStyle(frame)
 		-- now show text if mouse is found over tab.
 		tab:HookScript("OnEnter", function() _G[chat.."TabText"]:Show() end)
 		tab:HookScript("OnLeave", function() _G[chat.."TabText"]:Hide() end)
+	else
+		-- Stop the chat chat from fading out
+		_G[chat]:SetFading(false)
 	end
+	
+	_G[chat.."TabText"]:SetTextColor(unpack(C["datatext"].color))
+	_G[chat.."TabText"].SetTextColor = T.dummy
+	_G[chat.."TabText"]:SetFont(C.media.font,12,"THINOUTLINE")
 	
 	-- yeah baby
 	_G[chat]:SetClampRectInsets(0,0,0,0)
 	
 	-- Removes crap from the bottom of the chatbox so it can go to the bottom of the screen.
 	_G[chat]:SetClampedToScreen(false)
-			
-	-- Stop the chat chat from fading out
-	_G[chat]:SetFading(false)
 	
 	-- set min height/width to original tukui size
 	_G[chat]:SetMinResize(371,111)
@@ -83,8 +87,8 @@ local function SetChatStyle(frame)
 	
 	-- move the chat edit box
 	_G[chat.."EditBox"]:ClearAllPoints()
-	_G[chat.."EditBox"]:Point("TOPLEFT", TukuiTabsLeftBackground or TukuiInfoLeft, 2, -2)
-	_G[chat.."EditBox"]:Point("BOTTOMRIGHT", TukuiTabsLeftBackground or TukuiInfoLeft, -2, 2)	
+	_G[chat.."EditBox"]:Point("TOPLEFT", ChatBG1Tabs or TukuiInfoLeft, 2, -2)
+	_G[chat.."EditBox"]:Point("BOTTOMRIGHT", ChatBG1Tabs or TukuiInfoLeft, -2, 2)	
 	
 	-- Hide textures
 	for j = 1, #CHAT_FRAME_TEXTURES do
@@ -141,7 +145,7 @@ local function SetChatStyle(frame)
 	local EditBoxBackground = CreateFrame("frame", "TukuiChatchatEditBoxBackground", _G[chat.."EditBox"])
 	EditBoxBackground:CreatePanel("Default", 1, 1, "LEFT", _G[chat.."EditBox"], "LEFT", 0, 0)
 	EditBoxBackground:ClearAllPoints()
-	EditBoxBackground:SetAllPoints(TukuiTabsLeftBackground or TukuiInfoLeft)
+	EditBoxBackground:SetAllPoints(ChatBG1Tabs or TukuiInfoLeft)
 	EditBoxBackground:SetFrameStrata("LOW")
 	EditBoxBackground:SetFrameLevel(1)
 	
@@ -177,7 +181,7 @@ local function SetupChat(self)
 		SetChatStyle(frame)
 		FCFTab_UpdateAlpha(frame)
 	end
-				
+
 	-- Remember last channel
 	ChatTypeInfo.WHISPER.sticky = 1
 	ChatTypeInfo.BN_WHISPER.sticky = 1
@@ -202,41 +206,20 @@ local function SetupChatPosAndFont(self)
 			FCF_SetChatWindowFontSize(nil, chat, fontSize)
 		end
 		
-		-- force chat position on #1 and #4, needed if we change ui scale or resolution
-		-- also set original width and height of chatframes 1 and 4 if first time we run tukui.
-		-- doing resize of chat also here for users that hit "cancel" when default installation is show.
-		if i == 1 then
-			chat:Point("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, 6)
-			chat:Point("BOTTOMRIGHT", TukuiInfoLeft, "TOPRIGHT", 0, 6)
-			FCF_SavePositionAndDimensions(chat)
-		elseif i == 4 and name == LOOT then
-			if not chat.isDocked then
-				chat:ClearAllPoints()
-				chat:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 6)
-				chat:Point("BOTTOMLEFT", TukuiInfoRight, "TOPLEFT", 0, 6)
-				chat:SetJustifyH("RIGHT") 
-				FCF_SavePositionAndDimensions(chat)
-			end
+		if point == "BOTTOMRIGHT" and C.chat.background ~= true then
+			chat:SetJustifyH("RIGHT") 
 		end
 		
 		--Check if chat exists in the bottomright corner
 		if C.chat.background == true and point == "BOTTOMRIGHT" and chat:IsShown() then
-			TukuiChatBackgroundRight:Show()
-			TukuiTabsRightBackground:Show()
-			TukuiLineToABRightAlt:ClearAllPoints()
-			TukuiLineToABRightAlt:Point("LEFT", TukuiBar1, "RIGHT", 0, 16)
-			TukuiLineToABRightAlt:Point("BOTTOMRIGHT", TukuiChatBackgroundRight, "BOTTOMLEFT", 0, 16)			
+			ChatBG2:Show()
 		end
 	end
 			
 	-- reposition battle.net popup over chat #1
 	BNToastFrame:HookScript("OnShow", function(self)
 		self:ClearAllPoints()
-		if C.chat.background and TukuiChatBackgroundLeft then
-			self:Point("BOTTOMLEFT", TukuiChatBackgroundLeft, "TOPLEFT", 0, 6)
-		else
-			self:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 6)
-		end
+		self:Point("BOTTOMLEFT", TukuiBnetHolder, "BOTTOMLEFT", 0, 0)
 	end)
 end
 

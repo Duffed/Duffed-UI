@@ -11,7 +11,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
  
 	local hText = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
 	hText:SetFont(C.media.font, C["datatext"].fontsize)
-	hText:SetText("0.0 ",L.datatext_hps)
+	hText:SetText("0.0 ",T.panelcolor..L.datatext_hps)
  
 	T.PP(C["datatext"].hps_text, hText)
  
@@ -32,7 +32,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
 		else
 			HPS_FEED:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
-		hText:SetText(get_hps())
+		hText:SetText(T.panelcolor..get_hps())
 	end)
  
 	function HPS_FEED:PLAYER_LOGIN()
@@ -61,7 +61,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
 	end
  
 	function HPS_FEED:PLAYER_REGEN_ENABLED()
-		hText:SetText(get_hps)
+		hText:SetText(T.panelcolor..get_hps)
 	end
    
 	function HPS_FEED:PLAYER_REGEN_DISABLED()

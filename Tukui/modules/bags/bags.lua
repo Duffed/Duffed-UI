@@ -393,12 +393,25 @@ function Stuffing:CreateBagFrame(w)
 	f:SetToplevel(1)
 	f:SetFrameStrata("HIGH")
 	f:SetFrameLevel(20)
+	f:CreateShadow("Default")
 
 	if w == "Bank" then
-		f:Point("BOTTOMLEFT", TukuiInfoLeft, "TOPLEFT", 0, 5)
+		if ChatBG1 then
+			f:Point("BOTTOMRIGHT", ChatBG1, "TOPRIGHT", 0, 5)
+		else
+			f:Point("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 145,7)
+		end
 	else
-		f:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 0, 5)
+		if ChatBG2 then
+			f:Point("BOTTOMLEFT", ChatBG2, "TOPLEFT", 0, 5)
+		else
+			f:Point("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -145, 7)
+		end
 	end
+	
+	-- moveable
+	f:SetScript("OnMouseDown", function() f:ClearAllPoints() f:StartMoving() end)
+	f:SetScript("OnMouseUp", function() f:StopMovingOrSizing() end)
 	
 	-- close button
 	f.b_close = CreateFrame("Button", "Stuffing_CloseButton" .. w, f, "UIPanelCloseButton")
@@ -495,7 +508,7 @@ function Stuffing:InitBags()
 	detail:Point("TOPLEFT", f, 12, -10)
 	detail:Point("RIGHT",-(16 + 24), 0)
 	detail:SetJustifyH("LEFT")
-	detail:SetText("|cff9999ff" .. "Search")
+	detail:SetText(T.panelcolor.."Search")
 	editbox:SetAllPoints(detail)
 
 	local gold = f:CreateFontString(nil, "ARTWORK", "GameFontHighlightLarge")

@@ -12,15 +12,12 @@ local isf = nil
 
 local function CreatCopyFrame()
 	frame = CreateFrame("Frame", "CopyFrame", UIParent)
-	frame:SetTemplate("Default")
-	if T.lowversion then
-		frame:Width(TukuiBar1:GetWidth() + 10)
-	else
-		frame:Width((TukuiBar1:GetWidth() * 2) + 20)
-	end
+	frame:SetTemplate("Transparent")
+	frame:Width(TukuiBar1:GetWidth())
 	frame:Height(250)
 	frame:SetScale(1)
-	frame:Point("BOTTOM", UIParent, "BOTTOM", 0, 10)
+	frame:Point("BOTTOM", TukuiBar1, "BOTTOM", 0, 0)
+	frame:CreateShadow("Default")
 	frame:Hide()
 	frame:SetFrameStrata("DIALOG")
 
@@ -79,20 +76,39 @@ local function ChatCopyButtons()
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G[format("ChatFrame%d",  i)]
 		local button = CreateFrame("Button", format("ButtonCF%d", i), cf)
-		button:SetPoint("TOPRIGHT", 0, 0)
-		button:SetHeight(T.Scale(20))
-		button:SetWidth(T.Scale(20))
-		button:SetNormalTexture(C.media.copyicon)
-		button:SetAlpha(0)
-		button:SetTemplate("Default")
-
-		button:SetScript("OnMouseUp", function(self)
-			Copy(cf)
+		button:Size(20, 20)
+		button:Point("TOPRIGHT", 0, 24)
+		
+		local buttontext = button:CreateFontString(nil,"OVERLAY",nil)
+		buttontext:SetFont(C.media.font,12)
+		buttontext:SetText(T.panelcolor.."C")
+		buttontext:SetShadowColor(0, 0, 0)
+		buttontext:SetShadowOffset(1.25, -1.25)
+		buttontext:Point("CENTER", 1, 0)
+		buttontext:SetJustifyH("CENTER")
+		buttontext:SetJustifyV("CENTER")
+				
+		button:SetScript("OnMouseUp", function(self, btn)
+			if btn == "RightButton" then
+				ToggleFrame(ChatMenu)
+			else
+				Copy(cf)
+			end
 		end)
-		button:SetScript("OnEnter", function() 
-			button:SetAlpha(1) 
-		end)
-		button:SetScript("OnLeave", function() button:SetAlpha(0) end)
+		button:SetScript("OnEnter", function() button:SetAlpha(1) buttontext:SetText("C") end)
+		
+		if C.chat.background ~= true then
+			button:SetAlpha(0.1)
+			button:SetScript("OnLeave", function() button:SetAlpha(0.1) buttontext:SetText(T.panelcolor.."C") end)
+			button:ClearAllPoints()
+			button:SetPoint("TOPRIGHT", 0, 0)
+		else
+			if i == 2 and GetChannelName("Log") then
+				button:Point("TOPRIGHT", 0, 48)
+			end
+			button:SetAlpha(1)
+			button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
+		end
 	end
 end
 ChatCopyButtons()

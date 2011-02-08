@@ -9,6 +9,7 @@ if not C["actionbar"].enable == true then return end
 ---------------------------------------------------------------------------
 
 local bar = TukuiBar1
+if C["actionbar"].swapbar1and3 then bar = TukuiBar2 end
 --[[ 
 	Bonus bar classes id
 
@@ -75,8 +76,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button:SetSize(T.buttonsize, T.buttonsize)
 			button:ClearAllPoints()
 			button:SetParent(bar)
-			button:SetFrameStrata("BACKGROUND")
-			button:SetFrameLevel(15)
+			button:SetFrameStrata("MEDIUM")
 			if i == 1 then
 				button:SetPoint("BOTTOMLEFT", T.buttonspacing, T.buttonspacing)
 			else

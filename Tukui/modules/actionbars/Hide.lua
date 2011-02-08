@@ -7,8 +7,10 @@ if not C["actionbar"].enable == true then return end
 
 do
 	MainMenuBar:SetScale(0.00001)
+	MainMenuBar:SetAlpha(0)
 	MainMenuBar:EnableMouse(false)
 	VehicleMenuBar:SetScale(0.00001)
+	VehicleMenuBar:SetAlpha(0)
 	VehicleMenuBar:EnableMouse(false)
 	PetActionBarFrame:EnableMouse(false)
 	ShapeshiftBarFrame:EnableMouse(false)
@@ -22,13 +24,7 @@ do
 		if element:GetObjectType() == "Frame" then
 			element:UnregisterAllEvents()
 		end
-		
-		-- Because of code changes by Blizzard developer thought 4.0.6 about action bars, we must have MainMenuBar always visible. :X
-		-- MultiActionBar_Update() and IsNormalActionBarState() Blizzard functions make shit thought our bars. (example: Warrior after /rl)
-		-- See 4.0.6 MultiActionBars.lua for more info at line ~25.
-		if element ~= MainMenuBar then
-			element:Hide()
-		end
+		element:Hide()
 		element:SetAlpha(0)
 	end
 	elements = nil
@@ -58,3 +54,4 @@ do
 	end
 	uiManagedFrames = nil
 end
+

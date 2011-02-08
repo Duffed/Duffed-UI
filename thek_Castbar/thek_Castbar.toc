@@ -1,7 +1,0 @@
-## Interface: 40000
-## Title: thek: Castbar
-## Author: °-°
-## Notes: rewritten default castbars
-## RequiredDeps: Tukui
-config.lua
-core.lua

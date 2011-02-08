@@ -92,7 +92,7 @@ local function Update(self, t)
 			end
 			if ( name ) then
 				if ( name == T.myname ) then
-					Text2:SetText(L.datatext_honor..format('%d', T.panelcolor..honorGained))
+					Text2:SetText(L.datatext_honor..T.panelcolor..format('%d', honorGained))
 					Text1:SetText(dmgtxt)
 					Text3:SetText(L.datatext_killingblows..T.panelcolor..killingBlows)
 				end   

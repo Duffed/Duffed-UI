@@ -13,6 +13,7 @@ for i=1, 12 do
 	local b2 = _G["MultiBarBottomLeftButton"..i-1]
 	b:SetSize(T.buttonsize, T.buttonsize)
 	b:ClearAllPoints()
+	b:SetFrameStrata("MEDIUM")
 	
 	if i == 1 then
 		b:SetPoint("LEFT", bar, "CENTER", T.buttonspacing/2, 0)

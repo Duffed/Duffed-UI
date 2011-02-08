@@ -618,12 +618,12 @@ local function Shared(self, unit)
 			castbar.PostChannelStart = T.CheckChannel
 
 			castbar.time = T.SetFontString(castbar, font1, fontsize)
-			castbar.time:Point("RIGHT", castbar, "RIGHT", -4, 0)
+			castbar.time:Point("RIGHT", castbar, "RIGHT", -5, 0)
 			castbar.time:SetTextColor(0.84, 0.75, 0.65)
 			castbar.time:SetJustifyH("RIGHT")
 
 			castbar.Text = T.SetFontString(castbar, font1, fontsize)
-			castbar.Text:Point("LEFT", castbar, "LEFT", 4, 0)
+			castbar.Text:Point("LEFT", castbar, "LEFT", 6, 0)
 			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
 			
 			-- Border
@@ -1130,7 +1130,7 @@ local function Shared(self, unit)
 								
 		castbar.button = CreateFrame("Frame", nil, castbar)
 		castbar.button:Size(31, 31)
-		castbar.button:Point("BOTTOM", castbar, "TOP",0,4)
+		castbar.button:Point("BOTTOM", castbar, "TOP",0,5)
 		castbar.button:SetTemplate("Default")
 		castbar.button:CreateShadow("Default")
 		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")

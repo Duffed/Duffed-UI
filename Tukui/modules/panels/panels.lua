@@ -141,7 +141,7 @@ if C["datatext"].battleground == true then
 	bgframe:CreatePanel("Default", 1, 1, "TOPLEFT", UIParent, "BOTTOMLEFT", 0, 0)
 	bgframe:SetAllPoints(ileft)
 	bgframe:SetFrameStrata("LOW")
-	bgframe:SetFrameLevel(0)
+	bgframe:SetFrameLevel(3)
 	bgframe:EnableMouse(true)
 end
 
@@ -156,6 +156,22 @@ bnet.text = T.SetFontString(bnet, C.media.uffont, 12)
 bnet.text:SetPoint("CENTER")
 bnet.text:SetText("Move BnetFrame")
 bnet:SetAlpha(0)
+
+-- Omen Skin
+if IsAddOnLoaded("Omen") then
+	local omenbg = CreateFrame("Frame", "Omen_Background", OmenBarList)
+	omenbg:CreatePanel("Transparent", 1, 1, "TOPRIGHT", OmenBarList, "TOPRIGHT", -1, 1)
+	omenbg:SetPoint("BOTTOMLEFT", OmenBarList, "BOTTOMLEFT", 1, 1)
+	omenbg:CreateShadow("Default")
+end
+
+-- Recount Skin
+if IsAddOnLoaded("Recount") then
+	local recountbg = CreateFrame("Frame", "Recount_Background", Recount.MainWindow)
+	recountbg:CreatePanel("Transparent", 1, 1, "TOPRIGHT", Recount.MainWindow, "TOPRIGHT", 0, -10)
+	recountbg:SetPoint("BOTTOMLEFT", Recount.MainWindow, "BOTTOMLEFT", 0, 1)
+	recountbg:CreateShadow("Default")
+end
 
 -- Shadows
 iright:CreateShadow("Default")

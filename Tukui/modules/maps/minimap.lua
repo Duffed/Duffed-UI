@@ -9,7 +9,7 @@ TukuiMinimap:RegisterEvent("ADDON_LOADED")
 TukuiMinimap:SetClampedToScreen(true)
 TukuiMinimap:SetMovable(true)
 TukuiMinimap:CreateShadow("Default")
-TukuiMinimap.text = T.SetFontString(TukuiMinimap, C.media.uffont, 12)
+TukuiMinimap.text = T.SetFontString(TukuiMinimap, C.media.font, 12)
 TukuiMinimap.text:SetPoint("CENTER")
 TukuiMinimap.text:SetText(L.move_minimap)
 

@@ -13,6 +13,7 @@ for i= 1, 12 do
 	local b2 = _G["MultiBarLeftButton"..i-1]
 	b:SetSize(T.buttonsize, T.buttonsize)
 	b:ClearAllPoints()
+	b:SetFrameStrata("MEDIUM")
 	
 	if i == 1 then
 		b:SetPoint("TOPLEFT", bar, T.buttonspacing, -T.buttonspacing)
@@ -33,6 +34,7 @@ for i= 1, 12 do
 	local b2 = _G["MultiBarRightButton"..i-1]
 	b:SetSize(T.buttonsize, T.buttonsize)
 	b:ClearAllPoints()
+	b:SetFrameStrata("MEDIUM")
 	
 	if i == 1 then
 		b:SetPoint("TOPRIGHT", bar, -T.buttonspacing, -T.buttonspacing)

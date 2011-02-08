@@ -354,7 +354,7 @@ local function ShowGroup(group)
 	if _G["TukuiConfigUI"..group] then
 		local o = "TukuiConfigUI"..group
 		Local(o)
-		_G["TukuiConfigUITitle"]:SetText(T.option)
+		_G["TukuiConfigUITitle"]:SetText(T.panelcolor..T.option)
 		local height = _G["TukuiConfigUI"..group]:GetHeight()
 		_G["TukuiConfigUI"..group]:Show()
 		local scrollamntmax = 305

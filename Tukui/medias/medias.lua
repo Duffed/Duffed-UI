@@ -3,9 +3,9 @@ local T, C, L = unpack(select(2, ...))
 C["media"] = {
 	-- fonts
 	["font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
-	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of dmg / sct
-	["uffontsize"] = 8,
+	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\normal_font.ttf]], -- general font of unitframes
+	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
+	["uffontsize"] = 12,
 	
 	-- fonts (RUSSIAN)
 	["ru_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui

@@ -2,9 +2,9 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 -- just some random skin, not everything is skinned atm.
 
 local function SetModifiedBackdrop(self)
-	local color = RAID_CLASS_COLORS[T.myclass]
-	self:SetBackdropColor(color.r, color.g, color.b, 0.15)
-	self:SetBackdropBorderColor(color.r, color.g, color.b)
+	local r,g,b = unpack(C["datatext"].color)
+	self:SetBackdropColor(r,g,b, 0.15)
+	self:SetBackdropBorderColor(r,g,b)
 end
 
 local function SetOriginalBackdrop(self)
@@ -83,7 +83,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		end
 		
 		for i = 1, getn(skins) do
-			_G[skins[i]]:SetTemplate("Default")
+			_G[skins[i]]:SetTemplate("Transparent")
 			if _G[skins[i]] ~= _G["AutoCompleteBox"] and _G[skins[i]] ~= _G["BNToastFrame"] then -- frame to blacklist from create shadow function
 				_G[skins[i]]:CreateShadow("Default")
 			end

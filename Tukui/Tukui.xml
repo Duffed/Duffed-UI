@@ -118,6 +118,8 @@
 	<Script file="modules\notifications\hunterpethappiness.lua"/>	
 	<Script file="modules\misc\altpowerbar.lua"/>
 	<Script file="modules\misc\threatbar.lua"/>
+	<Script file="modules\misc\mage.lua"/>
+	<Script file="modules\misc\raidUtility.lua"/>
 	<Script file="modules\blizzard\achievements.lua"/>
 	<Script file="core\movers.lua"/>
 	<Script file="developer\test.lua"/>

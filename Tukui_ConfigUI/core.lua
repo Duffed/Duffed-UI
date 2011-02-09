@@ -54,12 +54,12 @@ local function Local(o)
 	if o == "TukuiConfigUIcastbartarget-y-offset"  then o = "Target Castbar offset from the BOTTOM" end
 	if o == "TukuiConfigUIcastbarfocus-y-offset"  then o = "Focus Castbar offset from the TOP" end
 	
-	if o == "TukuiConfigUIactionswapbar1and3"  then o = "Swap Mainbar with 3. (on top)" end
-	if o == "TukuiConfigUIactionrightbarsmouseover"  then o = "Rightbars on mouseover" end
-	if o == "TukuiConfigUIactionshapeshiftborder"  then o = "Display Border around Shapeshiftbar" end
-	if o == "TukuiConfigUIactionshapeshiftmouseover"  then o = "Shapeshiftbar on mouseover" end
-	if o == "TukuiConfigUIactionmacrotext"  then o = "Display Macrotext" end
-	if o == "TukuiConfigUIactionpetbaralwaysvisible"  then o = "Always show Petbar even if rightbarsmouseover = true" end
+	if o == "TukuiConfigUIactionbarswapbar1and3"  then o = "Swap Mainbar with 3. (on top)" end
+	if o == "TukuiConfigUIactionbarrightbarsmouseover"  then o = "Rightbars on mouseover" end
+	if o == "TukuiConfigUIactionbarshapeshiftborder"  then o = "Display Border around Shapeshiftbar" end
+	if o == "TukuiConfigUIactionbarshapeshiftmouseover"  then o = "Shapeshiftbar on mouseover" end
+	if o == "TukuiConfigUIactionbarmacrotext"  then o = "Display Macrotext" end
+	if o == "TukuiConfigUIactionbarpetbaralwaysvisible"  then o = "Always show Petbar even if rightbarsmouseover = true" end
 	
 	if o == "TukuiConfigUIpvpdrinkannouncement"  then o = "Announce 'drinking' in  Arena" end
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end
@@ -419,7 +419,7 @@ function CreateTukuiConfigUI()
 	
 	local title = TukuiConfigUITitleBox:CreateFontString("TukuiConfigUITitle", "OVERLAY")
 	title:SetFont(C.media.font, 12)
-	title:SetPoint("LEFT", TukuiConfigUITitleBox, "LEFT", 4, 0)
+	title:SetPoint("LEFT", TukuiConfigUITitleBox, "LEFT", 10, 0)
 		
 	local TukuiConfigUIBG = CreateFrame("Frame","TukuiConfigUI",TukuiConfigUI)
 	TukuiConfigUIBG:SetPoint("TOPLEFT", -10, 10)

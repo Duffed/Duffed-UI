@@ -13,12 +13,8 @@ end
 -- Name need to be case sensitive
 ----------------------------------------------------------------------------
 
-if T.myname == "Sacerdus" or T.myname == "Snurq" then 
-	C["datatext"].reputation = 0
-	C["datatext"].experience = 0
-	C["unitframes"].priestarmor = true
-	C["datatext"].mmenu = 5
-	C["pvp"].ccannouncement = true
+if T.myname == "yournamehere" then
+	-- do some config!
 end
 
 ----------------------------------------------------------------------------
@@ -30,4 +26,14 @@ if UnitLevel("player") < MAX_PLAYER_LEVEL then
 	C["datatext"].reputation = 0
 	C["datatext"].experience = 5
 	C["actionbar"].hotkey = true
+end
+
+if IsAddOnLoaded("a") then -- my config for every char
+	C["datatext"].reputation = 0
+	C["datatext"].experience = 0
+	C["unitframes"].priestarmor = true
+	C["datatext"].mmenu = 5
+	C["pvp"].ccannouncement = true
+	C["media"].uffont = [[Fonts\1.ttf]]
+	C["media"].uffontsize = 8
 end

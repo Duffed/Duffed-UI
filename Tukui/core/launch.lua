@@ -177,7 +177,7 @@ local function install()
 	end
 	
 	-- tell savedvariable that we installed Tukui perfectly
-	TukuiDataPerChar.install = true
+	TukuiDataPerChar.installv5 = true
 			
 	ReloadUI()
 end
@@ -209,7 +209,7 @@ StaticPopupDialogs["TUKUIINSTALL_UI"] = {
 	button1 = ACCEPT,
 	button2 = CANCEL,
     OnAccept = install,
-	OnCancel = function() TukuiDataPerChar.install = true end,
+	OnCancel = function() TukuiDataPerChar.installv5 = true end,
     timeout = 0,
     whileDead = 1,
 }
@@ -219,7 +219,7 @@ StaticPopupDialogs["TUKUIRESET_UI"] = {
 	button1 = ACCEPT,
 	button2 = CANCEL,
     OnAccept = install,
-	OnCancel = function() TukuiDataPerChar.install = true end,
+	OnCancel = function() TukuiDataPerChar.installv5 = true end,
     timeout = 0,
     whileDead = 1,
 }
@@ -282,7 +282,7 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 		end
 		
 		-- install default if we never ran Tukui on this character.
-		if not TukuiDataPerChar.install then			
+		if not TukuiDataPerChar.installv5 then			
 			StaticPopup_Show("TUKUIINSTALL_UI")
 		end
 	end

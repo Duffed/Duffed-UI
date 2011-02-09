@@ -781,7 +781,7 @@ local function Shared(self, unit)
 		self.Power = power
 		
 		-- Unit name
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
+		local Name = T.SetFontString(health, font1, fontsize)
 		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
 		Name:SetJustifyH("CENTER")
 
@@ -904,7 +904,7 @@ local function Shared(self, unit)
 		self.Power.bg = powerBG
 				
 		-- Unit name
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
+		local Name = T.SetFontString(health, font1, fontsize)
 		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
 		Name:SetJustifyH("CENTER")
 

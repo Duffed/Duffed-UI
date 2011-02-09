@@ -15,6 +15,7 @@ for i= 1, 12 do
 	b:SetSize(T.buttonsize, T.buttonsize)
 	b:ClearAllPoints()
 	b:SetFrameStrata("MEDIUM")
+	b:SetFrameLevel(15)
 	
 	if i == 1 then
 		b:SetPoint("BOTTOMLEFT", bar, T.buttonspacing, T.buttonspacing)

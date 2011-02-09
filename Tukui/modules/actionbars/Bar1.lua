@@ -77,6 +77,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button:ClearAllPoints()
 			button:SetParent(bar)
 			button:SetFrameStrata("MEDIUM")
+			button:SetFrameLevel(15)
 			if i == 1 then
 				button:SetPoint("BOTTOMLEFT", T.buttonspacing, T.buttonspacing)
 			else

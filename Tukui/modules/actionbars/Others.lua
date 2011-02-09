@@ -39,4 +39,9 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 			ActionButton_ShowGrid(button)
 		end
 	end
+	-- Show Bars on startup to prevent bug on some classes
+	MultiBarBottomLeft:Show()
+	MultiBarBottomRight:Show()
+	MultiBarLeft:Show()
+	MultiBarRight:Show()
 end)

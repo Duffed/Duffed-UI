@@ -271,6 +271,7 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 9005 ), -- Pounce stun
 				CreateSpellEntry( 16857, true ), -- Faerie Fire (Feral)
 				CreateSpellEntry( 770, true ), -- Farie Fire
+				CreateSpellEntry( 91565, true), -- Farie Fire? :>
 				CreateSpellEntry( 467 ), -- Thorns
 				CreateSpellEntry( 78675 ), -- Solar Beam
 				CreateSpellEntry( 93402 ), -- Sunfire

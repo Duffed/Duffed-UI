@@ -100,17 +100,17 @@ local function DrPepper(self, bar) -- guess what! :P
 end
 
 local TukuiBar2Button = CreateFrame("Button", "TukuiBar2Button", UIParent)
-TukuiBar2Button:Width(18)
-TukuiBar2Button:Height(22)
-TukuiBar2Button:Point("BOTTOM", UIParent, "BOTTOM", 0, 2)
+TukuiBar2Button:Point("TOPLEFT", TukuiInfoLeft, "TOPRIGHT", 2, 0)
+TukuiBar2Button:Point("BOTTOMRIGHT", TukuiInfoRight, "BOTTOMLEFT", -2, 0)
 TukuiBar2Button:SetTemplate("Default")
+TukuiBar2Button:CreateShadow("Default")
 TukuiBar2Button:RegisterForClicks("AnyUp")
 TukuiBar2Button:SetAlpha(0)
 TukuiBar2Button:SetScript("OnClick", function(self) DrPepper(self, TukuiBar2) end)
 TukuiBar2Button:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
 TukuiBar2Button:SetScript("OnLeave", function(self) self:SetAlpha(0) end)
 TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.media.font, 17)
-TukuiBar2Button.text:Point("CENTER", 0, 0)
+TukuiBar2Button.text:Point("CENTER", 0, -1)
 TukuiBar2Button.text:SetText(T.panelcolor.."-|r")
 
 local TukuiBar3Button = CreateFrame("Button", "TukuiBar3Button", UIParent)
@@ -187,7 +187,7 @@ init:SetScript("OnEvent", function(self, event)
 	
 	-- Castbar Position
 	T.cbPosition = function()
-	if not C["unitframes"].enable == true then return end
+		if not C["unitframes"].enable == true then return end
 		if TukuiDataPerChar.hidebar2 == true then
 			TukuiPlayerCastBar:ClearAllPoints()
 			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", 14, 6)

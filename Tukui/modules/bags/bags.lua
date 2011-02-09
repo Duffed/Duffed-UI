@@ -895,11 +895,13 @@ function Stuffing:PLAYER_ENTERING_WORLD()
 	-- this is just a reskin of Blizzard key bag to fit Tukui
 	-- hooking OnShow because sometime key max slot changes.
 	ContainerFrame1:HookScript("OnShow", function(self)
+		ContainerFrame1:SetParent(TukuiBags)
 		local keybackdrop = CreateFrame("Frame", nil, self)
 		keybackdrop:Point("TOPLEFT", 9, -40)
 		keybackdrop:Point("BOTTOMLEFT", 0, 0)
 		keybackdrop:Size(179,215)
 		keybackdrop:SetTemplate("Default")
+		keybackdrop:CreateShadow("Default")
 		ContainerFrame1CloseButton:Hide()
 		ContainerFrame1Portrait:Hide()
 		ContainerFrame1Name:Hide()
@@ -922,7 +924,7 @@ function Stuffing:PLAYER_ENTERING_WORLD()
 	end)
 	
 	ContainerFrame1:ClearAllPoints()
-	ContainerFrame1:Point("BOTTOMRIGHT", TukuiInfoRight, "TOPRIGHT", 4, 5)
+	ContainerFrame1:Point("TOPRIGHT", TukuiBags, "TOPLEFT", -2, 15)
 	ContainerFrame1.ClearAllPoints = T.dummy
 	ContainerFrame1.SetPoint = T.dummy
 end
@@ -1416,7 +1418,7 @@ function Stuffing.Menu(self, level)
 		else
 			key_ring = 1
 		end
-		Stuffing_Toggle()
+		-- Stuffing_Toggle()
 		ToggleKeyRing()
 		Stuffing:Layout()
 	end

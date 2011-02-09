@@ -231,7 +231,6 @@ TukuiChat:SetScript("OnEvent", function(self, event, ...)
 			SetupChat(self)
 		end
 	elseif event == "PLAYER_ENTERING_WORLD" then
-		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 		SetupChatPosAndFont(self)
 	end
 end)

@@ -19,7 +19,7 @@ if C["datatext"].micromenu and C["datatext"].micromenu > 0 then
 	Stat:SetFrameLevel(3)
 
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	Text:SetFont(C.media.font, C["datatext"].fontsize)
+	Text:SetFont(C["datatext"].font, C["datatext"].fontsize)
 	T.PP(C["datatext"].micromenu, Text)
 
 	local function OnEvent(self, event, ...)

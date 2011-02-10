@@ -7,7 +7,7 @@ if not C["datatext"].mastery == nil or C["datatext"].mastery > 0 then
 	local Stat = CreateFrame("Frame")
 
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	Text:SetFont(C.media.font, C["datatext"].fontsize)
+	Text:SetFont(C["datatext"].font, C["datatext"].fontsize)
 	T.PP(C["datatext"].mastery, Text)
 
 	local int = 1

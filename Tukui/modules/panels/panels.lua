@@ -2,8 +2,15 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 
 local TukuiBar1 = CreateFrame("Frame", "TukuiBar1", UIParent, "SecureHandlerStateTemplate") -- Mainbar (24)
 TukuiBar1:CreatePanel("Default", 1, 1, "BOTTOM", UIParent, "BOTTOM", 0, 27)
-TukuiBar1:SetWidth((T.buttonsize * 24) + (T.buttonspacing * 25))
-TukuiBar1:SetHeight((T.buttonsize * 1) + (T.buttonspacing * 2))
+if T.lowversion then
+	TukuiBar1:ClearAllPoints()
+	TukuiBar1:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 46)
+	TukuiBar1:SetWidth((T.buttonsize * 12) + (T.buttonspacing * 13))
+	TukuiBar1:SetHeight((T.buttonsize * 2) + (T.buttonspacing * 3))
+else
+	TukuiBar1:SetWidth((T.buttonsize * 24) + (T.buttonspacing * 25))
+	TukuiBar1:SetHeight((T.buttonsize * 1) + (T.buttonspacing * 2))
+end
 
 local TukuiBar2 = CreateFrame("Frame", "TukuiBar2", UIParent, "SecureHandlerStateTemplate") -- Bar on top of Main bar (12)
 TukuiBar2:CreatePanel("Default", 1, 1, "BOTTOM", TukuiBar1, "TOP", 0, 4)
@@ -63,6 +70,8 @@ ileft:SetFrameLevel(2)
 local iright = CreateFrame("Frame", "TukuiInfoRight", TukuiBar1)
 iright:CreatePanel("Default", T.InfoLeftRightWidth, 19, "BOTTOMLEFT", UIParent, "BOTTOM", 12, 4)
 iright:SetFrameLevel(2)
+if T.lowversion then iright:ClearAllPoints() iright:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 4) end
+if T.lowversion then ileft:ClearAllPoints() ileft:SetPoint("BOTTOM", iright, "TOP", 0, -1) end
 
 if C["actionbar"].buttonsize > 26 then
 	-- HORIZONTAL LINE LEFT
@@ -72,6 +81,7 @@ if C["actionbar"].buttonsize > 26 then
 	-- HORIZONTAL LINE RIGHT
 	local ltoabr = CreateFrame("Frame", "TukuiLineToABRight", TukuiBar1)
 	ltoabr:CreatePanel("Default", 10, 2, "LEFT", iright, "RIGHT", 0, 0)
+	if T.lowversion then ltoabr:ClearAllPoints() ltoabr:SetPoint("LEFT", ileft, "RIGHT", 0, 0) end
 
 	-- LEFT VERTICAL LINE
 	local ileftlv = CreateFrame("Frame", "TukuiInfoLeftLineVertical", TukuiBar1)
@@ -100,8 +110,7 @@ if C["chat"].background == true then
 
 	-- Chat 4 Background
 	local chatbg2 = CreateFrame("Frame", "ChatBG2", UIParent)
-	chatbg2:CreatePanel("Transparent", 430, 126, "TOPLEFT", ChatFrame4, "TOPLEFT", -5, 29)
-	chatbg2:Point("BOTTOMRIGHT", ChatFrame4, "BOTTOMRIGHT", 5, -5)
+	chatbg2:CreatePanel("Transparent", 430, 126, "CENTER", UIParent, "CENTER", 0,0)
 	chatbg2:CreateShadow("Default")
 	chatbg2:Hide()
 	
@@ -152,7 +161,7 @@ if ChatBG1 then	bnet:Point("BOTTOMLEFT", ChatBG1, "TOPLEFT", 0, 4) end
 bnet:SetClampedToScreen(true)
 bnet:SetMovable(true)
 bnet:SetBackdropBorderColor(1,0,0)
-bnet.text = T.SetFontString(bnet, C.media.uffont, 12)
+bnet.text = T.SetFontString(bnet, C.media.font, 12)
 bnet.text:SetPoint("CENTER")
 bnet.text:SetText("Move BnetFrame")
 bnet:SetAlpha(0)
@@ -172,6 +181,17 @@ if IsAddOnLoaded("Recount") then
 	recountbg:SetPoint("BOTTOMLEFT", Recount.MainWindow, "BOTTOMLEFT", 0, 1)
 	recountbg:CreateShadow("Default")
 end
+
+-- Addon Background (where the right chat is .. if someone wanna use it
+-- local bg = CreateFrame("Frame", nil, UIParent)
+-- bg:CreatePanel("Transparent", 360, 152, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
+-- bg:CreateShadow("Default")
+
+-- local bgtab = CreateFrame("Frame", nil, bg)
+-- bgtab:CreatePanel("Transparent", 1, 20, "TOPLEFT", bg, "TOPLEFT", 5, -5)
+-- bgtab:Point("TOPRIGHT", bg, "TOPRIGHT", -5, -5)
+-- bgtab:CreateShadow("Default")
+
 
 -- Shadows
 iright:CreateShadow("Default")

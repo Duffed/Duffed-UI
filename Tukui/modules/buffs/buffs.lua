@@ -15,7 +15,7 @@ local FormatTime = function(s)
 end
 
 local function UpdateTime(self, elapsed)
-	if(self.expiration) then	
+	if(self.expiration) then
 		self.expiration = math.max(self.expiration - elapsed, 0)
 		if(self.expiration <= 0) then
 			self.time:SetText("")
@@ -41,7 +41,7 @@ local function UpdateWeapons(button, slot, active, expiration)
 		
 		button.time = button:CreateFontString(nil, "ARTWORK")
 		button.time:SetPoint("BOTTOM", 0, -17)
-		button.time:SetFont(C.media.font, 12, "OUTLINE")
+		button.time:SetFont(C.datatext.font, C.datatext.fontsize, "OUTLINE")
 				
 		button.bg = CreateFrame("Frame", nil, button)
 		button.bg:CreatePanel("Default", 30, 30, "CENTER", button, "CENTER", 0, 0)
@@ -74,10 +74,10 @@ local function UpdateAuras(header, button, weapon)
 
 		button.count = button:CreateFontString(nil, "ARTWORK")
 		button.count:SetPoint("BOTTOMRIGHT", -1, 1)
-		button.count:SetFont(C.media.font, 12, "OUTLINE")
+		button.count:SetFont(C.datatext.font, C.datatext.fontsize, "OUTLINE")
 
-		button.time = T.SetFontString(button, C.media.font, 12)
-		button.time:SetPoint("BOTTOM", 0, -17)
+		button.time = T.SetFontString(button, C.datatext.font,  C.datatext.fontsize)
+		button.time:SetPoint("BOTTOM", 0, -16)
 
 		button:SetScript("OnUpdate", UpdateTime)
 		
@@ -172,7 +172,7 @@ local function CreateAuraHeader(filter, ...)
 	header:SetBackdropBorderColor(0,0,0,0)
 	header:Show()
 	
-	header.text = T.SetFontString(header, C.media.uffont, 12)
+	header.text = T.SetFontString(header, C.media.font, 12)
 	header.text:SetPoint("CENTER")
 	if filter == "HELPFUL" then
 		header.text:SetText(L.move_buffs)

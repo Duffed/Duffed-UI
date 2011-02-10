@@ -11,15 +11,15 @@ Stat:SetFrameStrata("MEDIUM")
 Stat:SetFrameLevel(3)
 
 local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-Text:SetFont(C.media.font, C["datatext"].fontsize)
+Text:SetFont(C["datatext"].font, C["datatext"].fontsize)
 Text:SetShadowOffset(T.mult, -T.mult)
 T.PP(C["datatext"].friends, Text)
 
 local menuFrame = CreateFrame("Frame", "TukuiFriendRightClickMenu", UIParent, "UIDropDownMenuTemplate")
 local menuList = {
-	{ text = "Select an Option", isTitle = true,notCheckable=true},
-	{ text = "Invite", hasArrow = true,notCheckable=true, },
-	{ text = "Whisper", hasArrow = true,notCheckable=true, }
+	{ text = OPTIONS_MENU, isTitle = true,notCheckable=true},
+	{ text = INVITE, hasArrow = true,notCheckable=true, },
+	{ text = CHAT_MSG_WHISPER_INFORM, hasArrow = true,notCheckable=true, }
 }
 
 local function GetTableIndex(table, fieldIndex, value)

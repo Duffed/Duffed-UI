@@ -851,3 +851,21 @@ T.UpdateThreat = function(self, event, unit)
 		end
 	end 
 end
+
+function updateAuraTrackerTime(self, elapsed)
+	if (self.active) then
+		self.timeleft = self.timeleft - elapsed
+
+		if (self.timeleft <= 5) then
+			self.text:SetTextColor(1, 0, 0) -- red
+		else
+			self.text:SetTextColor(1, 1, 1) -- white
+		end
+		
+		if (self.timeleft <= 0) then
+			self.icon:SetTexture("")
+			self.text:SetText("")
+		end	
+		self.text:SetFormattedText("%.1f", self.timeleft)
+	end
+end

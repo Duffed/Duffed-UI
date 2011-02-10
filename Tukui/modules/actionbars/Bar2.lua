@@ -17,7 +17,11 @@ for i=1, 12 do
 	b:SetFrameLevel(15)
 	
 	if i == 1 then
-		b:SetPoint("LEFT", bar, "CENTER", T.buttonspacing/2, 0)
+		if T.lowversion then
+			b:SetPoint("TOPLEFT", bar, "TOPLEFT", T.buttonspacing, -T.buttonspacing)
+		else
+			b:SetPoint("LEFT", bar, "CENTER", T.buttonspacing/2, 0)
+		end
 	else
 		b:SetPoint("LEFT", b2, "RIGHT", T.buttonspacing, 0)
 	end

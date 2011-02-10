@@ -2,6 +2,7 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 
 T.dummy = function() return end
 T.myname = select(1, UnitName("player"))
+T.myrealm = GetRealmName()
 T.myclass = select(2, UnitClass("player"))
 T.client = GetLocale() 
 T.resolution = GetCurrentResolution()

@@ -6,7 +6,7 @@ local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Lo
 if C["datatext"].zonepanel == true then
 	local Stat = CreateFrame("Frame")
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "LOW")		
-	Text:SetFont(C.media.font, C["datatext"].fontsize)
+	Text:SetFont(C["datatext"].font, C["datatext"].fontsize)
 	Text:SetPoint("CENTER", TukuiZonePanel, "CENTER", 0, 0)
 	Stat:EnableMouse(true)
 	Stat:SetAllPoints(Text)

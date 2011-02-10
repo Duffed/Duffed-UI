@@ -37,3 +37,10 @@ end
 if (IsAddOnLoaded("Gladius")) then
 	C["arena"].unitframes = false
 end
+
+if C.general.normalfont then
+	C.media.uffont = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=]
+	C.media.uffontsize = 12
+	C.datatext.font = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=]
+	C.datatext.fontsize = 12
+end

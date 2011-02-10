@@ -5,7 +5,8 @@ C["general"] = {
 	["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
 	["overridelowtohigh"] = true,                      	-- EXPERIMENTAL ONLY! override lower version to higher version on a lower reso.
 	["multisampleprotect"] = true,                      -- i don't recommend this because of shitty border but, voila!
-	["blizzardsct"] = false,								-- Skin also Blizzard SCT Font(put it in generel now)
+	["blizzardsct"] = true,								-- Skin also Blizzard SCT Font(put it in generel now)
+	["normalfont"] = false,								-- Use the normal/old font + fontsize instead of pixelfont :>
 }
 
 C["unitframes"] = {
@@ -122,7 +123,7 @@ C["cooldown"] = {
 C["datatext"] = {
 	["color"] = { 75/255, 175/255, 76/255 },			-- datatext color { r/255, g/255, b/255 }
 	["classcolored"] = false,							-- classcolored datatext
-	["zonepanel"] = false,
+	["zonepanel"] = false,								-- Show Panel with ur current Zone instead of mouseover on minimap
 	["mMenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)
 	["experience"] = 0,
 	["reputation"] = 5,
@@ -150,7 +151,8 @@ C["datatext"] = {
 	["battleground"] = true,                            -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 	["time24"] = true,                                  -- set time to 24h format.
 	["localtime"] = false,                              -- set time to local time instead of server time.
-	["fontsize"] = 12,                                  -- font size for panels.
+	["font"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]],
+	["fontsize"] = 8,                                  -- font size for panels.
 }
 
 C["chat"] = {

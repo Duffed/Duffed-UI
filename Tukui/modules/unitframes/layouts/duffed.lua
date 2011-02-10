@@ -51,8 +51,8 @@ local function Shared(self, unit)
 	-- symbols, now put the symbol on the frame we created above.
 	local RaidIcon = InvFrame:CreateTexture(nil, "OVERLAY")
 	RaidIcon:SetTexture("Interface\\AddOns\\Tukui\\medias\\textures\\raidicons.blp") -- thx hankthetank for texture
-	RaidIcon:SetHeight(20)
-	RaidIcon:SetWidth(20)
+	RaidIcon:SetHeight(18)
+	RaidIcon:SetWidth(18)
 	RaidIcon:SetPoint("TOP", 0, 8)
 	self.RaidIcon = RaidIcon
 	
@@ -782,13 +782,13 @@ local function Shared(self, unit)
 		
 		-- Unit name
 		local Name = T.SetFontString(health, font1, fontsize)
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
+		Name:SetPoint("CENTER", health, "CENTER", 0, -1)
 		Name:SetJustifyH("CENTER")
 
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
 		self.Name = Name
 		
-		if C["unitframes"].totdebuffs == true and T.lowversion ~= true then
+		if C["unitframes"].totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
 			debuffs:SetHeight(20)
 			debuffs:SetWidth(127)
@@ -905,7 +905,7 @@ local function Shared(self, unit)
 				
 		-- Unit name
 		local Name = T.SetFontString(health, font1, fontsize)
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
+		Name:SetPoint("CENTER", health, "CENTER", 0, -1)
 		Name:SetJustifyH("CENTER")
 
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:diffcolor][level]')
@@ -1086,7 +1086,7 @@ local function Shared(self, unit)
 		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
 		health.border:CreateShadow("Default")
 
-		-- create debuff for arena units
+		-- create debuffs
 		local debuffs = CreateFrame("Frame", nil, self)
 		debuffs:SetHeight(26)
 		debuffs:Point("RIGHT", self, "LEFT", -5, 0)
@@ -1371,7 +1371,7 @@ local function Shared(self, unit)
 			AuraTracker.icon:Point("BOTTOMRIGHT", AuraTracker, -2, 2)
 			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
 			
-			AuraTracker.text = T.SetFontString(AuraTracker, font1, fontsize, "THINOUTLINE")
+			AuraTracker.text = T.SetFontString(AuraTracker, font1, 13, "THINOUTLINE")
 			AuraTracker.text:SetPoint("CENTER", AuraTracker, 0, 0)
 			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
 			
@@ -1505,12 +1505,20 @@ oUF:RegisterStyle('Tukui', Shared)
 
 -- player
 local player = oUF:Spawn('player', "TukuiPlayer")
-player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 0,140)
+if T.lowversion then
+	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", -180,110)
+else
+	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 0,140)
+end
 player:Size(playerwidth, 44)
 
 -- target
 local target = oUF:Spawn('target', "TukuiTarget")
-target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 0,140)
+if T.lowversion then
+	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 180,110)
+else
+	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 0,140)
+end
 target:Size(playerwidth, 44)
 
 -- tot

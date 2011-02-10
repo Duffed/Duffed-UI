@@ -34,6 +34,4 @@ if IsAddOnLoaded("a") then -- my config for every char
 	C["unitframes"].priestarmor = true
 	C["datatext"].mmenu = 5
 	C["pvp"].ccannouncement = true
-	C["media"].uffont = [[Fonts\1.ttf]]
-	C["media"].uffontsize = 8
 end

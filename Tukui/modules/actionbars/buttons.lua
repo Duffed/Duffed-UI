@@ -16,11 +16,11 @@ local function ShowOrHideBar(bar, button)
 		if bar == TukuiBar3 then
 			if button == TukuiBar3Button then
 				TukuiLineToPetActionBarBackground:Show()
-				if bar:GetWidth() > ((T.buttonsize * 1) + (T.buttonspacing * 2)) and bar:GetWidth() < ((T.buttonsize * 2) + (T.buttonspacing * 3)) then
+				if db.rightbars == 1 then
 					MultiBarRight:Show()
 					db.rightbars = 2
 					bar:SetWidth((T.buttonsize * 2) + (T.buttonspacing * 3))
-				elseif bar:GetWidth() > ((T.buttonsize * 2) + (T.buttonspacing * 3)) then
+				elseif db.rightbars == 2 then
 					MultiBarRight:Hide()
 					db.rightbars = 1
 					bar:SetWidth((T.buttonsize * 1) + (T.buttonspacing * 2))
@@ -100,15 +100,20 @@ local function DrPepper(self, bar) -- guess what! :P
 end
 
 local TukuiBar2Button = CreateFrame("Button", "TukuiBar2Button", UIParent)
-TukuiBar2Button:Point("TOPLEFT", TukuiInfoLeft, "TOPRIGHT", 2, 0)
-TukuiBar2Button:Point("BOTTOMRIGHT", TukuiInfoRight, "BOTTOMLEFT", -2, 0)
 TukuiBar2Button:SetTemplate("Default")
 TukuiBar2Button:CreateShadow("Default")
 TukuiBar2Button:RegisterForClicks("AnyUp")
-TukuiBar2Button:SetAlpha(0)
 TukuiBar2Button:SetScript("OnClick", function(self) DrPepper(self, TukuiBar2) end)
+TukuiBar2Button:SetAlpha(0)
 TukuiBar2Button:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
 TukuiBar2Button:SetScript("OnLeave", function(self) self:SetAlpha(0) end)
+if T.lowversion then
+	TukuiBar2Button:Size(20,20)
+	TukuiBar2Button:Point("LEFT", TukuiInfoRight, "RIGHT", 5, 2)
+else
+	TukuiBar2Button:Point("TOPLEFT", TukuiInfoLeft, "TOPRIGHT", 2, 0)
+	TukuiBar2Button:Point("BOTTOMRIGHT", TukuiInfoRight, "BOTTOMLEFT", -2, 0)
+end
 TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.media.font, 17)
 TukuiBar2Button.text:Point("CENTER", 0, -1)
 TukuiBar2Button.text:SetText(T.panelcolor.."-|r")
@@ -199,6 +204,7 @@ init:SetScript("OnEvent", function(self, event)
 	T.cbPosition()
 	
 	-- Rightbars on startup
+	if db.rightbars == nil then db.rightbars = 2 end
 	if db.rightbars == 1 then
 		DrPepper(TukuiBar3Button, TukuiBar3)
 		MultiBarRight:Hide()
@@ -208,11 +214,12 @@ init:SetScript("OnEvent", function(self, event)
 		TukuiBar3Button.text:SetText(T.panelcolor.."<|r")
 		TukuiBar3:Hide()
 		TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -26, -14)
-	elseif db.rightbars == 2 or db.rightbars == nil then
+	elseif db.rightbars == 2 then
 		TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 2) + (T.buttonspacing * 3)), -14)
 	end
 	
 	-- Third Bar at the bottom
+	if db.hidebar2 == nil and T.lowversion then db.hidebar2 = true end
 	if db.hidebar2 then
 		DrPepper(TukuiBar2Button, TukuiBar2)
 	end

@@ -35,6 +35,7 @@ local function Local(o)
 	
 	-- Duffed UI config entrys (english)
 	if o == "TukuiConfigUIgeneralblizzardsct" then o = "Skin Blizzard SCT" end
+	if o == "TukuiConfigUIgeneralnormalfont" then o = "Use the Normal/Old Font instead of pixelfont." end
 	
 	if o == "TukuiConfigUIdatatextcolor" then o = "Text Color (datatext, chat etc.)" end
 	if o == "TukuiConfigUIdatatextclasscolored" then o = "Classcolored Text" end
@@ -42,6 +43,7 @@ local function Local(o)
 	if o == "TukuiConfigUIdatatextexperience" then o = "Experience Position" end
 	if o == "TukuiConfigUIdatatextreputation" then o = "Reputation Position" end
 	if o == "TukuiConfigUIdatatextmMenu"  then o = "mMenu Position (mMenu required)" end
+	if o == "TukuiConfigUIdatatextfont" then o = "Font (datatext, buffs, chat-tabs, ClassTimer)" end
 	
 	if o == "TukuiConfigUIunitframeshealthbarcolor"  then o = "Healthbar Color (unicolor)" end
 	if o == "TukuiConfigUIunitframesdeficitcolor"  then o = "Deficit Color (unicolor)" end

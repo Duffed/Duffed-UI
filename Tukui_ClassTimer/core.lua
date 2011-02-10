@@ -439,9 +439,8 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 77489 ), -- Echo of Light
             },
             player = {
+				CreateSpellEntry( 139 ), -- Renew
                 CreateSpellEntry( 10060 ), -- Power Infusion
-                -- CreateSpellEntry( 588 ), -- Inner Fire
-				-- CreateSpellEntry( 73413 ), -- Inner Will
                 CreateSpellEntry( 47585 ), -- Dispersion
 				CreateSpellEntry( 81700 ), -- Archangel
 				CreateSpellEntry( 14751 ), -- Chakra

@@ -294,12 +294,6 @@ hooksecurefunc("ActionButton_UpdateFlyout", styleflyout)
 -- don't continue executing code in this file is not playing a shaman.
 if not T.myclass == "SHAMAN" then return end
 
-local TotemBar = CreateFrame("Frame")
-TotemBar:RegisterEvent("PLAYER_LOGIN")
-TotemBar:SetScript("OnEvent", function(self)
-	T.TotemOrientationDown = T.TotemBarOrientation()
-end)
-
 -- Tex Coords for empty buttons
 SLOT_EMPTY_TCOORDS = {
 	[EARTH_TOTEM_SLOT] = {
@@ -343,23 +337,17 @@ local function StyleTotemFlyout(flyout)
 		icon:SetDrawLayer("ARTWORK")
 		icon:Point("TOPLEFT",button,"TOPLEFT",2,-2)
 		icon:Point("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2,2)			
-		button:Size(30,30)
-		button:ClearAllPoints()
-		if T.TotemOrientationDown then
-			button:Point("TOP",last,"BOTTOM",0,-4)
-		else
+		if not InCombatLockdown() then
+			button:Size(30,30)
+			button:ClearAllPoints()
 			button:Point("BOTTOM",last,"TOP",0,4)
-		end		
+		end			
 		if button:IsVisible() then last = button end
 		button:SetBackdropBorderColor(flyout.parent:GetBackdropBorderColor())
 		button:StyleButton()
 	end
 	
-	if T.TotemOrientationDown then
-		flyout.buttons[1]:SetPoint("TOP",flyout,"TOP")
-	else
-		flyout.buttons[1]:SetPoint("BOTTOM",flyout,"BOTTOM")
-	end
+	flyout.buttons[1]:SetPoint("BOTTOM",flyout,"BOTTOM")
 	
 	if flyout.type == "slot" then
 		local tcoords = SLOT_EMPTY_TCOORDS[flyout.parent:GetID()]
@@ -374,22 +362,13 @@ local function StyleTotemFlyout(flyout)
 	close:GetHighlightTexture():Point("BOTTOMRIGHT",close,"BOTTOMRIGHT",-1,1)
 	close:GetNormalTexture():SetTexture(nil)
 	close:ClearAllPoints()
-	if T.TotemOrientationDown then
-		close:Point("TOPLEFT",last,"BOTTOMLEFT",0,-4)
-		close:SetPoint("TOPRIGHT",last,"BOTTOMRIGHT",0,-4)
-	else
-		close:Point("BOTTOMLEFT",last,"TOPLEFT",0,4)
-		close:Point("BOTTOMRIGHT",last,"TOPRIGHT",0,4)	
-	end
+	close:Point("BOTTOMLEFT",last,"TOPLEFT",0,4)
+	close:Point("BOTTOMRIGHT",last,"TOPRIGHT",0,4)	
 	close:Height(8)
 	
 	close:SetBackdropBorderColor(last:GetBackdropBorderColor())
 	flyout:ClearAllPoints()
-	if T.TotemOrientationDown then
-		flyout:Point("TOP",flyout.parent,"BOTTOM",0,-4)
-	else
-		flyout:Point("BOTTOM",flyout.parent,"TOP",0,4)
-	end
+	flyout:Point("BOTTOM",flyout.parent,"TOP",0,4)
 end
 hooksecurefunc("MultiCastFlyoutFrame_ToggleFlyout",function(self) StyleTotemFlyout(self) end)
 	
@@ -398,13 +377,8 @@ local function StyleTotemOpenButton(button, parent)
 	button:GetNormalTexture():SetTexture(nil)
 	button:Height(20)
 	button:ClearAllPoints()
-	if T.TotemOrientationDown then
-		button:Point("TOPLEFT", parent, "BOTTOMLEFT", 0, 3)
-		button:Point("TOPRIGHT", parent, "BOTTOMRIGHT", 0, 3)	
-	else
-		button:Point("BOTTOMLEFT", parent, "TOPLEFT", 0, -3)
-		button:Point("BOTTOMRIGHT", parent, "TOPRIGHT", 0, -3)
-	end
+	button:Point("BOTTOMLEFT", parent, "TOPLEFT", 0, -3)
+	button:Point("BOTTOMRIGHT", parent, "TOPRIGHT", 0, -3)
 	if not button.visibleBut then
 		button.visibleBut = CreateFrame("Frame",nil,button)
 		button.visibleBut:Height(8)
@@ -436,7 +410,7 @@ local function StyleTotemSlotButton(button, index)
 	button.background:ClearAllPoints()
 	button.background:SetPoint("TOPLEFT",button,"TOPLEFT",T.Scale(2),T.Scale(-2))
 	button.background:SetPoint("BOTTOMRIGHT",button,"BOTTOMRIGHT",T.Scale(-2),T.Scale(2))
-	button:Size(30)
+	if not InCombatLockdown() then button:Size(30) end
 	button:SetBackdropBorderColor(unpack(bordercolors[((index-1) % 4) + 1]))
 	button:StyleButton()
 end
@@ -451,9 +425,8 @@ local function StyleTotemActionButton(button, index)
 	icon:Point("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2,2)
 	button.overlayTex:SetTexture(nil)
 	button.overlayTex:Hide()
-	button:GetNormalTexture():SetTexture(nil)
-	button.SetNormalTexture = T.dummy
-	if button.slotButton then
+	button:GetNormalTexture():SetAlpha(0)
+	if not InCombatLockdown() and button.slotButton then
 		button:ClearAllPoints()
 		button:SetAllPoints(button.slotButton)
 		button:SetFrameLevel(button.slotButton:GetFrameLevel()+1)
@@ -474,7 +447,7 @@ local function StyleTotemSpellButton(button, index)
 	icon:Point("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2,2)
 	button:SetTemplate("Default")
 	button:GetNormalTexture():SetTexture(nil)
-	button:Size(30, 30)
+	if not InCombatLockdown() then button:Size(30, 30) end
 	_G[button:GetName().."Highlight"]:SetTexture(nil)
 	_G[button:GetName().."NormalTexture"]:SetTexture(nil)
 	button:StyleButton()

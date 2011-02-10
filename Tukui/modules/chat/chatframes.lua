@@ -73,7 +73,7 @@ local function SetChatStyle(frame)
 	
 	_G[chat.."TabText"]:SetTextColor(unpack(C["datatext"].color))
 	_G[chat.."TabText"].SetTextColor = T.dummy
-	_G[chat.."TabText"]:SetFont(C.media.font,12,"THINOUTLINE")
+	_G[chat.."TabText"]:SetFont(C.datatext.font,C.datatext.fontsize,"THINOUTLINE")
 	
 	-- yeah baby
 	_G[chat]:SetClampRectInsets(0,0,0,0)
@@ -207,7 +207,10 @@ local function SetupChatPosAndFont(self)
 		end
 				
 		--Check if chat exists in the bottomright corner
-		if ChatBG2 and point == "BOTTOMRIGHT" and chat:IsShown() then
+		if ChatBG2 and point == "BOTTOMRIGHT" and chat:IsShown() and name == LOOT.."/"..L.chat_trade then
+			ChatBG2:ClearAllPoints()
+			ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
+			ChatBG2:Point("BOTTOMRIGHT", chat, "BOTTOMRIGHT", 5, -5)
 			ChatBG2:Show()
 		elseif point == "BOTTOMRIGHT" and chat:IsShown() then
 			chat:SetJustifyH("RIGHT") 

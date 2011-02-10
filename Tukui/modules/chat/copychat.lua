@@ -31,11 +31,7 @@ local function CreatCopyFrame()
 	editBox:EnableMouse(true)
 	editBox:SetAutoFocus(false)
 	editBox:SetFontObject(ChatFontNormal)
-	if T.lowversion then
-		editBox:Width(TukuiBar1:GetWidth() + 10)
-	else
-		editBox:Width((TukuiBar1:GetWidth() * 2) + 20)
-	end
+	editBox:Width(TukuiBar1:GetWidth())
 	editBox:Height(250)
 	editBox:SetScript("OnEscapePressed", function() frame:Hide() end)
 
@@ -80,7 +76,7 @@ local function ChatCopyButtons()
 		button:Point("TOPRIGHT", 0, 24)
 		
 		local buttontext = button:CreateFontString(nil,"OVERLAY",nil)
-		buttontext:SetFont(C.media.font,12)
+		buttontext:SetFont(C.datatext.font,C.datatext.fontsize)
 		buttontext:SetText(T.panelcolor.."C")
 		buttontext:SetShadowColor(0, 0, 0)
 		buttontext:SetShadowOffset(1.25, -1.25)

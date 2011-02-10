@@ -10,7 +10,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
 	local actual_heals_total, cmbt_time = 0
  
 	local hText = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	hText:SetFont(C.media.font, C["datatext"].fontsize)
+	hText:SetFont(C["datatext"].font, C["datatext"].fontsize)
 	hText:SetText("0.0 ",T.panelcolor..L.datatext_hps)
  
 	T.PP(C["datatext"].hps_text, hText)

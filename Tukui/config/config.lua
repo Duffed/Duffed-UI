@@ -122,7 +122,7 @@ C["cooldown"] = {
 }
 
 C["datatext"] = {
-	["color"] = { 75/255, 175/255, 76/255 },			-- datatext color { r/255, g/255, b/255 }
+	["color"] = { 0.15, 0.49, 0.69 },					-- datatext color
 	["classcolored"] = false,							-- classcolored datatext
 	["zonepanel"] = false,								-- Show Panel with ur current Zone instead of mouseover on minimap
 	["mmenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)

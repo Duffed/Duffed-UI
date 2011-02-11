@@ -39,4 +39,7 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 			ActionButton_ShowGrid(button)
 		end
 	end
+	if TukuiDataPerChar.rightbars == 1 then
+		MultiBarRight:Hide()
+	end
 end)

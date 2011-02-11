@@ -205,7 +205,6 @@ init:SetScript("OnEvent", function(self, event)
 	if db.rightbars == 1 then
 		MoveButtonBar(TukuiBar3Button, TukuiBar3)
 		TukuiBar3:SetWidth((T.buttonsize * 1) + (T.buttonspacing * 2))
-		MultiBarRight:Hide()
 		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -23 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) end
 	elseif db.rightbars == 0 then
 		TukuiBar3Button.text:SetText(T.panelcolor.."<|r")

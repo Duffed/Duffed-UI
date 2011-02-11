@@ -37,7 +37,7 @@ local function style(self)
 		Btname:Kill()
 	else
 		Btname:SetAlphaGradient(0,Button:GetWidth())
-		Btname:SetFont(C["media"].font, 12, "THINOUTLINE")
+		Btname:SetFont(C.datatext.font, C.datatext.fontsize, "THINOUTLINE")
 	end
  
 	if not _G[name.."Panel"] then
@@ -60,7 +60,7 @@ local function style(self)
 
 	HotKey:ClearAllPoints()
 	HotKey:Point("TOPRIGHT", 0, -3)
-	HotKey:SetFont(C["media"].font, 12, "OUTLINE")
+	HotKey:SetFont(C["datatext"].font, C["datatext"].fontsize, "OUTLINE")
 	HotKey.ClearAllPoints = T.dummy
 	HotKey.SetPoint = T.dummy
  
@@ -157,6 +157,10 @@ local function updatehotkey(self, actionButtonType)
 	text = replace(text, '(Insert)', 'Ins')
 	text = replace(text, '(Home)', 'Hm')
 	text = replace(text, '(Delete)', 'Del')
+	text = replace(text, '(Maustaste 5)', 'M5')
+	text = replace(text, '(Maustaste 4)', 'M4')
+	text = replace(text, '(Mittlere Maustaste)', 'M3')
+	text = replace(text, '(Maustaste)', 'M ')
 	
 	if hotkey:GetText() == _G['RANGE_INDICATOR'] then
 		hotkey:SetText('')

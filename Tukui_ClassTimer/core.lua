@@ -1139,7 +1139,7 @@ do
 		background:SetFrameStrata("BACKGROUND")
 		background:Point( "TOPLEFT", result, "TOPLEFT", 20, 2 );
 		background:Point( "BOTTOMRIGHT", result, "BOTTOMRIGHT", 2, -2 );
-		background:SetTemplate("Default")
+		background:SetTemplate("Transparent")
 		background:CreateShadow("Default")
 		result.background = background;
 		

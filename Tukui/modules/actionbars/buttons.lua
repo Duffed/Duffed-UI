@@ -203,7 +203,8 @@ init:SetScript("OnEvent", function(self, event)
 	-- Rightbars on startup
 	if db.rightbars == nil then db.rightbars = 2 end
 	if db.rightbars == 1 then
-		DrPepper(TukuiBar3Button, TukuiBar3)
+		MoveButtonBar(TukuiBar3Button, TukuiBar3)
+		TukuiBar3:SetWidth((T.buttonsize * 1) + (T.buttonspacing * 2))
 		MultiBarRight:Hide()
 		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) end
 	elseif db.rightbars == 0 then

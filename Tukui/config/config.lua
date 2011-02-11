@@ -125,7 +125,7 @@ C["datatext"] = {
 	["color"] = { 75/255, 175/255, 76/255 },			-- datatext color { r/255, g/255, b/255 }
 	["classcolored"] = false,							-- classcolored datatext
 	["zonepanel"] = false,								-- Show Panel with ur current Zone instead of mouseover on minimap
-	["mMenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)
+	["mmenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)
 	["experience"] = 0,
 	["reputation"] = 5,
 	

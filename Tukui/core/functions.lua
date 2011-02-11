@@ -292,9 +292,66 @@ end
 if C["datatext"].classcolored == true then
 	C["datatext"].color = T.oUF_colors.class[T.myclass]
 end
+
 -- convert datatext color from rgb decimal to hex 
 local dr, dg, db = unpack(C["datatext"].color)
 T.panelcolor = ("|cff%.2x%.2x%.2x"):format(dr * 255, dg * 255, db * 255)
+
+-- Castbar Size
+T.cbSize = function()
+	if not C["unitframes"].enable == true then return end
+
+	if C["actionbar"].petbarhorizontal == true then
+		if TukuiPetBar:IsShown() then
+			TukuiPlayerCastBar:Width(TukuiPetBar:GetWidth() - 32)
+		else
+			TukuiPlayerCastBar:Width(TukuiBar2:GetWidth() - 32)
+		end
+	else
+		TukuiPlayerCastBar:Width(TukuiBar2:GetWidth() - 32)
+	end
+end
+
+-- Castbar Position
+T.cbPosition = function()
+	if not C["unitframes"].enable == true then return end
+
+	T.cbSize()
+	if TukuiDataPerChar.hidebar2 == true then
+		TukuiPlayerCastBar:ClearAllPoints()
+		if C["actionbar"].petbarhorizontal == true then
+			if TukuiPetBar:IsShown() then
+				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, 6)
+			else
+				TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", 14, 6)
+			end
+		else
+			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", 14, 6)
+		end
+	else
+		TukuiPlayerCastBar:ClearAllPoints()
+		if C["actionbar"].petbarhorizontal == true then
+			if TukuiPetBar:IsShown() then
+				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, 6)
+			else
+				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, 6)
+			end
+		else
+			TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, 6)
+		end
+	end
+end
+
+-- Petbarposition
+T.petBarPosition = function()
+if C["actionbar"].petbarhorizontal ~= true then return end
+	TukuiPetBar:ClearAllPoints()
+	if TukuiDataPerChar.hidebar2 == true then
+		TukuiPetBar:Point("BOTTOM", TukuiBar1, "TOP", 0, 4)
+	else
+		TukuiPetBar:Point("BOTTOM", TukuiBar2, "TOP", 0, 4)
+	end
+end
 ------------------------------------------------------------------------
 --	unitframes Functions
 ------------------------------------------------------------------------
@@ -754,9 +811,9 @@ end
 
 T.MLAnchorUpdate = function (self)
 	if self.Leader:IsShown() then
-		self.MasterLooter:SetPoint("TOPLEFT", 14, 8)
+		self.MasterLooter:SetPoint("TOPLEFT", 14, -5)
 	else
-		self.MasterLooter:SetPoint("TOPLEFT", 2, 8)
+		self.MasterLooter:SetPoint("TOPLEFT", 2, -5)
 	end
 end
 

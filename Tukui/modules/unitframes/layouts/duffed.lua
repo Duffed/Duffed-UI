@@ -604,7 +604,6 @@ local function Shared(self, unit)
 			local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
 			castbar:SetStatusBarTexture(normTex)
 			if unit == "player" then
-				castbar:Width(TukuiBar2:GetWidth() - 32)
 				castbar:Height(21)
 			elseif unit == "target" then
 				castbar:Width(240)
@@ -1537,11 +1536,7 @@ pet:Size(125, 18)
 
 -- focustarget
 local focustarget = oUF:Spawn("focustarget", "TukuiFocusTarget")
-if T.myclass == "SHAMAN" or T.myclass == "DEATHKNIGHT" or T.myclass == "PALADIN" or T.myclass == "WARLOCK" or T.myclass == "DRUID" then
-	focustarget:Point("BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0,19)
-else
-	focustarget:Point("BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0,7)
-end
+focustarget:Point("BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0,6)
 focustarget:Size(80, 16)
 
 -- focus

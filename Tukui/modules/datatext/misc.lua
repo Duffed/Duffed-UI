@@ -18,7 +18,7 @@ if C["datatext"].zonepanel == true then
 	coordsframe:SetAlpha(0)
 	
 	local coordsframetext = coordsframe:CreateFontString("CoordsFrame_Text", "LOW")
-	coordsframetext:SetFont(C.media.font, 12)
+	coordsframetext:SetFont(C.datatext.font, C.datatext.fontsize)
 	coordsframetext:Point("CENTER", coordsframe, "CENTER",0,-1)
 	
 	local function Update(self, event)	
@@ -48,7 +48,7 @@ end
 if C["datatext"].honor and C["datatext"].honor > 0 then
 	local Stat = CreateFrame("Frame")
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "LOW")		
-	Text:SetFont(C.media.font, C["datatext"].fontsize)
+	Text:SetFont(C.datatext.font, C.datatext.fontsize)
 	T.PP(C["datatext"].honor, Text)
 	
 	local function OnEvent(self, event)
@@ -73,7 +73,7 @@ if C["datatext"].experience and C["datatext"].experience > 0 then
 		Stat:EnableMouse(true)
 
 		local Text = TukuiInfoLeft:CreateFontString(nil, "LOW")		
-		Text:SetFont(C.media.font, C["datatext"].fontsize)
+		Text:SetFont(C.datatext.font, C.datatext.fontsize)
 		T.PP(C["datatext"].experience, Text)
 	
 		local function GetPlayerXP()
@@ -126,7 +126,7 @@ if C["datatext"].reputation and C["datatext"].reputation > 0 then
 	Stat:EnableMouse(true)
 
 	local Text  = TukuiInfoLeft:CreateFontString(nil, "LOW")	
-	Text:SetFont(C.media.font, C["datatext"].fontsize)
+	Text:SetFont(C.datatext.font, C.datatext.fontsize)
 	T.PP(C["datatext"].reputation, Text)
 
 

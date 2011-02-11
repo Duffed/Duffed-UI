@@ -23,15 +23,25 @@ end
 
 if UnitLevel("player") < MAX_PLAYER_LEVEL then
 	-- Settings for a Char you are leveling (lvl 1-MaxLevel)
-	C["datatext"].reputation = 0
-	C["datatext"].experience = 5
-	C["actionbar"].hotkey = true
+	C.datatext.reputation = 0
+	C.datatext.experience = 5
+	C.actionbar.hotkey = true
 end
 
-if IsAddOnLoaded("a") then -- my config for every char
-	C["datatext"].reputation = 0
-	C["datatext"].experience = 0
-	C["unitframes"].priestarmor = true
-	C["datatext"].mmenu = 5
-	C["pvp"].ccannouncement = true
+----------------------------------------------------------------------------
+-- Special Configs :o
+----------------------------------------------------------------------------
+
+if IsAddOnLoaded("a") or IsAddOnLoaded("b") then -- my config for every char
+	C.datatext.reputation = 0
+	C.datatext.experience = 0
+	C.unitframes.priestarmor = true
+	C.datatext.mmenu = 5
+	C.pvp.ccannouncement = true
+end
+
+if IsAddOnLoaded("b") then 
+	C.chat.addonborder = true
+	C.actionbar.hotkey = true
+	C.datatext.classcolored = true
 end

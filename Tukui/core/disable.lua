@@ -40,7 +40,7 @@ end
 
 if C.general.normalfont then
 	C.media.uffont = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=]
-	C.media.uffontsize = 12
+	if C.media.uffontsize == 8 then C.media.uffontsize = 12 end
 	C.datatext.font = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=]
-	C.datatext.fontsize = 12
+	if C.datatext.fontsize == 8 then C.datatext.fontsize = 12 end
 end

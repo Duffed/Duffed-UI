@@ -23,11 +23,16 @@ TukuiBar3:SetWidth((T.buttonsize * 2) + (T.buttonspacing * 3))
 TukuiBar3:SetHeight((T.buttonsize * 12) + (T.buttonspacing * 13))
 
 local petbg = CreateFrame("Frame", "TukuiPetBar", UIParent, "SecureHandlerStateTemplate")
-petbg:CreatePanel("Default", T.petbuttonsize + (T.petbuttonspacing * 2), (T.petbuttonsize * 10) + (T.petbuttonspacing * 11), "RIGHT", TukuiBar3, "LEFT", -6, 0)
+if C["actionbar"].petbarhorizontal == true then
+	petbg:CreatePanel("Default",(T.petbuttonsize * 10) + (T.petbuttonspacing * 11), T.petbuttonsize + (T.petbuttonspacing * 2), "BOTTOM", TukuiBar2, "TOP", 0, 4)
+else
+	petbg:CreatePanel("Default", T.petbuttonsize + (T.petbuttonspacing * 2), (T.petbuttonsize * 10) + (T.petbuttonspacing * 11), "RIGHT", TukuiBar3, "LEFT", -6, 0)
+end
 
 local ltpetbg1 = CreateFrame("Frame", "TukuiLineToPetActionBarBackground", petbg)
 ltpetbg1:CreatePanel("Transparent", 24, 265, "LEFT", petbg, "RIGHT", 0, 0)
 ltpetbg1:SetFrameLevel(0)
+if C["actionbar"].petbarhorizontal == true then ltpetbg1:Hide() end
 
 if not C.chat.background then
 	-- CUBE AT LEFT, ACT AS A BUTTON (CHAT MENU)
@@ -182,16 +187,19 @@ if IsAddOnLoaded("Recount") then
 	recountbg:CreateShadow("Default")
 end
 
--- Addon Background (where the right chat is .. if someone wanna use it
--- local bg = CreateFrame("Frame", nil, UIParent)
--- bg:CreatePanel("Transparent", 360, 152, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
--- bg:CreateShadow("Default")
+-- Addons Background (same size as right chat background)
+if C["chat"].addonborder == true then
+	local bg = CreateFrame("Frame", nil, UIParent)
+	bg:CreatePanel("Transparent", 360, 152, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
+	bg:CreateShadow("Default")
 
--- local bgtab = CreateFrame("Frame", nil, bg)
--- bgtab:CreatePanel("Transparent", 1, 20, "TOPLEFT", bg, "TOPLEFT", 5, -5)
--- bgtab:Point("TOPRIGHT", bg, "TOPRIGHT", -5, -5)
--- bgtab:CreateShadow("Default")
-
+	local bgtab = CreateFrame("Frame", nil, bg)
+	bgtab:CreatePanel("Transparent", 1, 20, "TOPLEFT", bg, "TOPLEFT", 5, -5)
+	bgtab:Point("TOPRIGHT", bg, "TOPRIGHT", -5, -5)
+	bgtab:CreateShadow("Default")
+	
+	if IsAddOnLoaded("b") then bg:Size(376, 152) end
+end
 
 -- Shadows
 iright:CreateShadow("Default")

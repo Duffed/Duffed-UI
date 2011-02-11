@@ -154,6 +154,7 @@ local function moving()
 end
 SLASH_MOVING1 = "/mtukui"
 SLASH_MOVING2 = "/moveui"
+SLASH_MOVING3 = "/uf"
 SlashCmdList["MOVING"] = moving
 
 local protection = CreateFrame("Frame")

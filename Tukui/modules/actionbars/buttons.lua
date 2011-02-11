@@ -15,7 +15,7 @@ local function ShowOrHideBar(bar, button)
 		end
 		if bar == TukuiBar3 then
 			if button == TukuiBar3Button then
-				TukuiLineToPetActionBarBackground:Show()
+				if C["actionbar"].petbarhorizontal ~= true then TukuiLineToPetActionBarBackground:Show() end
 				if db.rightbars == 1 then
 					MultiBarRight:Show()
 					db.rightbars = 2
@@ -26,7 +26,7 @@ local function ShowOrHideBar(bar, button)
 					bar:SetWidth((T.buttonsize * 1) + (T.buttonspacing * 2))
 				end
 			elseif button == TukuiBar3Button2 then
-				TukuiLineToPetActionBarBackground:Hide()
+				if C["actionbar"].petbarhorizontal ~= true then TukuiLineToPetActionBarBackground:Hide() end
 				db.rightbars = 0
 				bar:Hide()
 			end
@@ -41,7 +41,7 @@ local function ShowOrHideBar(bar, button)
 				bar:SetWidth((T.buttonsize * 1) + (T.buttonspacing * 2))
 				MultiBarRight:Hide()
 				db.rightbars = 1
-				TukuiLineToPetActionBarBackground:Show()
+				if C["actionbar"].petbarhorizontal ~= true then TukuiLineToPetActionBarBackground:Show() end
 			end
 		end
 	end
@@ -51,6 +51,7 @@ local function MoveButtonBar(button, bar)
 	local db = TukuiDataPerChar
 	
 	if button == TukuiBar2Button then
+		T.petBarPosition()
 		T.cbPosition()
 		if bar:IsShown() then
 			button.text:SetText(T.panelcolor.."-|r")
@@ -67,14 +68,14 @@ local function MoveButtonBar(button, bar)
 				button:Height(130)
 				button:ClearAllPoints()
 				button:Point("RIGHT", UIParent, "RIGHT", 1, -14)
-				TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 2) + (T.buttonspacing * 3)), -14)
+				if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 2) + (T.buttonspacing * 3)), -14) end
 			elseif db.rightbars == 1 then
 				TukuiBar3Button2:Show()
 				button:Height(130/2)
 				button:ClearAllPoints()
 				button:Point("BOTTOMRIGHT", UIParent, "RIGHT", 1, -14)
 				button.text:SetText(T.panelcolor.."<|r")
-				TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14)
+				if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) end
 			end
 		else
 		end
@@ -84,7 +85,7 @@ local function MoveButtonBar(button, bar)
 			TukuiBar3Button:Height(130)
 			TukuiBar3Button:ClearAllPoints()
 			TukuiBar3Button:Point("RIGHT", UIParent, "RIGHT", 1, -14)
-			TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -23, -14)
+			if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -23, -14) end
 		end
 	end
 end
@@ -189,38 +190,27 @@ init:RegisterEvent("VARIABLES_LOADED")
 init:SetScript("OnEvent", function(self, event)
 	if not TukuiDataPerChar then TukuiDataPerChar = {} end
 	local db = TukuiDataPerChar
+	if db.hidebar2 == nil and T.lowversion then db.hidebar2 = true end
 	
-	-- Castbar Position
-	T.cbPosition = function()
-		if not C["unitframes"].enable == true then return end
-		if TukuiDataPerChar.hidebar2 == true then
-			TukuiPlayerCastBar:ClearAllPoints()
-			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", 14, 6)
-		else
-			TukuiPlayerCastBar:ClearAllPoints()
-			TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, 6)
-		end
-	end
 	T.cbPosition()
+	T.petBarPosition()
+	
+	-- Third Bar at the bottom
+	if db.hidebar2 then
+		DrPepper(TukuiBar2Button, TukuiBar2)
+	end
 	
 	-- Rightbars on startup
 	if db.rightbars == nil then db.rightbars = 2 end
 	if db.rightbars == 1 then
 		DrPepper(TukuiBar3Button, TukuiBar3)
 		MultiBarRight:Hide()
-		TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14)
+		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) end
 	elseif db.rightbars == 0 then
-		TukuiLineToPetActionBarBackground:Hide()
 		TukuiBar3Button.text:SetText(T.panelcolor.."<|r")
 		TukuiBar3:Hide()
-		TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -26, -14)
+		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -26, -14) TukuiLineToPetActionBarBackground:Hide() end
 	elseif db.rightbars == 2 then
-		TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 2) + (T.buttonspacing * 3)), -14)
-	end
-	
-	-- Third Bar at the bottom
-	if db.hidebar2 == nil and T.lowversion then db.hidebar2 = true end
-	if db.hidebar2 then
-		DrPepper(TukuiBar2Button, TukuiBar2)
+		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -36 -((T.buttonsize * 2) + (T.buttonspacing * 3)), -14) TukuiLineToPetActionBarBackground:Show() end
 	end
 end)

@@ -8,7 +8,7 @@ if not C["actionbar"].enable == true then return end
 local TukuiOnLogon = CreateFrame("Frame")
 TukuiOnLogon:RegisterEvent("PLAYER_ENTERING_WORLD")
 TukuiOnLogon:SetScript("OnEvent", function(self, event)
-	self:UnregisterEvent("PLAYER_ENTERING_WORLD")	
+	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	SetActionBarToggles(1, 1, 1, 1, 0)
 	SetCVar("alwaysShowActionBars", 0)	
 	if C["actionbar"].showgrid == true then
@@ -39,9 +39,4 @@ TukuiOnLogon:SetScript("OnEvent", function(self, event)
 			ActionButton_ShowGrid(button)
 		end
 	end
-	-- Show Bars on startup to prevent bug on some classes
-	MultiBarBottomLeft:Show()
-	MultiBarBottomRight:Show()
-	MultiBarLeft:Show()
-	MultiBarRight:Show()
 end)

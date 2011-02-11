@@ -425,7 +425,7 @@ local function StyleTotemActionButton(button, index)
 	icon:Point("BOTTOMRIGHT",button,"BOTTOMRIGHT",-2,2)
 	button.overlayTex:SetTexture(nil)
 	button.overlayTex:Hide()
-	button:GetNormalTexture():SetAlpha(0)
+	button:GetNormalTexture():SetTexCoord(0,0,0,0)
 	if not InCombatLockdown() and button.slotButton then
 		button:ClearAllPoints()
 		button:SetAllPoints(button.slotButton)

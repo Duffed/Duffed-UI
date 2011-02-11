@@ -66,8 +66,9 @@ C["actionbar"] = {
 	["rightbarsmouseover"] = true, 						-- Right Bars on mouseover
 	["shapeshiftborder"] = true,						-- Create a Border around the shapeshift buttons
 	["shapeshiftmouseover"] = false,					-- Shapeshiftbar on mouseover
-	["petbaralwaysvisible"] = true,						-- Always show petbar even if rightbarsmouseover = true
 	["macrotext"] = false,								-- display macro text on buttons
+	["petbaralwaysvisible"] = true,						-- Always show petbar even if rightbarsmouseover = true
+	["petbarhorizontal"] = false,						-- Petbar horizontal on top of Bar1/2
 
 	["enable"] = true,                                  -- enable tukui action bars
 	["hotkey"] = false,                                 -- enable hotkey display because it was a lot requested
@@ -159,6 +160,7 @@ C["chat"] = {
 	["enable"] = true,                                  -- blah
 	["whispersound"] = true,                            -- play a sound when receiving whisper
 	["background"] = true,
+	["addonborder"] = false,							-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
 }
 
 C["nameplate"] = {

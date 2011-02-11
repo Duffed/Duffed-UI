@@ -62,6 +62,7 @@ local function Local(o)
 	if o == "TukuiConfigUIactionbarshapeshiftmouseover"  then o = "Shapeshiftbar on mouseover" end
 	if o == "TukuiConfigUIactionbarmacrotext"  then o = "Display Macrotext" end
 	if o == "TukuiConfigUIactionbarpetbaralwaysvisible"  then o = "Always show Petbar even if rightbarsmouseover = true" end
+	if o == "TukuiConfigUIactionbarpetbarhorizontal"  then o = "Petbar horizontal on top of Bar2/1" end
 	
 	if o == "TukuiConfigUIpvpdrinkannouncement"  then o = "Announce 'drinking' in  Arena" end
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end
@@ -72,6 +73,8 @@ local function Local(o)
 	if o == "TukuiConfigUIclasstimertargetbuffcolor" then o = "Target-Buffs Color" end
 	if o == "TukuiConfigUIclasstimertargetdebuffcolor" then o = "Target-Debuffs Color" end
 	if o == "TukuiConfigUIclasstimertrinketcolor" then o = "Player-Trinket(Procs) Color" end
+	
+	if o == "TukuiConfigUIchataddonborder" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

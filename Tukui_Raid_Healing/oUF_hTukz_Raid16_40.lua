@@ -89,10 +89,8 @@ local function Shared(self, unit)
 	self.panel = panel
 	
 	local name = health:CreateFontString(nil, "OVERLAY")
-    name:SetPoint("TOP", 0, -1) 
-	name:SetPoint("LEFT") 
-	name:SetPoint("RIGHT")
-	name:SetFont(font2, fontsize*C["unitframes"].gridscale*T.raidscale)
+	local name = T.SetFontString(health, font2, fontsize*C["unitframes"].gridscale*T.raidscale)
+    name:SetPoint("CENTER", health, "TOP", 0, -5) 
 	self:Tag(name, "[Tukui:getnamecolor][Tukui:nameshort]")
 	self.Name = name
 	

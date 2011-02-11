@@ -1205,7 +1205,7 @@ playerFrame:SetHiddenHeight( -yOffset );
 if IgnoreFocusFrame then
 	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset )
 else
-	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, 2*yOffset + TukuiFocus:GetHeight())
+	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
 end
 playerFrame:Point( "BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0, yOffset );
 	

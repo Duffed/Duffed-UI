@@ -2,7 +2,7 @@
 ## Title: |cffC495DDTukui Interrupt Icons|r
 ## Notes: Display Enemy Interrupt as icons on screen. (/ii)
 ## Author: Tukz
-## Version: 1.00
+## Version: 1.01
 ## SavedVariables: TukuiInterruptIcons
 ## RequiredDeps: Tukui
 

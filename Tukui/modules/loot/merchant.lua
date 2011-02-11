@@ -43,16 +43,18 @@ f:SetScript("OnEvent", function()
 	end
 	if not IsShiftKeyDown() then
 		if CanMerchantRepair() and C["merchant"].autorepair then
-			local cost, possible = GetRepairAllCost()
-			if cost>0 then
-				if possible then
-					RepairAllItems()
-					local c = cost%100
-					local s = math.floor((cost%10000)/100)
-					local g = math.floor(cost/10000)
-					DEFAULT_CHAT_FRAME:AddMessage(L.merchant_repaircost.." |cffffffff"..g..L.goldabbrev.." |cffffffff"..s..L.silverabbrev.." |cffffffff"..c..L.copperabbrev..".",255,255,0)
-				else
-					DEFAULT_CHAT_FRAME:AddMessage(L.merchant_repairnomoney,255,0,0)
+			if not IsShiftKeyDown() then
+				local cost, possible = GetRepairAllCost()
+				if cost>0 then
+					if possible then
+						RepairAllItems()
+						local c = cost%100
+						local s = math.floor((cost%10000)/100)
+						local g = math.floor(cost/10000)
+						DEFAULT_CHAT_FRAME:AddMessage(L.merchant_repaircost.." |cffffffff"..g..L.goldabbrev.." |cffffffff"..s..L.silverabbrev.." |cffffffff"..c..L.copperabbrev..".",255,255,0)
+					else
+						DEFAULT_CHAT_FRAME:AddMessage(L.merchant_repairnomoney,255,0,0)
+					end
 				end
 			end
 		end

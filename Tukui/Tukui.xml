@@ -29,6 +29,7 @@
 	<Script file="modules\unitframes\plugins\oUF_ClassIcons\oUF_ClassIcons.lua"/>
 	<Script file="modules\unitframes\plugins\oUF_AuraTracker\oUF_AuraTracker.lua"/>
 	<Script file="modules\unitframes\plugins\oUF_Talents\oUF_Talents.lua"/>
+	<Script file="modules\unitframes\plugins\oUF_Priest_SoS\oUF_Priest_SoS.lua"/>
 	<Script file="modules\unitframes\templates\colors.lua"/>
 	<Script file="core\uiscale.lua"/>
 	<Script file="core\deprecated.lua"/>

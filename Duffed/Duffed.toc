@@ -13,3 +13,4 @@ scripts\drink_announcement.lua
 scripts\targethp.lua
 scripts\tbtimer.lua
 scripts\sayinterrupt.lua
+scripts\priest.lua

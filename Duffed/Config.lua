@@ -2,7 +2,8 @@ dStuff = {
 	ccannouncement = false,		-- Announce CC/Buffs/Debuffs
 	tbtimer = false,			-- Show Watchframe when entering tb (abuse :<)
 	drinkannouncement = true,	-- drink announcement for arena
-	sayinterrupt = true,		-- 
+	sayinterrupt = true,		-- Announce interrupt in /p or /ra
+	priest_SoS = false,			-- Priest Soul of Strength Icon
 }
 
 -- spelllist for the buff/debuff announcement

@@ -18,7 +18,7 @@ TukuiBar2:SetWidth((T.buttonsize * 12) + (T.buttonspacing * 13))
 TukuiBar2:SetHeight((T.buttonsize * 1) + (T.buttonspacing * 2))
 
 local TukuiBar3 = CreateFrame("Frame", "TukuiBar3", UIParent) -- Rightbars
-TukuiBar3:CreatePanel("Default", 1, 1, "RIGHT", UIParent, "RIGHT", -23, -14)
+TukuiBar3:CreatePanel("Default", 1, 1, "RIGHT", UIParent, "RIGHT", -14, -14)
 TukuiBar3:SetWidth((T.buttonsize * 2) + (T.buttonspacing * 3))
 TukuiBar3:SetHeight((T.buttonsize * 12) + (T.buttonspacing * 13))
 

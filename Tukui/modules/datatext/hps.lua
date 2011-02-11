@@ -10,7 +10,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
 	local actual_heals_total, cmbt_time = 0
  
 	local hText = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
-	hText:SetFont(C["datatext"].font, C["datatext"].fontsize)
+	hText:SetFont(C.datatext.font, C["datatext"].fontsize)
 	hText:SetText("0.0 ",T.panelcolor..L.datatext_hps)
  
 	T.PP(C["datatext"].hps_text, hText)
@@ -32,7 +32,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
 		else
 			HPS_FEED:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 		end
-		hText:SetText(T.panelcolor..get_hps())
+		hText:SetText(get_hps())
 	end)
  
 	function HPS_FEED:PLAYER_LOGIN()
@@ -61,7 +61,7 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
 	end
  
 	function HPS_FEED:PLAYER_REGEN_ENABLED()
-		hText:SetText(T.panelcolor..get_hps)
+		hText:SetText(get_hps)
 	end
    
 	function HPS_FEED:PLAYER_REGEN_DISABLED()
@@ -76,9 +76,9 @@ if C["datatext"].hps_text and C["datatext"].hps_text > 0 then
  
 	function get_hps()
 		if (actual_heals_total == 0) then
-			return ("0.0 " .. L.datatext_hps)
+			return ("0.0 " .. T.panelcolor..L.datatext_hps)
 		else
-			return string.format("%.1f " .. L.datatext_hps, (actual_heals_total or 0) / (cmbt_time or 1))
+			return string.format("%.1f " .. T.panelcolor..L.datatext_hps, (actual_heals_total or 0) / (cmbt_time or 1))
 		end
 	end
 

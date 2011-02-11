@@ -190,6 +190,23 @@ local function Shared(self, unit)
 			self.WeakenedSoul = ws
 		end
 		
+		-- Strength of Soul Plugin
+		if T.myclass == "PRIEST" then
+			local sos = CreateFrame("Frame", nil, self)
+			sos:CreatePanel("Default", 32, 32, "BOTTOMLEFT", self, "BOTTOMRIGHT", 6, -2)
+			sos:CreateShadow("Default")
+			
+			sos.icon = sos:CreateTexture(nil, "OVERLAY")
+			sos.icon:Point("TOPLEFT", 2, -2)
+			sos.icon:Point("BOTTOMRIGHT", -2, 2)
+			
+			sos.text = T.SetFontString(sos, font2, 14, "THINOUTLINE")
+			sos.text:SetPoint("CENTER", sos, 1, 0)
+			sos:SetScript("OnUpdate", Priest_SoS_Time)
+			
+			self.Priest_SoS = sos
+		end
+		
 		-- Healthbar Border
 		health.border = CreateFrame("Frame", nil, health)
 		health.border:CreatePanel("Default",1,1, "TOPLEFT", health, "TOPLEFT", -2, 2)
@@ -1370,7 +1387,7 @@ local function Shared(self, unit)
 			AuraTracker.icon:Point("BOTTOMRIGHT", AuraTracker, -2, 2)
 			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
 			
-			AuraTracker.text = T.SetFontString(AuraTracker, font1, 13, "THINOUTLINE")
+			AuraTracker.text = T.SetFontString(AuraTracker, font2, 15, "THINOUTLINE")
 			AuraTracker.text:SetPoint("CENTER", AuraTracker, 0, 0)
 			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
 			
@@ -1543,7 +1560,7 @@ focustarget:Size(80, 16)
 local focus = oUF:Spawn('focus', "TukuiFocus")
 focus:Point("RIGHT", TukuiFocusTarget, "LEFT", -7, 0)
 if C["unitframes"].charportrait ~= true then
-	focus:Size((playerwidth - 6) - 80, 16)
+	focus:Size((playerwidth - 7) - 80, 16)
 else
 	focus:Size((playerwidth + 55) - 80, 16)
 end

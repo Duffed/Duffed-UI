@@ -71,8 +71,6 @@ local function setup()
 
 	WatchFrameTitle:SetParent(TukuiWatchFrame)
 	WatchFrameCollapseExpandButton:SetParent(TukuiWatchFrame)
-	WatchFrameCollapseExpandButton:ClearAllPoints()
-	WatchFrameCollapseExpandButton:Point("TOPLEFT", 34, -10)
 	WatchFrameCollapseExpandButton:FontString("text", C.datatext.font, C.datatext.fontsize)
 	WatchFrameCollapseExpandButton.text:SetText("-")
 	WatchFrameCollapseExpandButton.text:Point("CENTER", 1, 0)

@@ -439,6 +439,8 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 77489 ), -- Echo of Light
             },
             player = {
+				CreateSpellEntry( 96219 ), -- Strength of Soul (silence immun)
+				CreateSpellEntry( 89489 ), -- priest slow immun
 				CreateSpellEntry( 139 ), -- Renew
                 CreateSpellEntry( 10060 ), -- Power Infusion
                 CreateSpellEntry( 47585 ), -- Dispersion

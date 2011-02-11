@@ -299,7 +299,7 @@ T.panelcolor = ("|cff%.2x%.2x%.2x"):format(dr * 255, dg * 255, db * 255)
 
 -- Castbar Size
 T.cbSize = function()
-	if not C["unitframes"].enable == true then return end
+	if C["unitframes"].enable ~= true or C["unitframes"].unitcastbar ~= true then return end
 
 	if C["actionbar"].petbarhorizontal == true then
 		if TukuiPetBar:IsShown() then
@@ -314,7 +314,7 @@ end
 
 -- Castbar Position
 T.cbPosition = function()
-	if not C["unitframes"].enable == true then return end
+	if C["unitframes"].enable ~= true or C["unitframes"].unitcastbar ~= true then return end
 
 	T.cbSize()
 	if TukuiDataPerChar.hidebar2 == true then
@@ -914,15 +914,25 @@ function updateAuraTrackerTime(self, elapsed)
 		self.timeleft = self.timeleft - elapsed
 
 		if (self.timeleft <= 5) then
-			self.text:SetTextColor(1, 0, 0) -- red
+			self.text:SetTextColor(1, 0, 0)
 		else
-			self.text:SetTextColor(1, 1, 1) -- white
+			self.text:SetTextColor(1, 1, 1)
 		end
 		
 		if (self.timeleft <= 0) then
 			self.icon:SetTexture("")
 			self.text:SetText("")
 		end	
+		self.text:SetFormattedText("%.1f", self.timeleft)
+	end
+end
+
+function Priest_SoS_Time(self, elapsed)
+	if (self.hasBuff) then
+		self.timeleft = self.timeleft - elapsed
+		if self.timeleft <= 0 then
+			self.text:SetText("0")
+		end
 		self.text:SetFormattedText("%.1f", self.timeleft)
 	end
 end

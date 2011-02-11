@@ -1,0 +1,9 @@
+## Interface: 40000
+## Title: oUF Priest - Strength of Soul
+## Notes: Displays Strength of Soul Buff
+## Author: Duffed
+## Version: 1
+## X-Category: oUF
+## Dependencies: oUF
+
+oUF_Priest_SoS.lua

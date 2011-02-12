@@ -1538,7 +1538,7 @@ oUF:RegisterStyle('Tukui', Shared)
 -- player
 local player = oUF:Spawn('player', "TukuiPlayer")
 if T.lowversion then
-	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", -130,115)
+	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", -130,135)
 else
 	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2,140)
 end
@@ -1547,7 +1547,7 @@ player:Size(playerwidth, 44)
 -- target
 local target = oUF:Spawn('target', "TukuiTarget")
 if T.lowversion then
-	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 130,115)
+	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 130,135)
 else
 	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2,140)
 end

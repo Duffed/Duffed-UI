@@ -719,14 +719,16 @@ end
 
 local CheckInterrupt = function(self, unit)
 	if unit == "vehicle" then unit = "player" end
-	if self.interrupt then -- and UnitCanAttack("player", unit)
+	if self.interrupt then
 		self:SetStatusBarColor(1, 0, 0, 0.5)	
 	else
 		if unit == "player" then
 			r,g,b = unpack(C["datatext"].color)
 			self:SetStatusBarColor(r, g, b, .7)
+		elseif unit then
+			self:SetStatusBarColor(unpack(T.oUF_colors.class[select(2, UnitClass(unit))]))
 		else
-			self:SetStatusBarColor(unpack(C["castbar"].color))
+			self:SetStatusBarColor(unpack(T.castbar.color))
 		end
 	end
 end

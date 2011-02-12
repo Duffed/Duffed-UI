@@ -207,7 +207,7 @@ local function SetupChatPosAndFont(self)
 		end
 				
 		--Check if chat exists in the bottomright corner
-		if ChatBG2 and (point == "BOTTOMRIGHT" or point == "RIGHT" or point == "BOTTOM") and chat:IsShown() and name == LOOT.."/"..L.chat_trade then
+		if ChatBG2 and point == "BOTTOMRIGHT" and chat:IsShown() and name == LOOT.."/"..L.chat_trade then
 			ChatBG2:ClearAllPoints()
 			if not T.lowversion then
 				ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
@@ -225,12 +225,17 @@ local function SetupChatPosAndFont(self)
 	-- reposition battle.net popup over chat #1
 	BNToastFrame:HookScript("OnShow", function(self)
 		self:ClearAllPoints()
-		self:Point("BOTTOMLEFT", TukuiBnetHolder, "BOTTOMLEFT", 0, 0)
+		if TukuiBnetHolder:GetPoint() == "RIGHT" or TukuiBnetHolder:GetPoint() == "BOTTOMRIGHT" then
+			self:Point("BOTTOMRIGHT", TukuiBnetHolder, "BOTTOMRIGHT", 0, 0)
+		else
+			self:Point("BOTTOMLEFT", TukuiBnetHolder, "BOTTOMLEFT", 0, 0)
+		end
 	end)
 end
 
 TukuiChat:RegisterEvent("ADDON_LOADED")
 TukuiChat:RegisterEvent("PLAYER_ENTERING_WORLD")
+TukuiChat:RegisterEvent("PLAYER_LOGIN")
 TukuiChat:SetScript("OnEvent", function(self, event, ...)
 	local addon = ...
 	if event == "ADDON_LOADED" then
@@ -239,6 +244,9 @@ TukuiChat:SetScript("OnEvent", function(self, event, ...)
 			SetupChat(self)
 		end
 	elseif event == "PLAYER_ENTERING_WORLD" then
+		SetupChatPosAndFont(self)
+	end
+	if event == "PLAYER_LOGIN" then
 		SetupChatPosAndFont(self)
 	end
 end)

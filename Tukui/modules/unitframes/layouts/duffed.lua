@@ -803,15 +803,20 @@ local function Shared(self, unit)
 		power:SetStatusBarTexture(normTex)
 		
 		power.frequentUpdates = true
-		power.colorPower = true
 		if C["unitframes"].showsmooth == true then
 			power.Smooth = true
 		end
 		
+		if C["unitframes"].unicolor == true then
+			power.colorTapping = true
+			power.colorClass = true			
+		else
+			power.colorPower = true
+		end
 		self.Power = power
 		
 		-- Unit name
-		local Name = T.SetFontString(health, font1, fontsize)
+		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
 		Name:SetPoint("CENTER", health, "CENTER", 0, -1)
 		Name:SetJustifyH("CENTER")
 
@@ -934,7 +939,7 @@ local function Shared(self, unit)
 		self.Power.bg = powerBG
 				
 		-- Unit name
-		local Name = T.SetFontString(health, font1, fontsize)
+		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
 		Name:SetPoint("CENTER", health, "CENTER", 0, -1)
 		Name:SetJustifyH("CENTER")
 

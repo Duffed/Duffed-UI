@@ -1,7 +1,7 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
-local twinpeaks = select(1, GetBattlegroundInfo(2))
-local gilneas = select(1, GetBattlegroundInfo(3))
+local gilneas = select(1, GetBattlegroundInfo(2))
+local twinpeaks = select(1, GetBattlegroundInfo(3))
 local warsong = select(1, GetBattlegroundInfo(4))
 local arathi = select(1, GetBattlegroundInfo(5))
 local eos = select(1, GetBattlegroundInfo(6))
@@ -107,6 +107,7 @@ local function OnEvent(self, event)
 	if event == "PLAYER_ENTERING_WORLD" then
 		local inInstance, instanceType = IsInInstance()
 		if inInstance and (instanceType == "pvp") then
+			
 			bgframe:Show()
 		else
 			Text1:SetText("")
@@ -117,6 +118,7 @@ local function OnEvent(self, event)
 	end
 end
 
+bgframe:SetScript("OnMouseDown", function() ToggleFrame(WorldStateScoreFrame) end)
 Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
 Stat:SetScript("OnEvent", OnEvent)
 Stat:SetScript("OnUpdate", Update)

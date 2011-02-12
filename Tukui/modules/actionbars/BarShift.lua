@@ -85,10 +85,10 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			end
 		end
 		T.TukuiShiftBarUpdate()
-		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+C["actionbar"].buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
+		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+T.buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		T.StyleShift()
-		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+C["actionbar"].buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
+		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+T.buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
 		
 		-- Mouseover
 		if C["actionbar"].shapeshiftmouseover == true then

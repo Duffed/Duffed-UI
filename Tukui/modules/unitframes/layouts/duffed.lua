@@ -12,6 +12,7 @@ local glowTex = C["media"].glowTex
 local bubbleTex = C["media"].bubbleTex
 local fontsize = C["media"].uffontsize
 local playerwidth = C["unitframes"].framewidth
+if T.lowversion then playerwidth = C["unitframes"].framewidth - 45 end
 
 local backdrop = {
 	bgFile = C["media"].blank,
@@ -1522,18 +1523,18 @@ oUF:RegisterStyle('Tukui', Shared)
 -- player
 local player = oUF:Spawn('player', "TukuiPlayer")
 if T.lowversion then
-	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", -180,110)
+	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", -130,115)
 else
-	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 0,140)
+	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2,140)
 end
 player:Size(playerwidth, 44)
 
 -- target
 local target = oUF:Spawn('target', "TukuiTarget")
 if T.lowversion then
-	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 180,110)
+	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 130,115)
 else
-	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", 0,140)
+	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2,140)
 end
 target:Size(playerwidth, 44)
 

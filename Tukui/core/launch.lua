@@ -65,18 +65,28 @@ local function install()
 			local chatName = FCF_GetChatWindowInfo(chatFrameId)
 			
 			-- set the size of chat frames
-			frame:Size(350, 117)
-			
-			-- tell wow that we are using new size
-			SetChatWindowSavedDimensions(chatFrameId, 350, T.Scale(111))
-			
-			-- move general bottom left or Loot (if found) on right
-			if i == 1 then
-				frame:ClearAllPoints()
-				frame:Point("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 9, 9)
-			elseif i == 4 and chatName == LOOT.."/"..L.chat_trade then
-				frame:ClearAllPoints()
-				frame:Point("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -9, 9)
+			if not T.lowversion then
+				frame:Size(366, 117)
+				SetChatWindowSavedDimensions(chatFrameId, 366, T.Scale(117))
+				-- move general bottom left or Loot (if found) on right
+				if i == 1 then
+					frame:ClearAllPoints()
+					frame:Point("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 9, 9)
+				elseif i == 4 and chatName == LOOT.."/"..L.chat_trade then
+					frame:ClearAllPoints()
+					frame:Point("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -9, 9)
+				end
+			else
+				frame:Size(350, 93)
+				SetChatWindowSavedDimensions(chatFrameId, 350, T.Scale(93))
+				-- move general bottom left or Loot (if found) on right
+				if i == 1 then
+					frame:ClearAllPoints()
+					frame:Point("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 9, 26)
+				elseif i == 4 and chatName == LOOT.."/"..L.chat_trade then
+					frame:ClearAllPoints()
+					frame:Point("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -9, 26)
+				end
 			end
 					
 			-- save new default position and dimension

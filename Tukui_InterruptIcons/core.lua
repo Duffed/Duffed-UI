@@ -1,7 +1,6 @@
 local T, C, L = unpack(Tukui) -- Import: T - functions, constants, variables; C - config; L - locales
 
 tInterruptIcons = CreateFrame("frame")
-tInterruptIcons:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 tInterruptIcons:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 tInterruptIcons:RegisterEvent("PLAYER_ENTERING_WORLD")
 tInterruptIcons:SetScript("OnUpdate", function(self, elapsed) tInterruptIcons.OnUpdate(elapsed) end)
@@ -29,7 +28,6 @@ tInterruptIcons.Spells = T.interrupt
 ------------------------------------------------------------
 -- end of spell configuration
 ------------------------------------------------------------
-
 SlashCmdList["tInterruptIcons"] = function(msg) tInterruptIcons.SlashHandler(msg) end
 SLASH_tInterruptIcons1 = "/ii"
 tInterruptIcons:SetScript("OnEvent", function(self, event, ...) tInterruptIcons[event](...) end)
@@ -140,7 +138,7 @@ function tInterruptIcons.Print(msg, ...)
 end
 
 function tInterruptIcons.COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags, spellID)
-	if (event == "SPELL_CAST_SUCCESS" and not tInterruptIcons.Icons[1]:IsMouseEnabled() and (bit.band(sourceFlags,COMBATLOG_OBJECT_REACTION_HOSTILE) == COMBATLOG_OBJECT_REACTION_HOSTILE)) then			
+	if (event == "SPELL_CAST_SUCCESS" and not tInterruptIcons.Icons[1]:IsMouseEnabled() and (bit.band(sourceFlags,COMBATLOG_OBJECT_REACTION_HOSTILE) == COMBATLOG_OBJECT_REACTION_HOSTILE)) then 
 		if (sourceName ~= UnitName("player")) then
 			if (tInterruptIcons.Spells[spellID]) then
 				local _,_,texture = GetSpellInfo(spellID)
@@ -237,6 +235,12 @@ function tInterruptIcons:PLAYER_ENTERING_WORLD()
 		TukuiInterruptIcons = {["orientation"] = "VERTICALUP",} 
 	end
 	pvpType = GetZonePVPInfo()
+	
+	if pvpType == "Arena" then
+		tInterruptIcons:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	else
+		tInterruptIcons:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	end
 end
 
 function tInterruptIcons:ZONE_CHANGED_NEW_AREA()
@@ -246,5 +250,8 @@ function tInterruptIcons:ZONE_CHANGED_NEW_AREA()
 		for i in pairs(tInterruptIcons.Timers) do
 			tInterruptIcons.StopTimer(i)
 		end
+		tInterruptIcons:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+	else
+		tInterruptIcons:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	end
 end

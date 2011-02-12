@@ -100,25 +100,34 @@ local function DrPepper(self, bar) -- guess what! :P
 	MoveButtonBar(button, bar)
 end
 
+-- +/-
 local TukuiBar2Button = CreateFrame("Button", "TukuiBar2Button", UIParent)
 TukuiBar2Button:SetTemplate("Default")
 TukuiBar2Button:CreateShadow("Default")
 TukuiBar2Button:RegisterForClicks("AnyUp")
-TukuiBar2Button:SetScript("OnClick", function(self) DrPepper(self, TukuiBar2) end)
-TukuiBar2Button:SetAlpha(0)
-TukuiBar2Button:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
-TukuiBar2Button:SetScript("OnLeave", function(self) self:SetAlpha(0) end)
+TukuiBar2Button:SetScript("OnClick", function(self, btn)
+	if btn == "RightButton" then
+		if TukuiInfoLeftBattleGround and UnitInBattleground("player") then
+			ToggleFrame(TukuiInfoLeftBattleGround)
+		end
+	else
+		DrPepper(self, TukuiBar2)
+	end
+end)
 if T.lowversion then
-	TukuiBar2Button:Size(20,20)
-	TukuiBar2Button:Point("LEFT", TukuiInfoRight, "RIGHT", 5, 2)
+	TukuiBar2Button:Size(18,18)
+	TukuiBar2Button:Point("BOTTOMRIGHT", TukuiBar1, "BOTTOMLEFT", -4, 0)
 else
 	TukuiBar2Button:Point("TOPLEFT", TukuiInfoLeft, "TOPRIGHT", 2, 0)
 	TukuiBar2Button:Point("BOTTOMRIGHT", TukuiInfoRight, "BOTTOMLEFT", -2, 0)
 end
-TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.media.font, 17)
-TukuiBar2Button.text:Point("CENTER", 0, -1)
+TukuiBar2Button:SetScript("OnEnter", function(self) self:SetBackdropBorderColor(unpack(C.datatext.color)) end)
+TukuiBar2Button:SetScript("OnLeave", function(self) self:SetBackdropBorderColor(unpack(C.media.bordercolor)) end)
+TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.datatext.font, C.datatext.fontsize)
+TukuiBar2Button.text:Point("CENTER", 0, 0)
 TukuiBar2Button.text:SetText(T.panelcolor.."-|r")
 
+-- >/< 1
 local TukuiBar3Button = CreateFrame("Button", "TukuiBar3Button", UIParent)
 TukuiBar3Button:Width(12)
 TukuiBar3Button:Height(130)
@@ -138,6 +147,7 @@ TukuiBar3Button.text = T.SetFontString(TukuiBar3Button, C.media.font, 14)
 TukuiBar3Button.text:Point("CENTER", 0, 0)
 TukuiBar3Button.text:SetText(T.panelcolor..">|r")
 
+-- >/< 2
 local TukuiBar3Button2 = CreateFrame("Button", "TukuiBar3Button2", UIParent)
 TukuiBar3Button2:Width(TukuiBar3Button:GetWidth())
 TukuiBar3Button2:Height((TukuiBar3Button:GetHeight()/2)+1)

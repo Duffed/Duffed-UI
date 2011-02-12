@@ -209,8 +209,13 @@ local function SetupChatPosAndFont(self)
 		--Check if chat exists in the bottomright corner
 		if ChatBG2 and point == "BOTTOMRIGHT" and chat:IsShown() and name == LOOT.."/"..L.chat_trade then
 			ChatBG2:ClearAllPoints()
-			ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
-			ChatBG2:Point("BOTTOMRIGHT", chat, "BOTTOMRIGHT", 5, -5)
+			if not T.lowversion then
+				ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
+				ChatBG2:Point("BOTTOMRIGHT", chat, "BOTTOMRIGHT", 5, -5)
+			else
+				ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
+				ChatBG2:Point("BOTTOMRIGHT", chat, "BOTTOMRIGHT", 5, -16)
+			end
 			ChatBG2:Show()
 		elseif point == "BOTTOMRIGHT" and chat:IsShown() then
 			chat:SetJustifyH("RIGHT") 

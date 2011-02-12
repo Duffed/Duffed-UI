@@ -1,7 +1,7 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
 -- Petbar horizontal
-if C["actionbar"].petbarhorizontal == true then 
+if C["actionbar"].petbarhorizontal == true then
 	local f = CreateFrame("Frame")
 	f:RegisterEvent("PLAYER_CONTROL_LOST")
 	f:RegisterEvent("PLAYER_CONTROL_GAINED")
@@ -12,7 +12,9 @@ if C["actionbar"].petbarhorizontal == true then
 	f:RegisterEvent("UNIT_PORTRAIT_UPDATE")
 	f:SetScript("OnEvent", function()
 		T.petBarPosition()
-		T.cbPosition()
+		if C["unitframes"].enable == true and C["unitframes"].unitcastbar == true then
+			T.cbPosition()
+		end
 	end)
 end
 

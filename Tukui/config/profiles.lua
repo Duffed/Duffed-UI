@@ -32,7 +32,7 @@ end
 -- Special Configs :o
 ----------------------------------------------------------------------------
 
-if IsAddOnLoaded("a") or IsAddOnLoaded("b") then -- my config for every char
+if IsAddOnLoaded("a") or IsAddOnLoaded("b") then
 	C.datatext.reputation = 0
 	C.datatext.experience = 0
 	C.unitframes.priestarmor = true

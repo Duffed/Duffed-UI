@@ -4,7 +4,7 @@ local TukuiBar1 = CreateFrame("Frame", "TukuiBar1", UIParent, "SecureHandlerStat
 TukuiBar1:CreatePanel("Default", 1, 1, "BOTTOM", UIParent, "BOTTOM", 0, 27)
 if T.lowversion then
 	TukuiBar1:ClearAllPoints()
-	TukuiBar1:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 46)
+	TukuiBar1:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 4)
 	TukuiBar1:SetWidth((T.buttonsize * 12) + (T.buttonspacing * 13))
 	TukuiBar1:SetHeight((T.buttonsize * 2) + (T.buttonspacing * 3))
 else
@@ -34,51 +34,19 @@ ltpetbg1:CreatePanel("Transparent", 24, 265, "LEFT", petbg, "RIGHT", 0, 0)
 ltpetbg1:SetFrameLevel(0)
 if C["actionbar"].petbarhorizontal == true then ltpetbg1:Hide() end
 
-if not C.chat.background then
-	-- CUBE AT LEFT, ACT AS A BUTTON (CHAT MENU)
-	local cubeleft = CreateFrame("Frame", "TukuiCubeLeft", TukuiBar1)
-	cubeleft:CreatePanel("Default", 10, 10, "BOTTOM", ileftlv, "TOP", 0, 0)
-	cubeleft:EnableMouse(true)
-	cubeleft:SetScript("OnMouseDown", function(self, btn)
-		if TukuiInfoLeftBattleGround and UnitInBattleground("player") then
-			if btn == "RightButton" then
-				if TukuiInfoLeftBattleGround:IsShown() then
-					TukuiInfoLeftBattleGround:Hide()
-				else
-					TukuiInfoLeftBattleGround:Show()
-				end
-			end
-		end
-		
-		if btn == "LeftButton" then	
-			ToggleFrame(ChatMenu)
-		end
-	end)
-
-	-- CUBE AT RIGHT, ACT AS A BUTTON (CONFIGUI or BG'S)
-	local cuberight = CreateFrame("Frame", "TukuiCubeRight", TukuiBar1)
-	cuberight:CreatePanel("Default", 10, 10, "BOTTOM", irightlv, "TOP", 0, 0)
-	if C["bags"].enable then
-		cuberight:EnableMouse(true)
-		cuberight:SetScript("OnMouseDown", function(self)
-			ToggleKeyRing()
-		end)
-	end
-end
-
 -- INFO LEFT (FOR STATS)
 local ileft = CreateFrame("Frame", "TukuiInfoLeft", TukuiBar1)
 ileft:CreatePanel("Default", T.InfoLeftRightWidth, 19, "BOTTOMRIGHT", UIParent, "BOTTOM", -12, 4)
 ileft:SetFrameLevel(2)
+if T.lowversion then ileft:ClearAllPoints() ileft:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 14, 3) end
 
 -- INFO RIGHT (FOR STATS)
 local iright = CreateFrame("Frame", "TukuiInfoRight", TukuiBar1)
 iright:CreatePanel("Default", T.InfoLeftRightWidth, 19, "BOTTOMLEFT", UIParent, "BOTTOM", 12, 4)
 iright:SetFrameLevel(2)
-if T.lowversion then iright:ClearAllPoints() iright:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 4) end
-if T.lowversion then ileft:ClearAllPoints() ileft:SetPoint("BOTTOM", iright, "TOP", 0, -1) end
+if T.lowversion then iright:ClearAllPoints() iright:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -14, 3) end
 
-if C["actionbar"].buttonsize > 26 then
+if C["actionbar"].buttonsize > 26 and not T.lowversion then
 	-- HORIZONTAL LINE LEFT
 	local ltoabl = CreateFrame("Frame", "TukuiLineToABLeft", TukuiBar1)
 	ltoabl:CreatePanel("Default", 10, 2, "RIGHT", ileft, "LEFT", 0, 0)
@@ -86,7 +54,6 @@ if C["actionbar"].buttonsize > 26 then
 	-- HORIZONTAL LINE RIGHT
 	local ltoabr = CreateFrame("Frame", "TukuiLineToABRight", TukuiBar1)
 	ltoabr:CreatePanel("Default", 10, 2, "LEFT", iright, "RIGHT", 0, 0)
-	if T.lowversion then ltoabr:ClearAllPoints() ltoabr:SetPoint("LEFT", ileft, "RIGHT", 0, 0) end
 
 	-- LEFT VERTICAL LINE
 	local ileftlv = CreateFrame("Frame", "TukuiInfoLeftLineVertical", TukuiBar1)
@@ -100,8 +67,13 @@ end
 if C["chat"].background == true then
 	-- Chat 1 Background
 	local chatbg = CreateFrame("Frame", "ChatBG1", UIParent)
-	chatbg:CreatePanel("Transparent", 430, 126, "TOPLEFT", ChatFrame1, "TOPLEFT", -5, 29)
-	chatbg:Point("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 5, -5)
+	if not T.lowversion then
+		chatbg:CreatePanel("Transparent", 430, 126, "TOPLEFT", ChatFrame1, "TOPLEFT", -5, 29)
+		chatbg:Point("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 5, -5)
+	else
+		chatbg:CreatePanel("Transparent", 430, 126, "TOPLEFT", ChatFrame1, "TOPLEFT", -5, 29)
+		chatbg:Point("BOTTOMRIGHT", ChatFrame1, "BOTTOMRIGHT", 5, -16)
+	end
 	chatbg:CreateShadow("Default")
 	
 	local tabchat1 = CreateFrame("Frame", "ChatBG1Tabs", chatbg)
@@ -190,15 +162,13 @@ end
 -- Addons Background (same size as right chat background)
 if C["chat"].addonborder == true then
 	local bg = CreateFrame("Frame", nil, UIParent)
-	bg:CreatePanel("Transparent", 360, 152, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
+	bg:CreatePanel("Transparent", 376, 152, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
 	bg:CreateShadow("Default")
 
 	local bgtab = CreateFrame("Frame", nil, bg)
 	bgtab:CreatePanel("Transparent", 1, 20, "TOPLEFT", bg, "TOPLEFT", 5, -5)
 	bgtab:Point("TOPRIGHT", bg, "TOPRIGHT", -5, -5)
 	bgtab:CreateShadow("Default")
-	
-	if IsAddOnLoaded("b") then bg:Size(376, 152) end
 end
 
 -- Shadows

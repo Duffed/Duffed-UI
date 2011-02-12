@@ -149,40 +149,4 @@ oUF:Factory(function(self)
 	else
 		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
 	end
-	
-	local pets = {} 
-		pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
-		pets[1]:SetPoint('BOTTOMLEFT', raid, 'TOPLEFT', 0, 24*T.raidscale)
-		pets[1]:SetSize(T.Scale(140*T.raidscale), T.Scale(19*T.raidscale))
-	for i =2, 4 do 
-		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetPoint('BOTTOM', pets[i-1], 'TOP', 0, 8)
-		pets[i]:SetSize(T.Scale(140*T.raidscale), T.Scale(19*T.raidscale))
-	end
-	
-	local RaidMove = CreateFrame("Frame")
-	RaidMove:RegisterEvent("PLAYER_LOGIN")
-	RaidMove:RegisterEvent("RAID_ROSTER_UPDATE")
-	RaidMove:RegisterEvent("PARTY_LEADER_CHANGED")
-	RaidMove:RegisterEvent("PARTY_MEMBERS_CHANGED")
-	RaidMove:SetScript("OnEvent", function(self)
-		if InCombatLockdown() then
-			self:RegisterEvent("PLAYER_REGEN_ENABLED")
-		else
-			self:UnregisterEvent("PLAYER_REGEN_ENABLED")
-			local numraid = GetNumRaidMembers()
-			local numparty = GetNumPartyMembers()
-			if numparty > 0 and numraid == 0 or numraid > 0 and numraid <= 5 then
-				for i,v in ipairs(pets) do v:Enable() end
-			elseif numraid > 5 and numraid < 11 then
-				for i,v in ipairs(pets) do v:Disable() end
-			elseif numraid > 10 and numraid < 16 then
-				for i,v in ipairs(pets) do v:Disable() end
-			elseif numraid > 15 and numraid < 26 then
-				for i,v in ipairs(pets) do v:Disable() end
-			elseif numraid > 25 then
-				for i,v in ipairs(pets) do v:Disable() end
-			end
-		end
-	end)
 end)

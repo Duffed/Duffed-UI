@@ -236,7 +236,7 @@ function tInterruptIcons:PLAYER_ENTERING_WORLD()
 	end
 	pvpType = GetZonePVPInfo()
 	
-	if pvpType == "Arena" then
+	if pvpType == "arena" then
 		tInterruptIcons:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 	else
 		tInterruptIcons:UnregisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
@@ -246,7 +246,7 @@ end
 function tInterruptIcons:ZONE_CHANGED_NEW_AREA()
 	pvpType = GetZonePVPInfo()
 	
-	if pvpType == "Arena" then
+	if pvpType == "arena" then
 		for i in pairs(tInterruptIcons.Timers) do
 			tInterruptIcons.StopTimer(i)
 		end

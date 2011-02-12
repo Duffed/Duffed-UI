@@ -36,13 +36,15 @@ local function Local(o)
 	-- Duffed UI config entrys (english)
 	if o == "TukuiConfigUIgeneralblizzardsct" then o = "Skin Blizzard SCT" end
 	if o == "TukuiConfigUIgeneralnormalfont" then o = "Use the Normal/Old Font instead of pixelfont." end
+	if o == "TukuiConfigUIgeneraluffontsize" then o = "Unitframe Fontsize" end
+	if o == "TukuiConfigUIgeneraloverridehightolow" then o = "Use Low-res Version on High-res (Experimental)" end
 	
 	if o == "TukuiConfigUIdatatextcolor" then o = "Text Color (datatext, chat etc.)" end
 	if o == "TukuiConfigUIdatatextclasscolored" then o = "Classcolored Text" end
 	if o == "TukuiConfigUIdatatextzonepanel" then o = "Panel that shows current Zone below Minimap" end
 	if o == "TukuiConfigUIdatatextexperience" then o = "Experience Position" end
 	if o == "TukuiConfigUIdatatextreputation" then o = "Reputation Position" end
-	if o == "TukuiConfigUIdatatextmMenu"  then o = "mMenu Position (mMenu required)" end
+	if o == "TukuiConfigUIdatatextmmenu"  then o = "mMenu Position (mMenu required)" end
 	if o == "TukuiConfigUIdatatextfont" then o = "Font (datatext, buffs, chat-tabs, ClassTimer)" end
 	
 	if o == "TukuiConfigUIunitframeshealthbarcolor"  then o = "Healthbar Color (unicolor)" end
@@ -50,6 +52,7 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframespriestarmor"  then o = "Display current Armor for Priest" end
 	if o == "TukuiConfigUIunitframestotandpetlines"  then o = "Display Lines from Pet & ToT" end
 	if o == "TukuiConfigUIunitframesframewidth"  then o = "Player & Target width (affect also boss- & arenaframes)" end
+	if o == "TukuiConfigUIunitframesfader" then o = "[EXPERIMENTAL] Fade Unitframes out when not in combat (+ some more conditions ofc)" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player" end

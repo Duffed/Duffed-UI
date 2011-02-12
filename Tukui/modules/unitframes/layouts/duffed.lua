@@ -12,7 +12,7 @@ local glowTex = C["media"].glowTex
 local bubbleTex = C["media"].bubbleTex
 local fontsize = C["media"].uffontsize
 local playerwidth = C["unitframes"].framewidth
-if T.lowversion then playerwidth = C["unitframes"].framewidth - 45 end
+if T.lowversion and not C.general.overridehightolow then playerwidth = C["unitframes"].framewidth - 45 end
 
 local backdrop = {
 	bgFile = C["media"].blank,
@@ -56,6 +56,19 @@ local function Shared(self, unit)
 	RaidIcon:SetWidth(18)
 	RaidIcon:SetPoint("TOP", 0, 8)
 	self.RaidIcon = RaidIcon
+	
+	-- Fader
+	if C.unitframes.fader then
+		if (unit and not unit:find("arena%d")) or (unit and not unit:find("boss%d")) then
+			self.Fader = {
+				[1] = {Combat = 1, Arena = 1, Instance = 1}, 
+				[2] = {PlayerTarget = 0.7, PlayerNotMaxHealth = 0.5, PlayerNotMaxMana = 0.5}, 
+				[3] = {Stealth = 0.4},
+				[4] = {notCombat = 0, PlayerTaxi = 0, PlayerMaxHealth = 0},
+			}
+		end
+		self.NormalAlpha = 1
+	end
 	
 	------------------------------------------------------------------------
 	--	Player and Target units layout (mostly mirror'd)
@@ -204,7 +217,7 @@ local function Shared(self, unit)
 			sos.text = T.SetFontString(sos, font2, 14, "THINOUTLINE")
 			sos.text:SetPoint("CENTER", sos, 1, 0)
 			sos:SetScript("OnUpdate", Priest_SoS_Time)
-			
+
 			self.Priest_SoS = sos
 		end
 		
@@ -1118,46 +1131,48 @@ local function Shared(self, unit)
 		self.Debuffs = debuffs
 		
 		-- castbar
-		local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
-		castbar:SetStatusBarTexture(normTex)
-		castbar:SetFrameLevel(6)
-		
-		castbar:Height(20)
-		castbar:Width(240)
-		castbar:Point("TOP", UIParent, "TOP", 0, C["castbar"]["focus-y-offset"])
-		
-		castbar.border = CreateFrame("Frame", nil, castbar)
-		castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
-		castbar.border:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
-		castbar.border:CreateShadow("Default")
-		
-		castbar.time = T.SetFontString(castbar, font1, fontsize)
-		castbar.time:Point("RIGHT", castbar, "RIGHT", -4, 0)
-		castbar.time:SetTextColor(0.84, 0.75, 0.65)
-		castbar.time:SetJustifyH("RIGHT")
-		castbar.CustomTimeText = T.CustomCastTimeText
+		if C.unitframes.unitcastbar == true then
+			local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
+			castbar:SetStatusBarTexture(normTex)
+			castbar:SetFrameLevel(6)
+			
+			castbar:Height(20)
+			castbar:Width(240)
+			castbar:Point("TOP", UIParent, "TOP", 0, C["castbar"]["focus-y-offset"])
+			
+			castbar.border = CreateFrame("Frame", nil, castbar)
+			castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
+			castbar.border:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
+			castbar.border:CreateShadow("Default")
+			
+			castbar.time = T.SetFontString(castbar, font1, fontsize)
+			castbar.time:Point("RIGHT", castbar, "RIGHT", -4, 0)
+			castbar.time:SetTextColor(0.84, 0.75, 0.65)
+			castbar.time:SetJustifyH("RIGHT")
+			castbar.CustomTimeText = T.CustomCastTimeText
 
-		castbar.Text = T.SetFontString(castbar, font1, fontsize)
-		castbar.Text:SetPoint("LEFT", castbar, "LEFT", 4, 0)
-		castbar.Text:SetTextColor(0.84, 0.75, 0.65)
-		
-		castbar.CustomDelayText = T.CustomCastDelayText
-		castbar.PostCastStart = T.CheckCast
-		castbar.PostChannelStart = T.CheckChannel
-								
-		castbar.button = CreateFrame("Frame", nil, castbar)
-		castbar.button:Size(31, 31)
-		castbar.button:Point("BOTTOM", castbar, "TOP",0,5)
-		castbar.button:SetTemplate("Default")
-		castbar.button:CreateShadow("Default")
-		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-		castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
-		castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
-		castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+			castbar.Text = T.SetFontString(castbar, font1, fontsize)
+			castbar.Text:SetPoint("LEFT", castbar, "LEFT", 4, 0)
+			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
+			
+			castbar.CustomDelayText = T.CustomCastDelayText
+			castbar.PostCastStart = T.CheckCast
+			castbar.PostChannelStart = T.CheckChannel
+									
+			castbar.button = CreateFrame("Frame", nil, castbar)
+			castbar.button:Size(31, 31)
+			castbar.button:Point("BOTTOM", castbar, "TOP",0,5)
+			castbar.button:SetTemplate("Default")
+			castbar.button:CreateShadow("Default")
+			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
+			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
+			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
 
-		self.Castbar = castbar
-		self.Castbar.Time = castbar.time
-		self.Castbar.Icon = castbar.icon
+			self.Castbar = castbar
+			self.Castbar.Time = castbar.time
+			self.Castbar.Icon = castbar.icon
+		end
 	end
 	
 	------------------------------------------------------------------------

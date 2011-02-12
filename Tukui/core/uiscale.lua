@@ -49,3 +49,4 @@ T.UIScale = function()
 	end
 end
 T.UIScale()
+if C.general.overridehightolow then T.lowversion = true end

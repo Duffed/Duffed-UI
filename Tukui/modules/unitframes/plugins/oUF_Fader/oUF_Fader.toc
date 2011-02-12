@@ -1,0 +1,10 @@
+## Interface: 20400
+## Title: oUF_Fader
+## Notes: Adds fading to oUF.
+## Author: Slakah
+## Version: 1.2
+## X-Category: UnitFrame
+## Dependencies: oUF
+
+oUF_Fader.lua
+

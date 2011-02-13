@@ -10,7 +10,7 @@ local function style(self)
 	local name = self:GetName()
 	
 	--> fixing a taint issue while changing totem flyout button in combat.
-	if name:match("MultiCastActionButton") then return end 
+	if name:match("MultiCast") then return end 
 	
 	local action = self.action
 	local Button = self
@@ -150,6 +150,8 @@ local function updatehotkey(self, actionButtonType)
 	text = replace(text, '(c%-)', 'C')
 	text = replace(text, '(Mouse Button )', 'M')
 	text = replace(text, '(Middle Mouse)', 'M3')
+	text = replace(text, '(Mouse Wheel Up)', 'MU')
+	text = replace(text, '(Mouse Wheel Down)', 'MD')
 	text = replace(text, '(Num Pad )', 'N')
 	text = replace(text, '(Page Up)', 'PU')
 	text = replace(text, '(Page Down)', 'PD')
@@ -199,33 +201,6 @@ local function SetupFlyoutButton()
 end
 SpellFlyout:HookScript("OnShow", SetupFlyoutButton)
 
--- Reposition flyout buttons depending on what tukui bar the button is parented to
-local function FlyoutButtonPos(self, buttons, direction)
-	for i=1, buttons do
-		local parent = SpellFlyout:GetParent()
-		if not _G["SpellFlyoutButton"..i] then return end
-		
-		if InCombatLockdown() then return end
-		
-		if direction == "LEFT" then
-			if i == 1 then
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("RIGHT", parent, "LEFT", -4, 0)
-			else
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("RIGHT", _G["SpellFlyoutButton"..i-1], "LEFT", -4, 0)
-			end
-		else
-			if i == 1 then
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("BOTTOM", parent, "TOP", 0, 4)
-			else
-				_G["SpellFlyoutButton"..i]:ClearAllPoints()
-				_G["SpellFlyoutButton"..i]:SetPoint("BOTTOM", _G["SpellFlyoutButton"..i-1], "TOP", 0, 4)
-			end
-		end
-	end
-end
  
 --Hide the Mouseover texture and attempt to find the ammount of buttons to be skinned
 local function styleflyout(self)
@@ -254,18 +229,21 @@ local function styleflyout(self)
 	end
 	
 	if self:GetParent():GetParent():GetName() == "SpellBookSpellIconsFrame" then return end
-	local point, _, _, _, _ = self:GetParent():GetParent():GetPoint()
-
-	if strfind(point, "BOTTOM") then
-		self.FlyoutArrow:ClearAllPoints()
-		self.FlyoutArrow:SetPoint("TOP", self, "TOP", 0, arrowDistance)
-		SetClampedTextureRotation(self.FlyoutArrow, 0)
-		FlyoutButtonPos(self,buttons,"UP")		
-	else
-		self.FlyoutArrow:ClearAllPoints()
-		self.FlyoutArrow:SetPoint("LEFT", self, "LEFT", -arrowDistance, 0)
-		SetClampedTextureRotation(self.FlyoutArrow, 270)
-		FlyoutButtonPos(self,buttons,"LEFT")
+	
+	if self:GetAttribute("flyoutDirection") ~= nil then
+		local point, _, _, _, _ = self:GetParent():GetParent():GetPoint()
+		
+		if strfind(point, "BOTTOM") then
+			self.FlyoutArrow:ClearAllPoints()
+			self.FlyoutArrow:SetPoint("TOP", self, "TOP", 0, arrowDistance)
+			SetClampedTextureRotation(self.FlyoutArrow, 0)
+			if not InCombatLockdown() then self:SetAttribute("flyoutDirection", "UP") end
+		else
+			self.FlyoutArrow:ClearAllPoints()
+			self.FlyoutArrow:SetPoint("LEFT", self, "LEFT", -arrowDistance, 0)
+			SetClampedTextureRotation(self.FlyoutArrow, 270)
+			if not InCombatLockdown() then self:SetAttribute("flyoutDirection", "LEFT") end
+		end
 	end
 end
 

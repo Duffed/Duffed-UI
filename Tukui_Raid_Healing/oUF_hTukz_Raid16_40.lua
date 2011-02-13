@@ -1,3 +1,10 @@
+local ADDON_NAME, ns = ...
+local oUF = oUFTukui or oUF
+assert(oUF, "Tukui was unable to locate oUF install.")
+
+ns._Objects = {}
+ns._Headers = {}
+
 local T, C, L = unpack(Tukui) -- Import: T - functions, constants, variables; C - config; L - locales
 if not C["unitframes"].enable == true then return end
 
@@ -191,8 +198,8 @@ local function Shared(self, unit)
 		--[[
 		if C["unitframes"].auratimer then
 			RaidDebuffs.cd = CreateFrame('Cooldown', nil, RaidDebuffs)
-			RaidDebuffs.cd:SetPoint("TOPLEFT", T.Scale(2), T.Scale(-2))
-			RaidDebuffs.cd:SetPoint("BOTTOMRIGHT", T.Scale(-2), T.Scale(2))
+			RaidDebuffs.cd:Point("TOPLEFT", 2, -2)
+			RaidDebuffs.cd:Point("BOTTOMRIGHT", -2, 2)
 			RaidDebuffs.cd.noOCC = true -- remove this line if you want cooldown number on it
 		end
 		--]]

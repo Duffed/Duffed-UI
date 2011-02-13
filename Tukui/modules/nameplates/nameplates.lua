@@ -215,11 +215,6 @@ local function UpdateCastbar(frame)
 	if(not frame.shield:IsShown()) then
 		frame:SetStatusBarColor(0.78, 0.25, 0.25, 1)
 	end
-
-	local frame = frame:GetParent()
-	frame.castbarbackdrop_tex:ClearAllPoints()
-	frame.castbarbackdrop_tex:SetPoint("TOPLEFT", frame.cb, "TOPLEFT", -noscalemult*3, noscalemult*3)
-	frame.castbarbackdrop_tex:SetPoint("BOTTOMRIGHT", frame.cb, "BOTTOMRIGHT", noscalemult*3, -noscalemult*3)
 end	
 
 --Determine whether or not the cast is Channelled or a Regular cast so we can grab the proper Cast Name
@@ -302,15 +297,6 @@ local function UpdateObjects(frame)
 	frame.hp:SetPoint('TOP', frame, 'TOP', 0, -noscalemult*3)
 	frame.hp:GetStatusBarTexture():SetHorizTile(true)
 
-	-- Create Health Backdrop frame
-	if not frame.hp.healthbarbackdrop_tex then
-		frame.hp.healthbarbackdrop_tex = frame.hp:CreateTexture(nil, "BACKGROUND")
-		frame.hp.healthbarbackdrop_tex:SetPoint("TOPLEFT", frame.hp, "TOPLEFT", -noscalemult*3, noscalemult*3)
-		frame.hp.healthbarbackdrop_tex:SetPoint("TOPRIGHT", frame.hp, "TOPRIGHT", noscalemult*3, noscalemult*3)
-		frame.hp.healthbarbackdrop_tex:SetHeight(hpHeight + noscalemult*6)
-		frame.hp.healthbarbackdrop_tex:SetTexture(unpack(C["media"].backdropcolor))
-	end
-
 	--Determine if its an Enemy Player frame
 	for class, color in pairs(RAID_CLASS_COLORS) do
 		if RAID_CLASS_COLORS[class].r == r and RAID_CLASS_COLORS[class].g == g and RAID_CLASS_COLORS[class].b == b then
@@ -377,7 +363,15 @@ local function SkinObjects(frame)
 	--Just make sure these are correct
 	hp:SetFrameLevel(1)
 	cb:SetFrameLevel(1)
-
+	
+	--Create hp backdrop
+	local healthbarbackdrop_tex = hp:CreateTexture(nil, "BORDER")
+	healthbarbackdrop_tex:SetPoint("TOPLEFT", hp, "TOPLEFT", -noscalemult*3, noscalemult*3)
+	healthbarbackdrop_tex:SetPoint("TOPRIGHT", hp, "TOPRIGHT", noscalemult*3, noscalemult*3)
+	healthbarbackdrop_tex:SetHeight(hpHeight + noscalemult*6)
+	healthbarbackdrop_tex:SetTexture(unpack(C["media"].backdropcolor))	
+	healthbarbackdrop_tex:SetDrawLayer("BORDER", -1) --This is what was causing all the issues
+	
 	--Create our fake border.. fuck blizz
 	local healthbarborder_tex1 = hp:CreateTexture(nil, "BORDER")
 	healthbarborder_tex1:SetPoint("TOPLEFT", hp, "TOPLEFT", -noscalemult*2, noscalemult*2)
@@ -445,7 +439,6 @@ local function SkinObjects(frame)
 	castbarbackdrop_tex:SetPoint("TOPLEFT", cb, "TOPLEFT", -noscalemult*3, noscalemult*3)
 	castbarbackdrop_tex:SetPoint("BOTTOMRIGHT", cb, "BOTTOMRIGHT", noscalemult*3, -noscalemult*3)
 	castbarbackdrop_tex:SetTexture(unpack(C["media"].backdropcolor))
-	frame.castbarbackdrop_tex = castbarbackdrop_tex
 
 	--Create our fake border.. fuck blizz
 	local castbarborder_tex1 = cb:CreateTexture(nil, "BORDER")

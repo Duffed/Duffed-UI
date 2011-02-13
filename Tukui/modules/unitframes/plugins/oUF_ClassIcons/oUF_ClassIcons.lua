@@ -1,3 +1,6 @@
+local _, ns = ...
+local oUF = ns.oUF or oUF
+
 local Update = function(self, event)
 	local _, class = UnitClass(self.unit)
 	local icon = self.ClassIcon

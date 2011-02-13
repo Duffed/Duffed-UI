@@ -42,8 +42,8 @@ SpellsAN = {				-- true means you announce start and end of buff/debuff; false o
 
 if IsAddOnLoaded("Tukui") then
 	local T, C, L = unpack(Tukui)
-	dStuff.drinkannouncement = C["pvp"].drinkannouncement
-	dStuff.ccannouncement = C["pvp"].ccannouncement
-	dStuff.sayinterrupt = C["pvp"].sayinterrupt
-	dStuff.priest_SoS = false
+	if C["pvp"].drinkannouncement then dStuff.drinkannouncement = C["pvp"].drinkannouncement end
+	if C["pvp"].ccannouncement then dStuff.ccannouncement = C["pvp"].ccannouncement end
+	if C["pvp"].sayinterrupt then dStuff.sayinterrupt = C["pvp"].sayinterrupt end
+	if T.Duffed then dStuff.priest_SoS = false end
 end

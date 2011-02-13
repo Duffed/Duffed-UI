@@ -1,4 +1,4 @@
-if dStuff.priest_SoS ~= true or UnitClass("player") ~= "PRIEST" then return end
+if dStuff.priest_SoS ~= true or select(2, UnitClass("player")) ~= "PRIEST" then return end
 
 local p = CreateFrame("Frame", "dPriest_Frame", UIParent)
 p:SetSize(40,40)

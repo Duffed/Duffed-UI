@@ -15,6 +15,7 @@ T.incombat = UnitAffectingCombat("player")
 T.patch = GetBuildInfo()
 T.level = UnitLevel("player")
 T.TotemOrientationDown = false
+T.Duffed = true
 if T.getscreenwidth < 1600 and T.lowversion ~= true then
 	T.InfoLeftRightWidth = 340
 else

@@ -1,4 +1,8 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
+
+local _, ns = ...
+local oUF = ns.oUF or oUF
+
 if not oUF or C.unitframes.fader ~= true then return end
 local strmatch, gmatch = string.match, string.gmatch
 local objects, addon = {}, CreateFrame("Frame")

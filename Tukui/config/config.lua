@@ -19,6 +19,7 @@ C["unitframes"] = {
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
 	["framewidth"] = 220,								-- Width of Player & Target Frame (affect also arena- & bossframes)
 	["fader"] = false,									-- EXPERIMENTAL (cause i didnt really test it :) - Fade Unitframes out when ooc etc.
+		["fader_alpha"] = 1,							-- alpha for frames if you're not in combat but hp is < 100% and some more conditions
 
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
@@ -161,10 +162,13 @@ C["datatext"] = {
 }
 
 C["chat"] = {
+	["addonborder"] = false,							-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
+	["leftchatbackground"] = true,						-- attached to ChatFrame1
+	["rightchatbackground"] = true,						-- attached to ChatFrameX
+		["rightchatnumber"] = 4,						-- Rightchat-background is attached to ChatFrameX ..X = value
+	
 	["enable"] = true,                                  -- blah
 	["whispersound"] = true,                            -- play a sound when receiving whisper
-	["background"] = true,
-	["addonborder"] = false,							-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
 }
 
 C["nameplate"] = {

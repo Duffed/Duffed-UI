@@ -95,7 +95,12 @@ local function UpdateAlpha(obj)
 		obj.inRangeAlpha = alpha
 		obj.outsideRangeAlpha = alpha * obj.outsideRangeAlphaPerc
 	end
+	
 	obj:SetAlpha(alpha)
+	obj:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
+	obj:SetScript("OnLeave", function(self) self:SetAlpha(alpha) end)
+	TukuiPlayerCastBar:SetParent(UIParent)
+	TukuiPlayerCastBar:SetAlpha(1)
 end
 
 local t = 0

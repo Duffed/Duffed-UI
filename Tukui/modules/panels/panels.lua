@@ -64,7 +64,7 @@ if C["actionbar"].buttonsize > 26 and not T.lowversion then
 	irightlv:CreatePanel("Default", 2, 13, "BOTTOM", ltoabr, "RIGHT", 0, -1)
 end
 
-if C["chat"].background == true then
+if C["chat"].leftchatbackground == true then
 	-- Chat 1 Background
 	local chatbg = CreateFrame("Frame", "ChatBG1", UIParent)
 	if not T.lowversion then
@@ -84,12 +84,18 @@ if C["chat"].background == true then
 	local copy1 = CreateFrame("Frame", nil, tabchat1)
 	copy1:CreatePanel("Transparent", 20, 20, "LEFT", tabchat1, "RIGHT", 3, 0)
 	copy1:CreateShadow("Default")
-
+end
+if C["chat"].rightchatbackground == true then
 	-- Chat 4 Background
 	local chatbg2 = CreateFrame("Frame", "ChatBG2", UIParent)
-	chatbg2:CreatePanel("Transparent", 430, 126, "CENTER", UIParent, "CENTER", 0,0)
+	if not T.lowversion then
+		chatbg2:CreatePanel("Transparent", 430, 126, "TOPLEFT", _G["ChatFrame"..C.chat.rightchatnumber], "TOPLEFT", -5, 29)
+		chatbg2:Point("BOTTOMRIGHT", _G["ChatFrame"..C.chat.rightchatnumber], "BOTTOMRIGHT", 5, -5)
+	else
+		chatbg2:CreatePanel("Transparent", 430, 126, "TOPLEFT", _G["ChatFrame"..C.chat.rightchatnumber], "TOPLEFT", -5, 29)
+		chatbg2:Point("BOTTOMRIGHT", _G["ChatFrame"..C.chat.rightchatnumber], "BOTTOMRIGHT", 5, -16)
+	end
 	chatbg2:CreateShadow("Default")
-	chatbg2:Hide()
 	
 	local tabchat2 = CreateFrame("Frame", "ChatBG2Tabs", chatbg2)
 	tabchat2:CreatePanel("Transparent", 1, 20, "TOPLEFT", chatbg2, "TOPLEFT", 5, -5)

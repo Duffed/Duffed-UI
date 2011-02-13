@@ -62,9 +62,9 @@ local function Shared(self, unit)
 		if (unit and not unit:find("arena%d")) or (unit and not unit:find("boss%d")) then
 			self.Fader = {
 				[1] = {Combat = 1, Arena = 1, Instance = 1}, 
-				[2] = {PlayerTarget = 0.7, PlayerNotMaxHealth = 0.5, PlayerNotMaxMana = 0.5}, 
-				[3] = {Stealth = 0.4},
-				[4] = {notCombat = 0, PlayerTaxi = 0, PlayerMaxHealth = 0},
+				[2] = {PlayerTarget = C.unitframes.fader_alpha, PlayerNotMaxHealth = C.unitframes.fader_alpha, PlayerNotMaxMana = C.unitframes.fader_alpha}, 
+				[3] = {Stealth = C.unitframes.fader_alpha},
+				[4] = {notCombat = 0, PlayerTaxi = 0},
 			}
 		end
 		self.NormalAlpha = 1

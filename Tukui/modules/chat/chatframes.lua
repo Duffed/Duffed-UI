@@ -59,7 +59,7 @@ local function SetChatStyle(frame)
 	tab:SetAlpha(1)
 	tab.SetAlpha = UIFrameFadeRemoveFrame
 	
-	if not C.chat.background then
+	if not C.chat.leftchatbackground then
 		-- hide text when setting chat
 		_G[chat.."TabText"]:Hide()
 		
@@ -207,17 +207,7 @@ local function SetupChatPosAndFont(self)
 		end
 				
 		--Check if chat exists in the bottomright corner
-		if ChatBG2 and point == "BOTTOMRIGHT" and chat:IsShown() and name == LOOT.."/"..L.chat_trade then
-			ChatBG2:ClearAllPoints()
-			if not T.lowversion then
-				ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
-				ChatBG2:Point("BOTTOMRIGHT", chat, "BOTTOMRIGHT", 5, -5)
-			else
-				ChatBG2:Point("TOPLEFT", chat, "TOPLEFT", -5, 29)
-				ChatBG2:Point("BOTTOMRIGHT", chat, "BOTTOMRIGHT", 5, -16)
-			end
-			ChatBG2:Show()
-		elseif point == "BOTTOMRIGHT" and chat:IsShown() then
+		if i == 4 and not ChatBG2 then
 			chat:SetJustifyH("RIGHT") 
 		end
 	end
@@ -235,7 +225,6 @@ end
 
 TukuiChat:RegisterEvent("ADDON_LOADED")
 TukuiChat:RegisterEvent("PLAYER_ENTERING_WORLD")
-TukuiChat:RegisterEvent("PLAYER_LOGIN")
 TukuiChat:SetScript("OnEvent", function(self, event, ...)
 	local addon = ...
 	if event == "ADDON_LOADED" then
@@ -245,6 +234,7 @@ TukuiChat:SetScript("OnEvent", function(self, event, ...)
 		end
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		SetupChatPosAndFont(self)
+		TukuiChat:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	end
 	if event == "PLAYER_LOGIN" then
 		SetupChatPosAndFont(self)

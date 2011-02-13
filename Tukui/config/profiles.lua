@@ -44,4 +44,5 @@ if IsAddOnLoaded("b") then
 	C.chat.addonborder = true
 	C.actionbar.hotkey = true
 	C.datatext.classcolored = true
+	C.chat.rightchatbackground = false
 end

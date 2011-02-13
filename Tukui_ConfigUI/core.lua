@@ -53,6 +53,7 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframestotandpetlines"  then o = "Display Lines from Pet & ToT" end
 	if o == "TukuiConfigUIunitframesframewidth"  then o = "Player & Target width (affect also boss- & arenaframes)" end
 	if o == "TukuiConfigUIunitframesfader" then o = "[EXPERIMENTAL] Fade Unitframes out when not in combat (+ some more conditions ofc)" end
+	if o == "TukuiConfigUIunitframesfader_alpha" then o = "(Fader) Alpha for frames (if not 0)" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player" end
@@ -78,6 +79,9 @@ local function Local(o)
 	if o == "TukuiConfigUIclasstimertrinketcolor" then o = "Player-Trinket(Procs) Color" end
 	
 	if o == "TukuiConfigUIchataddonborder" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
+	if o == "TukuiConfigUIchatleftchatbackground" then o = "Show Background for the left Chat (ChatFrame1)" end
+	if o == "TukuiConfigUIchatrightchatbackground" then o = "Show Background for the right Chat (ChatFrame4)" end
+	if o == "TukuiConfigUIchatrightchatnumber" then o = "(For Rightchat-Background) Chat Number X" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

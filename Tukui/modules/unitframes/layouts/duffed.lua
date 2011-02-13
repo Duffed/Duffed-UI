@@ -211,23 +211,6 @@ local function Shared(self, unit)
 			self.WeakenedSoul = ws
 		end
 		
-		-- Strength of Soul Plugin
-		if T.myclass == "PRIEST" then
-			local sos = CreateFrame("Frame", nil, self)
-			sos:CreatePanel("Default", 32, 32, "BOTTOMLEFT", self, "BOTTOMRIGHT", 6, -2)
-			sos:CreateShadow("Default")
-			
-			sos.icon = sos:CreateTexture(nil, "OVERLAY")
-			sos.icon:Point("TOPLEFT", 2, -2)
-			sos.icon:Point("BOTTOMRIGHT", -2, 2)
-			
-			sos.text = T.SetFontString(sos, font2, 14, "THINOUTLINE")
-			sos.text:SetPoint("CENTER", sos, 1, 0)
-			sos:SetScript("OnUpdate", Priest_SoS_Time)
-
-			self.Priest_SoS = sos
-		end
-		
 		-- Healthbar Border
 		health.border = CreateFrame("Frame", nil, health)
 		health.border:CreatePanel("Default",1,1, "TOPLEFT", health, "TOPLEFT", -2, 2)
@@ -303,6 +286,23 @@ local function Shared(self, unit)
 			self.MasterLooter = MasterLooter
 			self:RegisterEvent("PARTY_LEADER_CHANGED", T.MLAnchorUpdate)
 			self:RegisterEvent("PARTY_MEMBERS_CHANGED", T.MLAnchorUpdate)
+			
+			-- Strength of Soul Plugin
+			if T.myclass == "PRIEST" then
+				local sos = CreateFrame("Frame", nil, self)
+				sos:CreatePanel("Default", 32, 32, "BOTTOMLEFT", self, "BOTTOMRIGHT", 6, -2)
+				sos:CreateShadow("Default")
+				
+				sos.icon = sos:CreateTexture(nil, "OVERLAY")
+				sos.icon:Point("TOPLEFT", 2, -2)
+				sos.icon:Point("BOTTOMRIGHT", -2, 2)
+				
+				sos.text = T.SetFontString(sos, font2, 14, "THINOUTLINE")
+				sos.text:SetPoint("CENTER", sos, 1, 0)
+				sos:SetScript("OnUpdate", Priest_SoS_Time)
+
+				self.Priest_SoS = sos
+			end
 
 			-- experience bar on player via mouseover for player currently levelling a character
 			if T.level ~= MAX_PLAYER_LEVEL and C["unitframes"].charportrait == true then
@@ -568,8 +568,8 @@ local function Shared(self, unit)
 				if self.EclipseBar and self.EclipseBar:IsShown() then 
 					self.EclipseBar.Text:Show()
 				end
-				FlashInfo.ManaLevel:Hide()
-				status:Show()
+				FlashInfo.ManaLevel:Show()
+				status:Hide()
 				UnitFrame_OnLeave(self) 
 			end)
 		end

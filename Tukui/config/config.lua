@@ -85,7 +85,8 @@ C["actionbar"] = {
 }
 
 C["castbar"] = {
-	["color"] = { 0.9, 0.9, 0.9, 0.9 },					-- Castbar color for everything except player (player uses datatext.color value)
+	["classcolored"] = true,
+		["color"] = { 0.9, 0.9, 0.9, 0.9 },				-- Castbar color for everything except player (if classcolored = false)
 	["target-y-offset"] = 380,							-- Target Castbar offset from the BOTTOM
 	["focus-y-offset"] = -320,							-- Focus Castbar offset from the TOP
 }
@@ -127,8 +128,8 @@ C["cooldown"] = {
 }
 
 C["datatext"] = {
-	["color"] = { 0.15, 0.49, 0.69 },					-- datatext color
 	["classcolored"] = false,							-- classcolored datatext
+		["color"] = { 0.15, 0.49, 0.69 },				-- datatext color (if classcolored = false)
 	["zonepanel"] = false,								-- Show Panel with ur current Zone instead of mouseover on minimap
 	["mmenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)
 	["experience"] = 0,

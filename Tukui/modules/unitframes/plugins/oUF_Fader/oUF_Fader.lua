@@ -101,8 +101,8 @@ local function UpdateAlpha(obj)
 	end
 	
 	obj:SetAlpha(alpha)
-	obj:SetScript("OnEnter", function(self) self:SetAlpha(1) end)
-	obj:SetScript("OnLeave", function(self) self:SetAlpha(alpha) end)
+	obj:SetScript("OnEnter", function(self) self:SetAlpha(1) UnitFrame_OnEnter(obj) end)
+	obj:SetScript("OnLeave", function(self) self:SetAlpha(alpha) UnitFrame_OnLeave(obj) end)
 	TukuiPlayerCastBar:SetParent(UIParent)
 	TukuiPlayerCastBar:SetAlpha(1)
 end

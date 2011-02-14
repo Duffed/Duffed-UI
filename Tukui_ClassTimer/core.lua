@@ -1148,7 +1148,7 @@ do
 		local border = CreateFrame( "Frame", nil, result, nil );
 		border:SetFrameStrata("BACKGROUND")
 		border:Point( "TOPLEFT", result, "TOPLEFT", 21, 1 );
-		border:Point( "BOTTOMRIGHT", result, "BOTTOMRIGHT", -1, -1 );
+		border:Point( "BOTTOMRIGHT", result, "BOTTOMRIGHT", 1, -1 );
 		border:SetBackdrop {
 		  edgeFile = C["media"].blank, edgeSize = 1,
 		  insets = {left = 0, right = 0, top = 0, bottom = 0}

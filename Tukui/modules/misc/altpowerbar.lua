@@ -22,7 +22,7 @@ AltPowerBarStatus:SetStatusBarTexture(C.media.normTex)
 AltPowerBarStatus:SetMinMaxValues(0, 100)
 AltPowerBarStatus:Point("TOPLEFT", TukuiInfoLeft, "TOPLEFT", 2, -2)
 AltPowerBarStatus:Point("BOTTOMRIGHT", TukuiInfoLeft, "BOTTOMRIGHT", -2, 2)
-AltPowerBarStatus:SetStatusBarColor(75/255,  175/255, 76/255)
+AltPowerBarStatus:SetStatusBarColor(unpack(C.datatext.color))
 
 local AltPowerText = AltPowerBarStatus:CreateFontString(nil, "OVERLAY")
 AltPowerText:SetFont(C.datatext.font, C.datatext.fontsize, "OUTLINE")

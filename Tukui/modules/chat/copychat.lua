@@ -105,7 +105,7 @@ local function ChatCopyButtons()
 			button:SetAlpha(1)
 			button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
 		end
-		if C.chat.rightchatbackground ~= true and C.chat.leftchatbackground == true and i == 4 then
+		if C.chat.rightchatbackground ~= true and C.chat.leftchatbackground == true and i == C.chat.rightchatnumber then
 			button:SetAlpha(0.1)
 			button:SetScript("OnLeave", function() button:SetAlpha(0.1) buttontext:SetText(T.panelcolor.."C") end)
 			button:ClearAllPoints()

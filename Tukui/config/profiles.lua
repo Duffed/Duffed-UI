@@ -38,6 +38,7 @@ if IsAddOnLoaded("a") or IsAddOnLoaded("b") then
 	C.unitframes.priestarmor = true
 	C.datatext.mmenu = 5
 	C.pvp.ccannouncement = true
+	C.castbar.classcolored = false
 end
 
 if IsAddOnLoaded("b") then 
@@ -45,4 +46,5 @@ if IsAddOnLoaded("b") then
 	C.actionbar.hotkey = true
 	C.datatext.classcolored = true
 	C.chat.rightchatbackground = false
+	C.castbar.classcolored = true
 end

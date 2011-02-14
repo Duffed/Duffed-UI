@@ -18,13 +18,13 @@ local function Shared(self, unit)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 	
+	self:SetBackdrop({bgFile = C["media"].blank, insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult}})
+	self:SetBackdropColor(unpack(C.media.backdropcolor))
+	
 	self.menu = T.SpawnMenu
 	
-	self:SetBackdrop({bgFile = C["media"].blank, insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult}})
-	self:SetBackdropColor(0.1, 0.1, 0.1)
-	
 	local health = CreateFrame('StatusBar', nil, self)
-	health:Height(15)
+	health:Height(16)
 	health:SetPoint("TOPLEFT")
 	health:SetPoint("TOPRIGHT")
 	health:SetStatusBarTexture(C["media"].normTex)
@@ -53,7 +53,7 @@ local function Shared(self, unit)
 	end
 	
 	local power = CreateFrame("StatusBar", nil, self)
-	power:Height(3)
+	power:Height(2)
 	power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -1)
 	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, -1)
 	power:SetStatusBarTexture(C["media"].normTex)
@@ -66,12 +66,11 @@ local function Shared(self, unit)
 	power.bg:SetAllPoints(power)
 	power.bg:SetTexture(C["media"].normTex)
 	power.bg:SetAlpha(1)
-	power.bg.multiplier = 0.4
+	power.bg.multiplier = 0.3
 	self.Power.bg = power.bg
 	
 	if C.unitframes.unicolor == true then
-		power.colorClass = true
-		power.bg.multiplier = 0.1				
+		power.colorClass = true				
 	else
 		power.colorPower = true
 	end
@@ -132,7 +131,6 @@ local function Shared(self, unit)
 	border:CreatePanel("Default", 1, 1, "TOPLEFT", health, "TOPLEFT", -2, 2)
 	border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
 	border:CreateShadow("Default")
-	self.panel = border
 
 	return self
 end

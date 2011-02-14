@@ -388,7 +388,7 @@ local function Shared(self, unit)
 			-- show druid mana when shapeshifted in bear, cat or whatever
 			if T.myclass == "DRUID" then
 				CreateFrame("Frame"):SetScript("OnUpdate", function() T.UpdateDruidMana(self) end)
-				local DruidMana = T.SetFontString(health, font1, 12, "THINOUTLINE")
+				local DruidMana = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
 				DruidMana:SetTextColor(1, 0.49, 0.04)
 				self.DruidMana = DruidMana
 			end
@@ -1107,7 +1107,7 @@ local function Shared(self, unit)
 		-- powerBG:SetTexture(normTex)
 		-- powerBG.multiplier = 0.3
 		
-		-- power.value = T.SetFontString(health, font1, 12, "OUTLINE")
+		-- power.value = T.SetFontString(health, font1, fontsize, "OUTLINE")
 		-- power.value:Point("RIGHT", -2, 0)
 		-- power.PreUpdate = T.PreUpdatePower
 		-- power.PostUpdate = T.PostUpdatePower

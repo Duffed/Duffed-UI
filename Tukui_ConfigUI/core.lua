@@ -56,7 +56,8 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesfader_alpha" then o = "(Fader) Alpha for frames (if not 0)" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
-	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player" end
+	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end
+	if o == "TukuiConfigUIcastbarclasscolored"  then o = "Castbar classcolored." end
 	if o == "TukuiConfigUIcastbartarget-y-offset"  then o = "Target Castbar offset from the BOTTOM" end
 	if o == "TukuiConfigUIcastbarfocus-y-offset"  then o = "Focus Castbar offset from the TOP" end
 	

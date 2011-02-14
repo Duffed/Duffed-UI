@@ -19,10 +19,10 @@ local function Shared(self, unit)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 	
-	self.menu = T.SpawnMenu
-	
 	self:SetBackdrop({bgFile = C["media"].blank, insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult}})
-	self:SetBackdropColor(0.1, 0.1, 0.1)
+	self:SetBackdropColor(unpack(C.media.backdropcolor))
+	
+	self.menu = T.SpawnMenu
 	
 	local health = CreateFrame('StatusBar', nil, self)
 	health:SetPoint("TOPLEFT")

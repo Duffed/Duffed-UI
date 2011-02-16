@@ -3,7 +3,7 @@ local T, C, L = unpack(select(2, ...))
 C["media"] = {
 	-- fonts
 	["font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of unitframes
+	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
 	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
 	["uffontsize"] = C.general.uffontsize,
 	
@@ -28,9 +28,9 @@ C["media"] = {
 	["bubbleTex"] = [[Interface\AddOns\Tukui\medias\textures\bubbleTex]], -- unitframes combo points
 	["copyicon"] = [[Interface\AddOns\Tukui\medias\textures\copy]], -- copy icon
 	["blank"] = [[Interface\AddOns\Tukui\medias\textures\blank]], -- the main texture for all borders/panels
-	["bordercolor"] = { .2,.2,.2 }, -- border color of tukui panels
-	["altbordercolor"] = { .2,.2,.2 }, -- alternative border color, mainly for unitframes text panels.
+	["bordercolor"] = { .2, .2, .2 }, -- border color of tukui panels
 	["backdropcolor"] = { .05,.05,.05 }, -- background color of tukui panels
+	["altbackdropcolor"] = { .1, .1, .1 }, -- alternative backdrop color for some specific frames
 	["buttonhover"] = [[Interface\AddOns\Tukui\medias\textures\button_hover]],
 	
 	-- sound

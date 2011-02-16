@@ -24,6 +24,7 @@ local OnEnter = function(self)
 		CursorUpdate(self)
 	end
 
+	LootFrame.selectedSlot = self:GetID()
 	self.drop:Show()
 	self.drop:SetVertexColor(1, 1, 0)
 end

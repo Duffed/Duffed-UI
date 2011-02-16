@@ -287,6 +287,25 @@ local function Shared(self, unit)
 			self:RegisterEvent("PARTY_LEADER_CHANGED", T.MLAnchorUpdate)
 			self:RegisterEvent("PARTY_MEMBERS_CHANGED", T.MLAnchorUpdate)
 			
+			-- Vengeance Plugin
+			if C.unitframes.vengeancebar then
+				local vge = CreateFrame("StatusBar", "VengeanceBar", TukuiInfoRight)
+				vge:Point("TOPLEFT", 2, -2)
+				vge:Point("BOTTOMRIGHT", -2, 2)
+				vge:SetStatusBarTexture(normTex)
+				vge:SetStatusBarColor(163/255,  24/255,  24/255)
+				
+				vge.Text = vge:CreateFontString(nil, "OVERLAY")
+				vge.Text:SetFont(font1, fontsize, "THINOUTLINE")
+				vge.Text:SetPoint("CENTER")
+				
+				vge.bg = vge:CreateTexture(nil, 'BORDER')
+				vge.bg:SetAllPoints(vge)
+				vge.bg:SetTexture(unpack(C.media.backdropcolor))
+				
+				self.Vengeance = vge
+			end
+			
 			-- Strength of Soul Plugin
 			if T.myclass == "PRIEST" then
 				local sos = CreateFrame("Frame", nil, self)
@@ -458,8 +477,8 @@ local function Shared(self, unit)
 						bars[i].bg = bars[i]:CreateTexture(nil, 'BORDER')
 						
 						if T.myclass == "WARLOCK" then
-							bars[i]:SetStatusBarColor(255/255,101/255,101/255)
-							bars[i].bg:SetTexture(255/255,101/255,101/255)
+							bars[i]:SetStatusBarColor(205/255,40/255,40/255)
+							bars[i].bg:SetTexture(205/255,40/255,40/255)
 						elseif T.myclass == "PALADIN" then
 							bars[i]:SetStatusBarColor(228/255,225/255,16/255)
 							bars[i].bg:SetTexture(228/255,225/255,16/255)
@@ -638,7 +657,7 @@ local function Shared(self, unit)
 		end
 		
 		-- cast bar for player and target
-		if (C["unitframes"].unitcastbar == true) then
+		if (C["castbar"].enable == true) then
 			-- castbar of player and target
 			local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
 			castbar:SetStatusBarTexture(normTex)
@@ -973,7 +992,7 @@ local function Shared(self, unit)
 			line2:SetFrameLevel(0)
 		end
 		
-		if (C["unitframes"].unitcastbar == true) then
+		if (C["castbar"].enable == true) then
 			local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
 			castbar:SetStatusBarTexture(normTex)
 			self.Castbar = castbar
@@ -1144,7 +1163,7 @@ local function Shared(self, unit)
 		self.Debuffs = debuffs
 		
 		-- castbar
-		if C.unitframes.unitcastbar == true then
+		if C["castbar"].enable == true then
 			local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
 			castbar:SetStatusBarTexture(normTex)
 			castbar:SetFrameLevel(6)
@@ -1533,6 +1552,12 @@ local function Shared(self, unit)
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:nameshort]')
 		self.Name = Name
+		
+		-- border
+		local border = CreateFrame("Frame", nil, self)
+		border:CreatePanel("Default", 1, 1, "TOPLEFT", self, "TOPLEFT", -2, 2)
+		border:Point("BOTTOMRIGHT", self, "BOTTOMRIGHT", 2, -2)
+		border:CreateShadow("Default")
 	end
 	
 	return self
@@ -1624,7 +1649,7 @@ if C["unitframes"].showboss then
 	end
 end
 
-local assisttank_width = 100
+local assisttank_width = 90
 local assisttank_height  = 20
 if C["unitframes"].maintank == true then
 	local tank = oUF:SpawnHeader('TukuiMainTank', nil, 'raid',

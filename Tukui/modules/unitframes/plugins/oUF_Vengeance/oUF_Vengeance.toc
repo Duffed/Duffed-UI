@@ -1,0 +1,8 @@
+## Interface: 40000
+## Author: Shandrela [EU-Baelgun] <Bloodmoon>
+## Version: 40000.1
+## Title: oUF Vengeance
+## Notes: Vengeance plug-in for oUF
+## RequiredDeps: oUF
+
+oUF_Vengeance.lua

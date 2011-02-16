@@ -23,17 +23,6 @@ local BAR_HEIGHT = 15;
 -- Distance between bars
 local BAR_SPACING = 1;
 
--- Background alpha (range from 0 to 1)
-local BACKGROUND_ALPHA = 0.75;
-
---[[ Show icons outside of frame (flags - that means you can combine them - for example 3 means it will be outside the right edge)
-	0 - left
-	1 - right
-	2 - outside
-	4 - hide
-]]--
-local ICON_POSITION = 0;
-
 -- Show spark
 local SPARK = false;
 
@@ -1218,7 +1207,7 @@ trinketFrame:SetHiddenHeight( -yOffset );
 trinketFrame:Point( "BOTTOMLEFT", playerFrame, "TOPLEFT", 0, yOffset );
 trinketFrame:Point( "BOTTOMRIGHT", playerFrame, "TOPRIGHT", 0, yOffset );
 trinketFrame:Show();
-	
+
 local targetFrame = CreateAuraBarFrame( targetDataSource, TukuiPlayer );
 targetFrame:SetHiddenHeight( -yOffset );
 targetFrame:Point( "BOTTOMLEFT", trinketFrame, "TOPLEFT", 0, yOffset );

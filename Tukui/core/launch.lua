@@ -43,6 +43,11 @@ local function install()
 	SetCVar("bloatthreat", 0)
 	SetCVar("bloattest", 0)
 	SetCVar("bloatnameplates", 0)
+	if IsAddOnLoaded("a") then
+		SetCVar("ffxDeath", "0")
+		SetCVar("ffxNetherWorld", "0")
+		SetCVar("ffxGlow", "0")
+	end
 	
 	-- Var ok, now setting chat frames if using Tukui chats.	
 	if (C.chat.enable == true) and (not IsAddOnLoaded("Prat") or not IsAddOnLoaded("Chatter")) then					
@@ -218,20 +223,20 @@ StaticPopupDialogs["TUKUIINSTALL_UI"] = {
 	text = L.popup_install,
 	button1 = ACCEPT,
 	button2 = CANCEL,
-    OnAccept = install,
+	OnAccept = install,
 	OnCancel = function() TukuiDataPerChar.installv5 = true end,
-    timeout = 0,
-    whileDead = 1,
+	timeout = 0,
+	whileDead = 1,
 }
 
 StaticPopupDialogs["TUKUIRESET_UI"] = {
 	text = L.popup_reset,
 	button1 = ACCEPT,
 	button2 = CANCEL,
-    OnAccept = install,
+	OnAccept = install,
 	OnCancel = function() TukuiDataPerChar.installv5 = true end,
-    timeout = 0,
-    whileDead = 1,
+	timeout = 0,
+	whileDead = 1,
 }
 
 StaticPopupDialogs["TUKUIDISABLE_RAID"] = {

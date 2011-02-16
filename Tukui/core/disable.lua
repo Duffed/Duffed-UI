@@ -27,7 +27,7 @@ if (IsAddOnLoaded("Prat") or IsAddOnLoaded("Chatter")) then
 end
 
 if (IsAddOnLoaded("Quartz") or IsAddOnLoaded("AzCastBar") or IsAddOnLoaded("eCastingBar")) then
-	C["unitframes"].unitcastbar = false
+	C["castbar"].enable = false
 end
 
 if (IsAddOnLoaded("TipTac")) then

@@ -8,8 +8,7 @@ if not C["actionbar"].enable == true then return end
 -- used for anchor totembar or shapeshiftbar
 local TukuiShift = CreateFrame("Frame","TukuiShiftBar",UIParent)
 TukuiShift:SetPoint("TOPLEFT", 4, -46)
-TukuiShift:SetWidth((T.petbuttonsize * 5) + (T.petbuttonsize * 4))
-TukuiShift:SetHeight(20)
+TukuiShift:SetSize((T.petbuttonsize * 5) + (T.petbuttonsize * 4), 20)
 TukuiShift:SetFrameStrata("HIGH")
 TukuiShift:SetMovable(true)
 TukuiShift:SetClampedToScreen(true)
@@ -17,8 +16,9 @@ TukuiShift:SetClampedToScreen(true)
 -- shapeshift command to move totem or shapeshift in-game
 local ssmover = CreateFrame("Frame", "TukuiShapeShiftHolder", UIParent)
 ssmover:SetAllPoints(TukuiShift)
-ssmover:SetTemplate("Default")
+ssmover:SetTemplate("Transparent")
 ssmover:SetFrameStrata("HIGH")
+ssmover:SetBackdropColor(0,0,0,.5)
 ssmover:SetBackdropBorderColor(1,0,0)
 ssmover:SetAlpha(0)
 ssmover.text = T.SetFontString(ssmover, C.media.font, 12)
@@ -58,6 +58,7 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			button = _G["ShapeshiftButton"..i]
 			button:ClearAllPoints()
 			button:SetParent(self)
+			button:SetFrameStrata("LOW")
 			if i == 1 then
 				button:Point("BOTTOMLEFT", TukuiShift, 0, 24)
 			else
@@ -85,10 +86,10 @@ bar:SetScript("OnEvent", function(self, event, ...)
 			end
 		end
 		T.TukuiShiftBarUpdate()
-		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+T.buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
+		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+T.buttonspacing)*GetNumShapeshiftForms() )+ T.buttonspacing, ShapeshiftButton1:GetHeight()+ 2*T.buttonspacing)
 	elseif event == "PLAYER_ENTERING_WORLD" then
 		T.StyleShift()
-		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+T.buttonspacing)*GetNumShapeshiftForms() )+ 4, ShapeshiftButton1:GetHeight()+ 8)
+		ShapeShiftBorder:Size(((ShapeshiftButton1:GetWidth()+T.buttonspacing)*GetNumShapeshiftForms() )+ T.buttonspacing, ShapeshiftButton1:GetHeight()+ 2*T.buttonspacing)
 		
 		-- Mouseover
 		if C["actionbar"].shapeshiftmouseover == true then
@@ -115,7 +116,7 @@ end)
 
 -- Border
 local ssborder = CreateFrame("Frame", "ShapeShiftBorder", ShapeshiftButton1)
-if C["actionbar"].shapeshiftborder ~= true then -- this config entry isnt added yet ..you can if u want and ..read this :>
+if C["actionbar"].shapeshiftborder ~= true then
 	ssborder:SetAlpha(0)
 else
 	ssborder:SetTemplate("Default")
@@ -123,4 +124,4 @@ else
 end
 ssborder:SetFrameLevel(1)
 ssborder:SetFrameStrata("BACKGROUND")
-ssborder:Point("LEFT", -4, 0)
+ssborder:Point("LEFT", -T.buttonspacing, 0)

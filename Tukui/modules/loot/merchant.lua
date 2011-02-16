@@ -44,7 +44,7 @@ f:SetScript("OnEvent", function()
 	if not IsShiftKeyDown() then
 		if CanMerchantRepair() and C["merchant"].autorepair then
 			if not IsShiftKeyDown() then
-				local cost, possible = GetRepairAllCost()
+			local cost, possible = GetRepairAllCost()
 				if cost>0 then
 					if possible then
 						RepairAllItems()

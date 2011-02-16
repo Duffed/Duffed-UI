@@ -18,13 +18,13 @@ C["unitframes"] = {
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
 	["framewidth"] = 220,								-- Width of Player & Target Frame (affect also arena- & bossframes)
+	["vengeancebar"] = false,							-- Display a Vengeance-Bar instead of Threat-Bar at the right info panel
 	["fader"] = false,									-- EXPERIMENTAL (cause i didnt really test it :) - Fade Unitframes out when ooc etc.
 		["fader_alpha"] = 1,							-- alpha for frames if you're not in combat but hp is < 100% and some more conditions
 
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
 	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.
-	["unitcastbar"] = true,                             -- enable tukui castbar
 	["cblatency"] = false,                              -- enable castbar latency
 	["cbicons"] = true,                                 -- enable icons on castbar
 	["auratimer"] = true,                               -- enable timers on buffs/debuffs
@@ -66,6 +66,14 @@ C["unitframes"] = {
 	["classbar"] = true,                                -- enable tukui classbar over player unit
 }
 
+C["castbar"] = {
+	["enable"] = true,
+	["classcolored"] = true,
+		["color"] = { 0.9, 0.9, 0.9, 0.9 },				-- Castbar color for everything except player (if classcolored = false)
+	["target-y-offset"] = 380,							-- Target Castbar offset from the BOTTOM
+	["focus-y-offset"] = -320,							-- Focus Castbar offset from the TOP
+}
+
 C["actionbar"] = {
 	["swapbar1and3"] = false,							-- Swap Bar 1 and 3 (Mainbar with the third at the Top)
 	["rightbarsmouseover"] = true, 						-- Right Bars on mouseover
@@ -82,13 +90,6 @@ C["actionbar"] = {
 	["buttonsize"] = 27,                                -- normal buttons size
 	["petbuttonsize"] = 29,                             -- pet & stance buttons size
 	["buttonspacing"] = 4,                              -- buttons spacing
-}
-
-C["castbar"] = {
-	["classcolored"] = true,
-		["color"] = { 0.9, 0.9, 0.9, 0.9 },				-- Castbar color for everything except player (if classcolored = false)
-	["target-y-offset"] = 380,							-- Target Castbar offset from the BOTTOM
-	["focus-y-offset"] = -320,							-- Focus Castbar offset from the TOP
 }
 
 C["arena"] = {
@@ -158,7 +159,7 @@ C["datatext"] = {
 	["battleground"] = true,                            -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 	["time24"] = true,                                  -- set time to 24h format.
 	["localtime"] = false,                              -- set time to local time instead of server time.
-	["font"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]],
+	["font"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]],
 	["fontsize"] = 8,                                  -- font size for panels.
 }
 

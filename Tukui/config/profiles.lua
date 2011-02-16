@@ -47,4 +47,5 @@ if IsAddOnLoaded("b") then
 	C.datatext.classcolored = true
 	C.chat.rightchatbackground = false
 	C.castbar.classcolored = true
+	C.unitframes.vengeancebar = true
 end

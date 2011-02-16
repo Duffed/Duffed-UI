@@ -72,6 +72,8 @@ local function ChatCopyButtons()
 	for i = 1, NUM_CHAT_WINDOWS do
 		local cf = _G[format("ChatFrame%d",  i)]
 		local button = CreateFrame("Button", format("ButtonCF%d", i), cf)
+		local id = cf:GetID()
+		local point = GetChatWindowSavedPosition(id)
 		button:Size(20, 20)
 		button:Point("TOPRIGHT", 0, 24)
 		
@@ -93,23 +95,38 @@ local function ChatCopyButtons()
 		end)
 		button:SetScript("OnEnter", function() button:SetAlpha(1) buttontext:SetText("C") end)
 		
-		if C.chat.leftchatbackground ~= true then
-			button:SetAlpha(0.1)
-			button:SetScript("OnLeave", function() button:SetAlpha(0.1) buttontext:SetText(T.panelcolor.."C") end)
+		local bnb = function() -- just to shorten the code
+			button:SetAlpha(0)
+			button:SetScript("OnLeave", function() button:SetAlpha(0) buttontext:SetText(T.panelcolor.."C") end)
 			button:ClearAllPoints()
 			button:SetPoint("TOPRIGHT", 0, 0)
-		else
-			if i == 2 and GetChannelName("Log") then
-				button:Point("TOPRIGHT", 0, 48)
-			end
-			button:SetAlpha(1)
-			button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
+			button:SetTemplate("Default")
 		end
-		if C.chat.rightchatbackground ~= true and C.chat.leftchatbackground == true and i == C.chat.rightchatnumber then
-			button:SetAlpha(0.1)
-			button:SetScript("OnLeave", function() button:SetAlpha(0.1) buttontext:SetText(T.panelcolor.."C") end)
-			button:ClearAllPoints()
-			button:SetPoint("TOPRIGHT", 0, 0)
+		-- check chat position
+		if point == "BOTTOMLEFT" or point == "LEFT" then
+			if C.chat.leftchatbackground then
+				button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
+				if i == 2 and GetChannelName("Log") then
+					button:Point("TOPRIGHT", 0, 48)
+				end
+			else
+				bnb()
+			end
+		elseif point == "BOTTOMRIGHT" or point == "RIGHT" then
+			if C.chat.rightchatbackground then
+				button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
+			else
+				bnb()
+			end
+		else
+			if C.chat.leftchatbackground then
+				if i == 2 and GetChannelName("Log") then
+					button:Point("TOPRIGHT", 0, 48)
+				end
+				button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
+			else
+				bnb()
+			end
 		end
 	end
 end

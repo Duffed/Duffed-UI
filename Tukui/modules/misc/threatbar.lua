@@ -30,7 +30,7 @@ TukuiThreatBar.Title:SetPoint("LEFT", TukuiThreatBar, "LEFT", T.Scale(30), 0)
 	  
 TukuiThreatBar.bg = TukuiThreatBar:CreateTexture(nil, 'BORDER')
 TukuiThreatBar.bg:SetAllPoints(TukuiThreatBar)
-TukuiThreatBar.bg:SetTexture(0.1,0.1,0.1)
+TukuiThreatBar.bg:SetTexture(unpack(C.media.backdropcolor))
 
 -- event func
 local function OnEvent(self, event, ...)

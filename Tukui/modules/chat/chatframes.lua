@@ -66,9 +66,6 @@ local function SetChatStyle(frame)
 		-- now show text if mouse is found over tab.
 		tab:HookScript("OnEnter", function() _G[chat.."TabText"]:Show() end)
 		tab:HookScript("OnLeave", function() _G[chat.."TabText"]:Hide() end)
-	else
-		-- Stop the chat chat from fading out
-		_G[chat]:SetFading(false)
 	end
 	
 	_G[chat.."TabText"]:SetTextColor(unpack(C["datatext"].color))
@@ -217,6 +214,8 @@ local function SetupChatPosAndFont(self)
 		self:ClearAllPoints()
 		if TukuiBnetHolder:GetPoint() == "RIGHT" or TukuiBnetHolder:GetPoint() == "BOTTOMRIGHT" then
 			self:Point("BOTTOMRIGHT", TukuiBnetHolder, "BOTTOMRIGHT", 0, 0)
+		elseif TukuiBnetHolder:GetPoint() == "TOPLEFT" then
+			self:Point("TOPLEFT", TukuiBnetHolder, "TOPLEFT", 0, 0)
 		else
 			self:Point("BOTTOMLEFT", TukuiBnetHolder, "BOTTOMLEFT", 0, 0)
 		end

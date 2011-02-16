@@ -76,16 +76,17 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
 			int = 10
 		end	
 		if int2 < 0 then
-			Text:SetText(floor(GetFramerate())..T.panelcolor.." fps|r &"..select(3, GetNetStats())..T.panelcolor.." ms|r")
+			Text:SetText(floor(GetFramerate())..T.panelcolor.." fps|r & "..select(3, GetNetStats())..T.panelcolor.." ms|r")
 			int2 = 2
 		end
 	end
 
 	Stat:SetScript("OnEnter", function(self)
-		if not InCombatLockdown() then
+		-- if not InCombatLockdown() then
 			self.tooltip = true
 			local bandwidth = GetAvailableBandwidth()
 			local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
+			local _, _, latencyHome, latencyWorld = GetNetStats()
 			if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
 				GameTooltip:SetOwner(panel, anchor, xoff, yoff)
 			else
@@ -107,8 +108,10 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
 					GameTooltip:AddDoubleLine(memoryTable[i][2], formatMem(memoryTable[i][3]), 1, 1, 1, red, green + .5, 0)
 				end						
 			end
+			GameTooltip:AddLine(" ")
+			GameTooltip:AddDoubleLine("Latency:","|cffffffff"..latencyHome..", "..latencyWorld.."|r (Home, World)", 0.69, 0.31, 0.31, 0.84, 0.75, 0.65)
 			GameTooltip:Show()
-		end
+		-- end
 	end)
 
 	Stat:SetScript("OnMouseDown", function(self, btn) if(btn == "LeftButton") then ToggleFrame(PVPFrame) else collectgarbage("collect")	end	end)

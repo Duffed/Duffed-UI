@@ -299,7 +299,7 @@ T.panelcolor = ("|cff%.2x%.2x%.2x"):format(dr * 255, dg * 255, db * 255)
 
 -- Castbar Size
 T.cbSize = function()
-	if C["unitframes"].enable ~= true or C["unitframes"].unitcastbar ~= true then return end
+	if C["unitframes"].enable ~= true or C["castbar"].enable ~= true then return end
 
 	if C["actionbar"].petbarhorizontal == true then
 		if TukuiPetBar:IsShown() then
@@ -314,7 +314,7 @@ end
 
 -- Castbar Position
 T.cbPosition = function()
-	if C["unitframes"].enable ~= true or C["unitframes"].unitcastbar ~= true then return end
+	if C["unitframes"].enable ~= true or C["castbar"].enable ~= true then return end
 
 	T.cbSize()
 	if TukuiDataPerChar.hidebar2 == true then
@@ -906,13 +906,13 @@ T.UpdateThreat = function(self, event, unit)
 	local threat = UnitThreatSituation(self.unit)
 	if (threat == 3) then
 		if self.panel then
-			self.panel:SetBackdropBorderColor(.69,.31,.31,1)
+			self.panel:SetBackdropBorderColor(.85,.31,.31,1)
 		else
 			self.Name:SetTextColor(1,0.1,0.1)
 		end
 	else
 		if self.panel then
-			self.panel:SetBackdropBorderColor(unpack(C["media"].altbordercolor))
+			self.panel:SetBackdropBorderColor(unpack(C["media"].bordercolor))
 		else
 			self.Name:SetTextColor(1,1,1)
 		end

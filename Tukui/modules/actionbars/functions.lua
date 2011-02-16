@@ -12,7 +12,7 @@ if C["actionbar"].petbarhorizontal == true then
 	f:RegisterEvent("UNIT_PORTRAIT_UPDATE")
 	f:SetScript("OnEvent", function()
 		T.petBarPosition()
-		if C["unitframes"].enable == true and C["unitframes"].unitcastbar == true then
+		if C["unitframes"].enable == true and C["castbar"].enable == true then
 			T.cbPosition()
 		end
 	end)

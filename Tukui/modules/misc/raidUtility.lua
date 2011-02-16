@@ -1,11 +1,16 @@
-local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 --Raid Utility by Elv22
+local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
+
+CompactRaidFrameManager:Kill() --Get rid of old module
+local panel_height = ((T.Scale(5)*4) + (T.Scale(20)*4))
+
 --Create main frame
 local RaidUtilityPanel = CreateFrame("Frame", "RaidUtilityPanel", UIParent)
-RaidUtilityPanel:CreatePanel("Transparent", 170, (5*4) + (18*3), "TOP", UIParent, "TOP", -300, 0)
+RaidUtilityPanel:CreatePanel("Default", T.Scale(170), panel_height, "TOP", UIParent, "TOP", -300, panel_height + 15)
+local r,g,b,_ = C["media"].backdropcolor
+RaidUtilityPanel:SetBackdropColor(r,g,b,0.6)
 RaidUtilityPanel:CreateShadow("Default")
-RaidUtilityPanel:Hide()
- 
+
 --Check if We are Raid Leader or Raid Officer
 local function CheckRaidStatus()
 	local inInstance, instanceType = IsInInstance()
@@ -15,166 +20,162 @@ local function CheckRaidStatus()
 		return false
 	end
 end
- 
+
 --Change border when mouse is inside the button
 local function ButtonEnter(self)
 	local r,g,b = unpack(C["datatext"].color)
 	self:SetBackdropBorderColor(r,g,b)
 end
- 
+
 --Change border back to normal when mouse leaves button
 local function ButtonLeave(self)
 	self:SetBackdropBorderColor(unpack(C["media"].bordercolor))
 end
- 
---Create button for when frame is hidden
-local HiddenToggleButton = CreateFrame("Button", nil, UIParent)
-HiddenToggleButton:Height(18)
-HiddenToggleButton:Width(RaidUtilityPanel:GetWidth() / 1.5)
-HiddenToggleButton:SetTemplate("Default")
-HiddenToggleButton:Point("TOP", UIParent, "TOP", -300, -1)
-HiddenToggleButton:SetScript("OnEnter", ButtonEnter)
-HiddenToggleButton:SetScript("OnLeave", ButtonLeave)
-HiddenToggleButton:SetScript("OnMouseUp", function(self)
-	RaidUtilityPanel:Show()
-	HiddenToggleButton:Hide()
-end)
- 
-local HiddenToggleButtonText = HiddenToggleButton:CreateFontString(nil,"OVERLAY",HiddenToggleButton)
-HiddenToggleButtonText:SetFont(C.media.font,12,"OUTLINE")
-HiddenToggleButtonText:SetText("Raid Utility")
-HiddenToggleButtonText:SetPoint("CENTER")
-HiddenToggleButtonText:SetJustifyH("CENTER")
- 
---Create button for when frame is shown
-local ShownToggleButton = CreateFrame("Button", nil, RaidUtilityPanel)
-ShownToggleButton:Height(18)
-ShownToggleButton:Width(RaidUtilityPanel:GetWidth() / 2.5)
-ShownToggleButton:SetTemplate("Default")
-ShownToggleButton:Point("TOP", RaidUtilityPanel, "BOTTOM", 0, -1)
-ShownToggleButton:SetScript("OnEnter", ButtonEnter)
-ShownToggleButton:SetScript("OnLeave", ButtonLeave)
-ShownToggleButton:SetScript("OnMouseUp", function(self)
-	RaidUtilityPanel:Hide()
-	HiddenToggleButton:Show()
-end)
- 
-local ShownToggleButtonText = ShownToggleButton:CreateFontString(nil,"OVERLAY",ShownToggleButton)
-ShownToggleButtonText:SetFont(C.media.font,12,"OUTLINE")
-ShownToggleButtonText:SetText("Close")
-ShownToggleButtonText:SetPoint("CENTER")
-ShownToggleButtonText:SetJustifyH("CENTER")
- 
+
+-- Function to create buttons in this module
+local function CreateButton(name, parent, template, width, height, point, relativeto, point2, xOfs, yOfs, text, texture)
+	local b = CreateFrame("Button", name, parent, template)
+	b:SetWidth(width)
+	b:SetHeight(height)
+	b:SetPoint(point, relativeto, point2, xOfs, yOfs)
+	b:HookScript("OnEnter", ButtonEnter)
+	b:HookScript("OnLeave", ButtonLeave)
+	b:EnableMouse(true)
+	b:SetTemplate("Default")
+	if text then
+		local t = b:CreateFontString(nil,"OVERLAY",b)
+		t:SetFont(C["media"].font, 12,"OUTLINE")
+		t:SetPoint("CENTER")
+		t:SetJustifyH("CENTER")
+		t:SetText(text)
+		b:SetFontString(t)
+	elseif texture then
+		local t = b:CreateTexture(nil,"OVERLAY",nil)
+		t:SetTexture(texture)
+		t:SetPoint("TOPLEFT", b, "TOPLEFT", T.mult, -T.mult)
+		t:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", -T.mult, T.mult)
+    end
+end
+
+-- popup
+StaticPopupDialogs["TUKUIDISBAND_RAID"] = {
+	text = "Disband Raid?",
+	button1 = ACCEPT,
+	button2 = CANCEL,
+	OnAccept = function() SlashCmdList["RAIDDISBAND"]() end,
+	timeout = 0,
+	whileDead = 1,
+	hideOnEscape = true,
+}
+
+--Create button to toggle the frame
+CreateButton("ShowButton", RaidUtilityPanel, "UIMenuButtonStretchTemplate, SecureHandlerClickTemplate", RaidUtilityPanel:GetWidth() / 2.5, T.Scale(18), "TOP", UIParent, "TOP", -300, 2, "RaidUtility", nil)
+ShowButton:SetAttribute("_onclick", [=[
+ if select(5, self:GetPoint()) > 0 then
+	self:GetParent():ClearAllPoints()
+	self:GetParent():SetPoint("TOP", UIParent, "TOP", -300, 1)
+	self:ClearAllPoints()
+	self:SetPoint("TOP", UIParent, "TOP", -300, -100)
+ else
+	self:GetParent():ClearAllPoints()
+	self:GetParent():SetPoint("TOP", UIParent, "TOP", -300, 500)
+	self:ClearAllPoints()
+	self:SetPoint("TOP", UIParent, "TOP", -300, 1)
+ end
+]=])
+
 --Disband Raid button
-local DisbandRaidButton = CreateFrame("Button", nil, RaidUtilityPanel)
-DisbandRaidButton:Height(18)
-DisbandRaidButton:Width(RaidUtilityPanel:GetWidth() * 0.8)
-DisbandRaidButton:SetTemplate("Default")
-DisbandRaidButton:Point("TOP", RaidUtilityPanel, "TOP", 0, -5)
-DisbandRaidButton:SetScript("OnEnter", ButtonEnter)
-DisbandRaidButton:SetScript("OnLeave", ButtonLeave)
+CreateButton("DisbandRaidButton", RaidUtilityPanel, "UIMenuButtonStretchTemplate", RaidUtilityPanel:GetWidth() * 0.8, T.Scale(18), "TOP", RaidUtilityPanel, "TOP", 0, T.Scale(-5), "Disband Raid", nil)
 DisbandRaidButton:SetScript("OnMouseUp", function(self)
 	if CheckRaidStatus() then
-		StaticPopup_Show("DISBAND_RAID")
-		RaidUtilityPanel:Hide()
-		HiddenToggleButton:Show()
+		StaticPopup_Show("TUKUIDISBAND_RAID")
 	end
 end)
- 
-local DisbandRaidButtonText = DisbandRaidButton:CreateFontString(nil,"OVERLAY",DisbandRaidButton)
-DisbandRaidButtonText:SetFont(C.media.font,12,"OUTLINE")
-DisbandRaidButtonText:SetText("Disband Group")
-DisbandRaidButtonText:SetPoint("CENTER")
-DisbandRaidButtonText:SetJustifyH("CENTER")
- 
+
 --Role Check button
-local RoleCheckButton = CreateFrame("Button", nil, RaidUtilityPanel)
-RoleCheckButton:Height(18)
-RoleCheckButton:Width(RaidUtilityPanel:GetWidth() * 0.8)
-RoleCheckButton:SetTemplate("Default")
-RoleCheckButton:Point("TOP", DisbandRaidButton, "BOTTOM", 0, -5)
-RoleCheckButton:SetScript("OnEnter", ButtonEnter)
-RoleCheckButton:SetScript("OnLeave", ButtonLeave)
+CreateButton("RoleCheckButton", RaidUtilityPanel, "UIMenuButtonStretchTemplate", RaidUtilityPanel:GetWidth() * 0.8, T.Scale(18), "TOP", DisbandRaidButton, "BOTTOM", 0, T.Scale(-5), ROLE_POLL, nil)
 RoleCheckButton:SetScript("OnMouseUp", function(self)
 	if CheckRaidStatus() then
 		InitiateRolePoll()
-		RaidUtilityPanel:Hide()
-		HiddenToggleButton:Show()
 	end
 end)
- 
-local RoleCheckButtonText = RoleCheckButton:CreateFontString(nil,"OVERLAY",RoleCheckButton)
-RoleCheckButtonText:SetFont(C.media.font,12,"OUTLINE")
-RoleCheckButtonText:SetText(ROLE_POLL)
-RoleCheckButtonText:SetPoint("CENTER")
-RoleCheckButtonText:SetJustifyH("CENTER")
- 
+
+--MainTank Button
+CreateButton("MainTankButton", RaidUtilityPanel, "SecureActionButtonTemplate, UIMenuButtonStretchTemplate", (DisbandRaidButton:GetWidth() / 2) - T.Scale(2), T.Scale(18), "TOPLEFT", RoleCheckButton, "BOTTOMLEFT", 0, T.Scale(-5), "MT", nil)
+MainTankButton:SetAttribute("type", "maintank")
+MainTankButton:SetAttribute("unit", "target")
+MainTankButton:SetAttribute("action", "set")
+
+--MainAssist Button
+CreateButton("MainAssistButton", RaidUtilityPanel, "SecureActionButtonTemplate, UIMenuButtonStretchTemplate", (DisbandRaidButton:GetWidth() / 2) - T.Scale(2), T.Scale(18), "TOPRIGHT", RoleCheckButton, "BOTTOMRIGHT", 0, T.Scale(-5), "MA", nil)
+MainAssistButton:SetAttribute("type", "mainassist")
+MainAssistButton:SetAttribute("unit", "target")
+MainAssistButton:SetAttribute("action", "set")
+
 --Ready Check button
-local ReadyCheckButton = CreateFrame("Button", nil, RaidUtilityPanel)
-ReadyCheckButton:Height(18)
-ReadyCheckButton:Width(RoleCheckButton:GetWidth() * 0.75)
-ReadyCheckButton:SetTemplate("Default")
-ReadyCheckButton:Point("TOPLEFT", RoleCheckButton, "BOTTOMLEFT", 0, -5)
-ReadyCheckButton:SetScript("OnEnter", ButtonEnter)
-ReadyCheckButton:SetScript("OnLeave", ButtonLeave)
+CreateButton("ReadyCheckButton", RaidUtilityPanel, "UIMenuButtonStretchTemplate", RoleCheckButton:GetWidth() * 0.75, T.Scale(18), "TOPLEFT", MainTankButton, "BOTTOMLEFT", 0, T.Scale(-5), READY_CHECK, nil)
 ReadyCheckButton:SetScript("OnMouseUp", function(self)
 	if CheckRaidStatus() then
 		DoReadyCheck()
-		RaidUtilityPanel:Hide()
-		HiddenToggleButton:Show()
 	end
 end)
- 
-local ReadyCheckButtonText = ReadyCheckButton:CreateFontString(nil,"OVERLAY",ReadyCheckButton)
-ReadyCheckButtonText:SetFont(C.media.font,12,"OUTLINE")
-ReadyCheckButtonText:SetText(READY_CHECK)
-ReadyCheckButtonText:SetPoint("CENTER")
-ReadyCheckButtonText:SetJustifyH("CENTER")
- 
---World Marker button
-local WorldMarkerButton = CreateFrame("Button", nil, RaidUtilityPanel)
-WorldMarkerButton:Height(18)
-WorldMarkerButton:Width(RoleCheckButton:GetWidth() * 0.2)
-WorldMarkerButton:SetTemplate("Default")
-WorldMarkerButton:Point("TOPRIGHT", RoleCheckButton, "BOTTOMRIGHT", 0, -5)
- 
---Start Hack
---This will fuck up the points of some of the buttons on blizzard's raid frame manager
+
+--Reposition/Resize and Reuse the World Marker Button
 CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:ClearAllPoints()
-CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetAllPoints(WorldMarkerButton)
-CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetParent(WorldMarkerButton)
-CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetAlpha(0)
-CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:HookScript("OnEnter", function()
-	local r,g,b = unpack(C["datatext"].color)
-	WorldMarkerButton:SetBackdropColor(r,g,b, 0.15)
-	WorldMarkerButton:SetBackdropBorderColor(r,g,b)
-end)
-CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:HookScript("OnLeave", function()
-	WorldMarkerButton:SetBackdropColor(unpack(C["media"].backdropcolor))
-	WorldMarkerButton:SetBackdropBorderColor(unpack(C["media"].bordercolor))
-end)
---Remember boys & girls.. put back your toys when your done playing..
---Fix buttons that we screwed up, this isn't necessary but whatever..
-CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck:SetPoint("RIGHT", CompactRaidFrameManagerDisplayFrameHiddenModeToggle, "TOPRIGHT", 0, 0)
-CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateRolePoll:SetPoint("RIGHT", CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck, "TOPRIGHT")
---Hack Complete
- 
-local WorldMarkerButtonTexture = WorldMarkerButton:CreateTexture(nil,"OVERLAY",nil)
-WorldMarkerButtonTexture:SetTexture("Interface\\RaidFrame\\Raid-WorldPing")
-WorldMarkerButtonTexture:Point("TOPLEFT", WorldMarkerButton, "TOPLEFT", 1, -1)
-WorldMarkerButtonTexture:Point("BOTTOMRIGHT", WorldMarkerButton, "BOTTOMRIGHT", -1, 1)
- 
+CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetPoint("TOPRIGHT", MainAssistButton, "BOTTOMRIGHT", 0, T.Scale(-5))
+CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetParent("RaidUtilityPanel")
+CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetHeight(T.Scale(18))
+CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton:SetWidth(RoleCheckButton:GetWidth() * 0.22)
+
+--Put other stuff back
+CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck:ClearAllPoints()
+CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck:SetPoint("BOTTOMLEFT", CompactRaidFrameManagerDisplayFrameLockedModeToggle, "TOPLEFT", 0, 1)
+CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck:SetPoint("BOTTOMRIGHT", CompactRaidFrameManagerDisplayFrameHiddenModeToggle, "TOPRIGHT", 0, 1)
+CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateRolePoll:ClearAllPoints()
+CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateRolePoll:SetPoint("BOTTOMLEFT", CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck, "TOPLEFT", 0, 1)
+CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateRolePoll:SetPoint("BOTTOMRIGHT", CompactRaidFrameManagerDisplayFrameLeaderOptionsInitiateReadyCheck, "TOPRIGHT", 0, 1)
+
+--Reskin Stuff
+do
+	local buttons = {
+		"CompactRaidFrameManagerDisplayFrameLeaderOptionsRaidWorldMarkerButton",
+		"DisbandRaidButton",
+		"MainTankButton",
+		"MainAssistButton",
+		"RoleCheckButton",
+		"ReadyCheckButton",
+		"ShowButton"
+	}
+	for i, button in pairs(buttons) do
+		local f = _G[button]
+		_G[button.."Left"]:SetAlpha(0)
+		_G[button.."Middle"]:SetAlpha(0)
+		_G[button.."Right"]:SetAlpha(0)
+		f:SetHighlightTexture("")
+		f:SetDisabledTexture("")
+		f:HookScript("OnEnter", ButtonEnter)
+		f:HookScript("OnLeave", ButtonLeave)
+		f:SetTemplate("Default", true)
+	end
+end
+
+local function ToggleRaidUtil(self, event)
+	if InCombatLockdown() then
+		self:RegisterEvent("PLAYER_REGEN_ENABLED")
+		return
+	end
+	if CheckRaidStatus() then
+		RaidUtilityPanel:Show()
+	else
+		RaidUtilityPanel:Hide()
+	end
+	if event == "PLAYER_REGEN_ENABLED" then
+		self:UnregisterEvent("PLAYER_REGEN_ENABLED")
+	end
+end
+
 --Automatically show/hide the frame if we have RaidLeader or RaidOfficer
 local LeadershipCheck = CreateFrame("Frame")
 LeadershipCheck:RegisterEvent("RAID_ROSTER_UPDATE")
 LeadershipCheck:RegisterEvent("PLAYER_ENTERING_WORLD")
-LeadershipCheck:SetScript("OnEvent", function(self, event)
-	if CheckRaidStatus() then
-		RaidUtilityPanel:Hide()
-		HiddenToggleButton:Show()
-	else
-		--Hide Everything..
-		HiddenToggleButton:Hide()
-		RaidUtilityPanel:Hide()
-	end
-end)
+LeadershipCheck:SetScript("OnEvent", ToggleRaidUtil)

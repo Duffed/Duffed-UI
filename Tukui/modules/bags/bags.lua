@@ -13,7 +13,7 @@ if not C["bags"].enable == true then return end
 
 local bags_BACKPACK = {0, 1, 2, 3, 4}
 local bags_BANK = {-1, 5, 6, 7, 8, 9, 10, 11}
-local BAGSFONT = C["media"].font
+local BAGSFONT = C["datatext"].font
 local ST_NORMAL = 1
 local ST_FISHBAG = 2
 local ST_SPECIAL = 3
@@ -575,39 +575,21 @@ function Stuffing:Layout(lb)
 	local slots = 0
 	local rows = 0
 	local off = 26
-	local cols
+	local cols = 9
 	local f
 	local bs
 
 	if lb then
 		bs = bags_BANK
-		if T.InfoLeftRightWidth >= 405 then
-			cols = 11
-		elseif T.InfoLeftRightWidth >= 370 and T.InfoLeftRightWidth < 405 then
-			cols = 10
-		elseif T.InfoLeftRightWidth >= 335 and T.InfoLeftRightWidth < 370 then
-			cols = 9
-		else
-			cols = 8
-		end
 		f = self.bankFrame
 	else
 		bs = bags_BACKPACK
-		if T.InfoLeftRightWidth >= 405 then
-			cols = 11
-		elseif T.InfoLeftRightWidth >= 370 and T.InfoLeftRightWidth < 405 then
-			cols = 10
-		elseif T.InfoLeftRightWidth >= 335 and T.InfoLeftRightWidth < 370 then
-			cols = 9
-		else
-			cols = 8
-		end
 		f = self.frame
 
 		f.gold:SetText(GetMoneyString(GetMoney(), 12))
-		f.editbox:SetFont(BAGSFONT, 12)
-		f.detail:SetFont(BAGSFONT, 12)
-		f.gold:SetFont(BAGSFONT, 12)
+		f.editbox:SetFont(C.media.font, 12)
+		f.detail:SetFont(BAGSFONT, C.datatext.fontsize)
+		f.gold:SetFont(BAGSFONT, C.datatext.fontsize)
 
 		f.detail:ClearAllPoints()
 		f.detail:Point("TOPLEFT", f, 12, -10)
@@ -733,7 +715,7 @@ function Stuffing:Layout(lb)
 				b.frame:SetNormalTexture("")
 				b.frame:Show()
 				b.frame:SetTemplate("Default")
-				b.frame:SetBackdropColor(0, 0, 0, 0) -- we just need border with SetTemplate, not the backdrop. Hopefully this will fix invisible item that some users have.
+				b.frame:SetBackdropColor(0,0,0,0) -- we just need border with SetTemplate, not the backdrop. Hopefully this will fix invisible item that some users have.
 				b.frame:StyleButton()
 				
 				-- color fish bag border slot to red

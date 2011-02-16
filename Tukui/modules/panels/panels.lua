@@ -139,8 +139,7 @@ end
 
 -- BNToastFrame Anchorframe
 local bnet = CreateFrame("Frame", "TukuiBnetHolder", UIParent)
-bnet:CreatePanel("Default", BNToastFrame:GetWidth(), BNToastFrame:GetHeight(), "BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 10)
-if ChatBG1 then	bnet:Point("BOTTOMLEFT", ChatBG1, "TOPLEFT", 0, 4) end
+bnet:CreatePanel("Default", BNToastFrame:GetWidth(), BNToastFrame:GetHeight(), "TOPLEFT", UIParent, "TOPLEFT", 4, -4)
 bnet:SetClampedToScreen(true)
 bnet:SetMovable(true)
 bnet:SetBackdropBorderColor(1,0,0)

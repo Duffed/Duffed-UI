@@ -16,11 +16,11 @@ local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")
 Text:SetFont(C["datatext"].font, C["datatext"].fontsize)
 T.PP(C["datatext"].system, Text)
 
-local bandwidthString = "%.2f Mbps"
+local bandwidthString = "%.2f "..T.panelcolor.."Mbps"
 local percentageString = "%.2f%%"
 
-local kiloByteString = "%d kb"
-local megaByteString = "%.2f mb"
+local kiloByteString = "%d "..T.panelcolor.."kb"
+local megaByteString = "%.2f "..T.panelcolor.."mb"
 
 local function formatMem(memory)
 	local mult = 10^1

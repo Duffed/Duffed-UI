@@ -100,6 +100,7 @@ local function Shared(self, unit)
 	border:CreatePanel("Default", 1, 1, "TOPLEFT", health, "TOPLEFT", -2, 2)
 	border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
 	border:CreateShadow("Default")
+	self.panel = border
 	
 	return self
 end

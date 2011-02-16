@@ -54,12 +54,14 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesframewidth"  then o = "Player & Target width (affect also boss- & arenaframes)" end
 	if o == "TukuiConfigUIunitframesfader" then o = "[EXPERIMENTAL] Fade Unitframes out when not in combat (+ some more conditions ofc)" end
 	if o == "TukuiConfigUIunitframesfader_alpha" then o = "(Fader) Alpha for frames (if not 0)" end
+	if o == "TukuiConfigUIunitframesvengeancebar" then o = "Display Vengeance-Bar instead of Threat-Bar" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end
 	if o == "TukuiConfigUIcastbarclasscolored"  then o = "Castbar classcolored." end
 	if o == "TukuiConfigUIcastbartarget-y-offset"  then o = "Target Castbar offset from the BOTTOM" end
 	if o == "TukuiConfigUIcastbarfocus-y-offset"  then o = "Focus Castbar offset from the TOP" end
+	if o == "TukuiConfigUIcastbarenable" then o = TukuiL.option_unitframes_castbar end
 	
 	if o == "TukuiConfigUIactionbarswapbar1and3"  then o = "Swap Mainbar with 3. (on top)" end
 	if o == "TukuiConfigUIactionbarrightbarsmouseover"  then o = "Rightbars on mouseover" end

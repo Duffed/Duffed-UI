@@ -89,7 +89,7 @@ local function SetTemplate(f, t, tex)
 	  insets = { left = -mult, right = -mult, top = -mult, bottom = -mult}
 	})
 	
-	if t == "Transparent" then backdropa = 0.8 else backdropa = 1 end
+	if t == "Transparent" then backdropa = 0.85 else backdropa = 1 end
 	
 	f:SetBackdropColor(backdropr, backdropg, backdropb, backdropa)
 	f:SetBackdropBorderColor(borderr, borderg, borderb)
@@ -98,7 +98,7 @@ end
 local function CreatePanel(f, t, w, h, a1, p, a2, x, y)
 	GetTemplate(t)
 	
-	if t == "Transparent" then backdropa = 0.8 else backdropa = 1 end
+	if t == "Transparent" then backdropa = 0.85 else backdropa = 1 end
 	
 	local sh = Scale(h)
 	local sw = Scale(w)

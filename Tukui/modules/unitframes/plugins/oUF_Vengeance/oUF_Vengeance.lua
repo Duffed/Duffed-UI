@@ -109,7 +109,7 @@ local function isTank(self, event)
 				bar.isTank = false
 				bar:Hide()
 			end
-		elseif class == "DEATH KNIGHT" and masteryIndex == 1 then
+		elseif class == "DEATHKNIGHT" and masteryIndex == 1 then
 			bar.isTank = true
 		elseif class == "PALADIN" and masteryIndex == 2 then
 			bar.isTank = true

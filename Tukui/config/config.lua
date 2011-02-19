@@ -21,11 +21,11 @@ C["unitframes"] = {
 	["vengeancebar"] = false,							-- Display a Vengeance-Bar instead of Threat-Bar at the right info panel
 	["fader"] = false,									-- EXPERIMENTAL (cause i didnt really test it :) - Fade Unitframes out when ooc etc.
 		["fader_alpha"] = 1,							-- alpha for frames if you're not in combat but hp is < 100% and some more conditions
+	["largefocus"] = false,								-- Use larger Focus Frame
 
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
-	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.
-	["cblatency"] = false,                              -- enable castbar latency
+	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.´
 	["cbicons"] = true,                                 -- enable icons on castbar
 	["auratimer"] = true,                               -- enable timers on buffs/debuffs
 	["auratextscale"] = 11,                             -- the font size of buffs/debuffs timers on unitframes
@@ -68,6 +68,7 @@ C["unitframes"] = {
 
 C["castbar"] = {
 	["enable"] = true,
+	["cblatency"] = false,                              -- enable castbar latency
 	["classcolored"] = true,
 		["color"] = { 0.9, 0.9, 0.9, 0.9 },				-- Castbar color for everything except player (if classcolored = false)
 	["target-y-offset"] = 380,							-- Target Castbar offset from the BOTTOM
@@ -135,6 +136,8 @@ C["datatext"] = {
 	["mmenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)
 	["experience"] = 0,
 	["reputation"] = 5,
+	["honor"] = 0,
+	["honorablekills"] = 0,
 	
 	["fps_ms"] = 2,                                     -- show fps and ms on panels
 	["system"] = 0,                                     -- show total memory and others systems infos on panels

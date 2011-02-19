@@ -106,7 +106,7 @@ local function ChatCopyButtons()
 		if point == "BOTTOMLEFT" or point == "LEFT" then
 			if C.chat.leftchatbackground then
 				button:SetScript("OnLeave", function() buttontext:SetText(T.panelcolor.."C") end)
-				if i == 2 and GetChannelName("Log") then
+				if i == 2 and GetChannelName("Log") and not IsAddOnLoaded("nibHideBlackBar") then
 					button:Point("TOPRIGHT", 0, 48)
 				end
 			else

@@ -27,7 +27,7 @@ local function Shared(self, unit)
 	local health = CreateFrame('StatusBar', nil, self)
 	health:SetPoint("TOPLEFT")
 	health:SetPoint("TOPRIGHT")
-	health:Height(35*C["unitframes"].gridscale*T.raidscale)
+	health:Height(34*C["unitframes"].gridscale*T.raidscale)
 	health:SetStatusBarTexture(normTex)
 	self.Health = health
 	
@@ -226,7 +226,7 @@ oUF:Factory(function(self)
 				self:SetHeight(header:GetAttribute('initial-height'))
 			]],
 			'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
-			'initial-height', T.Scale(39*C["unitframes"].gridscale*T.raidscale),
+			'initial-height', T.Scale(38*C["unitframes"].gridscale*T.raidscale),
 			"showRaid", true,
 			"xoffset", T.Scale(8),
 			"yOffset", T.Scale(-8),
@@ -252,7 +252,7 @@ oUF:Factory(function(self)
 				self:SetHeight(header:GetAttribute('initial-height'))
 			]],
 			'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
-			'initial-height', T.Scale(39*C["unitframes"].gridscale*T.raidscale),
+			'initial-height', T.Scale(38*C["unitframes"].gridscale*T.raidscale),
 			"showParty", true,
 			"showPlayer", C["unitframes"].showplayerinparty, 
 			"showRaid", true, 
@@ -276,11 +276,11 @@ oUF:Factory(function(self)
 		local pets = {} 
 			pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
 			pets[1]:Point('BOTTOMLEFT', raid, 'TOPLEFT', 0, 8)
-			pets[1]:Size(68*C["unitframes"].gridscale*T.raidscale, 39*C["unitframes"].gridscale*T.raidscale)
+			pets[1]:Size(68*C["unitframes"].gridscale*T.raidscale, 38*C["unitframes"].gridscale*T.raidscale)
 		for i =2, 4 do 
 			pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
 			pets[i]:Point('LEFT', pets[i-1], 'RIGHT', 8, 0)
-			pets[i]:Size(68*C["unitframes"].gridscale*T.raidscale, 39*C["unitframes"].gridscale*T.raidscale)
+			pets[i]:Size(68*C["unitframes"].gridscale*T.raidscale, 38*C["unitframes"].gridscale*T.raidscale)
 		end
 		
 		local ShowPet = CreateFrame("Frame")

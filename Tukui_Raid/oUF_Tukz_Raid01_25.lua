@@ -115,7 +115,7 @@ local function Shared(self, unit)
 	self.ReadyCheck = ReadyCheck
 	
 	self.DebuffHighlightAlpha = 1
-	self.DebuffHighlightBackdrop = true
+	self.DebuffHighlightBackdrop = false
 	self.DebuffHighlightFilter = true
 
 	if C["unitframes"].showsmooth == true then

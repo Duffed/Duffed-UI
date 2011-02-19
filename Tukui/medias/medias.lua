@@ -7,11 +7,6 @@ C["media"] = {
 	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
 	["uffontsize"] = C.general.uffontsize,
 	
-	-- fonts (RUSSIAN)
-	["ru_font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
-	["ru_uffont"] = [[Fonts\ARIALN.TTF]], -- general font of unitframes
-	["ru_dmgfont"] = [[Fonts\ARIALN.TTF]], -- general font of dmg / sct
-	
 	-- fonts (TAIWAN ONLY)
 	["tw_font"] = [=[Fonts\bLEI00D.ttf]=], -- general font of tukui
 	["tw_uffont"] = [[Fonts\bLEI00D.ttf]], -- general font of unitframes

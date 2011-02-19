@@ -1193,7 +1193,7 @@ if C["unitframes"].charportrait == true then xOffset = -62 end
 local playerFrame = CreateAuraBarFrame( playerDataSource, TukuiPlayer );
 playerFrame:SetHiddenHeight( -yOffset );
 
-if IgnoreFocusFrame then
+if IgnoreFocusFrame or C.unitframes.largefocus then
 	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset )
 else
 	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)

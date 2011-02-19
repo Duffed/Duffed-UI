@@ -46,6 +46,8 @@ local function Local(o)
 	if o == "TukuiConfigUIdatatextreputation" then o = "Reputation Position" end
 	if o == "TukuiConfigUIdatatextmmenu"  then o = "mMenu Position (mMenu required)" end
 	if o == "TukuiConfigUIdatatextfont" then o = "Font (datatext, buffs, chat-tabs, ClassTimer)" end
+	if o == "TukuiConfigUIdatatexthonorablekills" then o = "Honorable Kills Position" end
+	if o == "TukuiConfigUIdatatexthonor" then o = "Honor Position" end
 	
 	if o == "TukuiConfigUIunitframeshealthbarcolor"  then o = "Healthbar Color (unicolor)" end
 	if o == "TukuiConfigUIunitframesdeficitcolor"  then o = "Deficit Color (unicolor)" end
@@ -55,6 +57,7 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesfader" then o = "[EXPERIMENTAL] Fade Unitframes out when not in combat (+ some more conditions ofc)" end
 	if o == "TukuiConfigUIunitframesfader_alpha" then o = "(Fader) Alpha for frames (if not 0)" end
 	if o == "TukuiConfigUIunitframesvengeancebar" then o = "Display Vengeance-Bar instead of Threat-Bar" end
+	if o == "TukuiConfigUIunitframeslargefocus" then o = "Use larger Focus Frame" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end
@@ -62,6 +65,7 @@ local function Local(o)
 	if o == "TukuiConfigUIcastbartarget-y-offset"  then o = "Target Castbar offset from the BOTTOM" end
 	if o == "TukuiConfigUIcastbarfocus-y-offset"  then o = "Focus Castbar offset from the TOP" end
 	if o == "TukuiConfigUIcastbarenable" then o = TukuiL.option_unitframes_castbar end
+	if o == "TukuiConfigUIcastbarcblatency" then o = TukuiL.option_unitframes_latency end
 	
 	if o == "TukuiConfigUIactionbarswapbar1and3"  then o = "Swap Mainbar with 3. (on top)" end
 	if o == "TukuiConfigUIactionbarrightbarsmouseover"  then o = "Rightbars on mouseover" end

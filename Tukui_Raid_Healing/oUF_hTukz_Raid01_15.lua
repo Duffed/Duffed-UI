@@ -147,7 +147,7 @@ local function Shared(self, unit)
 	self.Debuffs = debuffs
 	
 	self.DebuffHighlightAlpha = 1
-	self.DebuffHighlightBackdrop = true
+	self.DebuffHighlightBackdrop = false
 	self.DebuffHighlightFilter = true
 	
 	if C["unitframes"].showrange == true then

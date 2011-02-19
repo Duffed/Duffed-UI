@@ -643,7 +643,7 @@ local CreateAuraTimer = function(self, elapsed)
 end
 
 T.PostCreateAura = function(element, button)
-	T.SetTemplate(button)
+	button:SetTemplate("Default")
 	
 	button.remaining = T.SetFontString(button, C["media"].font, C["unitframes"].auratextscale, "THINOUTLINE")
 	button.remaining:Point("CENTER", 1, 0)
@@ -671,14 +671,8 @@ T.PostCreateAura = function(element, button)
 	button.overlay:SetParent(button.overlayFrame)
 	button.count:SetParent(button.overlayFrame)
 	button.remaining:SetParent(button.overlayFrame)
-			
-	button.Glow = CreateFrame("Frame", nil, button)
-	button.Glow:Point("TOPLEFT", button, "TOPLEFT", -3, 3)
-	button.Glow:Point("BOTTOMRIGHT", button, "BOTTOMRIGHT", 3, -3)
-	button.Glow:SetFrameStrata("BACKGROUND")	
-	button.Glow:SetBackdrop{edgeFile = C["media"].glowTex, edgeSize = 3, insets = {left = 0, right = 0, top = 0, bottom = 0}}
-	button.Glow:SetBackdropColor(0, 0, 0, 0)
-	button.Glow:SetBackdropBorderColor(0, 0, 0)
+	
+	button:CreateShadow("Default")
 end
 
 T.PostUpdateAura = function(icons, unit, icon, index, offset, filter, isDebuff, duration, timeLeft)
@@ -1108,6 +1102,9 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			89084, -- Low Health
 			
 			--Nefarian
+			
+			--Sinestra
+			92956, -- Wrack
 			
 		--The Bastion of Twilight
 			--Valiona & Theralion

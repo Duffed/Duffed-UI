@@ -43,29 +43,6 @@ if C["datatext"].zonepanel == true then
 end
 
 --------------------------------------------------------------------
--- Honor
---------------------------------------------------------------------
-if C["datatext"].honor and C["datatext"].honor > 0 then
-	local Stat = CreateFrame("Frame")
-	local Text  = TukuiInfoLeft:CreateFontString(nil, "LOW")		
-	Text:SetFont(C.datatext.font, C.datatext.fontsize)
-	T.PP(C["datatext"].honor, Text)
-	
-	local function OnEvent(self, event)
-		Text:SetText("Honor" .. ":"..T.panelcolor.." " .. GetHonorCurrency())
-	end
-
-	-- Make sure the panel gets displayed when the player logs in
-	Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
-
-	-- Make sure the panel updates when your amount of honor changes
-	Stat:RegisterEvent("HONOR_CURRENCY_UPDATE")
-
-	Stat:SetScript("OnEvent", OnEvent)
-	Stat:SetScript("OnMouseDown", function() TogglePVPFrame() end)
-end
-
---------------------------------------------------------------------
 -- Experience
 --------------------------------------------------------------------
 if C["datatext"].experience and C["datatext"].experience > 0 then
@@ -171,4 +148,49 @@ if C["datatext"].reputation and C["datatext"].reputation > 0 then
 	Stat:SetScript("OnEvent", OnEvent)
 	Stat:SetScript("OnEnter", OnEnter)
 	Stat:SetScript("OnMouseDown", function() ToggleCharacter("ReputationFrame") end)
+end
+
+--------------------------------------------------------------------
+-- Honor
+--------------------------------------------------------------------
+if C["datatext"].honor and C["datatext"].honor > 0 then
+	local Stat = CreateFrame("Frame")	
+	local Text  = TukuiInfoLeft:CreateFontString(nil, "LOW")		
+	Text:SetFont(C.datatext.font, C.datatext.fontsize)
+	T.PP(C["datatext"].honor, Text)
+	
+	local function OnEvent(self, event)
+		local _, amount, _ = GetCurrencyInfo(392)
+		Text:SetText("Honor: "..T.panelcolor..amount)
+	end
+
+	-- Make sure the panel gets displayed when the player logs in
+	Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+	-- Make sure the panel updates when your amount of honor changes
+	Stat:RegisterEvent("CURRENCY_DISPLAY_UPDATE")
+
+	Stat:SetScript("OnEvent", OnEvent)
+end
+
+--------------------------------------------------------------------
+-- Honorable Kills
+--------------------------------------------------------------------
+if C["datatext"].honorablekills and C["datatext"].honorablekills > 0 then
+	local Stat = CreateFrame("Frame")	
+	local Text  = TukuiInfoLeft:CreateFontString(nil, "LOW")		
+	Text:SetFont(C.datatext.font, C.datatext.fontsize)
+	T.PP(C["datatext"].honorablekills, Text)
+	
+	local function OnEvent(self, event)
+		Text:SetText("Kills: "..T.panelcolor..GetPVPLifetimeStats())
+	end
+
+	-- Make sure the panel gets displayed when the player logs in
+	Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
+
+	-- Make sure the panel updates when your amount of honorable kills changes
+	Stat:RegisterEvent("PLAYER_PVP_KILLS_CHANGED")
+
+	Stat:SetScript("OnEvent", OnEvent)
 end

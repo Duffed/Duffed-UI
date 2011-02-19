@@ -202,7 +202,11 @@ local function Shared(self, unit)
 			RaidDebuffs.cd:Point("BOTTOMRIGHT", -2, 2)
 			RaidDebuffs.cd.noOCC = true -- remove this line if you want cooldown number on it
 		end
-		--]]
+		]]
+		
+		RaidDebuffs:FontString('time', C["media"].font, 10*C["unitframes"].gridscale, "THINOUTLINE")
+		RaidDebuffs.time:SetPoint('CENTER')
+		RaidDebuffs.time:SetTextColor(1, .9, 0)
 		
 		RaidDebuffs.count = RaidDebuffs:CreateFontString(nil, 'OVERLAY')
 		RaidDebuffs.count:SetFont(C["media"].uffont, 9*C["unitframes"].gridscale, "THINOUTLINE")

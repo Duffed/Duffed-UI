@@ -1140,7 +1140,13 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			--Al'Akir
 			93260, -- Ice Storm
 			93295, -- Lightning Rod
+			
+			-- 6788,--test
 		}
+		T.ReverseTimer = {
+			[92956] = true, -- Sinestra (Wrack)
+			-- [6788] = true, --test
+		},
 		
 		ORD:RegisterDebuffs(T.debuffids)
 	end

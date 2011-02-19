@@ -142,16 +142,20 @@ end
 local function formatTime(s)
 	if s > 60 then
 		return format('%dm', s/60), s%60
+	elseif s < 1 then
+		return format("%.1f", s), s - floor(s)
 	else
 		return format('%d', s), s - floor(s)
 	end
 end
 
+local abs = math.abs
 local function OnUpdate(self, elps)
 	self.nextUpdate = self.nextUpdate - elps
 	if self.nextUpdate > 0 then return end
 	
 	local timeLeft = self.endTime - GetTime()
+	if self.reverse then timeLeft = abs((self.endTime - GetTime()) - self.duration) end
 	if timeLeft > 0 then
 		local text, nextUpdate = formatTime(timeLeft)
 		self.time:SetText(text)
@@ -162,11 +166,12 @@ local function OnUpdate(self, elps)
 	end
 end
 
-local function UpdateDebuff(self, name, icon, count, debuffType, duration, endTime)
+local function UpdateDebuff(self, name, icon, count, debuffType, duration, endTime, spellId)
 	local f = self.RaidDebuffs
 	if name then
 		f.icon:SetTexture(icon)
 		f.icon:Show()
+		f.duration = duration
 		
 		if f.count then
 			if count and (count > 0) then
@@ -175,6 +180,12 @@ local function UpdateDebuff(self, name, icon, count, debuffType, duration, endTi
 			else
 				f.count:Hide()
 			end
+		end
+		
+		if spellId and T.ReverseTimer[spellId] then
+			f.reverse = true
+		else
+			f.reverse = nil
 		end
 		
 		if f.time then
@@ -209,7 +220,7 @@ end
 
 local function Update(self, event, unit)
 	if unit ~= self.unit then return end
-	local _name, _icon, _count, _dtype, _duration, _endTime
+	local _name, _icon, _count, _dtype, _duration, _endTime, _spellId
 	local _priority, priority = 0
 	for i = 1, 40 do
 		local name, rank, icon, count, debuffType, duration, expirationTime, unitCaster, isStealable, shouldConsolidate, spellId = UnitAura(unit, i, 'HARMFUL')
@@ -224,17 +235,17 @@ local function Update(self, event, unit)
 			end
 			
 			if priority and (priority > _priority) then
-				_priority, _name, _icon, _count, _dtype, _duration, _endTime = priority, name, icon, count, debuffType, duration, expirationTime
+				_priority, _name, _icon, _count, _dtype, _duration, _endTime, _spellId = priority, name, icon, count, debuffType, duration, expirationTime, spellId
 			end
 		end
 		
 		priority = debuff_data[addon.MatchBySpellName and name or spellId]
 		if priority and (priority > _priority) then
-			_priority, _name, _icon, _count, _dtype, _duration, _endTime = priority, name, icon, count, debuffType, duration, expirationTime
+			_priority, _name, _icon, _count, _dtype, _duration, _endTime, _spellId = priority, name, icon, count, debuffType, duration, expirationTime, spellId
 		end
 	end
 	
-	UpdateDebuff(self, _name, _icon, _count, _dtype, _duration, _endTime)
+	UpdateDebuff(self, _name, _icon, _count, _dtype, _duration, _endTime, _spellId)
 	
 	--Reset the DispellPriority
 	DispellPriority = {

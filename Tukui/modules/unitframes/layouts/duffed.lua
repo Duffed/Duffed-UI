@@ -1815,6 +1815,8 @@ TestUI = function(msg)
 				end
 			end
 		end
+	elseif msg == "g1" then
+		TukuiGridUnitButton1:Show(); TukuiGridUnitButton1.Hide = function() end; TukuiGridUnitButton1.unit = "player"
 	end
 end
 SlashCmdList.TestUI = TestUI

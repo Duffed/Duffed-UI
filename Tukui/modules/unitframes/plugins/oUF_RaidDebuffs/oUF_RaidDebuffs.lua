@@ -150,19 +150,20 @@ local function formatTime(s)
 end
 
 local abs = math.abs
-local function OnUpdate(self, elps)
-	self.nextUpdate = self.nextUpdate - elps
+local function OnUpdate(self, elapsed)
+	self.elapsed = (self.elapsed or 0) + elapsed
 	if self.nextUpdate > 0 then return end
-	
-	local timeLeft = self.endTime - GetTime()
-	if self.reverse then timeLeft = abs((self.endTime - GetTime()) - self.duration) end
-	if timeLeft > 0 then
-		local text, nextUpdate = formatTime(timeLeft)
-		self.time:SetText(text)
-		self.nextUpdate = nextUpdate
-	else
-		self:SetScript('OnUpdate', nil)
-		self.time:Hide()
+	if self.elapsed >= 0.1 then
+		local timeLeft = self.endTime - GetTime()
+		if self.reverse then timeLeft = abs((self.endTime - GetTime()) - self.duration) end
+		if timeLeft > 0 then
+			local text = formatTime(timeLeft)
+			self.time:SetText(text)
+		else
+			self:SetScript('OnUpdate', nil)
+			self.time:Hide()
+		end
+		self.elapsed = 0
 	end
 end
 

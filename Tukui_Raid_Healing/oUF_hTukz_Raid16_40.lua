@@ -205,7 +205,7 @@ local function Shared(self, unit)
 		]]
 		
 		RaidDebuffs:FontString('time', C["media"].font, 10*C["unitframes"].gridscale, "THINOUTLINE")
-		RaidDebuffs.time:SetPoint('CENTER')
+		RaidDebuffs.time:SetPoint('CENTER', 1, 0)
 		RaidDebuffs.time:SetTextColor(1, .9, 0)
 		
 		RaidDebuffs.count = RaidDebuffs:CreateFontString(nil, 'OVERLAY')

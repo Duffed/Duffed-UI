@@ -13,7 +13,7 @@ C["general"] = {
 }
 
 C["unitframes"] = {
-	["healthbarcolor"] = {.3, .3, .3, 1},				-- Healthbar color (if unicolor = true)
+	["healthbarcolor"] = {.2, .2, .2, 1},				-- Healthbar color (if unicolor = true)
 	["deficitcolor"] = {0, 0, 0, 1},					-- Healthbar deficit color (if unicolor = true)
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
@@ -131,7 +131,7 @@ C["cooldown"] = {
 
 C["datatext"] = {
 	["classcolored"] = false,							-- classcolored datatext
-		["color"] = { 0.15, 0.49, 0.69 },				-- datatext color (if classcolored = false)
+		["color"] = { 0.4, 0.4, 0.4 },				-- datatext color (if classcolored = false) -- 0.15, 0.49, 0.69
 	["zonepanel"] = false,								-- Show Panel with ur current Zone instead of mouseover on minimap
 	["mmenu"] = 0,										-- shows mMenu datatext (required: mMenu AddOn)
 	["experience"] = 0,

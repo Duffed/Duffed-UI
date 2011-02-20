@@ -207,7 +207,7 @@ local function Shared(self, unit)
 			ws:GetStatusBarTexture():SetHorizTile(false)
 			ws:SetBackdrop(backdrop)
 			ws:SetBackdropColor(unpack(C.media.backdropcolor))
-			ws:SetStatusBarColor(191/255, 10/255, 10/255)
+			ws:SetStatusBarColor(205/255, 20/255, 20/255)
 			
 			self.WeakenedSoul = ws
 		end

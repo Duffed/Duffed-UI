@@ -76,7 +76,7 @@ local function Shared(self, unit)
 	end
 		
 	local name = health:CreateFontString(nil, 'OVERLAY')
-	name:SetFont(font2, fontsize*T.raidscale, "THINOUTLINE")
+	name:SetFont(font2, fontsize, "THINOUTLINE")
 	name:Point("LEFT", self, "RIGHT", 5, 0)
 	if C["unitframes"].unicolor == true then
 		self:Tag(name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:dead][Tukui:afk]')

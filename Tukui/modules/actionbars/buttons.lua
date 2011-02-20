@@ -2,7 +2,8 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 -- This is the file for our action bars settings in game via mouseover buttons around action bars.
 -- I really hope you'll understand the code, because I was totally drunk when I wrote this file.
 -- At least, it work fine. :P (lol)
-
+local cp = "|cff319f1b" -- +
+local cm = "|cff9a1212" -- -
 local function ShowOrHideBar(bar, button)
 	local db = TukuiDataPerChar
 	
@@ -54,16 +55,16 @@ local function MoveButtonBar(button, bar)
 		T.petBarPosition()
 		T.cbPosition()
 		if bar:IsShown() then
-			button.text:SetText(T.panelcolor.."-|r")
+			button.text:SetText(cm.."-|r")
 		else
-			button.text:SetText(T.panelcolor.."+|r")
+			button.text:SetText(cp.."+|r")
 		end
 	end
 
 	if button == TukuiBar3Button then
 		if bar:IsShown() then
 			if db.rightbars == 2 and button == TukuiBar3Button then
-				button.text:SetText(T.panelcolor..">|r")
+				button.text:SetText(cm..">|r")
 				TukuiBar3Button2:Hide()
 				button:Height(130)
 				button:ClearAllPoints()
@@ -74,7 +75,7 @@ local function MoveButtonBar(button, bar)
 				button:Height(130/2)
 				button:ClearAllPoints()
 				button:Point("BOTTOMRIGHT", UIParent, "RIGHT", 1, -14)
-				button.text:SetText(T.panelcolor.."<|r")
+				button.text:SetText(cp.."<|r")
 				if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -23 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) end
 			end
 		else
@@ -125,7 +126,7 @@ TukuiBar2Button:SetScript("OnEnter", function(self) self:SetBackdropBorderColor(
 TukuiBar2Button:SetScript("OnLeave", function(self) self:SetBackdropBorderColor(unpack(C.media.bordercolor)) end)
 TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.datatext.font, C.datatext.fontsize)
 TukuiBar2Button.text:Point("CENTER", 0, 0)
-TukuiBar2Button.text:SetText(T.panelcolor.."-|r")
+TukuiBar2Button.text:SetText(cm.."-|r")
 
 -- >/< 1
 local TukuiBar3Button = CreateFrame("Button", "TukuiBar3Button", UIParent)
@@ -145,7 +146,7 @@ else
 end
 TukuiBar3Button.text = T.SetFontString(TukuiBar3Button, C.media.font, 14)
 TukuiBar3Button.text:Point("CENTER", 0, 0)
-TukuiBar3Button.text:SetText(T.panelcolor..">|r")
+TukuiBar3Button.text:SetText(cm..">|r")
 
 -- >/< 2
 local TukuiBar3Button2 = CreateFrame("Button", "TukuiBar3Button2", UIParent)
@@ -166,7 +167,7 @@ else
 end
 TukuiBar3Button2.text = T.SetFontString(TukuiBar3Button2, C.media.font, 14)
 TukuiBar3Button2.text:Point("CENTER", 0, 0)
-TukuiBar3Button2.text:SetText(T.panelcolor..">|r")
+TukuiBar3Button2.text:SetText(cm..">|r")
 
 -- exit vehicle button on right side of bottom action bar
 local exitvehicle = CreateFrame("Button", "TukuiExitVehicleButton", UIParent, "SecureHandlerClickTemplate")
@@ -177,7 +178,7 @@ exitvehicle:SetScript("OnClick", function() VehicleExit() end)
 exitvehicle:CreateShadow("Default")
 exitvehicle.text = T.SetFontString(exitvehicle, C.media.font, 19)
 exitvehicle.text:Point("CENTER", 1, 1)
-exitvehicle.text:SetText(T.panelcolor.."v|r")
+exitvehicle.text:SetText(cm.."v|r")
 RegisterStateDriver(exitvehicle, "visibility", "[target=vehicle,exists] show;hide")
 
 local exitvehicle2 = CreateFrame("Button", "TukuiExitVehicleButton2", UIParent, "SecureHandlerClickTemplate")
@@ -188,7 +189,7 @@ exitvehicle2:SetScript("OnClick", function() VehicleExit() end)
 exitvehicle2:CreateShadow("Default")
 exitvehicle2.text = T.SetFontString(exitvehicle2, C.media.font, 19)
 exitvehicle2.text:Point("CENTER", 1, 1)
-exitvehicle2.text:SetText(T.panelcolor.."v|r")
+exitvehicle2.text:SetText(cm.."v|r")
 RegisterStateDriver(exitvehicle2, "visibility", "[target=vehicle,exists] show;hide")
 
 --------------------------------------------------------------
@@ -215,9 +216,9 @@ init:SetScript("OnEvent", function(self, event)
 	if db.rightbars == 1 then
 		MoveButtonBar(TukuiBar3Button, TukuiBar3)
 		TukuiBar3:SetWidth((T.buttonsize * 1) + (T.buttonspacing * 2))
-		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -23 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) end
+		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -23 -((T.buttonsize * 1) + (T.buttonspacing * 2)), -14) TukuiLineToPetActionBarBackground:Show() end
 	elseif db.rightbars == 0 then
-		TukuiBar3Button.text:SetText(T.panelcolor.."<|r")
+		TukuiBar3Button.text:SetText(cp.."<|r")
 		TukuiBar3:Hide()
 		if C["actionbar"].petbarhorizontal ~= true then TukuiPetBar:Point("RIGHT", UIParent, "RIGHT", -14, -14) TukuiLineToPetActionBarBackground:Hide() end
 	elseif db.rightbars == 2 then

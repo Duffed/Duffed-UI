@@ -19,15 +19,16 @@ local function Shared(self, unit)
 	self:SetScript('OnEnter', UnitFrame_OnEnter)
 	self:SetScript('OnLeave', UnitFrame_OnLeave)
 	
-	self:SetBackdrop({bgFile = C["media"].blank, insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult}})
-	self:SetBackdropColor(unpack(C.media.backdropcolor))
-	
 	self.menu = T.SpawnMenu
 	
 	local health = CreateFrame('StatusBar', nil, self)
 	health:SetPoint("TOPLEFT")
 	health:SetPoint("TOPRIGHT")
-	health:Height(34*C["unitframes"].gridscale*T.raidscale)
+	if unit:find("partypet") then
+		health:Height(18)
+	else
+		health:Height(36*C["unitframes"].gridscale*T.raidscale)
+	end
 	health:SetStatusBarTexture(normTex)
 	self.Health = health
 	
@@ -43,7 +44,7 @@ local function Shared(self, unit)
 		
 	health.value = health:CreateFontString(nil, "OVERLAY")
 	health.value:Point("BOTTOM", health, 1, 1)
-	health.value:SetFont(font2, fontsize*C["unitframes"].gridscale*T.raidscale)
+	health.value:SetFont(font2, fontsize)
 	health.value:SetTextColor(1,1,1)
 	health.value:SetShadowOffset(1, -1)
 	self.Health.value = health.value
@@ -66,9 +67,13 @@ local function Shared(self, unit)
 	end
 		
 	local power = CreateFrame("StatusBar", nil, self)
-	power:SetHeight(3*C["unitframes"].gridscale*T.raidscale)
-	power:Point("TOPLEFT", self.Health, "BOTTOMLEFT", 0, -1)
-	power:Point("TOPRIGHT", self.Health, "BOTTOMRIGHT", 0, -1)
+	if unit:find("partypet") then
+		power:SetHeight(0)
+	else
+		power:SetHeight(3)
+	end
+	power:Point("TOPLEFT", self.Health, "BOTTOMLEFT", 0, -3)
+	power:Point("TOPRIGHT", self.Health, "BOTTOMRIGHT", 0, -3)
 	power:SetStatusBarTexture(normTex)
 	self.Power = power
 
@@ -79,11 +84,10 @@ local function Shared(self, unit)
 	power.bg:SetAllPoints(power)
 	power.bg:SetTexture(normTex)
 	power.bg:SetAlpha(1)
-	power.bg.multiplier = 0.4
+	power.bg.multiplier = 0.3
 	
 	if C.unitframes.unicolor == true then
-		power.colorClass = true
-		power.bg.multiplier = 0.1				
+		power.colorClass = true				
 	else
 		power.colorPower = true
 	end
@@ -91,13 +95,29 @@ local function Shared(self, unit)
 	-- border
 	local panel = CreateFrame("Frame", nil, self)
 	panel:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-	panel:SetPoint("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+	if unit:find("partypet") then
+		panel:SetPoint("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
+	else
+		panel:SetPoint("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+	end
 	panel:CreateShadow("Default")
 	self.panel = panel
 	
+	if not unit:find("partypet") then
+		local ppanel = CreateFrame("Frame", nil, self)
+		ppanel:CreateLine(power:GetWidth(), 1)
+		ppanel:Point("BOTTOMLEFT", -1, 4)
+		ppanel:Point("BOTTOMRIGHT", 1, 4)
+		self.panel2 = ppanel
+	end
+	
 	local name = health:CreateFontString(nil, "OVERLAY")
-	local name = T.SetFontString(health, font2, fontsize*C["unitframes"].gridscale*T.raidscale)
-    name:SetPoint("CENTER", health, "TOP", 0, -5) 
+	local name = T.SetFontString(health, font2, fontsize)
+	if unit:find("partypet") then
+		name:SetPoint("CENTER")
+	else
+		name:SetPoint("CENTER", health, "TOP", 0, -5)
+	end
 	self:Tag(name, "[Tukui:getnamecolor][Tukui:nameshort]")
 	self.Name = name
 	
@@ -181,8 +201,8 @@ local function Shared(self, unit)
 		
 		-- Raid Debuffs (big middle icon)
 		local RaidDebuffs = CreateFrame('Frame', nil, self)
-		RaidDebuffs:Height(22*C["unitframes"].gridscale)
-		RaidDebuffs:Width(22*C["unitframes"].gridscale)
+		RaidDebuffs:Height(24*C["unitframes"].gridscale)
+		RaidDebuffs:Width(24*C["unitframes"].gridscale)
 		RaidDebuffs:Point('CENTER', health, 1,0)
 		RaidDebuffs:SetFrameStrata(health:GetFrameStrata())
 		RaidDebuffs:SetFrameLevel(health:GetFrameLevel() + 2)
@@ -194,17 +214,7 @@ local function Shared(self, unit)
 		RaidDebuffs.icon:Point("TOPLEFT", 2, -2)
 		RaidDebuffs.icon:Point("BOTTOMRIGHT", -2, 2)
 		
-		-- just in case someone want to add this feature, uncomment to enable it
-		--[[
-		if C["unitframes"].auratimer then
-			RaidDebuffs.cd = CreateFrame('Cooldown', nil, RaidDebuffs)
-			RaidDebuffs.cd:Point("TOPLEFT", 2, -2)
-			RaidDebuffs.cd:Point("BOTTOMRIGHT", -2, 2)
-			RaidDebuffs.cd.noOCC = true -- remove this line if you want cooldown number on it
-		end
-		]]
-		
-		RaidDebuffs:FontString('time', C["media"].font, 10*C["unitframes"].gridscale, "THINOUTLINE")
+		RaidDebuffs:FontString('time', C["media"].font, 10, "THINOUTLINE")
 		RaidDebuffs.time:SetPoint('CENTER', 1, 0)
 		RaidDebuffs.time:SetTextColor(1, .9, 0)
 		
@@ -230,7 +240,7 @@ oUF:Factory(function(self)
 				self:SetHeight(header:GetAttribute('initial-height'))
 			]],
 			'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
-			'initial-height', T.Scale(38*C["unitframes"].gridscale*T.raidscale),
+			'initial-height', T.Scale(42*C["unitframes"].gridscale*T.raidscale),
 			"showRaid", true,
 			"xoffset", T.Scale(8),
 			"yOffset", T.Scale(-8),
@@ -256,7 +266,7 @@ oUF:Factory(function(self)
 				self:SetHeight(header:GetAttribute('initial-height'))
 			]],
 			'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
-			'initial-height', T.Scale(38*C["unitframes"].gridscale*T.raidscale),
+			'initial-height', T.Scale(42*C["unitframes"].gridscale*T.raidscale),
 			"showParty", true,
 			"showPlayer", C["unitframes"].showplayerinparty, 
 			"showRaid", true, 
@@ -280,11 +290,11 @@ oUF:Factory(function(self)
 		local pets = {} 
 			pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
 			pets[1]:Point('BOTTOMLEFT', raid, 'TOPLEFT', 0, 8)
-			pets[1]:Size(68*C["unitframes"].gridscale*T.raidscale, 38*C["unitframes"].gridscale*T.raidscale)
+			pets[1]:Size(68*C["unitframes"].gridscale*T.raidscale, 18*C["unitframes"].gridscale*T.raidscale)
 		for i =2, 4 do 
 			pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
 			pets[i]:Point('LEFT', pets[i-1], 'RIGHT', 8, 0)
-			pets[i]:Size(68*C["unitframes"].gridscale*T.raidscale, 38*C["unitframes"].gridscale*T.raidscale)
+			pets[i]:Size(68*C["unitframes"].gridscale*T.raidscale, 18*C["unitframes"].gridscale*T.raidscale)
 		end
 		
 		local ShowPet = CreateFrame("Frame")

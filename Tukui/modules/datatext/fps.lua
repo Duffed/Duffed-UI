@@ -86,7 +86,7 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
 			self.tooltip = true
 			local bandwidth = GetAvailableBandwidth()
 			local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
-			local _, _, latencyHome, latencyWorld = GetNetStats()
+			local _, _, _, latencyWorld = GetNetStats()
 			if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
 				GameTooltip:SetOwner(panel, anchor, xoff, yoff)
 			else
@@ -109,7 +109,7 @@ if C["datatext"].fps_ms and C["datatext"].fps_ms > 0 then
 				end						
 			end
 			GameTooltip:AddLine(" ")
-			GameTooltip:AddDoubleLine("Latency:","|cffffffff"..latencyHome..", "..latencyWorld.."|r (Home, World)", 0.69, 0.31, 0.31, 0.84, 0.75, 0.65)
+			GameTooltip:AddDoubleLine("World Latency:",latencyWorld, 0.69, 0.31, 0.31, 0.84, 0.75, 0.65)
 			GameTooltip:Show()
 		-- end
 	end)

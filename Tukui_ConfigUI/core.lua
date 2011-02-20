@@ -260,7 +260,7 @@ local function Local(o)
 	if o == "TukuiConfigUIcooldowntreshold" then o = TukuiL.option_cooldown_th end
 	
 	-- chat
-	if o == "TukuiConfigUIchat" then o = TukuiL.option_chat end
+	if o == "TukuiConfigUIchat" then o = "Chat" end
 	if o == "TukuiConfigUIchatenable" then o = TukuiL.option_chat_enable end
 	if o == "TukuiConfigUIchatwhispersound" then o = TukuiL.option_chat_whispersound end
 	if o == "TukuiConfigUIchatbackground" then o = TukuiL.option_chat_background end

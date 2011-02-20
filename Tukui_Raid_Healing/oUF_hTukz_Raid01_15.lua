@@ -39,7 +39,7 @@ local function Shared(self, unit)
 		
 	health.value = health:CreateFontString(nil, "OVERLAY")
 	health.value:SetPoint("RIGHT", health, -3, 1)
-	health.value:SetFont(font2, fontsize*T.raidscale, "THINOUTLINE")
+	health.value:SetFont(font2, fontsize, "THINOUTLINE")
 	health.value:SetTextColor(1,1,1)
 	health.value:SetShadowOffset(1, -1)
 	self.Health.value = health.value
@@ -87,7 +87,7 @@ local function Shared(self, unit)
 	
 	local name = health:CreateFontString(nil, "OVERLAY")
     name:SetPoint("LEFT", health, 3, 0)
-	name:SetFont(font2, fontsize*T.raidscale, "THINOUTLINE")
+	name:SetFont(font2, fontsize, "THINOUTLINE")
 	name:SetShadowOffset(1, -1)
 	self:Tag(name, "[Tukui:namemedium]")
 	self.Name = name

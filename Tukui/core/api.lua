@@ -146,6 +146,16 @@ local function CreateShadow(f, t)
 	f.shadow = shadow
 end
 
+local function CreateLine(f, w, h) -- was thinking about something completely different..now there's a function that creates a Backdrop ._.
+	f:SetHeight(Scale(h))
+	f:SetWidth(Scale(w))
+	f:SetFrameLevel(2)
+	f:SetFrameStrata("BACKGROUND")
+
+	f:SetBackdrop({ bgFile = C["media"].blank })
+	f:SetBackdropColor(unpack(C["media"].bordercolor))
+end
+
 local function Kill(object)
 	if object.UnregisterAllEvents then
 		object:UnregisterAllEvents()
@@ -225,6 +235,7 @@ local function addapi(object)
 	mt.Width = Width
 	mt.Height = Height
 	mt.FontString = FontString
+	mt.CreateLine = CreateLine
 end
 
 local handled = {["Frame"] = true}

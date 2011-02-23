@@ -58,6 +58,8 @@ Mod_AddonSkins:RegisterSkin("Omen",function(Skin, skin, Layout, layout, config)
 		self:UpdateBackdrop_()
 		skin:SkinBackgroundFrame(self.BarList)
 		-- skin:SkinBackgroundFrame(self.Title)
+		self.Title:SetBackdropColor(0,0,0,0)
+		self.Title:SetBackdropBorderColor(0,0,0,0)
 		self.BarList:SetPoint("TOPLEFT", self.Title, "BOTTOMLEFT",0,-1)
 	end
 	-- Hook bar creation to apply settings

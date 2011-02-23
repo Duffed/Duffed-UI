@@ -17,17 +17,30 @@ local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Lo
 if not IsAddOnLoaded("Recount") then return end
 local Recount = _G.Recount
 
+local LSM = LibStub("LibSharedMedia-3.0")
+if LSM then LSM:Register("font","Tukui Font", [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]]) end
+
 Mod_AddonSkins:RegisterSkin("Recount",function(Skin, skin, Layout, layout, config)
 
 	local function SkinFrame(frame)
-	    frame.bgMain = CreateFrame("Frame",nil,frame)
-	    skin:SkinBackgroundFrame(frame.bgMain)
-	    frame.bgMain:SetPoint("BOTTOMLEFT",frame,"BOTTOMLEFT")
-	    frame.bgMain:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT")
-	    frame.bgMain:SetPoint("TOP",frame,"TOP",0,-7)
+		frame.bgMain = CreateFrame("Frame",nil,frame)
+		skin:SkinBackgroundFrame(frame.bgMain)
+		frame.bgMain:SetPoint("BOTTOMLEFT",frame,"BOTTOMLEFT")
+		frame.bgMain:SetPoint("BOTTOMRIGHT",frame,"BOTTOMRIGHT")
+		frame.bgMain:SetPoint("TOP",frame,"TOP",0,-30)
 		frame.bgMain:SetFrameStrata("BACKGROUND")
-	    frame.CloseButton:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-1,-9)
+		frame.CloseButton:SetPoint("TOPRIGHT",frame,"TOPRIGHT",-1,-9)
 		frame:SetBackdrop(nil)
+		frame.Title:SetFont(C.datatext.font, C.datatext.fontsize)
+		frame.CloseButton:SetNormalTexture("")
+		frame.CloseButton:SetPushedTexture("")
+		frame.CloseButton:SetHighlightTexture("")
+		frame.CloseButton.t = frame.CloseButton:CreateFontString(nil, "OVERLAY")
+		frame.CloseButton.t:SetFont(C.datatext.font, C.datatext.fontsize)
+		frame.CloseButton.t:SetPoint("CENTER")
+		frame.CloseButton.t:SetText("X")
+		frame.CloseButton:SetScript("OnEnter", function() frame.CloseButton.t:SetText(T.panelcolor.."X") end)
+		frame.CloseButton:SetScript("OnLeave", function() frame.CloseButton.t:SetText("X") end)
 	end
 	
 	-- Override bar textures
@@ -36,6 +49,10 @@ Mod_AddonSkins:RegisterSkin("Recount",function(Skin, skin, Layout, layout, confi
 			v.StatusBar:SetStatusBarTexture(config.normTexture)
 			v.StatusBar:GetStatusBarTexture():SetHorizTile(false)
 			v.StatusBar:GetStatusBarTexture():SetVertTile(false)
+			v.LeftText:SetPoint("LEFT", 4, 0)
+			v.LeftText:SetFont(C.datatext.font, C.datatext.fontsize)
+			v.RightText:SetPoint("RIGHT", -4, 0)
+			v.RightText:SetFont(C.datatext.font, C.datatext.fontsize)
 		end
 		Recount:SetFont("Tukui Font")
 	end
@@ -51,9 +68,9 @@ Mod_AddonSkins:RegisterSkin("Recount",function(Skin, skin, Layout, layout, confi
 	-- Skin frames when they're created
 	Recount.CreateFrame_ = Recount.CreateFrame
 	Recount.CreateFrame = function(self, Name, Title, Height, Width, ShowFunc, HideFunc)
-	    local frame = self:CreateFrame_(Name, Title, Height, Width, ShowFunc, HideFunc)
-	    SkinFrame(frame)
-	    return frame
+		local frame = self:CreateFrame_(Name, Title, Height, Width, ShowFunc, HideFunc)
+		SkinFrame(frame)
+		return frame
 	end
 
 	-- Skin existing frames

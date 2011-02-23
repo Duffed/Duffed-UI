@@ -50,7 +50,6 @@ if IsAddOnLoaded("b") then
 	C.Addon_Skins.background = true
 	C.actionbar.hotkey = true
 	C.datatext.classcolored = true
-	C.chat.rightchatbackground = false
 	C.castbar.classcolored = true
 	C.unitframes.vengeancebar = true
 end

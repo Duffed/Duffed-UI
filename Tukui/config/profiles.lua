@@ -13,8 +13,8 @@ end
 -- Name need to be case sensitive
 ----------------------------------------------------------------------------
 
-if T.myname == "yournamehere" then
-	-- do some config!
+if T.myname == "Sacerdus" then
+	C.unitframes.gridvertical = true
 end
 
 ----------------------------------------------------------------------------
@@ -23,9 +23,10 @@ end
 
 if UnitLevel("player") < MAX_PLAYER_LEVEL then
 	-- Settings for a Char you are leveling (lvl 1-MaxLevel)
-	C.datatext.reputation = 0
-	C.datatext.experience = 5
-	C.actionbar.hotkey = true
+	if C.datatext.reputation == 5 then
+		C.datatext.reputation = 0
+		C.datatext.experience = 5
+	end
 end
 
 ----------------------------------------------------------------------------
@@ -39,10 +40,14 @@ if IsAddOnLoaded("a") or IsAddOnLoaded("b") then
 	C.datatext.mmenu = 5
 	C.pvp.ccannouncement = true
 	C.castbar.classcolored = false
+	C.actionbar.hotkey = false
+	if UnitLevel("player") < MAX_PLAYER_LEVEL then
+		C.actionbar.hotkey = true 
+	end
 end
 
 if IsAddOnLoaded("b") then 
-	C.chat.addonborder = true
+	C.Addon_Skins.background = true
 	C.actionbar.hotkey = true
 	C.datatext.classcolored = true
 	C.chat.rightchatbackground = false

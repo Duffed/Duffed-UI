@@ -105,6 +105,35 @@ if C["chat"].rightchatbackground == true then
 	local copy2 = CreateFrame("Frame", nil, tabchat2)
 	copy2:CreatePanel("Transparent", 20, 20, "LEFT", tabchat2, "RIGHT", 3, 0)
 	copy2:CreateShadow("Default")
+
+	if C.Addon_Skins.background then
+		tabchat2:ClearAllPoints()
+		tabchat2:Point("TOPLEFT", chatbg2, "TOPLEFT", 5, -5)
+		tabchat2:Point("TOPRIGHT", chatbg2, "TOPRIGHT", -51, -5)
+
+		local ca2 = CreateFrame("Frame", nil, tabchat2)
+		ca2:CreatePanel("Transparent", 20, 20, "LEFT", tabchat2, "RIGHT", 3, 0)
+		ca2:CreateShadow("Default")
+		
+		ca2.t = ca2:CreateFontString(nil, "OVERLAY")
+		ca2.t:SetPoint("CENTER")
+		ca2.t:SetFont(C.datatext.font, C.datatext.fontsize)
+		ca2.t:SetText(T.panelcolor.."T")
+		ca2:SetScript("OnEnter", function() ca2.t:SetText("T") end)
+		ca2:SetScript("OnLeave", function() ca2.t:SetText(T.panelcolor.."T") end)
+		ca2:SetScript("OnMouseDown", function()
+			chatbg2:Hide() 
+			_G["ChatFrame"..C.chat.rightchatnumber]:Hide()
+			_G["ChatFrame"..C.chat.rightchatnumber.."Tab"]:Hide()
+			AddonBGPanel:Show()
+			if IsAddOnLoaded("Recount") then Recount_MainWindow:Show() end
+			if IsAddOnLoaded("Omen") then OmenAnchor:Show() end
+			if IsAddOnLoaded("Skada") then Skada:SetActive(true) end
+		end)
+		
+		copy2:ClearAllPoints()
+		copy2:Point("LEFT", ca2, "RIGHT", 3, 0)
+	end
 end
 
 if TukuiMinimap then
@@ -147,34 +176,6 @@ bnet.text = T.SetFontString(bnet, C.media.font, 12)
 bnet.text:SetPoint("CENTER")
 bnet.text:SetText("Move BnetFrame")
 bnet:SetAlpha(0)
-
--- Omen Skin
-if IsAddOnLoaded("Omen") then
-	local omenbg = CreateFrame("Frame", "Omen_Background", OmenBarList)
-	omenbg:CreatePanel("Transparent", 1, 1, "TOPRIGHT", OmenBarList, "TOPRIGHT", -1, 1)
-	omenbg:SetPoint("BOTTOMLEFT", OmenBarList, "BOTTOMLEFT", 1, 1)
-	omenbg:CreateShadow("Default")
-end
-
--- Recount Skin
-if IsAddOnLoaded("Recount") then
-	local recountbg = CreateFrame("Frame", "Recount_Background", Recount.MainWindow)
-	recountbg:CreatePanel("Transparent", 1, 1, "TOPRIGHT", Recount.MainWindow, "TOPRIGHT", 0, -10)
-	recountbg:SetPoint("BOTTOMLEFT", Recount.MainWindow, "BOTTOMLEFT", 0, 1)
-	recountbg:CreateShadow("Default")
-end
-
--- Addons Background (same size as right chat background)
-if C["chat"].addonborder == true then
-	local bg = CreateFrame("Frame", nil, UIParent)
-	bg:CreatePanel("Transparent", 376, 152, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
-	bg:CreateShadow("Default")
-
-	local bgtab = CreateFrame("Frame", nil, bg)
-	bgtab:CreatePanel("Transparent", 1, 20, "TOPLEFT", bg, "TOPLEFT", 5, -5)
-	bgtab:Point("TOPRIGHT", bg, "TOPRIGHT", -5, -5)
-	bgtab:CreateShadow("Default")
-end
 
 -- Shadows
 iright:CreateShadow("Default")

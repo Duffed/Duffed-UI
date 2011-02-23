@@ -23,6 +23,7 @@ local ALLOWED_GROUPS = {
 	["pvp"]=1,
 	["castbar"]=1,
 	["classtimer"]=1,
+	["Addon_Skins"]=1,
 }
 
 --List of "Table Names" that we do not want to show in the config
@@ -36,7 +37,6 @@ local function Local(o)
 	-- Duffed UI config entrys (english)
 	if o == "TukuiConfigUIgeneralblizzardsct" then o = "Skin Blizzard SCT" end
 	if o == "TukuiConfigUIgeneralnormalfont" then o = "Use the Normal/Old Font instead of pixelfont." end
-	if o == "TukuiConfigUIgeneraluffontsize" then o = "Unitframe Fontsize" end
 	if o == "TukuiConfigUIgeneraloverridehightolow" then o = "Use Low-res Version on High-res (Experimental)" end
 	
 	if o == "TukuiConfigUIdatatextcolor" then o = "Text Color (datatext, chat etc.)" end
@@ -58,6 +58,9 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesfader_alpha" then o = "(Fader) Alpha for frames (if not 0)" end
 	if o == "TukuiConfigUIunitframesvengeancebar" then o = "Display Vengeance-Bar instead of Threat-Bar" end
 	if o == "TukuiConfigUIunitframeslargefocus" then o = "Use larger Focus Frame" end
+	if o == "TukuiConfigUIunitframesgridvertical" then o = "Grid direction vertical instead of horizontal" end
+	if o == "TukuiConfigUIunitframesgridpets" then o = "Show pets in Grid Layout (only in group, not raid)" end
+	if o == "TukuiConfigUIunitframesfontsize" then o = "Unitframe Fontsize" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end
@@ -89,6 +92,10 @@ local function Local(o)
 	if o == "TukuiConfigUIchatleftchatbackground" then o = "Show Background for the left Chat (ChatFrame1)" end
 	if o == "TukuiConfigUIchatrightchatbackground" then o = "Show Background for the right Chat (ChatFrame4)" end
 	if o == "TukuiConfigUIchatrightchatnumber" then o = "(For Rightchat-Background) Chat Number X" end
+	
+	if o == "TukuiConfigUIAddon_Skins" then o = "AddOn Skins" end
+	if o == "TukuiConfigUIAddon_Skinsbackground" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
+	if o == "TukuiConfigUIAddon_Skinscombat_toggle" then o = "Toggle Addonbackground, Recount, Omen & Skada in-/outfight (NOTE: Turn off auto-hide functions in these Addons)" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

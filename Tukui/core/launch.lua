@@ -151,14 +151,14 @@ local function install()
 		ChatFrame_AddChannel(ChatFrame3, L.chat_lfg) -- erf, it seem we need to localize this now
 				
 		-- Setup the right chat
-		ChatFrame_RemoveAllMessageGroups(ChatFrame4)
-		ChatFrame_AddChannel(ChatFrame4, L.chat_trade) -- erf, it seem we need to localize this now
-		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_XP_GAIN")
-		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_HONOR_GAIN")
-		ChatFrame_AddMessageGroup(ChatFrame4, "COMBAT_FACTION_CHANGE")
-		ChatFrame_AddMessageGroup(ChatFrame4, "LOOT")
-		ChatFrame_AddMessageGroup(ChatFrame4, "MONEY")
-		ChatFrame_AddMessageGroup(ChatFrame4, "SKILL")
+		ChatFrame_RemoveAllMessageGroups(_G["ChatFrame"..C.chat.rightchatnumber])
+		ChatFrame_AddChannel(_G["ChatFrame"..C.chat.rightchatnumber], L.chat_trade) -- erf, it seem we need to localize this now
+		ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "COMBAT_XP_GAIN")
+		ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "COMBAT_HONOR_GAIN")
+		ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "COMBAT_FACTION_CHANGE")
+		ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "LOOT")
+		ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "MONEY")
+		ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "SKILL")
 				
 		-- enable classcolor automatically on login and on each character without doing /configure each time.
 		ToggleChatColorNamesByClassGroup(true, "SAY")

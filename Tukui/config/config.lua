@@ -3,7 +3,6 @@
 C["general"] = {
 	["blizzardsct"] = true,								-- Skin also Blizzard SCT Font(put it in generel now)
 	["normalfont"] = false,								-- Use the normal/old font + fontsize instead of pixelfont :>
-	["uffontsize"] = 8,									-- Fontsize on Unitframes
 	["overridehightolow"] = false,						-- even that is experimental only! :> .. use lowres version on high resolution.
 
 	["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
@@ -13,6 +12,7 @@ C["general"] = {
 }
 
 C["unitframes"] = {
+	["fontsize"] = 8,									-- Fontsize on Unitframes
 	["healthbarcolor"] = {.2, .2, .2, 1},				-- Healthbar color (if unicolor = true)
 	["deficitcolor"] = {0, 0, 0, 1},					-- Healthbar deficit color (if unicolor = true)
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
@@ -22,6 +22,8 @@ C["unitframes"] = {
 	["fader"] = false,									-- EXPERIMENTAL (cause i didnt really test it :) - Fade Unitframes out when ooc etc.
 		["fader_alpha"] = 1,							-- alpha for frames if you're not in combat but hp is < 100% and some more conditions
 	["largefocus"] = false,								-- Use larger Focus Frame
+	["gridpets"] = true,								-- show pets in grid layout (only in group, not raid)
+	["gridvertical"] = false,							-- Grid direction vertical instead of horizontal
 
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
@@ -103,6 +105,11 @@ C["pvp"] = {
 	["sayinterrupt"] = true,							-- Announce when u interrupt someone
 }
 
+C["Addon_Skins"] = {
+	["background"] = false,								-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
+		["combat_toggle"] = false,						-- Shows the Addon Background, Omen, Recount & Skada infight, hides outfight
+}
+
 C["classtimer"] = {
 	["playercolor"] = {.2, .2, .2, 1 },
 	["targetbuffcolor"] = { 70/255, 150/255, 70/255, 1 },
@@ -167,7 +174,6 @@ C["datatext"] = {
 }
 
 C["chat"] = {
-	["addonborder"] = false,							-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
 	["leftchatbackground"] = true,						-- attached to ChatFrame1
 	["rightchatbackground"] = true,						-- attached to ChatFrameX
 		["rightchatnumber"] = 4,						-- Rightchat-background is attached to ChatFrameX ..X = value

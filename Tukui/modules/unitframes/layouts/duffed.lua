@@ -168,8 +168,7 @@ local function Shared(self, unit)
 		
 		if C["unitframes"].unicolor == true then
 			power.colorTapping = true
-			power.colorClass = true
-			-- powerBG.multiplier = 0.1				
+			power.colorClass = true		
 		else
 			power.colorPower = true
 		end
@@ -235,14 +234,8 @@ local function Shared(self, unit)
 			AltPowerBar:SetPoint("RIGHT")
 			AltPowerBar:SetPoint("TOP", self.Health, "TOP")
 			
-			AltPowerBar:SetBackdrop({
-			  bgFile = C["media"].blank, 
-			  edgeFile = C["media"].blank, 
-			  tile = false, tileSize = 0, edgeSize = 0, 
-			  insets = { left = 0, right = 0, top = 0, bottom = 0}
-			})
+			AltPowerBar:SetBackdrop({bgFile = C["media"].blank})
 			AltPowerBar:SetBackdropColor(.1, .1, .1)
-			AltPowerBar:SetBackdropBorderColor(0, 0, 0, 0)
 
 			self.AltPowerBar = AltPowerBar
 		end
@@ -625,16 +618,16 @@ local function Shared(self, unit)
 				buffs:Point("TOPLEFT", self, "TOPLEFT", -2, 30)
 			end
 							
-			buffs:SetHeight(26)
-			buffs:SetWidth(playerwidth+6)
-			buffs.size = 22
+			buffs:SetHeight(22)
+			buffs:SetWidth(playerwidth+4)
+			buffs.size = buffs:GetHeight()
 			buffs.spacing = 3
 			buffs.num = playerwidth/(buffs.size+buffs.spacing)
 			
-			debuffs:SetHeight(26)
-			debuffs:SetWidth(playerwidth+6)
-			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", -4, 1)
-			debuffs.size = 22
+			debuffs:SetHeight(22)
+			debuffs:SetWidth(playerwidth+4)
+			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", 0, 2)
+			debuffs.size = debuffs:GetHeight()
 			debuffs.spacing = 3
 			debuffs.num = 27
 						
@@ -1451,13 +1444,8 @@ local function Shared(self, unit)
 			AltPowerBar:SetPoint("RIGHT")
 			AltPowerBar:SetPoint("TOP", self.Health, "TOP")
 			
-			AltPowerBar:SetBackdrop({
-			  bgFile = C["media"].blank, 
-			  edgeFile = C["media"].blank, 
-			  tile = false, tileSize = 0, edgeSize = T.Scale(1), 
-			  insets = { left = 0, right = 0, top = 0, bottom = T.Scale(-1)}
-			})
-			AltPowerBar:SetBackdropColor(0, 0, 0)
+			-- AltPowerBar:SetBackdrop({bgFile = C["media"].blank})
+			-- AltPowerBar:SetBackdropColor(.1,.1,.1)
 
 			self.AltPowerBar = AltPowerBar
 			

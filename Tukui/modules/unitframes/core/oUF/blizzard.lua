@@ -88,8 +88,9 @@ function oUF:DisableBlizzard(unit, object)
 				HandleFrame(('Boss%dTargetFrame'):format(i))
 			end
 		end
+	end
 	if IsAddOnLoaded("Tukui_Raid") or IsAddOnLoaded("Tukui_Raid_Healing") then
-		elseif(unit:match'(party)%d?$' == 'party') then
+		if(unit:match'(party)%d?$' == 'party') then
 			local id = unit:match'party(%d)'
 			if(id) then
 				baseName = 'PartyMemberFrame' .. id

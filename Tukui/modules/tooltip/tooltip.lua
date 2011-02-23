@@ -31,8 +31,8 @@ anchor:SetFrameStrata("TOOLTIP")
 anchor:SetFrameLevel(20)
 anchor:SetClampedToScreen(true)
 anchor:SetAlpha(0)
-if ChatBG2 then
-	anchor:SetPoint("BOTTOMRIGHT", ChatBG2, "TOPRIGHT", 0, -TukuiInfoRight:GetHeight())
+if ChatBG2 or AddonBGPanel then
+	anchor:SetPoint("BOTTOMRIGHT", ChatBG2 or AddonBGPanel, "TOPRIGHT", 0, -TukuiInfoRight:GetHeight())
 else
 	anchor:Point("BOTTOMRIGHT", ChatFrame4, "TOPRIGHT", 0, 10)
 end

@@ -3,6 +3,7 @@
 	<Script file="developer\commands.lua"/>
 	<Script file="core\init.lua"/>
 	<Script file="core\constants.lua"/>	
+	
 	<Script file="locales\english.lua"/>
 	<Script file="locales\french.lua"/>
 	<Script file="locales\russian.lua"/>
@@ -10,10 +11,12 @@
 	<Script file="locales\taiwan.lua"/>
 	<Script file="locales\spanish.lua"/>
 	<Script file="locales\korean.lua"/>	
+	
 	<Script file="config\config.lua"/>
 	<Script file="medias\medias.lua"/>	
 	<Script file="config\profiles.lua"/>
 	<Script file="core\configui.lua"/>
+	
 	<Include file="modules\unitframes\core\oUF\oUF.xml"/>
 	<Script file="modules\unitframes\plugins\oUF_AuraWatch\oUF_AuraWatch.lua"/>
 	<Script file="modules\unitframes\plugins\oUF_CombatFeedback\oUF_CombatFeedback.lua"/>
@@ -33,6 +36,7 @@
 	<Script file="modules\unitframes\plugins\oUF_Fader\oUF_Fader.lua"/>
 	<Script file="modules\unitframes\plugins\oUF_Vengeance\oUF_Vengeance.lua"/>
 	<Script file="modules\unitframes\templates\colors.lua"/>
+	
 	<Script file="core\uiscale.lua"/>
 	<Script file="core\deprecated.lua"/>
 	<Script file="core\api.lua"/>
@@ -40,12 +44,14 @@
 	<Script file="core\launch.lua"/>
 	<Script file="core\disable.lua"/>
 	<Script file="core\clientfonts.lua"/>
+	
 	<Script file="modules\blizzard\watchframe.lua"/>
 	<Script file="modules\blizzard\durability.lua"/>
 	<Script file="modules\blizzard\vehicle.lua"/>
 	<Script file="modules\blizzard\capturebar.lua"/>
 	<Script file="modules\blizzard\gm.lua"/>
 	<Script file="modules\blizzard\ghostframe.lua"/>
+	
 	<Script file="modules\misc\commands.lua"/>
 	<Script file="modules\blizzard\quests.lua"/>
 	<Script file="modules\misc\invite.lua"/>
@@ -63,6 +69,7 @@
 	<Script file="modules\buffs\buffs.lua"/>
 	<Script file="modules\maps\minimap.lua"/>
 	<Script file="modules\panels\panels.lua"/>
+	
 	<Script file="modules\datatext\armor.lua"/>
 	<Script file="modules\datatext\avoidance.lua"/>
 	<Script file="modules\datatext\bags.lua"/>
@@ -84,6 +91,7 @@
 	<Script file="modules\datatext\micromenu.lua"/>
 	<Script file="modules\datatext\mastery.lua"/>
 	<Script file="modules\datatext\misc.lua"/>
+	
 	<Script file="modules\actionbars\Bind.lua"/>
 	<Script file="modules\actionbars\Hide.lua"/>
 	<Script file="modules\actionbars\Bar1.lua"/>
@@ -99,11 +107,13 @@
 	<Script file="modules\actionbars\Others.lua"/>
 	<Script file="modules\actionbars\Cooldowns.lua"/>	
 	<Script file="modules\actionbars\functions.lua"/>
+	
 	<Script file="modules\chat\chatframes.lua"/>
 	<Script file="modules\chat\telltarget.lua"/>
 	<Script file="modules\chat\copychat.lua"/>
 	<Script file="modules\chat\mousescroll.lua"/>
 	<Script file="modules\chat\sounds.lua"/>
+	
 	<Script file="modules\tooltip\tooltip.lua"/>
 	<Script file="modules\tooltip\hyperlink.lua"/>
 	<Script file="modules\nameplates\nameplates.lua"/>
@@ -115,15 +125,24 @@
 	<Script file="modules\blizzard\mirror.lua"/>
 	<Script file="modules\notifications\selfbuffs.lua"/>
 	<Script file="modules\skins\blizzardframes.lua"/>
-	<Script file="modules\skins\bubbles.lua"/>	
+	<Script file="modules\skins\bubbles.lua"/>
+	<Script file="modules\skins\addons\LoadSkins.lua"/>
+	<Script file="modules\skins\addons\addons.lua"/>
+	<Script file="modules\skins\addons\Skada.lua"/>
+	<Script file="modules\skins\addons\Omen.lua"/>
+	<Script file="modules\skins\addons\Recount.lua"/>
+	<Script file="modules\skins\addons\KLE.lua"/>
+	
 	<Include file="modules\unitframes\templates\tankassist.xml"/>
 	<Script file="modules\unitframes\tags\tags.lua"/>
 	<Script file="modules\unitframes\layouts\duffed.lua"/>
 	<Script file="modules\notifications\hunterpethappiness.lua"/>	
+	
 	<Script file="modules\misc\altpowerbar.lua"/>
 	<Script file="modules\misc\threatbar.lua"/>
 	<Script file="modules\misc\mage.lua"/>
 	<Script file="modules\misc\raidUtility.lua"/>
+	
 	<Script file="modules\blizzard\achievements.lua"/>
 	<Script file="core\movers.lua"/>
 	<Script file="developer\test.lua"/>

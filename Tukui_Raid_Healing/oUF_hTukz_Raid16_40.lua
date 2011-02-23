@@ -231,62 +231,47 @@ end
 
 oUF:RegisterStyle('TukuiHealR25R40', Shared)
 oUF:Factory(function(self)
-	oUF:SetActiveStyle("TukuiHealR25R40")	
-	if C["unitframes"].gridonly ~= true then
-		local raid = self:SpawnHeader("TukuiGrid", nil, "custom [@raid16,exists] show;hide",
-			'oUF-initialConfigFunction', [[
-				local header = self:GetParent()
-				self:SetWidth(header:GetAttribute('initial-width'))
-				self:SetHeight(header:GetAttribute('initial-height'))
-			]],
-			'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
-			'initial-height', T.Scale(42*C["unitframes"].gridscale*T.raidscale),
-			"showRaid", true,
-			"xoffset", T.Scale(8),
-			"yOffset", T.Scale(-8),
-			"point", "LEFT",
-			"groupFilter", "1,2,3,4,5,6,7,8",
-			"groupingOrder", "1,2,3,4,5,6,7,8",
-			"groupBy", "GROUP",
-			"maxColumns", 8,
-			"unitsPerColumn", 5,
-			"columnSpacing", T.Scale(8),
-			"columnAnchorPoint", "BOTTOM"		
-		)
-		if ChatBG1 then
-			raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)
-		else
-			raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
-		end
+	oUF:SetActiveStyle("TukuiHealR25R40")
+	
+	local spawnG = "raid,party"
+	if C["unitframes"].gridonly ~= true then spawnG = "custom [@raid16,exists] show;hide" end
+	
+	local pointG = "LEFT"
+	if C.unitframes.gridvertical then pointG = "BOTTOM" end
+	
+	local capG = "BOTTOM"
+	if C.unitframes.gridvertical then capG = "LEFT" end
+	
+	local raid = self:SpawnHeader(
+		"TukuiGrid", nil, spawnG,
+		'oUF-initialConfigFunction', [[
+			local header = self:GetParent()
+			self:SetWidth(header:GetAttribute('initial-width'))
+			self:SetHeight(header:GetAttribute('initial-height'))
+		]],
+		'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
+		'initial-height', T.Scale(42*C["unitframes"].gridscale*T.raidscale),
+		"showParty", true,
+		"showPlayer", C["unitframes"].showplayerinparty, 
+		"showRaid", true, 
+		"xoffset", T.Scale(8),
+		"yOffset", T.Scale(8),
+		"groupFilter", "1,2,3,4,5,6,7,8",
+		"groupingOrder", "1,2,3,4,5,6,7,8",
+		"groupBy", "GROUP",
+		"maxColumns", 8,
+		"unitsPerColumn", 5,
+		"columnSpacing", T.Scale(8),
+		"point", pointG,
+		"columnAnchorPoint", capG
+	)
+	if ChatBG1 then
+		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)
 	else
-		local raid = self:SpawnHeader("TukuiGrid", nil, "raid,party",
-			'oUF-initialConfigFunction', [[
-				local header = self:GetParent()
-				self:SetWidth(header:GetAttribute('initial-width'))
-				self:SetHeight(header:GetAttribute('initial-height'))
-			]],
-			'initial-width', T.Scale(68*C["unitframes"].gridscale*T.raidscale),
-			'initial-height', T.Scale(42*C["unitframes"].gridscale*T.raidscale),
-			"showParty", true,
-			"showPlayer", C["unitframes"].showplayerinparty, 
-			"showRaid", true, 
-			"xoffset", T.Scale(8),
-			"yOffset", T.Scale(-8),
-			"point", "LEFT",
-			"groupFilter", "1,2,3,4,5,6,7,8",
-			"groupingOrder", "1,2,3,4,5,6,7,8",
-			"groupBy", "GROUP",
-			"maxColumns", 8,
-			"unitsPerColumn", 5,
-			"columnSpacing", T.Scale(8),
-			"columnAnchorPoint", "BOTTOM"		
-		)
-		if ChatBG1 then
-			raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)
-		else
-			raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
-		end
-		
+		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
+	end
+	
+	if C.unitframes.gridpets then
 		local pets = {} 
 			pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
 			pets[1]:Point('BOTTOMLEFT', raid, 'TOPLEFT', 0, 8)
@@ -315,7 +300,7 @@ oUF:Factory(function(self)
 					for i,v in ipairs(pets) do v:Disable() end
 				end
 			end
-		end)		
+		end)
 	end
 end)
 

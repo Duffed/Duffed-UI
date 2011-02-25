@@ -72,6 +72,9 @@ local function SetChatStyle(frame)
 	_G[chat.."TabText"].SetTextColor = T.dummy
 	_G[chat.."TabText"]:SetFont(C.datatext.font,C.datatext.fontsize,"THINOUTLINE")
 	
+	-- fading
+	_G[chat]:SetFading(C.chat.fading)
+	
 	-- yeah baby
 	_G[chat]:SetClampRectInsets(0,0,0,0)
 	

@@ -15,7 +15,7 @@
 ]]
 local E, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 
-if not IsAddOnLoaded("Skada") then return end
+if not IsAddOnLoaded("Skada") or not C.Addon_Skins.Skada then return end
 local Skada = Skada
 
 Mod_AddonSkins:RegisterSkin("Skada",function(Skin,skin,Layout,layout,config)

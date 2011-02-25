@@ -14,11 +14,11 @@
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 
 
-if not IsAddOnLoaded("Recount") then return end
+if not IsAddOnLoaded("Recount") or not C.Addon_Skins.Recount then return end
 local Recount = _G.Recount
 
 local LSM = LibStub("LibSharedMedia-3.0")
-if LSM then LSM:Register("font","Tukui Font", [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]]) end
+if LSM then LSM:Register("font","Tukui Font", C.datatext.font) end
 
 Mod_AddonSkins:RegisterSkin("Recount",function(Skin, skin, Layout, layout, config)
 
@@ -54,7 +54,7 @@ Mod_AddonSkins:RegisterSkin("Recount",function(Skin, skin, Layout, layout, confi
 			v.RightText:SetPoint("RIGHT", -4, 0)
 			v.RightText:SetFont(C.datatext.font, C.datatext.fontsize)
 		end
-		Recount:SetFont("Tukui Font")
+		-- Recount:SetFont("Tukui Font")
 	end
 	Recount.SetBarTextures = Recount.UpdateBarTextures
 	

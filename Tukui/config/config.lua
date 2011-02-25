@@ -100,14 +100,19 @@ C["arena"] = {
 }
 
 C["pvp"] = {
-	["drinkannouncement"] = true,						-- drink announcement for arena
+	["drinkannouncement"] = true,						-- Drink announcement for arena
 	["ccannouncement"] = true,							-- Announce CC/Buffs/Debuffs (config in AddOns/Stuff/Config.lua)
-	["sayinterrupt"] = true,							-- Announce when u interrupt someone
+	["sayinterrupt"] = true,							-- Interrupt announce
+	["dispelannouncement"] = false,						-- Announce dispels in a movable frame (/ddispel)
 }
 
 C["Addon_Skins"] = {
 	["background"] = false,								-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
 		["combat_toggle"] = false,						-- Shows the Addon Background, Omen, Recount & Skada infight, hides outfight
+	["Recount"] = true,									-- Enable Recount Skin
+	["Skada"] = true,									-- Enable Skada Skin
+	["Omen"] = true,									-- Enable Omen Skin
+	["KLE"] = true,										-- Enable KLE Skin
 }
 
 C["classtimer"] = {
@@ -177,6 +182,7 @@ C["chat"] = {
 	["leftchatbackground"] = true,						-- attached to ChatFrame1
 	["rightchatbackground"] = true,						-- attached to ChatFrameX
 		["rightchatnumber"] = 4,						-- Rightchat-background is attached to ChatFrameX ..X = value
+	["fading"] = true,									-- Enable Fading
 	
 	["enable"] = true,                                  -- blah
 	["whispersound"] = true,                            -- play a sound when receiving whisper

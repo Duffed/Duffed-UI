@@ -12,6 +12,11 @@ if C.Addon_Skins.background then
 	bgtab:CreateShadow("Default")
 	
 	if C.chat.rightchatbackground then
+		-- Use Chatsize if there is the rightchatbackground
+		bg:ClearAllPoints()
+		bg:Point("TOPLEFT", _G["ChatFrame"..C.chat.rightchatnumber], "TOPLEFT", -5, 29)
+		bg:Point("BOTTOMRIGHT", _G["ChatFrame"..C.chat.rightchatnumber], "BOTTOMRIGHT", 5, -5)
+
 		bgtab:ClearAllPoints()
 		bgtab:Point("TOPLEFT", bg, "TOPLEFT", 5, -5)
 		bgtab:Point("TOPRIGHT", bg, "TOPRIGHT", -28, -5)

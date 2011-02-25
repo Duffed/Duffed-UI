@@ -19,7 +19,7 @@ p.icon:SetPoint("BOTTOMRIGHT", -2, 2)
 p.icon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
 
 p.text = p:CreateFontString(nil, "OVERLAY")
-p.text:SetFont("Fonts\\FRIZQT__.ttf", 14, "THINOUTLINE")
+p.text:SetFont(dStuff.font, 14, "THINOUTLINE")
 p.text:SetPoint("CENTER", 0, 0)
 
 local spells = { 89489, 96219 }

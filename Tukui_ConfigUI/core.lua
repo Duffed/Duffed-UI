@@ -81,6 +81,7 @@ local function Local(o)
 	if o == "TukuiConfigUIpvpdrinkannouncement"  then o = "Announce 'drinking' in  Arena" end
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end
 	if o == "TukuiConfigUIpvpsayinterrupt"  then o = "Announce when u interrupt someone" end
+	if o == "TukuiConfigUIpvpdispelannouncement" then o = "Announce Dispels in a movable Frame (/ddispel)" end
 	
 	if o == "TukuiConfigUIclasstimer" then o = "ClassTimer" end
 	if o == "TukuiConfigUIclasstimerplayercolor" then o = "Player-Bar Color" end
@@ -92,10 +93,15 @@ local function Local(o)
 	if o == "TukuiConfigUIchatleftchatbackground" then o = "Show Background for the left Chat (ChatFrame1)" end
 	if o == "TukuiConfigUIchatrightchatbackground" then o = "Show Background for the right Chat (ChatFrame4)" end
 	if o == "TukuiConfigUIchatrightchatnumber" then o = "(For Rightchat-Background) Chat Number X" end
+	if o == "TukuiConfigUIchatfading" then o = "Enable fading" end
 	
 	if o == "TukuiConfigUIAddon_Skins" then o = "AddOn Skins" end
 	if o == "TukuiConfigUIAddon_Skinsbackground" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
 	if o == "TukuiConfigUIAddon_Skinscombat_toggle" then o = "Toggle Addonbackground, Recount, Omen & Skada in-/outfight (NOTE: Turn off auto-hide functions in these Addons)" end
+	if o == "TukuiConfigUIAddon_SkinsSkada" then o = "Enable Skada Skin" end
+	if o == "TukuiConfigUIAddon_SkinsRecount" then o = "Enable Recount Skin" end
+	if o == "TukuiConfigUIAddon_SkinsOmen" then o = "Enable Omen Skin" end
+	if o == "TukuiConfigUIAddon_SkinsKLE" then o = "Enable KLE Skin" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

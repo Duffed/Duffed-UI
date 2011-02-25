@@ -20,7 +20,7 @@ for i=1, 12 do
 		if T.lowversion then
 			b:SetPoint("TOPLEFT", bar, "TOPLEFT", T.buttonspacing, -T.buttonspacing)
 		else
-			b:SetPoint("LEFT", bar, "CENTER", T.buttonspacing/2, 0)
+			b:SetPoint("BOTTOMLEFT", bar, "BOTTOM", T.buttonspacing/2, T.buttonspacing)
 		end
 	else
 		b:SetPoint("LEFT", b2, "RIGHT", T.buttonspacing, 0)

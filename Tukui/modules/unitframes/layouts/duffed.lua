@@ -626,7 +626,7 @@ local function Shared(self, unit)
 			
 			debuffs:SetHeight(22)
 			debuffs:SetWidth(playerwidth+4)
-			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", 0, 2)
+			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", -2, 4)
 			debuffs.size = debuffs:GetHeight()
 			debuffs.spacing = 3
 			debuffs.num = 27
@@ -1171,25 +1171,25 @@ local function Shared(self, unit)
 			power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
 			
 			-- Auratracker Frame
+			local TrackBorder = CreateFrame("Frame", "TrackBorder", self)
+			TrackBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
+			TrackBorder:CreateShadow("Default")
+			
 			local AuraTracker = CreateFrame("Frame", nil, self)
-			AuraTracker:Size(40)
-			AuraTracker:Point("BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
-			AuraTracker:SetTemplate("Default")
-			AuraTracker:CreateShadow("Default")
+			AuraTracker:SetFrameLevel(9)
 			self.AuraTracker = AuraTracker
 			
 			AuraTracker.icon = AuraTracker:CreateTexture(nil, "OVERLAY")
-			AuraTracker.icon:SetAllPoints(AuraTracker)
-			AuraTracker.icon:Point("TOPLEFT", AuraTracker, 2, -2)
-			AuraTracker.icon:Point("BOTTOMRIGHT", AuraTracker, -2, 2)
+			AuraTracker.icon:Point("TOPLEFT", TrackBorder, 2, -2)
+			AuraTracker.icon:Point("BOTTOMRIGHT", TrackBorder, -2, 2)
 			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
 			
 			AuraTracker.text = T.SetFontString(AuraTracker, font2, 15, "THINOUTLINE")
-			AuraTracker.text:SetPoint("CENTER", AuraTracker, 0, 0)
+			AuraTracker.text:SetPoint("CENTER", TrackBorder, 0, 0)
 			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
 			
 			-- Portrait
-			local portrait = CreateFrame("PlayerModel", nil, AuraTracker)
+			local portrait = CreateFrame("PlayerModel", nil, TrackBorder)
 			portrait:SetFrameLevel(8)
 			portrait:Point("TOPLEFT", 2, -2)
 			portrait:Point("BOTTOMRIGHT", -2, 2)
@@ -1443,18 +1443,28 @@ local function Shared(self, unit)
 			AltPowerBar:SetPoint("LEFT")
 			AltPowerBar:SetPoint("RIGHT")
 			AltPowerBar:SetPoint("TOP", self.Health, "TOP")
-			
 			-- AltPowerBar:SetBackdrop({bgFile = C["media"].blank})
 			-- AltPowerBar:SetBackdropColor(.1,.1,.1)
-
 			self.AltPowerBar = AltPowerBar
+			
+			-- Portrait Border
+			local PBorder = CreateFrame("Frame", nil, self)
+			PBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
+			PBorder:CreateShadow("Default")
+			
+			local portrait = CreateFrame("PlayerModel", nil, PBorder)
+			portrait:SetFrameLevel(8)
+			portrait:Point("TOPLEFT", 2, -2)
+			portrait:Point("BOTTOMRIGHT", -2, 2)
+			table.insert(self.__elements, T.HidePortrait)
+			self.Portrait = portrait
 			
 			-- create buff at left of unit if they are boss units
 			local buffs = CreateFrame("Frame", nil, self)
-			buffs:SetHeight(22)
+			buffs:SetHeight(40)
 			buffs:SetWidth(252)
-			buffs:Point("RIGHT", health, "LEFT", -4, -3)
-			buffs.size = 26
+			buffs:Point("BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
+			buffs.size = 40
 			buffs.num = 3
 			buffs.spacing = 2
 			buffs.initialAnchor = 'RIGHT'
@@ -1790,11 +1800,10 @@ TestUI = function(msg)
 		TukuiBoss1:Show(); TukuiBoss1.Hide = function() end; TukuiBoss1.unit = "player"
 		TukuiBoss2:Show(); TukuiBoss2.Hide = function() end; TukuiBoss2.unit = "player"
 		TukuiBoss3:Show(); TukuiBoss3.Hide = function() end; TukuiBoss3.unit = "player"
-	elseif msg == "buffs" then
-		testui()
+	elseif msg == "buffs" then -- better dont test it ^^
 		UnitAura = function()
 			-- name, rank, texture, count, dtype, duration, timeLeft, caster
-			return 80167, 'Rank 1', 'Interface\\Icons\\Spell_Holy_Penance', random(5), 'Magic', 0, 0, "player"
+			return 139, 'Rank 1', 'Interface\\Icons\\Spell_Holy_Penance', 1, 'Magic', 0, 0, "player"
 		end
 		if(oUF) then
 			for i, v in pairs(oUF.units) do
@@ -1803,8 +1812,6 @@ TestUI = function(msg)
 				end
 			end
 		end
-	elseif msg == "g1" then
-		TukuiGridUnitButton1:Show(); TukuiGridUnitButton1.Hide = function() end; TukuiGridUnitButton1.unit = "player"
 	end
 end
 SlashCmdList.TestUI = TestUI

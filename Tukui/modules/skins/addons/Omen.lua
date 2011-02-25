@@ -14,7 +14,7 @@
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 
 
-if not IsAddOnLoaded("Omen") then return end
+if not IsAddOnLoaded("Omen") or not C.Addon_Skins.Omen then return end
 
 local Omen = LibStub("AceAddon-3.0"):GetAddon("Omen")
 

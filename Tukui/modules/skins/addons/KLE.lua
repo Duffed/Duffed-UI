@@ -1,7 +1,7 @@
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 
 
-if not IsAddOnLoaded("KLE") then return end
+if not IsAddOnLoaded("KLE") or not C.Addon_Skins.KLE then return end
 local KLE = KLE
 local _G = getfenv(0)
 

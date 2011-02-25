@@ -13,77 +13,28 @@ local CreateSpellEntry = function( id, castByAnyone, color, unitType, castSpellI
 end
 
 -- Configuration starts here:
+local IgnoreFocusFrame = false				-- (Duffed UI) Ignore the Focus Frame? So it will overlap (true/false)
+local targetdebuffs = C.classtimer.targetdebuffs -- display target debuffs above target
+local BAR_HEIGHT = 15						-- Bar height
+local BAR_SPACING = 1						-- Distance between bars
+local SPARK = false							-- Show spark
+local CAST_SEPARATOR = true					-- Show cast separator
+local CAST_SEPARATOR_COLOR = { 0, 0, 0, .5 } -- Sets cast separator color
+local TEXT_MARGIN = 5						-- Sets distance between right edge of bar and name and left edge of bar and time left
 
--- (Duffed UI) Ignore the Focus Frame? So it will overlap (true/false)
-local IgnoreFocusFrame = false
+MASTER_FONT = { C["media"].uffont, C.media.uffontsize }; -- Sets font for all texts
+STACKS_FONT = { C["media"].uffont, C.media.uffontsize , "THINOUTLINE"}; -- Sets font for stack count
 
--- Bar height
-local BAR_HEIGHT = 15;
+local PERMANENT_AURA_VALUE = 1				-- Permanent aura bars 1 = filled 0 = empty
 
--- Distance between bars
-local BAR_SPACING = 1;
+local PLAYER_BAR_COLOR = C["classtimer"].playercolor -- Player bar color
+local PLAYER_DEBUFF_COLOR = nil -- Player debuff color
+local TARGET_BAR_COLOR = C["classtimer"].targetbuffcolor --Target bar color
+local TARGET_DEBUFF_COLOR = C["classtimer"].targetdebuffcolor --Target debuff color
+local TRINKET_BAR_COLOR = C["classtimer"].trinketcolor --Trinket bar color
 
--- Show spark
-local SPARK = false;
-
--- Show cast separator
-local CAST_SEPARATOR = true;
-
--- Sets cast separator color
-local CAST_SEPARATOR_COLOR = { 0, 0, 0, .5 }
-
--- Sets distance between right edge of bar and name and left edge of bar and time left
-local TEXT_MARGIN = 5;
-
--- Sets font for all texts
-MASTER_FONT = { C["media"].uffont, C.media.uffontsize };
-
--- Sets font for stack count
-STACKS_FONT = { C["media"].uffont, C.media.uffontsize , "THINOUTLINE"};
-
---[[ Permanent aura bars
-	1 filled 		
-	0 empty
-]]--
-local PERMANENT_AURA_VALUE = 1;
-
---[[ Player bar color
-	red, green, blue - range from 0 to 255
-	alpha - range from 0 to 1
-]]--
-local PLAYER_BAR_COLOR = C["classtimer"].playercolor
-
---[[ Player debuff color
-	red, green, blue - range from 0 to 255
-	alpha - range from 0 to 1
-]]--
-local PLAYER_DEBUFF_COLOR = nil;
-
---[[ Target bar color
-	red, green, blue - range from 0 to 255
-	alpha - range from 0 to 1
-]]--
-local TARGET_BAR_COLOR = C["classtimer"].targetbuffcolor
---[[ Target debuff color
-	red, green, blue - range from 0 to 255
-	alpha - range from 0 to 1
-]]--
-local TARGET_DEBUFF_COLOR = C["classtimer"].targetdebuffcolor
-
---[[ Trinket bar color
-	red, green, blue - range from 0 to 255
-	alpha - range from 0 to 1
-]]--
-local TRINKET_BAR_COLOR = C["classtimer"].trinketcolor
-
---[[ Sort direction
-	false - ascending
-	true - descending
-]]--
-local SORT_DIRECTION = true;
-
--- Timer tenths threshold - range from 1 to 60
-local TENTHS_TRESHOLD = 1
+local SORT_DIRECTION = true -- Sort direction (true - descending, false - ascending)
+local TENTHS_TRESHOLD = 1 -- Timer tenths threshold - range from 1 to 60
 
 -- Trinket filter - mostly for trinket procs, delete or wrap into comment block --[[  ]] if you dont want to track those
 local TRINKET_FILTER = {
@@ -1168,23 +1119,23 @@ do
 	end
 end
 
-local _, playerClass = UnitClass( "player" );
-local classFilter = CLASS_FILTERS[ playerClass ];
+local _, playerClass = UnitClass( "player" )
+local classFilter = CLASS_FILTERS[ playerClass ]
 
-local targetDataSource = CreateUnitAuraDataSource( "target" );
-local playerDataSource = CreateUnitAuraDataSource( "player" );
-local trinketDataSource = CreateUnitAuraDataSource( "player" );
+local targetDataSource = CreateUnitAuraDataSource( "target" )
+local playerDataSource = CreateUnitAuraDataSource( "player" )
+local trinketDataSource = CreateUnitAuraDataSource( "player" )
 
-targetDataSource:SetSortDirection( SORT_DIRECTION );
-playerDataSource:SetSortDirection( SORT_DIRECTION );
-trinketDataSource:SetSortDirection( SORT_DIRECTION );
+targetDataSource:SetSortDirection( SORT_DIRECTION )
+playerDataSource:SetSortDirection( SORT_DIRECTION )
+trinketDataSource:SetSortDirection( SORT_DIRECTION )
 
 if ( classFilter ) then
-	targetDataSource:AddFilter( classFilter.target, TARGET_BAR_COLOR, TARGET_DEBUFF_COLOR );		
-	playerDataSource:AddFilter( classFilter.player, PLAYER_BAR_COLOR, PLAYER_DEBUFF_COLOR );
-	trinketDataSource:AddFilter( classFilter.procs, TRINKET_BAR_COLOR );
+	targetDataSource:AddFilter( classFilter.target, TARGET_BAR_COLOR, TARGET_DEBUFF_COLOR );	
+	playerDataSource:AddFilter( classFilter.player, PLAYER_BAR_COLOR, PLAYER_DEBUFF_COLOR )
+	trinketDataSource:AddFilter( classFilter.procs, TRINKET_BAR_COLOR )
 end
-trinketDataSource:AddFilter( TRINKET_FILTER, TRINKET_BAR_COLOR );
+trinketDataSource:AddFilter( TRINKET_FILTER, TRINKET_BAR_COLOR )
 
 local yOffset = 7
 local xOffset = 0
@@ -1198,18 +1149,22 @@ if IgnoreFocusFrame or C.unitframes.largefocus then
 else
 	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
 end
-playerFrame:Point( "BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0, yOffset );
-	
-playerFrame:Show();
+playerFrame:Point( "BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0, yOffset )
 
-local trinketFrame = CreateAuraBarFrame( trinketDataSource, TukuiPlayer );
-trinketFrame:SetHiddenHeight( -yOffset );
-trinketFrame:Point( "BOTTOMLEFT", playerFrame, "TOPLEFT", 0, yOffset );
-trinketFrame:Point( "BOTTOMRIGHT", playerFrame, "TOPRIGHT", 0, yOffset );
-trinketFrame:Show();
 
-local targetFrame = CreateAuraBarFrame( targetDataSource, TukuiPlayer );
-targetFrame:SetHiddenHeight( -yOffset );
-targetFrame:Point( "BOTTOMLEFT", trinketFrame, "TOPLEFT", 0, yOffset );
-targetFrame:Point( "BOTTOMRIGHT", trinketFrame, "TOPRIGHT", 0, yOffset );
-targetFrame:Show();
+local trinketFrame = CreateAuraBarFrame( trinketDataSource, TukuiPlayer )
+trinketFrame:SetHiddenHeight( -yOffset )
+trinketFrame:Point( "BOTTOMLEFT", playerFrame, "TOPLEFT", 0, yOffset )
+trinketFrame:Point( "BOTTOMRIGHT", playerFrame, "TOPRIGHT", 0, yOffset )
+
+if not targetdebuffs then
+	local targetFrame = CreateAuraBarFrame( targetDataSource, TukuiPlayer )
+	targetFrame:SetHiddenHeight( -yOffset )
+	targetFrame:Point( "BOTTOMLEFT", trinketFrame, "TOPLEFT", 0, yOffset )
+	targetFrame:Point( "BOTTOMRIGHT", trinketFrame, "TOPRIGHT", 0, yOffset )
+else
+	local targetFrame = CreateAuraBarFrame( targetDataSource, TukuiTarget )
+	targetFrame:SetHiddenHeight( -yOffset )
+	targetFrame:Point( "BOTTOMLEFT", TukuiTarget, "TOPLEFT", 0, 61 )
+	targetFrame:Point( "BOTTOMRIGHT", TukuiTarget, "TOPRIGHT", -2, 61 )
+end

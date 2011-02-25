@@ -16,7 +16,8 @@ T.interrupt = {
 	[72] = 12, -- shield bash
 	[15487] = 45, -- silence priest
 	[34490] = 20, -- silencing shot
-	[85285] = 10, -- rebuke
+	[96231] = 10, -- rebuke
 	[80964] = 10, -- feral skull bash (cat)
 	[80965] = 10, -- feral skull bash (bear)
+	[48020] = 30, -- warlock teleport
 }

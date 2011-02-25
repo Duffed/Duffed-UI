@@ -629,7 +629,11 @@ local function Shared(self, unit)
 			debuffs:SetPoint("BOTTOMLEFT", buffs, "TOPLEFT", -2, 4)
 			debuffs.size = debuffs:GetHeight()
 			debuffs.spacing = 3
-			debuffs.num = 27
+			if C.classtimer.targetdebuffs then
+				debuffs.num = buffs.num
+			else
+				debuffs.num = buffs.num*2
+			end
 						
 			buffs.initialAnchor = 'TOPLEFT'
 			buffs.PostCreateIcon = T.PostCreateAura
@@ -1205,27 +1209,29 @@ local function Shared(self, unit)
 		end
 
 		-- create debuffs
-		local debuffs = CreateFrame("Frame", nil, self)
-		debuffs.spacing = 3
-		if lafo then
-			debuffs.size = 26
-			debuffs:SetHeight(22)
-			debuffs:Point('LEFT', health, 'RIGHT', 5, -3)
-			debuffs.initialAnchor = 'LEFT'
-			debuffs["growth-x"] = "RIGHT"
-			debuffs.num = (playerwidth-20)/(debuffs.size+debuffs.spacing)
-		else
-			debuffs:Point("RIGHT", self, "LEFT", -5, 0)
-			debuffs.initialAnchor = 'RIGHT'
-			debuffs["growth-x"] = "LEFT"
-			debuffs.num = 5
-			debuffs.size = 20
-			debuffs:SetHeight(20)
+		if C.unitframes.focusdebuffs then
+			local debuffs = CreateFrame("Frame", nil, self)
+			debuffs.spacing = 3
+			if lafo then
+				debuffs.size = 26
+				debuffs:SetHeight(22)
+				debuffs:Point('LEFT', health, 'RIGHT', 5, -3)
+				debuffs.initialAnchor = 'LEFT'
+				debuffs["growth-x"] = "RIGHT"
+				debuffs.num = (playerwidth-20)/(debuffs.size+debuffs.spacing)
+			else
+				debuffs:Point("RIGHT", self, "LEFT", -5, 0)
+				debuffs.initialAnchor = 'RIGHT'
+				debuffs["growth-x"] = "LEFT"
+				debuffs.num = 5
+				debuffs.size = 20
+				debuffs:SetHeight(20)
+			end
+			debuffs:SetWidth(debuffs:GetHeight() * debuffs.num)
+			debuffs.PostCreateIcon = T.PostCreateAura
+			debuffs.PostUpdateIcon = T.PostUpdateAura
+			self.Debuffs = debuffs
 		end
-		debuffs:SetWidth(debuffs:GetHeight() * debuffs.num)
-		debuffs.PostCreateIcon = T.PostCreateAura
-		debuffs.PostUpdateIcon = T.PostUpdateAura
-		self.Debuffs = debuffs
 		
 		-- castbar
 		if C["castbar"].enable == true then

@@ -41,6 +41,7 @@ if IsAddOnLoaded("a") or IsAddOnLoaded("b") then
 	C.pvp.ccannouncement = true
 	C.castbar.classcolored = false
 	C.actionbar.hotkey = false
+	C.pvp.dispelannouncement = true
 	if UnitLevel("player") < MAX_PLAYER_LEVEL then
 		C.actionbar.hotkey = true 
 	end

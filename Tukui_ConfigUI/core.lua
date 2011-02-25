@@ -61,6 +61,8 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesgridvertical" then o = "Grid direction vertical instead of horizontal" end
 	if o == "TukuiConfigUIunitframesgridpets" then o = "Show pets in Grid Layout (only in group, not raid)" end
 	if o == "TukuiConfigUIunitframesfontsize" then o = "Unitframe Fontsize" end
+	if o == "TukuiConfigUIunitframesgridsolo" then o = "Show Grid even without a Group (Solo)" end
+	if o == "TukuiConfigUIunitframesfocusdebuffs" then o = "Enable Focus Debuffs" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end
@@ -88,6 +90,7 @@ local function Local(o)
 	if o == "TukuiConfigUIclasstimertargetbuffcolor" then o = "Target-Buffs Color" end
 	if o == "TukuiConfigUIclasstimertargetdebuffcolor" then o = "Target-Debuffs Color" end
 	if o == "TukuiConfigUIclasstimertrinketcolor" then o = "Player-Trinket(Procs) Color" end
+	if o == "TukuiConfigUIclasstimertargetdebuffs" then o = "Target Debuffs above Target (looks crappy imo :))" end
 	
 	if o == "TukuiConfigUIchataddonborder" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
 	if o == "TukuiConfigUIchatleftchatbackground" then o = "Show Background for the left Chat (ChatFrame1)" end
@@ -102,6 +105,7 @@ local function Local(o)
 	if o == "TukuiConfigUIAddon_SkinsRecount" then o = "Enable Recount Skin" end
 	if o == "TukuiConfigUIAddon_SkinsOmen" then o = "Enable Omen Skin" end
 	if o == "TukuiConfigUIAddon_SkinsKLE" then o = "Enable KLE Skin" end
+	if o == "TukuiConfigUIAddon_SkinsTinyDPS" then o = "Enable TinyDPS Skin" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

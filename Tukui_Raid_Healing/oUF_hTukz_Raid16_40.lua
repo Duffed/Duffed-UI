@@ -233,7 +233,7 @@ oUF:RegisterStyle('TukuiHealR25R40', Shared)
 oUF:Factory(function(self)
 	oUF:SetActiveStyle("TukuiHealR25R40")
 	
-	local spawnG = "raid,party"
+	local spawnG = "solo,raid,party"
 	if C["unitframes"].gridonly ~= true then spawnG = "custom [@raid16,exists] show;hide" end
 	
 	local pointG = "LEFT"
@@ -263,7 +263,8 @@ oUF:Factory(function(self)
 		"unitsPerColumn", 5,
 		"columnSpacing", T.Scale(8),
 		"point", pointG,
-		"columnAnchorPoint", capG
+		"columnAnchorPoint", capG,
+		"showSolo", C.unitframes.gridsolo
 	)
 	if ChatBG1 then
 		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)

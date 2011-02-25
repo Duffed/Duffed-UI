@@ -64,8 +64,8 @@ if C.Addon_Skins.background then
 				_G["ChatFrame"..C.chat.rightchatnumber]:Show()
 				_G["ChatFrame"..C.chat.rightchatnumber.."Tab"]:Show()
 				
-				-- yeah set all chats again cause we lose them after /rl when chat is hidden ..dunno how to prevent this atm
-				ChatFrame_RemoveAllMessageGroups(_G["ChatFrame"..C.chat.rightchatnumber])
+				-- yeah set all chats for ChatFrameX again cause we lose them after /rl when chat is hidden ..dunno how to prevent this atm
+				-- ChatFrame_RemoveAllMessageGroups(_G["ChatFrame"..C.chat.rightchatnumber])
 				ChatFrame_AddChannel(_G["ChatFrame"..C.chat.rightchatnumber], L.chat_trade)
 				ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "COMBAT_XP_GAIN")
 				ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "COMBAT_HONOR_GAIN")
@@ -95,4 +95,10 @@ if C.Addon_Skins.background then
 			end
 		end
 	end)
+end
+
+-- TinyDPS Skin
+if IsAddOnLoaded("TinyDPS") and C.Addon_Skins.TinyDPS then
+	tdpsFrame:SetTemplate("")
+	tdpsFrame:CreateShadow("")
 end

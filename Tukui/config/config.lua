@@ -24,7 +24,9 @@ C["unitframes"] = {
 	["largefocus"] = false,								-- Use larger Focus Frame
 	["gridpets"] = true,								-- show pets in grid layout (only in group, not raid)
 	["gridvertical"] = false,							-- Grid direction vertical instead of horizontal
-
+	["gridsolo"] = false,								-- Show Grid even without a group (solo)
+	["focusdebuffs"] = true,
+	
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
 	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.´
@@ -113,9 +115,11 @@ C["Addon_Skins"] = {
 	["Skada"] = true,									-- Enable Skada Skin
 	["Omen"] = true,									-- Enable Omen Skin
 	["KLE"] = true,										-- Enable KLE Skin
+	["TinyDPS"] = true,									-- Enable TinyDPS Skin
 }
 
 C["classtimer"] = {
+	["targetdebuffs"] = false,							-- target debuffs above target (looks crappy imo)
 	["playercolor"] = {.2, .2, .2, 1 },
 	["targetbuffcolor"] = { 70/255, 150/255, 70/255, 1 },
 	["targetdebuffcolor"] = { 150/255, 30/255, 30/255, 1 },

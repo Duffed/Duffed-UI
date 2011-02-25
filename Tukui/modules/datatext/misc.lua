@@ -135,8 +135,8 @@ if C["datatext"].reputation and C["datatext"].reputation > 0 then
 					GameTooltip:AddDoubleLine("Rep earned:", format("|cffffffff%.f", value - max), 1, 1, 1, .65, .65, .65)
 					GameTooltip:AddDoubleLine("Rep total:", format("|cffffd200%.f", min - max), 1, 1, 1, .65, .65, .65)
 				else
-					GameTooltip:AddDoubleLine("Faction:")
-					GameTooltip:AddLine(T.panelcolor.."cffffffffNo Faction Tracked")
+					GameTooltip:AddDoubleLine("|cffffffffFaction:|r")
+					GameTooltip:AddLine(T.panelcolor.."No Faction Tracked")
 				end
 				GameTooltip:Show()
 			end

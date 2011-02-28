@@ -96,9 +96,3 @@ if C.Addon_Skins.background then
 		end
 	end)
 end
-
--- TinyDPS Skin
-if IsAddOnLoaded("TinyDPS") and C.Addon_Skins.TinyDPS then
-	tdpsFrame:SetTemplate("")
-	tdpsFrame:CreateShadow("")
-end

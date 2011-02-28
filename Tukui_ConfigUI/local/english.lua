@@ -101,6 +101,7 @@ TukuiL.option_unitframes_totdebuffs = "Enable Target of Target debuffs (High Res
 TukuiL.option_unitframes_classbar = "Enable class bar"
 TukuiL.option_unitframes_weakenedsoulbar = "Enable Weakened Soul bar notification (Priest)"
 TukuiL.option_unitframes_onlyselfdebuffs = "Display only our debuffs on target"
+TukuiL.option_unitframes_focus = "Enable Focus target"
  
 -- loot
 TukuiL.option_loot = "Loot"
@@ -174,6 +175,10 @@ TukuiL.option_chat = "Social"
 TukuiL.option_chat_enable = "Enable Tukui Chat"
 TukuiL.option_chat_whispersound = "Play sound when receiving private message"
 TukuiL.option_chat_background = "Enable chat panel background"
+
+-- buff
+TukuiL.option_auras = "Auras"
+TukuiL.option_auras_player = "Enable Tukui Buff/Debuff Frames"
 
 -- buttons
 TukuiL.option_button_reset = "Reset"

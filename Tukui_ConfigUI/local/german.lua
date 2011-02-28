@@ -100,6 +100,7 @@
 	TukuiL.option_unitframes_classbar = "Klassen Leiste aktivieren"
 	TukuiL.option_unitframes_weakenedsoulbar = "Aktiviere 'Geschwächte Seele' Anzeige (Priester)"
 	TukuiL.option_unitframes_onlyselfdebuffs = "Zeigt nur deine debuffs auf dem Ziel an"
+	TukuiL.option_unitframes_focus = "Aktiviere Fokus Ziel"
  
 	-- loot
 	TukuiL.option_loot = "Beute"
@@ -174,6 +175,10 @@
 	TukuiL.option_chat_whispersound = "Beim Empfang von Flüsternachrichten Ton abspielen"
 	TukuiL.option_chat_background = "Aktiviere die Hintergrund Panelen der Chatfenster"
  
+	 -- buff
+	TukuiL.option_auras = "Auras"
+	TukuiL.option_auras_player = "Enable Tukui Buff/Debuff Frames"
+
 	-- buttons
 	TukuiL.option_button_reset = "Zurücksetzen"
 	TukuiL.option_button_load = "Anwenden"

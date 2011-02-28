@@ -30,10 +30,13 @@ Kill:SetScript("OnEvent", function(self, event, addon)
 		Advanced_UIScaleSlider:Kill()
 		PartyMemberBackground:Kill()
 		TutorialFrameAlertButton:Kill()
-		BuffFrame:Kill()
-		TemporaryEnchantFrame:Kill()
-		ConsolidatedBuffs:Kill()
-		InterfaceOptionsBuffsPanelConsolidateBuffs:Kill()
+		
+		if C.auras.player or C.unitframes.playerauras then
+			BuffFrame:Kill()
+			TemporaryEnchantFrame:Kill()
+			ConsolidatedBuffs:Kill()
+			InterfaceOptionsBuffsPanelConsolidateBuffs:Kill()
+		end
 		
 		InterfaceOptionsUnitFramePanelPartyBackground:Kill()
 

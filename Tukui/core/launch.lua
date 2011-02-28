@@ -43,6 +43,7 @@ local function install()
 	SetCVar("bloatthreat", 0)
 	SetCVar("bloattest", 0)
 	SetCVar("bloatnameplates", 0)
+	SetCVar("threatWarning", 3)
 	if IsAddOnLoaded("a") then
 		SetCVar("ffxDeath", "0")
 		SetCVar("ffxNetherWorld", "0")

@@ -1098,10 +1098,14 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			SpellName(79835), --Poison Soaked Shell
 			SpellName(91433), --Lightning Conductor
 			SpellName(91521), --Incineration Security Measure
+			SpellName(92051), --Shadow Conductor
+			SpellName(79501), --Acquiring Target
+			SpellName(92048), --Shadow Infusion
 
 			--Maloriak
 			SpellName(77699), -- Flash Freeze
 			SpellName(77760), -- Biting Chill
+			SpellName(77786), -- Consuming Flames
 
 			--Atramedes
 			SpellName(92423), -- Searing Flame
@@ -1113,6 +1117,7 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			SpellName(89084), -- Low Health
 
 			--Nefarian
+			SpellName(79339), --Explosive Cinders
 
 			--Sinestra
 			SpellName(92956), --Wrack
@@ -1134,10 +1139,12 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			SpellName(83099), -- Lightning Rod
 			SpellName(92075), -- Gravity Core
 			SpellName(92488), -- Gravity Crush
+			SpellName(92067), -- Static Overload
 
 			--Cho'gall
 			SpellName(86028), -- Cho's Blast
 			SpellName(86029), -- Gall's Blast
+			SpellName(93133), -- Debilitating Beam
 
 		--Throne of the Four Winds
 			--Conclave of Wind
@@ -1151,6 +1158,7 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			--Al'Akir
 			SpellName(93260), -- Ice Storm
 			SpellName(93295), -- Lightning Rod
+			SpellName(87856), -- Squall Line
 			
 			-- SpellName(6788), --test
 		}

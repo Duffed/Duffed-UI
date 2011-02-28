@@ -24,6 +24,8 @@ local ALLOWED_GROUPS = {
 	["castbar"]=1,
 	["classtimer"]=1,
 	["Addon_Skins"]=1,
+	["sCombo"]=1,
+	["auras"]=1,
 }
 
 --List of "Table Names" that we do not want to show in the config
@@ -106,6 +108,13 @@ local function Local(o)
 	if o == "TukuiConfigUIAddon_SkinsOmen" then o = "Enable Omen Skin" end
 	if o == "TukuiConfigUIAddon_SkinsKLE" then o = "Enable KLE Skin" end
 	if o == "TukuiConfigUIAddon_SkinsTinyDPS" then o = "Enable TinyDPS Skin" end
+	if o == "TukuiConfigUIAddon_SkinsQuartz" then o = "Enable Quartz Skin" end
+	
+	if o == "TukuiConfigUItooltipshowspellid" then o = "Show SpellID on Tooltip" end
+	
+	if o == "TukuiConfigUIsCombo" then o = "ComboBar (sCombo)" end
+	if o == "TukuiConfigUIsComboenable" then o = "Enable sCombo-Addon for combopoints instead of default cp-display" end
+	if o == "TukuiConfigUIsComboenergybar" then o = "Show Energy-Bar below Combopoints" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end
@@ -281,6 +290,10 @@ local function Local(o)
 	if o == "TukuiConfigUIchatenable" then o = TukuiL.option_chat_enable end
 	if o == "TukuiConfigUIchatwhispersound" then o = TukuiL.option_chat_whispersound end
 	if o == "TukuiConfigUIchatbackground" then o = TukuiL.option_chat_background end
+	
+	-- aura
+	if o == "TukuiConfigUIauras" then o = TukuiL.option_auras end
+	if o == "TukuiConfigUIaurasplayer" then o = TukuiL.option_auras_player end
 
 	T.option = o
 end

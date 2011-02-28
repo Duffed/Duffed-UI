@@ -181,39 +181,8 @@ addon:SetScript("OnEvent", function(self, event)
 		ShowUIPanel(WorldMapFrame)
 		HideUIPanel(WorldMapFrame)
 	elseif event == "PLAYER_REGEN_DISABLED" then
-		WorldMapFrameSizeDownButton:Disable() 
-		WorldMapFrameSizeUpButton:Disable()
-		HideUIPanel(WorldMapFrame)
-		WatchFrame.showObjectives = nil
-		WorldMapQuestShowObjectives:SetChecked(false)
-		WorldMapQuestShowObjectives:Hide()
-		WorldMapTitleButton:Hide()
-		WorldMapBlobFrame:Hide()
-		WorldMapPOIFrame:Hide()
-
-		WorldMapQuestShowObjectives.Show = T.dummy
-		WorldMapTitleButton.Show = T.dummy
-		WorldMapBlobFrame.Show = T.dummy
-		WorldMapPOIFrame.Show = T.dummy       
-
 		WatchFrame_Update()
 	elseif event == "PLAYER_REGEN_ENABLED" then
-		WorldMapFrameSizeDownButton:Enable()
-		WorldMapFrameSizeUpButton:Enable()
-		WorldMapQuestShowObjectives.Show = WorldMapQuestShowObjectives:Show()
-		WorldMapTitleButton.Show = WorldMapTitleButton:Show()
-		WorldMapBlobFrame.Show = WorldMapBlobFrame:Show()
-		WorldMapPOIFrame.Show = WorldMapPOIFrame:Show()
-
-		WorldMapQuestShowObjectives:Show()
-		WorldMapTitleButton:Show()
-
-		WatchFrame.showObjectives = true
-		WorldMapQuestShowObjectives:SetChecked(true)
-
-		WorldMapBlobFrame:Show()
-		WorldMapPOIFrame:Show()
-
 		WatchFrame_Update()
 	end
 end)

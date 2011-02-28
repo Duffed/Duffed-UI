@@ -236,7 +236,7 @@ local coord_Update = function(self,t)
 	x = math.floor(100 * x)
 	y = math.floor(100 * y)
 	if x == 0 and y == 0 then
-		m_coord_text:SetText("X _ X")
+		m_coord_text:SetText("")
 	else
 		if x < 10 then
 			xt = "0"..x

@@ -31,3 +31,46 @@ f:SetScript("OnEvent", function(_, _, name)
 	f:SetScript("OnEvent", nil)
 	TukuiItemTooltip = TukuiItemTooltip or {count=true,id=true}
 end)
+
+-- SpellID on Tooltips (Credits to Silverwind)
+if not C.tooltip.showspellid then return end
+local c = "|cff9d9d9d"
+hooksecurefunc(GameTooltip, "SetUnitBuff", function(self,...)
+	local id = select(11,UnitBuff(...))
+	if id then
+		self:AddLine(c.."SpellID: "..id)
+		self:Show()
+	end
+end)
+
+hooksecurefunc(GameTooltip, "SetUnitDebuff", function(self,...)
+	local id = select(11,UnitDebuff(...))
+	if id then
+		self:AddLine(c.."SpellID: "..id)
+		self:Show()
+	end
+end)
+
+hooksecurefunc(GameTooltip, "SetUnitAura", function(self,...)
+	local id = select(11,UnitAura(...))
+	if id then
+		self:AddLine(c.."SpellID: "..id)
+		self:Show()
+	end
+end)
+
+hooksecurefunc("SetItemRef", function(link, text, button, chatFrame)
+	if string.find(link,"^spell:") then
+		local id = string.sub(link,7)
+		ItemRefTooltip:AddLine(c.."SpellID: "..id)
+		ItemRefTooltip:Show()
+	end
+end)
+
+GameTooltip:HookScript("OnTooltipSetSpell", function(self)
+	local id = select(3,self:GetSpell())
+	if id then
+		self:AddLine(c.."SpellID: "..id)
+		self:Show()
+	end
+end)

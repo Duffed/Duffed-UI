@@ -17,10 +17,7 @@ local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Lo
 if not IsAddOnLoaded("Recount") or not C.Addon_Skins.Recount then return end
 local Recount = _G.Recount
 
-local LSM = LibStub("LibSharedMedia-3.0")
-if LSM then LSM:Register("font","Tukui Font", C.datatext.font) end
-
-Mod_AddonSkins:RegisterSkin("Recount",function(Skin, skin, Layout, layout, config)
+AddonSkins_Mod:RegisterSkin("Recount",function(Skin, skin, Layout, layout, config)
 
 	local function SkinFrame(frame)
 		frame.bgMain = CreateFrame("Frame",nil,frame)

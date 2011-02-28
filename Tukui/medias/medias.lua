@@ -32,3 +32,13 @@ C["media"] = {
 	["whisper"] = [[Interface\AddOns\Tukui\medias\sounds\whisper.mp3]],
 	["warning"] = [[Interface\AddOns\Tukui\medias\sounds\warning.mp3]],
 }
+
+-- LibSharedMedia crap
+if not LibStub then return end
+local LSM = LibStub("LibSharedMedia-3.0", true)
+if not LSM then return end
+
+LSM:Register("statusbar","Tukui Statusbar", C.media.normTex)
+LSM:Register("border","Tukui Glow", C.media.glowTex)
+LSM:Register("font","Tukui Datatext Font", C.datatext.font)
+LSM:Register("font","Tukui UF Font", C.media.uffont)

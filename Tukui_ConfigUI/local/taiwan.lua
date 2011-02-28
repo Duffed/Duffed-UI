@@ -100,6 +100,7 @@
 	TukuiL.option_unitframes_classbar = "啟用職業專用列"
 	TukuiL.option_unitframes_weakenedsoulbar = "啟用虛弱靈魂指示 (牧師)"
 	TukuiL.option_unitframes_onlyselfdebuffs = "只在目標頭像上顯示自己釋放的減益效果"
+	TukuiL.option_unitframes_focus = "開啟專注目標的目標"
  
 	-- loot
 	TukuiL.option_loot = "戰利品"
@@ -173,6 +174,10 @@
 	TukuiL.option_chat_enable = "啟用Tukui對話框"
 	TukuiL.option_chat_whispersound = "收到悄悄話時以音效提醒"
 	TukuiL.option_chat_background = "啟用對話框背景"
+		
+	-- buff
+	TukuiL.option_auras = "Auras"
+	TukuiL.option_auras_player = "Enable Tukui Buff/Debuff Frames"
  
 	-- buttons
 	TukuiL.option_button_reset = "重置"

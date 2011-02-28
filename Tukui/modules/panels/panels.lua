@@ -175,7 +175,7 @@ bnet:SetBackdropBorderColor(1,0,0)
 bnet.text = T.SetFontString(bnet, C.media.font, 12)
 bnet.text:SetPoint("CENTER")
 bnet.text:SetText("Move BnetFrame")
-bnet:SetAlpha(0)
+bnet:Hide()
 
 -- Shadows
 iright:CreateShadow("Default")

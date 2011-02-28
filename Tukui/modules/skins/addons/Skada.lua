@@ -18,7 +18,7 @@ local E, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Lo
 if not IsAddOnLoaded("Skada") or not C.Addon_Skins.Skada then return end
 local Skada = Skada
 
-Mod_AddonSkins:RegisterSkin("Skada",function(Skin,skin,Layout,layout,config)
+AddonSkins_Mod:RegisterSkin("Skada",function(Skin,skin,Layout,layout,config)
 	Layout.PositionSkadaWindow = dummy
 	-- Used to strip unecessary options from the in-game config
 	local function StripOptions(options)
@@ -74,14 +74,6 @@ Mod_AddonSkins:RegisterSkin("Skada",function(Skin,skin,Layout,layout,config)
 	}
 	barmod.ApplySettings_ = barmod.ApplySettings
 	barmod.ApplySettings = function(self, win)
-		-- if C["skin"].embedright == "Skada" then
-			-- win.db.barwidth = (C["chat"].chatwidth - 4)
-			-- win.db.barheight = (C["chat"].chatheight*0.965) / 8
-			-- win.db.barmax = (math.floor(C["chat"].chatheight / win.db.barheight) - 1)
-			-- win.db.background.height = 1
-			-- win.db.spark = false
-			-- win.db.barslocked = true
-		-- end
         win.db.enablebackground = true
         win.db.background.borderthickness = config.borderWidth
 		barmod:ApplySettings_(win)

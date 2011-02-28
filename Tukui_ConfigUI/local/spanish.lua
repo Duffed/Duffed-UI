@@ -100,6 +100,7 @@ if GetLocale() == "esES" then
 	TukuiL.option_unitframes_classbar = "Habilitar Barra de Clase"
 	TukuiL.option_unitframes_weakenedsoulbar = "Habilitar Barra de Notificacion de Alma Debilitada (Sacerdote)"
 	TukuiL.option_unitframes_onlyselfdebuffs = "Mostrar solo tus debuffs en el objetivo"
+	TukuiL.option_unitframes_focus = "Habilitar el Blanco de tu Foco"
  
 	-- loot
 	TukuiL.option_loot = "Botín"
@@ -173,6 +174,10 @@ if GetLocale() == "esES" then
 	TukuiL.option_chat_enable = "Habilitar Chat de TukUI"
 	TukuiL.option_chat_whispersound = "Habilitar sonido cuando recives un sussuro"
 	TukuiL.option_chat_background = "Habilita el fondo del marco de chat"
+	
+	-- buff
+	TukuiL.option_auras = "Auras"
+	TukuiL.option_auras_player = "Enable Tukui Buff/Debuff Frames"
  
 	-- buttons
 	TukuiL.option_button_reset = "Resetear"

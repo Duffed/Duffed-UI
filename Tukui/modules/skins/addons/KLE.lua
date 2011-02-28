@@ -15,7 +15,7 @@ end
 
 local dummy = dummy or function() end
 
-Mod_AddonSkins:RegisterSkin("KLE",function(Skin, skin, Layout, layout, config)
+AddonSkins_Mod:RegisterSkin("KLE",function(Skin, skin, Layout, layout, config)
 	--[[ Kill KLE's skinning ]]
 	KLE.NotifyBarTextureChanged = dummy
 	KLE.NotifyBorderChanged = dummy

@@ -76,7 +76,9 @@ local function UpdateAuras(header, button, weapon)
 		button.count:SetPoint("BOTTOMRIGHT", -1, 1)
 		button.count:SetFont(C.datatext.font, C.datatext.fontsize, "OUTLINE")
 
-		button.time = T.SetFontString(button, C.datatext.font,  C.datatext.fontsize)
+		-- button.time = T.SetFontString(button, C.datatext.font,  C.datatext.fontsize, "OUTLINE")
+		button.time = button:CreateFontString(nil, "ARTWORK")
+		button.time:SetFont(C.datatext.font, C.datatext.fontsize, "OUTLINE")
 		button.time:SetPoint("BOTTOM", 0, -16)
 
 		button:SetScript("OnUpdate", UpdateTime)

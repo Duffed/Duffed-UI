@@ -1,10 +1,10 @@
-if dStuff.dispelannouncement ~= true then return end
+if dStuff.dispelannouncement.enable ~= true then return end
 
 -- Create movable frame for dispel announcements
 local f = CreateFrame("MessageFrame", "dDispelFrame", UIParent)
 f:SetPoint("TOP", 0, -220)
 f:SetSize(200, 100)
-f:SetFont(dStuff.font, 14)
+f:SetFont(dStuff.font, dStuff.dispelannouncement.fontsize)
 f:SetShadowOffset(1, -1)
 f:SetShadowColor(0,0,0)
 f:SetTimeVisible(2)
@@ -13,14 +13,14 @@ f:SetBackdropColor(0,0,0,0)
 f:SetMovable(true)
 f:SetFrameStrata("HIGH")
 f:SetInsertMode("TOP")
-f:SetJustifyH(dStuff.dispelannouncement_justify)
+f:SetJustifyH(dStuff.dispelannouncement.justify)
 f:SetClampedToScreen(true)
 f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 f:SetScript("OnEvent", function(self, event, ...)
 	local timestamp, type, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags = ...
 	if (type == "SPELL_DISPEL" or type == "SPELL_STOLEN") and sourceName == UnitName("player") then
-		f:AddMessage("- |cffce3a19"..select(13, ...), 1, 1, 1)
+		f:AddMessage("- "..dStuff.dispelannouncement.textcolor..select(13, ...), 1, 1, 1)
 	end
 end)
 
@@ -30,9 +30,9 @@ SLASH_DUFFEDDISPELLYEAH1 = "/ddispel"
 SlashCmdList.DUFFEDDISPELLYEAH = function()
 	if not move then
 		move = true
-		f:AddMessage("- |cffce3a19around!", 1, 1, 1)
-		f:AddMessage("- |cffce3a19Dispelframe", 1, 1, 1)
-		f:AddMessage("- |cffce3a19Move", 1, 1, 1)
+		f:AddMessage("- "..dStuff.dispelannouncement.textcolor.."around!", 1, 1, 1)
+		f:AddMessage("- "..dStuff.dispelannouncement.textcolor.."Dispelframe", 1, 1, 1)
+		f:AddMessage("- "..dStuff.dispelannouncement.textcolor.."Move", 1, 1, 1)
 		f:SetTimeVisible(999)
 		f:EnableMouse(true)
 		f:SetScript("OnMouseDown", function() f:StartMoving() end)

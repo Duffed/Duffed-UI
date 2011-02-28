@@ -41,9 +41,11 @@ local function Shared(self, unit)
 	health.bg:SetTexture(normTex)
 	health.bg.multiplier = (0.3)
 	self.Health.bg = health.bg
-		
+	
 	health.value = health:CreateFontString(nil, "OVERLAY")
-	health.value:Point("BOTTOM", health, 1, 1)
+	if not unit:find("partypet") then
+		health.value:Point("BOTTOM", health, 1, 1)
+	end
 	health.value:SetFont(font2, fontsize)
 	health.value:SetTextColor(1,1,1)
 	health.value:SetShadowOffset(1, -1)
@@ -272,7 +274,7 @@ oUF:Factory(function(self)
 		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
 	end
 	
-	if C.unitframes.gridpets then
+	if C.unitframes.gridpets and not C.unitframes.gridvertical then
 		local pets = {} 
 			pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
 			pets[1]:Point('BOTTOMLEFT', raid, 'TOPLEFT', 0, 8)

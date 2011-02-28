@@ -1,6 +1,5 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
--- all the frame we want to move
 -- all our frames that we want being movable.
 T.MoverFrames = {
 	TukuiMinimap,
@@ -19,7 +18,7 @@ T.MoverFrames = {
 -- used to exec various code if we enable or disable moving
 local function exec(self, enable)
 
-	if self == TukuiGMFrameAnchor then
+	if self == TukuiGMFrameAnchor or self == TukuiBnetHolder then
 		if enable then
 			self:Show()
 		else
@@ -61,7 +60,7 @@ local function exec(self, enable)
 		end
 	end
 	
-	if self == TukuiTooltipAnchor or self == TukuiRollAnchor or self == TukuiAchievementHolder or self == TukuiVehicleAnchor or self == TukuiBnetHolder then
+	if self == TukuiTooltipAnchor or self == TukuiRollAnchor or self == TukuiAchievementHolder or self == TukuiVehicleAnchor then
 		if enable then
 			self:SetAlpha(1)
 		else
@@ -114,6 +113,7 @@ local function moving()
 	-- don't allow moving while in combat
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 	
+	SlashCmdList.MOVESCOMBO() -- :s
 	for i = 1, getn(T.MoverFrames) do
 		if T.MoverFrames[i] then		
 			if enable then

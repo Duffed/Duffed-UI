@@ -100,6 +100,7 @@ if GetLocale() == "frFR" then
 	TukuiL.option_unitframes_classbar = "Afficher la barre de classe"
 	TukuiL.option_unitframes_weakenedsoulbar = "Afficher la barre de debuff âme affaiblie (pour prêtres)"
 	TukuiL.option_unitframes_onlyselfdebuffs = "Afficher seulement vos débuffs sur la cible"
+	TukuiL.option_unitframes_focus = "Afficher la cible du Focus"
  
 	-- loot
 	TukuiL.option_loot = "Butin"
@@ -173,6 +174,10 @@ if GetLocale() == "frFR" then
 	TukuiL.option_chat_enable = "Activer le Chat Tukui"
 	TukuiL.option_chat_whispersound = "Jouer un son lors de la réception d'un message"
 	TukuiL.option_chat_background = "Activer l'arrière plan du Chat"
+	
+	-- buff
+	TukuiL.option_auras = "Auras"
+	TukuiL.option_auras_player = "Activer les frames buff/debuff de Tukui"
  
 	TukuiL.option_button_reset = "Défaut"
 	TukuiL.option_button_load = "Appliquer"

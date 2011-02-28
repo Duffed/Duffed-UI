@@ -1,9 +1,10 @@
 ﻿--[[	
 	(C)2010 Darth Android / Telroth-Black Dragonflight
 ]]
-
-Mod_AddonSkins = CreateFrame("Frame")
-local Mod_AddonSkins = Mod_AddonSkins
+-- TelUI_AddonSkins
+-- do return end
+AddonSkins_Mod = CreateFrame("Frame")
+local AddonSkins_Mod = AddonSkins_Mod
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 
 local function skinFrame(self, frame)
@@ -44,37 +45,37 @@ local function skinButton(self, button)
 	end
 end
 
-Mod_AddonSkins.SkinFrame = skinFrame
-Mod_AddonSkins.SkinBackgroundFrame = skinFrame
-Mod_AddonSkins.SkinButton = skinButton
-Mod_AddonSkins.normTexture = C.media.normTex
-Mod_AddonSkins.bgTexture = C.media.blank
-Mod_AddonSkins.font = C.datatext.font
-Mod_AddonSkins.smallFont = C.datatext.font
-Mod_AddonSkins.fontSize = C.datatext.fontsize
-Mod_AddonSkins.buttonSize = T.Scale(27,27)
-Mod_AddonSkins.buttonSpacing = T.Scale(T.buttonspacing,T.buttonspacing)
-Mod_AddonSkins.borderWidth = T.Scale(2,2)
-Mod_AddonSkins.buttonZoom = {.09,.91,.09,.91}
-Mod_AddonSkins.barSpacing = T.Scale(1,1)
-Mod_AddonSkins.barHeight = T.Scale(20,20)
-Mod_AddonSkins.skins = {}
+AddonSkins_Mod.SkinFrame = skinFrame
+AddonSkins_Mod.SkinBackgroundFrame = skinFrame
+AddonSkins_Mod.SkinButton = skinButton
+AddonSkins_Mod.normTexture = C.media.normTex
+AddonSkins_Mod.bgTexture = C.media.blank
+AddonSkins_Mod.font = C.datatext.font
+AddonSkins_Mod.smallFont = C.datatext.font
+AddonSkins_Mod.fontSize = C.datatext.fontsize
+AddonSkins_Mod.buttonSize = T.Scale(27,27)
+AddonSkins_Mod.buttonSpacing = T.Scale(T.buttonspacing,T.buttonspacing)
+AddonSkins_Mod.borderWidth = T.Scale(2,2)
+AddonSkins_Mod.buttonZoom = {.09,.91,.09,.91}
+AddonSkins_Mod.barSpacing = T.Scale(1,1)
+AddonSkins_Mod.barHeight = T.Scale(20,20)
+AddonSkins_Mod.skins = {}
 
 -- Dummy function expected by some skins
 function dummy() end
 
 
-function Mod_AddonSkins:RegisterSkin(name, initFunc)
-	self = Mod_AddonSkins -- Static function
+function AddonSkins_Mod:RegisterSkin(name, initFunc)
+	self = AddonSkins_Mod -- Static function
 	if type(initFunc) ~= "function" then error("initFunc must be a function!",2) end
 	self.skins[name] = initFunc
 end
 
-Mod_AddonSkins:RegisterEvent("PLAYER_LOGIN")
-Mod_AddonSkins:SetScript("OnEvent",function(self, event, addon)
+AddonSkins_Mod:RegisterEvent("PLAYER_LOGIN")
+AddonSkins_Mod:SetScript("OnEvent",function(self, event, addon)
 	-- Initialize all skins
 	for name, func in pairs(self.skins) do
-		func(self,self,self,self,self) -- Mod_AddonSkins functions as skin, layout, and config.
+		func(self,self,self,self,self) -- AddonSkins_Mod functions as skin, layout, and config.
 	end
 	self:UnregisterEvent("PLAYER_LOGIN")
 end)

@@ -100,6 +100,7 @@
 	TukuiL.option_unitframes_classbar = "Включить классовую панель"
 	TukuiL.option_unitframes_weakenedsoulbar = "Включить уведомление Ослабленной души (для Приста)"
 	TukuiL.option_unitframes_onlyselfdebuffs = "Отображать только ваши дебаффы на цели"
+	TukuiL.option_unitframes_focus = "Включить цель фокуса"
  
 	-- loot
 	TukuiL.option_loot = "Добыча"
@@ -173,6 +174,10 @@
 	TukuiL.option_chat_enable = "Включить чат Tukui"
 	TukuiL.option_chat_whispersound = "Проигрывать звук при получении личного сообщения"
 	TukuiL.option_chat_background = "Включить фон окна чата"
+	
+	-- buff
+	TukuiL.option_auras = "Auras"
+	TukuiL.option_auras_player = "Enable Tukui Buff/Debuff Frames"
  
 	-- buttons
 	TukuiL.option_button_reset = "Сброс"

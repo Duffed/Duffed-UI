@@ -207,7 +207,7 @@ local function SetupChatPosAndFont(self)
 		end
 				
 		--Check if chat exists in the bottomright corner
-		if i == 4 and not ChatBG2 then
+		if i == C.chat.rightchatnumber and not ChatBG2 then
 			chat:SetJustifyH("RIGHT") 
 		end
 	end
@@ -238,14 +238,17 @@ TukuiChat:SetScript("OnEvent", function(self, event, ...)
 		SetupChatPosAndFont(self)
 		TukuiChat:UnregisterEvent("PLAYER_ENTERING_WORLD")
 	end
-	if event == "PLAYER_LOGIN" then
-		SetupChatPosAndFont(self)
-	end
 end)
 
 -- Setup temp chat (BN, WHISPER) when needed.
 local function SetupTempChat()
 	local frame = FCF_GetCurrentChatFrame()
+	local id = frame:GetID()
+	local buttonup = _G[format("ChatFrame%sButtonFrameUpButton", id)]
+		
+	-- do a check if we already did a skinning earlier for this temp chat frame
+	if not buttonup:IsShown() then return end
+	
 	SetChatStyle(frame)
 end
 hooksecurefunc("FCF_OpenTemporaryWindow", SetupTempChat)

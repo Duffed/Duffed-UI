@@ -116,6 +116,12 @@ C["Addon_Skins"] = {
 	["Omen"] = true,									-- Enable Omen Skin
 	["KLE"] = true,										-- Enable KLE Skin
 	["TinyDPS"] = true,									-- Enable TinyDPS Skin
+	["Quartz"] = true,									-- Enable Quartz Skin
+}
+
+C["sCombo"] = {
+	["enable"] = true,									-- Enable sCombo-Addon for combopoints instead of default cp-display
+	["energybar"] = false,								-- show energy-Bar below cp bar
 }
 
 C["classtimer"] = {
@@ -124,6 +130,10 @@ C["classtimer"] = {
 	["targetbuffcolor"] = { 70/255, 150/255, 70/255, 1 },
 	["targetdebuffcolor"] = { 150/255, 30/255, 30/255, 1 },
 	["trinketcolor"] = {75/255, 75/255, 75/255, 1 },
+}
+
+C["auras"] = {
+	["player"] = true,                                  -- enable tukui buffs/debuffs
 }
 
 C["bags"] = {
@@ -204,6 +214,8 @@ C["nameplate"] = {
 }
 
 C["tooltip"] = {
+	["showspellid"] = false,
+
 	["enable"] = true,                                  -- true to enable this mod, false to disable
 	["hidecombat"] = false,                             -- hide bottom-right tooltip when in combat
 	["hidebuttons"] = false,                            -- always hide action bar buttons tooltip.

@@ -119,7 +119,7 @@ local ssborder = CreateFrame("Frame", "ShapeShiftBorder", ShapeshiftButton1)
 if C["actionbar"].shapeshiftborder ~= true then
 	ssborder:SetAlpha(0)
 else
-	ssborder:SetTemplate("Default")
+	ssborder:SetTemplate("Transparent")
 	ssborder:CreateShadow("Default")
 end
 ssborder:SetFrameLevel(1)

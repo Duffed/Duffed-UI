@@ -12,12 +12,14 @@ C["general"] = {
 }
 
 C["unitframes"] = {
+	["layout"] = 1,										-- Layout 1 (default) or 2
+
 	["fontsize"] = 8,									-- Fontsize on Unitframes
 	["healthbarcolor"] = {.2, .2, .2, 1},				-- Healthbar color (if unicolor = true)
 	["deficitcolor"] = {0, 0, 0, 1},					-- Healthbar deficit color (if unicolor = true)
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
-	["framewidth"] = 220,								-- Width of Player & Target Frame (affect also arena- & bossframes)
+	["framewidth"] = 218,								-- Width of Player & Target Frame (affect also arena- & bossframes)
 	["vengeancebar"] = false,							-- Display a Vengeance-Bar instead of Threat-Bar at the right info panel
 	["fader"] = false,									-- EXPERIMENTAL (cause i didnt really test it :) - Fade Unitframes out when ooc etc.
 		["fader_alpha"] = 1,							-- alpha for frames if you're not in combat but hp is < 100% and some more conditions
@@ -25,18 +27,20 @@ C["unitframes"] = {
 	["gridpets"] = true,								-- show pets in grid layout (only in group, not raid)
 	["gridvertical"] = false,							-- Grid direction vertical instead of horizontal
 	["gridsolo"] = false,								-- Show Grid even without a group (solo)
-	["focusdebuffs"] = true,
+	["focusdebuffs"] = true,							-- display focus debuffs
+	["buffrows"] = 1,									-- Buff rows above Target (and Player if u enable it)
+	["debuffrows"] = 2, 								-- Debuff rows above Target (and Player if u enable it)
+	["portraitstyle"] = "ICON",							-- "ICON" or "MODEL" (Layout 2 only)
 	
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
 	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.´
 	["cbicons"] = true,                                 -- enable icons on castbar
 	["auratimer"] = true,                               -- enable timers on buffs/debuffs
-	["auratextscale"] = 11,                             -- the font size of buffs/debuffs timers on unitframes
+	["auratextscale"] = 8,                             -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,                            -- enable auras
 	["targetauras"] = true,                             -- enable auras on target unit frame
 	["lowThreshold"] = 20,                              -- global low threshold, for low mana warning.
-	["targetpowerpvponly"] = true,                      -- enable power text on pvp target only
 	["totdebuffs"] = false,                             -- enable tot debuffs (high reso only)
 	["showtotalhpmp"] = false,                          -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                              -- enable smooth bar

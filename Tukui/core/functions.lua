@@ -645,7 +645,7 @@ end
 T.PostCreateAura = function(element, button)
 	button:SetTemplate("Default")
 	
-	button.remaining = T.SetFontString(button, C["media"].font, C["unitframes"].auratextscale, "THINOUTLINE")
+	button.remaining = T.SetFontString(button, C["media"].uffont, C["unitframes"].auratextscale, "THINOUTLINE")
 	button.remaining:Point("CENTER", 1, 0)
 	
 	button.cd.noOCC = true		 	-- hide OmniCC CDs
@@ -659,7 +659,7 @@ T.PostCreateAura = function(element, button)
 	
 	button.count:Point("BOTTOMRIGHT", 3, 3)
 	button.count:SetJustifyH("RIGHT")
-	button.count:SetFont(C["media"].font, 9, "THICKOUTLINE")
+	button.count:SetFont(C["media"].uffont, 8, "THICKOUTLINE")
 	button.count:SetTextColor(0.84, 0.75, 0.65)
 	
 	button.overlayFrame = CreateFrame("frame", nil, button, nil)
@@ -778,11 +778,11 @@ end
 
 T.EclipseDirection = function(self)
 	if ( GetEclipseDirection() == "sun" ) then
-			self.Text:SetText("|cffE5994C"..L.unitframes_ouf_starfirespell.."|r")
+		self.Text:SetText("|cffE5994C"..L.unitframes_ouf_starfirespell.."|r")
 	elseif ( GetEclipseDirection() == "moon" ) then
-			self.Text:SetText("|cff4478BC"..L.unitframes_ouf_wrathspell.."|r")
+		self.Text:SetText("|cff4478BC"..L.unitframes_ouf_wrathspell.."|r")
 	else
-			self.Text:SetText("")
+		self.Text:SetText("")
 	end
 end
 
@@ -1111,6 +1111,8 @@ if C["unitframes"].raidunitdebuffwatch == true then
 			SpellName(92423), -- Searing Flame
 			SpellName(92485), -- Roaring Flame
 			SpellName(92407), -- Sonic Breath
+			SpellName(92685), -- Pestered
+			SpellName(78092), -- Tracking
 
 			--Chimaeron
 			SpellName(82881), -- Break

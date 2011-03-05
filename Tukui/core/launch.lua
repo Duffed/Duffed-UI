@@ -47,7 +47,7 @@ local function install()
 	if IsAddOnLoaded("a") then
 		SetCVar("ffxDeath", "0")
 		SetCVar("ffxNetherWorld", "0")
-		SetCVar("ffxGlow", "0")
+		print("SetCVar('ffxGlow', '0')")
 	end
 	
 	-- Var ok, now setting chat frames if using Tukui chats.	

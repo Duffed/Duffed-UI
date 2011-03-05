@@ -98,7 +98,7 @@ if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 end
 
 -- energy bar
-if not C.sCombo.energybar then return end
+if not C.sCombo.energybar or not C.unitframes.enable then return end
 local sPowerBG = CreateFrame("Frame", "sPowerBG", TukuiTarget)
 sPowerBG:CreatePanel(nil, (Options.comboWidth * 5) + (Options.spacing * 5) - Options.spacing, Options.comboHeight, "TOPLEFT", Anchor, "BOTTOMLEFT", 0, -(Options.comboHeight+6))
 sPowerBG:CreateShadow()
@@ -107,6 +107,11 @@ sPowerStatus:SetStatusBarTexture(C.media.normTex)
 sPowerStatus:SetFrameLevel(6)
 sPowerStatus:Point("TOPLEFT", sPowerBG, "TOPLEFT", 2, -2)
 sPowerStatus:Point("BOTTOMRIGHT", sPowerBG, "BOTTOMRIGHT", -2, 2)
+sPowerStatus.t = sPowerStatus:CreateFontString(nil, "OVERLAY")
+sPowerStatus.t:SetPoint("CENTER")
+sPowerStatus.t:SetFont(C.media.uffont, C.unitframes.fontsize, "OUTLINE")
+sPowerStatus.t:SetShadowOffset(0.5, -0.5)
+sPowerStatus.t:SetShadowColor(0,0,0)
 local color = RAID_CLASS_COLORS[T.myclass]
 sPowerStatus:SetStatusBarColor(color.r, color.g, color.b)
 local t = 0
@@ -116,6 +121,7 @@ sPowerStatus:SetScript("OnUpdate", function(self, elapsed)
         sPowerStatus:SetMinMaxValues(0, UnitPowerMax("player"))
         local power = UnitPower("player")
         sPowerStatus:SetValue(power)
+		sPowerStatus.t:SetText(power)
     end
 end)
 sPowerBG:RegisterEvent("PLAYER_ENTERING_WORLD")

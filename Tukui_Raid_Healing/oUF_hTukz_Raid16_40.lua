@@ -44,7 +44,7 @@ local function Shared(self, unit)
 	
 	health.value = health:CreateFontString(nil, "OVERLAY")
 	if not unit:find("partypet") then
-		health.value:Point("BOTTOM", health, 1, 1)
+		health.value:Point("BOTTOM", health, 1, 2)
 	end
 	health.value:SetFont(font2, fontsize)
 	health.value:SetTextColor(1,1,1)
@@ -118,7 +118,7 @@ local function Shared(self, unit)
 	if unit:find("partypet") then
 		name:SetPoint("CENTER")
 	else
-		name:SetPoint("CENTER", health, "TOP", 0, -5)
+		name:SetPoint("CENTER", health, "TOP", 0, -7)
 	end
 	self:Tag(name, "[Tukui:getnamecolor][Tukui:nameshort]")
 	self.Name = name
@@ -269,9 +269,9 @@ oUF:Factory(function(self)
 		"showSolo", C.unitframes.gridsolo
 	)
 	if ChatBG1 then
-		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)
+		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
 	else
-		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
+		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
 	end
 	
 	if C.unitframes.gridpets and not C.unitframes.gridvertical then

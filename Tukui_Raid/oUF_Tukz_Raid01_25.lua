@@ -147,12 +147,20 @@ oUF:Factory(function(self)
 			self:SetHeight(header:GetAttribute('initial-height'))
 		]],
 		'initial-width', T.Scale(140*T.raidscale),
-		'initial-height', T.Scale(19*T.raidscale),	
-		"showParty", true, "showPlayer", C["unitframes"].showplayerinparty, "showRaid", true, "groupFilter", "1,2,3,4,5,6,7,8", "groupingOrder", "1,2,3,4,5,6,7,8", "groupBy", "GROUP", "yOffset", T.Scale(-8)
+		'initial-height', T.Scale(19*T.raidscale),
+		"initial-anchor", "BOTTOM",
+		"showParty", true, 
+		"showPlayer", C["unitframes"].showplayerinparty, 
+		"showRaid", true, 
+		"groupFilter", "1,2,3,4,5,6,7,8", 
+		"groupingOrder", "1,2,3,4,5,6,7,8", 
+		"groupBy", "GROUP", 
+		"yOffset", T.Scale(8),
+		"point", "BOTTOM"
 	)
 	if ChatBG1 then
-		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 62)
+		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
 	else
-		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 77)
+		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
 	end
 end)

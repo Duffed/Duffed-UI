@@ -172,7 +172,6 @@ TukuiBar3Button2.text:SetText(cm..">|r")
 -- exit vehicle button on right side of bottom action bar
 local exitvehicle = CreateFrame("Button", "TukuiExitVehicleButton", UIParent, "SecureHandlerClickTemplate")
 exitvehicle:CreatePanel("Default", T.buttonsize, T.buttonsize, "LEFT", TukuiBar1, "RIGHT", 5, 0)
-exitvehicle:SetBackdropBorderColor(unpack(C["datatext"].color))
 exitvehicle:RegisterForClicks("AnyUp")
 exitvehicle:SetScript("OnClick", function() VehicleExit() end)
 exitvehicle:CreateShadow("Default")
@@ -183,7 +182,6 @@ RegisterStateDriver(exitvehicle, "visibility", "[target=vehicle,exists] show;hid
 
 local exitvehicle2 = CreateFrame("Button", "TukuiExitVehicleButton2", UIParent, "SecureHandlerClickTemplate")
 exitvehicle2:CreatePanel("Default", T.buttonsize, T.buttonsize, "RIGHT", TukuiBar1, "LEFT", -5, 0)
-exitvehicle2:SetBackdropBorderColor(unpack(C["datatext"].color))
 exitvehicle2:RegisterForClicks("AnyUp")
 exitvehicle2:SetScript("OnClick", function() VehicleExit() end)
 exitvehicle2:CreateShadow("Default")

@@ -65,6 +65,10 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesfontsize" then o = "Unitframe Fontsize" end
 	if o == "TukuiConfigUIunitframesgridsolo" then o = "Show Grid even without a Group (Solo)" end
 	if o == "TukuiConfigUIunitframesfocusdebuffs" then o = "Enable Focus Debuffs" end
+	if o == "TukuiConfigUIunitframesbuffrows" then o = "Buff-rows above Target" end
+	if o == "TukuiConfigUIunitframesdebuffrows" then o = "Debuff-rows above Target" end
+	if o == "TukuiConfigUIunitframesportraitstyle" then o = "Portrait Style: ICON or MODEL (Layout 2 only)" end
+	if o == "TukuiConfigUIunitframeslayout" then o = "Layout (1 or 2)" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end

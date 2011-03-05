@@ -8,11 +8,11 @@ local Update = function(self, event)
 	if(class) then
 		local left, right, top, bottom = unpack(CLASS_BUTTONS[class])
 		-- zoom class icon
-		left = left + (right - left) * 0.07
-		right = right - (right - left) * 0.07
+		left = left + (right - left) * 0.09
+		right = right - (right - left) * 0.09
 
-		top = top + (bottom - top) * 0.07
-		bottom = bottom - (bottom - top) * 0.07
+		top = top + (bottom - top) * 0.09
+		bottom = bottom - (bottom - top) * 0.09
 	
 		icon:SetTexCoord(left, right, top, bottom)
 		icon:Show()

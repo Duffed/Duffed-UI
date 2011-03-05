@@ -48,13 +48,14 @@ if C.Addon_Skins.background then
 
 	-- toggle in-/outfight (NOTE: This will only toggle ChatFrameX (chat config))
 	bg:RegisterEvent("PLAYER_ENTERING_WORLD")
+	bg:RegisterEvent("PLAYER_LOGIN")
 	if C.Addon_Skins.combat_toggle then
 		bg:RegisterEvent("PLAYER_REGEN_ENABLED")
 		bg:RegisterEvent("PLAYER_REGEN_DISABLED")
 	end
 	bg:SetScript("OnEvent", function(self, event)
-		if event == "PLAYER_ENTERING_WORLD" then
-			if C.chat.rightchatbackground or C.Addon_Skins.combat_toggle then
+		if C.chat.rightchatbackground or C.Addon_Skins.combat_toggle then
+			if event == "PLAYER_LOGIN" then
 				-- Hide
 				bg:Hide()
 				if IsAddOnLoaded("Recount") then Recount_MainWindow:Hide() end
@@ -63,7 +64,7 @@ if C.Addon_Skins.background then
 				if ChatBG2 then ChatBG2:Show() end
 				_G["ChatFrame"..C.chat.rightchatnumber]:Show()
 				_G["ChatFrame"..C.chat.rightchatnumber.."Tab"]:Show()
-				
+			elseif event == "PLAYER_ENTERING_WORLD" then
 				-- yeah set all chats for ChatFrameX again cause we lose them after /rl when chat is hidden ..dunno how to prevent this atm
 				-- ChatFrame_RemoveAllMessageGroups(_G["ChatFrame"..C.chat.rightchatnumber])
 				ChatFrame_AddChannel(_G["ChatFrame"..C.chat.rightchatnumber], L.chat_trade)

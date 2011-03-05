@@ -44,6 +44,8 @@ local TRINKET_FILTER = {
 		CreateSpellEntry( 26297 ), -- Berserking (troll racial)
 		CreateSpellEntry( 33702 ), CreateSpellEntry( 33697 ), CreateSpellEntry( 20572 ), -- Blood Fury (orc racial)
 		CreateSpellEntry( 57933 ), -- Tricks of Trade (15% dmg buff)
+		CreateSpellEntry( 91810 ), -- License to Slay stacks
+		CreateSpellEntry( 91832 ), -- Fury of Angerforge stacks
 		
 		-- Racials
 		CreateSpellEntry( 20954 ), -- Stoneform (Dwarf)
@@ -1144,12 +1146,32 @@ if C["unitframes"].charportrait == true then xOffset = -62 end
 local playerFrame = CreateAuraBarFrame( playerDataSource, TukuiPlayer );
 playerFrame:SetHiddenHeight( -yOffset );
 
-if IgnoreFocusFrame or C.unitframes.largefocus then
-	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset )
+if C.unitframes.layout ~= 2 then
+	if IgnoreFocusFrame or C.unitframes.largefocus then
+		playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset )
+	else
+		playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
+	end
+	playerFrame:Point( "BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0, yOffset )
 else
-	playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
+	playerFrame:Point("BOTTOMLEFT", ShardBarBorder or RuneBarBorder or TotemBarBorder or TukuiPlayer, "TOPLEFT", 2, 5)
+	playerFrame:Point("BOTTOMRIGHT", ShardBarBorder or RuneBarBorder or TotemBarBorder or TukuiPlayer, "TOPRIGHT", -2, 5)
+	
+	if T.myclass == "DRUID" then
+		if EclipseBarBorder:IsShown() then
+			playerFrame:Point("BOTTOMLEFT", EclipseBarBorder, "TOPLEFT", 2, 5)
+			playerFrame:Point("BOTTOMRIGHT", EclipseBarBorder, "TOPRIGHT", -2, 5)
+		end
+		EclipseBarBorder:HookScript("OnShow", function(self)
+			playerFrame:Point("BOTTOMLEFT", self, "TOPLEFT", 2, 5)
+			playerFrame:Point("BOTTOMRIGHT", self, "TOPRIGHT", -2, 5)
+		end)
+		EclipseBarBorder:HookScript("OnHide", function(self)
+			playerFrame:Point("BOTTOMLEFT", TukuiPlayer, "TOPLEFT", 2, 5)
+			playerFrame:Point("BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", -2, 5)
+		end)
+	end
 end
-playerFrame:Point( "BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0, yOffset )
 
 
 local trinketFrame = CreateAuraBarFrame( trinketDataSource, TukuiPlayer )

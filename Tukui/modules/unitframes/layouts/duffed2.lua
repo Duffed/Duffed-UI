@@ -1,5 +1,5 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
-if not C.unitframes.enable or C.unitframes.layout ~= 1 then return end
+if not C.unitframes.enable or C.unitframes.layout ~= 2 then return end
 
 local ADDON_NAME, ns = ...
 local oUF = ns.oUF or oUF
@@ -17,8 +17,8 @@ local normTex = C["media"].normTex
 local glowTex = C["media"].glowTex
 local bubbleTex = C["media"].bubbleTex
 local fontsize = C["media"].uffontsize
-local playerwidth = C["unitframes"].framewidth
-if T.lowversion and not C.general.overridehightolow then playerwidth = C["unitframes"].framewidth - 25 end 
+local playerwidth = 214
+-- if T.lowversion and not C.general.overridehightolow then playerwidth = C["unitframes"].framewidth - 25 end 
 local nameoffset = 4
 
 local backdrop = {
@@ -84,17 +84,17 @@ local function Shared(self, unit)
 	if (unit == "player" or unit == "target") then
 		-- create a panel
 		local panel = CreateFrame("Frame", nil, self)
-		panel:Height(17)
-		panel:SetFrameLevel(2)
-		panel:SetFrameStrata("MEDIUM")
+		panel:CreatePanel("", 1, 13, "BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
+		panel:SetPoint("BOTTOMRIGHT")
+		panel:CreateShadow("")
 		self.panel = panel
 	
 		-- health bar
 		local health = CreateFrame('StatusBar', nil, self)
 		health:Height(23)
-		health:Point("TOPLEFT", 0, -16)
-		health:Point("TOPRIGHT", 0, -16)
 		health:SetStatusBarTexture(normTex)
+		health:Point("BOTTOMLEFT", panel, "TOPLEFT", 2, 5)
+		health:Point("BOTTOMRIGHT", panel, "TOPRIGHT", -2, 5)
 				
 		-- health bar background
 		local healthBG = health:CreateTexture(nil, 'BORDER')
@@ -116,9 +116,6 @@ local function Shared(self, unit)
 			health.Smooth = true
 		end
 		
-		-- Raidicon repositioning
-		RaidIcon:Point("TOP", health, "TOP", 0, 12)
-		
 		if C["unitframes"].unicolor == true then
 			health.colorTapping = false
 			health.colorDisconnected = false
@@ -136,9 +133,13 @@ local function Shared(self, unit)
 
 		-- power
 		local power = CreateFrame('StatusBar', nil, self)
-		power:Height(2)
-		power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -3)
-		power:Point("TOPRIGHT", health, "BOTTOMRIGHT", 0, -3)
+		power:Size(playerwidth-60, 5)
+		-- power:Height(2)
+		if unit =="player" then
+			power:Point("TOPRIGHT", panel, "BOTTOMRIGHT", -2, -5)
+		else
+			power:Point("TOPLEFT", panel, "BOTTOMLEFT", 2, -5)
+		end
 		power:SetStatusBarTexture(normTex)
 		
 		local powerBG = power:CreateTexture(nil, 'BORDER')
@@ -146,7 +147,8 @@ local function Shared(self, unit)
 		powerBG:SetTexture(normTex)
 		powerBG.multiplier = 0.3
 		
-		power.value = T.SetFontString(panel, font1, fontsize, "THINOUTLINE")
+		power.value = panel:CreateFontString(nil, "OVERLAY")
+		power.value:SetFont(font1, fontsize, "THINOUTLINE")
 		if unit == "player" then
 			power.value:Point("LEFT", panel, "LEFT", 4, 0)
 		elseif unit == "target" then
@@ -171,31 +173,63 @@ local function Shared(self, unit)
 		else
 			power.colorPower = true
 		end
-
-		-- Panel position
-		panel:Point("BOTTOMLEFT", health, "TOPLEFT", -2, 2)
-		panel:Point("BOTTOMRIGHT", health, "TOPRIGHT", 2, 2)	
+		
+		-- Healthbar Border
+		health.border = CreateFrame("Frame", nil, health)
+		health.border:CreatePanel("Default",1,1, "TOPLEFT", health, "TOPLEFT", -2, 2)
+		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
+		health.border:CreateShadow("Default")
+		
+		-- Powerbar Border
+		power.border = CreateFrame("Frame", nil, power)
+		power.border:CreatePanel("Default", 1, 1, "TOPLEFT", power, "TOPLEFT", -2, 2)
+		power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT",  2,  -2)
+		power.border:CreateShadow("")
+		
+		local l1 = CreateFrame("Frame", nil, power)
+		local l2 = CreateFrame("Frame", nil, l1)
+		if unit == "player" then
+			l1:CreatePanel("", 9, 2, "RIGHT", power.border, "LEFT", -1, 0)
+			l2:CreatePanel("", 2, 7, "BOTTOMLEFT", l1, "BOTTOMLEFT", 0, 0)
+		else
+			l1:CreatePanel("", 9, 2, "LEFT", power.border, "RIGHT", 1, 0)
+			l2:CreatePanel("", 2, 7, "BOTTOMRIGHT", l1, "BOTTOMRIGHT", 0, 0)
+		end
 	
 		-- portraits
 		if (C["unitframes"].charportrait == true) then
-			local portrait = CreateFrame("PlayerModel", self:GetName().."_Portrait", self)
-			portrait:SetFrameLevel(8)
-			portrait:SetWidth(55)
+			local pb = CreateFrame("Frame", self:GetName().."_PortraitBorder", self)
+			pb:CreateShadow("")
 			if unit == "player" then
-				portrait:Point("TOPRIGHT", panel, "TOPLEFT", -5, -4)
-				portrait:Point("BOTTOMRIGHT", power, "BOTTOMLEFT", -5, 0)
-			elseif unit == "target" then
-				portrait:Point("TOPLEFT", panel, "TOPRIGHT", 5, -4)
-				portrait:Point("BOTTOMLEFT", power, "BOTTOMRIGHT", 5, 0)
+				pb:CreatePanel("", 43, 43, "BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
+			else
+				pb:CreatePanel("", 43, 43, "BOTTOMLEFT", panel, "BOTTOMRIGHT", 3, 0)
 			end
-			-- table.insert(self.__elements, T.HidePortrait)
-			self.Portrait = portrait
 			
-			-- Portrait Border
-			portrait.bg = CreateFrame("Frame",nil,portrait)
-			portrait.bg:CreatePanel("Default", 1 , 1, "BOTTOMLEFT", portrait, "BOTTOMLEFT", -2, -2)
-			portrait.bg:Point("TOPRIGHT", portrait, "TOPRIGHT", 2, 2)
-			portrait.bg:CreateShadow("Default")
+			if C.unitframes.portraitstyle == "MODEL" then
+				local portrait = CreateFrame("PlayerModel", self:GetName().."_Portrait", pb)
+				portrait:SetFrameLevel(1)
+				portrait:Point("TOPLEFT", 2, -2)
+				portrait:Point("BOTTOMRIGHT", -2, 2)
+				self.Portrait = portrait
+			else			
+				local class = pb:CreateTexture(self:GetName().."_ClassIcon", "ARTWORK")
+				class:Point("TOPLEFT", 2, -2)
+				class:Point("BOTTOMRIGHT", -2, 2)
+				self.ClassIcon = class
+			end
+			
+			local AuraTracker = CreateFrame("Frame")
+			self.AuraTracker = AuraTracker
+			
+			AuraTracker.icon = pb:CreateTexture(nil, "OVERLAY")
+			AuraTracker.icon:Point("TOPLEFT", 2, -2)
+			AuraTracker.icon:Point("BOTTOMRIGHT", -2, 2)
+			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
+			
+			AuraTracker.text = T.SetFontString(pb, font2, 15, "THINOUTLINE")
+			AuraTracker.text:SetPoint("CENTER")
+			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
 		end
 		
 		if T.myclass == "PRIEST" and C["unitframes"].weakenedsoulbar then
@@ -209,17 +243,6 @@ local function Shared(self, unit)
 			
 			self.WeakenedSoul = ws
 		end
-		
-		-- Healthbar Border
-		health.border = CreateFrame("Frame", nil, health)
-		health.border:CreatePanel("Default",1,1, "TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
-		health.border:CreateShadow("Default")
-		
-		-- Powerbar Border
-		power.border = CreateFrame("Frame", nil, power)
-		power.border:CreatePanel("Default", 1, 1, "TOPLEFT", power, "TOPLEFT", -2, 2)
-		power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT",  2,  -2)
 		
 		if unit == "target" then
 			-- alt power bar for target
@@ -253,12 +276,14 @@ local function Shared(self, unit)
 			FlashInfo:SetScript("OnUpdate", T.UpdateManaLevel)
 			FlashInfo.parent = self
 			FlashInfo:SetAllPoints(panel)
-			FlashInfo.ManaLevel = T.SetFontString(FlashInfo, font1, fontsize, "THINOUTLINE")
+			FlashInfo.ManaLevel = FlashInfo:CreateFontString(nil, "OVERLAY")
+			FlashInfo.ManaLevel:SetFont(font1, fontsize, "THINOUTLINE")
 			FlashInfo.ManaLevel:Point("RIGHT", panel, "RIGHT", -4, 0)
 			self.FlashInfo = FlashInfo
 			
 			-- pvp status text
-			local status = T.SetFontString(panel, font1, fontsize)
+			local status = panel:CreateFontString(nil, "OVERLAY")
+			status:SetFont(font1, fontsize, "THINOUTLINE")
 			status:Point("RIGHT", panel, "RIGHT", -4, 0)
 			status:SetTextColor(0.69, 0.31, 0.31)
 			status:Hide()
@@ -269,7 +294,7 @@ local function Shared(self, unit)
 			local Leader = InvFrame:CreateTexture(nil, "OVERLAY")
 			Leader:Height(14)
 			Leader:Width(14)
-			Leader:Point("TOPLEFT", 2, -6)
+			Leader:Point("LEFT", self, "TOPLEFT", 2, 0)
 			self.Leader = Leader
 			
 			-- master looter
@@ -302,7 +327,7 @@ local function Shared(self, unit)
 			-- Strength of Soul Plugin
 			if T.myclass == "PRIEST" then
 				local sos = CreateFrame("Frame", nil, self)
-				sos:CreatePanel("Default", 32, 32, "BOTTOMLEFT", self, "BOTTOMRIGHT", 6, -2)
+				sos:CreatePanel("", 43, 43, "BOTTOMLEFT", panel, "BOTTOMRIGHT", 3, 0)
 				sos:CreateShadow("Default")
 				
 				sos.icon = sos:CreateTexture(nil, "OVERLAY")
@@ -326,16 +351,17 @@ local function Shared(self, unit)
 				Experience:SetPoint("TOPLEFT", health)
 				Experience:SetPoint("BOTTOMRIGHT", health)
 				Experience:SetFrameLevel(10)
-				Experience:SetAlpha(0)		
-				TukuiPlayer_Portrait:EnableMouse(true)
-				TukuiPlayer_Portrait:HookScript("OnEnter", function()
+				Experience:SetAlpha(0)
+				mo = TukuiPlayer_PortraitBorder
+				mo:EnableMouse(true)
+				mo:HookScript("OnEnter", function()
 						Experience:SetAlpha(1) 
 				end)
-				TukuiPlayer_Portrait:HookScript("OnLeave", function() Experience:SetAlpha(0) end)
+				mo:HookScript("OnLeave", function() Experience:SetAlpha(0) end)
 				Experience.noTooltip = true					
 
 				local Text = T.SetFontString(Experience, font1, fontsize)
-				Text:SetSize(playerwidth-10, T.Scale(18))
+				Text:SetSize(playerwidth-20, T.Scale(18))
 				Text:Point("CENTER", Experience, "CENTER", 0, 0)
 				
 				local function update()
@@ -371,23 +397,24 @@ local function Shared(self, unit)
 				Reputation:SetPoint("BOTTOMRIGHT", health)
 				Reputation:SetFrameLevel(10)
 				Reputation:SetAlpha(0)
-				TukuiPlayer_Portrait:HookScript("OnEnter", function() 
+				mo = TukuiPlayer_PortraitBorder
+				mo:HookScript("OnEnter", function() 
 						Reputation:SetAlpha(1) 
 				end)
-				TukuiPlayer_Portrait:HookScript("OnLeave", function() Reputation:SetAlpha(0) end)
+				mo:HookScript("OnLeave", function() Reputation:SetAlpha(0) end)
 
 				local Text = T.SetFontString(Reputation, font1, fontsize, "THINOUTLINE")
-				Text:SetSize(playerwidth-10, health:GetHeight())
+				Text:SetSize(playerwidth-20, health:GetHeight())
 				Text:Point("CENTER", Reputation, "CENTER", 0, 0)
 				
 				local function update()
 					local name, standing, min, max, value = GetWatchedFactionInfo()
 					if GetWatchedFactionInfo() ~= nil then
-						TukuiPlayer_Portrait:EnableMouse(true)
+						mo:EnableMouse(true)
 						Text:SetText(format('%s - %s/%s (%d%%)', name, value - min, max - min, (value - min) / (max - min) * 100))
 						Reputation:SetStatusBarColor(FACTION_BAR_COLORS[standing].r, FACTION_BAR_COLORS[standing].g, FACTION_BAR_COLORS[standing].b)
 					else
-						TukuiPlayer_Portrait:EnableMouse(false)
+						mo:EnableMouse(false)
 					end
 				end
 				self:RegisterEvent('UPDATE_FACTION', update)
@@ -401,7 +428,8 @@ local function Shared(self, unit)
 			-- show druid mana when shapeshifted in bear, cat or whatever
 			if T.myclass == "DRUID" then
 				CreateFrame("Frame"):SetScript("OnUpdate", function() T.UpdateDruidMana(self) end)
-				local DruidMana = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
+				local DruidMana = health:CreateFontString(nil, "OVERLAY")
+				DruidMana:SetFont(font1, fontsize, "THINOUTLINE")
 				DruidMana:SetTextColor(1, 0.49, 0.04)
 				self.DruidMana = DruidMana
 			end
@@ -409,8 +437,8 @@ local function Shared(self, unit)
 			if C["unitframes"].classbar then
 				if T.myclass == "DRUID" then			
 					local eclipseBar = CreateFrame('Frame', nil, self)
-					eclipseBar:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -7)
-					eclipseBar:Size(playerwidth, 5)
+					eclipseBar:Point("BOTTOMLEFT", health, "TOPLEFT", 0, 7)
+					eclipseBar:Size(playerwidth-4, 5)
 					eclipseBar:SetFrameStrata("MEDIUM")
 					eclipseBar:SetFrameLevel(8)
 					eclipseBar:SetScript("OnShow", function() T.EclipseDisplay(self, false) end)
@@ -451,10 +479,8 @@ local function Shared(self, unit)
 				-- set holy power bar or shard bar
 				if (T.myclass == "WARLOCK" or T.myclass == "PALADIN") then
 					local bars = CreateFrame("Frame", nil, self)
-					bars:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -7)
-					bars:Size(playerwidth, 5)
-					bars:SetTemplate("Default")
-					bars:SetBackdropBorderColor(0,0,0,0)
+					bars:Point("BOTTOMLEFT", health, "TOPLEFT", 0, 7)
+					bars:Size(playerwidth-4, 5)
 					
 					-- border
 					bars.border = CreateFrame("Frame", "ShardBarBorder",bars)
@@ -480,7 +506,7 @@ local function Shared(self, unit)
 						
 						if i == 1 then
 							bars[i]:SetPoint("LEFT", bars)
-							bars[i]:Width((bars:GetWidth()/3)-1)
+							bars[i]:Width((bars:GetWidth()/3))
 							bars[i].bg:SetAllPoints(bars[i])
 						else
 							bars[i]:Point("LEFT", bars[i-1], "RIGHT", 1, 0)
@@ -504,12 +530,11 @@ local function Shared(self, unit)
 				-- deathknight runes
 				if T.myclass == "DEATHKNIGHT" then
 					local Runes = CreateFrame("Frame", nil, self)
-					Runes:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -7)
-					Runes:Height(5)
-					Runes:Size(playerwidth, 5)
+					Runes:Point("BOTTOMLEFT", health, "TOPLEFT", 0, 7)
+					Runes:Size(playerwidth-4, 5)
 					
 					-- border
-					Runes.border = CreateFrame("Frame", "RuneBarBorder", Runes)
+					Runes.border = CreateFrame("Frame", "RuneBarBorder",Runes)
 					Runes.border:CreatePanel("Default",1,1,"TOPLEFT", Runes, "TOPLEFT", -2, 2)
 					Runes.border:Point("BOTTOMRIGHT", Runes, "BOTTOMRIGHT", 2, -2)
 					Runes.border:CreateShadow("Default")
@@ -518,10 +543,10 @@ local function Shared(self, unit)
 						Runes[i] = CreateFrame("StatusBar", self:GetName().."_Runes"..i, health)
 						Runes[i]:SetHeight(5)
 						if (i == 1) then
-							Runes[i]:Width(((playerwidth) / 6)+2)
+							Runes[i]:Width(((playerwidth-4) / 6)+1)
 							Runes[i]:Point("LEFT", Runes.border, "LEFT", 2, 0)
 						else
-							Runes[i]:Width(((playerwidth) / 6)-1)
+							Runes[i]:Width(((playerwidth-4) / 6)-1)
 							Runes[i]:Point("TOPLEFT", Runes[i-1], "TOPRIGHT", 1, 0)
 						end
 						Runes[i]:SetStatusBarTexture(normTex)
@@ -538,13 +563,12 @@ local function Shared(self, unit)
 					for i = 1, 4 do
 						TotemBar[i] = CreateFrame("StatusBar", self:GetName().."_TotemBar"..i, self)
 						if (i == 1) then
-							TotemBar[i]:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -7)
+							TotemBar[i]:Point("BOTTOMLEFT", health, "TOPLEFT", 0, 7)
 						else
 							TotemBar[i]:Point("TOPLEFT", TotemBar[i-1], "TOPRIGHT", 3, 0)
 						end
 						TotemBar[i]:SetStatusBarTexture(normTex)
-						TotemBar[i]:Height(5)
-						TotemBar[i]:Width(((playerwidth) / 4)-3)
+						TotemBar[i]:Size(((playerwidth-4)/4)-3, 5)
 						if i == 4 then TotemBar[i]:Width(TotemBar[1]:GetWidth()+1) end
 						TotemBar[i]:SetMinMaxValues(0, 1)
 
@@ -589,15 +613,15 @@ local function Shared(self, unit)
 		
 		if (unit == "target") then			
 			-- Unit name on target
-			local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-			Name:Point("LEFT", panel, "LEFT", 4, 0)
+			local Name = panel:CreateFontString(nil, "OVERLAY")
+			Name:SetFont(font1, fontsize, "THINOUTLINE")
+			Name:Point("LEFT", 4, 0)
 			Name:SetJustifyH("LEFT")
 
 			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
 			self.Name = Name
 			
 			-- combo points on target
-			
 			local cp = T.SetFontString(self, font2, 15, "THINOUTLINE")
 			cp:SetPoint("RIGHT", health.border, "LEFT", -5, 0)
 			
@@ -608,18 +632,18 @@ local function Shared(self, unit)
 			local buffs = CreateFrame("Frame", nil, self)
 			local debuffs = CreateFrame("Frame", nil, self)
 			
-			buffs:Point("BOTTOMLEFT", self, "TOPLEFT", -2, 4)
-			buffs.size = 22
-			buffs.spacing = 3
+			buffs:Point("BOTTOMLEFT", self, "TOPLEFT", 0, 3)
+			buffs.size = 25
+			buffs.spacing = 2
 			buffs:Height((buffs.size+buffs.spacing) * C.unitframes.buffrows)
-			buffs:Width(playerwidth+3)
-			buffs.num = ( playerwidth/(buffs.size+buffs.spacing) ) * C.unitframes.buffrows
+			buffs:Width(playerwidth)
+			buffs.num = ( playerwidth/(buffs.size+2*buffs.spacing) ) * C.unitframes.buffrows
 			
-			debuffs.size = 22
-			debuffs.spacing = 3
+			debuffs.size = 25
+			debuffs.spacing = 2
 			debuffs:Height((debuffs.size+debuffs.spacing) * C.unitframes.debuffrows)
-			debuffs:Width(playerwidth+3)
-			debuffs:Point("BOTTOMLEFT", buffs, "TOPLEFT", 1, 0)
+			debuffs:Width(playerwidth-2)
+			debuffs:Point("BOTTOMLEFT", buffs, "TOPLEFT", 2, 1)
 			if C.classtimer.targetdebuffs then
 				debuffs.num = ( playerwidth/(buffs.size+buffs.spacing) )
 			else
@@ -771,9 +795,8 @@ local function Shared(self, unit)
 	if (unit == "targettarget") then
 		-- health bar
 		local health = CreateFrame('StatusBar', nil, self)
-		health:Height(16)
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("TOPRIGHT")
+		health:SetPoint("TOPLEFT", 2, -2)
+		health:SetPoint("BOTTOMRIGHT", -2, 2)
 		health:SetStatusBarTexture(normTex)
 		
 		local healthBG = health:CreateTexture(nil, 'BORDER')
@@ -806,31 +829,12 @@ local function Shared(self, unit)
 		-- Healthbar Border
 		health.border = CreateFrame("Frame", nil,health)
 		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -4)
+		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
 		health.border:CreateShadow("Default")
 		
-		-- power
-		local power = CreateFrame('StatusBar', nil, self)
-		power:Height(1)
-		power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -1)
-		power:Point("TOPRIGHT", health, "BOTTOMRIGHT", 0, -1)
-		power:SetStatusBarTexture(normTex)
-		
-		power.frequentUpdates = true
-		if C["unitframes"].showsmooth == true then
-			power.Smooth = true
-		end
-		
-		if C["unitframes"].unicolor == true then
-			power.colorTapping = true
-			power.colorClass = true			
-		else
-			power.colorPower = true
-		end
-		self.Power = power
-		
 		-- Unit name
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
+		local Name = health:CreateFontString(nil, "OVERLAY")
+		Name:SetFont(font1, fontsize, "THINOUTLINE")
 		Name:SetPoint("CENTER", health, "CENTER", 0, -1)
 		Name:SetJustifyH("CENTER")
 
@@ -839,13 +843,13 @@ local function Shared(self, unit)
 		
 		if C["unitframes"].totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
-			debuffs:SetHeight(20)
-			debuffs:SetWidth(127)
+			debuffs:Height(20)
+			debuffs:Width(200)
 			debuffs.size = 19.5
-			debuffs.spacing = 4
-			debuffs.num = 6
+			debuffs.spacing = 3
+			debuffs.num = (self:GetWidth()+debuffs.spacing)/debuffs.size
 
-			debuffs:Point("TOPLEFT", power, "BOTTOMLEFT", -2, -5)
+			debuffs:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -3)
 			debuffs.initialAnchor = "TOPLEFT"
 			debuffs["growth-y"] = "UP"
 			debuffs.PostCreateIcon = T.PostCreateAura
@@ -853,17 +857,9 @@ local function Shared(self, unit)
 			self.Debuffs = debuffs
 		end
 		
-		-- Lines
-		if C["unitframes"].totandpetlines == true and playerwidth > 155 then
-			line1 = CreateFrame("Frame", nil, health)
-			line1:CreatePanel("Default", 15, 2, "RIGHT", health.border, "LEFT", -1, 0)
-			
-			line2 = CreateFrame("Frame", nil, health)
-			line2:CreatePanel("Default", 2, 15, "BOTTOM", line1, "LEFT", 0, -1)
-		end
-		
 		-- portrait
 		if C["unitframes"].charportrait == true then
+		do return end
 			local portrait = CreateFrame("PlayerModel", nil, self)
 			portrait:SetFrameLevel(8)
 			portrait:Width(21)
@@ -888,9 +884,8 @@ local function Shared(self, unit)
 	if (unit == "pet") then
 		-- health bar panel
 		local health = CreateFrame('StatusBar', nil, self)
-		health:Height(16)
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("TOPRIGHT")
+		health:SetPoint("TOPLEFT", 2, -2)
+		health:SetPoint("BOTTOMRIGHT", -2, 2)
 		health:SetStatusBarTexture(normTex)
 		
 		health.PostUpdate = T.PostUpdatePetColor
@@ -926,32 +921,12 @@ local function Shared(self, unit)
 		-- Healthbar Border
 		health.border = CreateFrame("Frame", nil,health)
 		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -4)
+		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
 		health.border:CreateShadow("Default")
-		
-		-- power
-		local power = CreateFrame('StatusBar', nil, self)
-		power:Height(1)
-		power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -1)
-		power:Point("TOPRIGHT", health, "BOTTOMRIGHT", 0, -1)
-		power:SetStatusBarTexture(normTex)
-		
-		power.frequentUpdates = true
-		power.colorPower = true
-		if C["unitframes"].showsmooth == true then
-			power.Smooth = true
-		end
-
-		local powerBG = power:CreateTexture(nil, 'BORDER')
-		powerBG:SetAllPoints(power)
-		powerBG:SetTexture(normTex)
-		powerBG.multiplier = 0.3
-				
-		self.Power = power
-		self.Power.bg = powerBG
 				
 		-- Unit name
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
+		local Name = health:CreateFontString(nil, "OVERLAY")
+		Name:SetFont(font1, fontsize, "THINOUTLINE")
 		Name:SetPoint("CENTER", health, "CENTER", 0, -1)
 		Name:SetJustifyH("CENTER")
 
@@ -964,15 +939,6 @@ local function Shared(self, unit)
 		else
 			self:Tag(Name, '[Tukui:namemedium]  [Tukui:diffcolor][level]')
 			self.Name = Name
-		end
-		
-		-- Lines
-		if (C["unitframes"].totandpetlines == true and playerwidth > 155) then
-			line1 = CreateFrame("Frame", nil, health)
-			line1:CreatePanel("Default", 15, 2, "LEFT", health.border, "RIGHT", 1, 0)
-			
-			line2 = CreateFrame("Frame", nil, health)
-			line2:CreatePanel("Default", 2, 15, "BOTTOM", line1, "RIGHT", 0, -1)
 		end
 		
 		if (C["castbar"].enable == true) then
@@ -1006,32 +972,15 @@ local function Shared(self, unit)
 			castbar.border:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
 		end
 		
-		if (C["unitframes"].charportrait == true) then
-			local portrait = CreateFrame("PlayerModel", nil, self)
-			portrait:SetFrameLevel(8)
-			portrait:Width(21)
-			portrait:Point("TOPRIGHT", health,"TOPLEFT",-7,0)
-			portrait:Point("BOTTOMRIGHT", power,"BOTTOMLEFT",-7,0)
-
-			table.insert(self.__elements, T.HidePortrait)
-			self.Portrait = portrait
-			
-			-- Portrait Border
-			portrait.bg = CreateFrame("Frame",nil,portrait)
-			portrait.bg:CreatePanel("Default",1,1,"BOTTOMLEFT",portrait,"BOTTOMLEFT",-2,-2)
-			portrait.bg:Point("TOPRIGHT",portrait,"TOPRIGHT",2,2)
-			portrait.bg:CreateShadow("Default")
-		end
-		
 		if C["unitframes"].totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
 			debuffs:Height(20)
-			debuffs:Width(127)
+			debuffs:Width(self:GetWidth())
 			debuffs.size = 19.5
 			debuffs.spacing = 3
-			debuffs.num = 6
+			debuffs.num = (self:GetWidth()+debuffs.spacing)/debuffs.size
 
-			debuffs:Point("TOPLEFT", power, "BOTTOMLEFT", -2, -5)
+			debuffs:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -3)
 			debuffs.initialAnchor = "TOPLEFT"
 			debuffs["growth-y"] = "UP"
 			debuffs.PostCreateIcon = C["unitframes"].PostCreateAura
@@ -1049,18 +998,48 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 	
 	if (unit == "focus") then
-		local lafo = C.unitframes.largefocus
-		-- health 
-		local health = CreateFrame('StatusBar', nil, self)
-		if lafo then
-			health:Height(19)
-			health:Point("TOPLEFT",0 ,-15)
-			health:Point("TOPRIGHT",0 ,-15)
-		else
-			health:Height(16)
-			health:SetPoint("TOPLEFT")
-			health:SetPoint("TOPRIGHT")
+		local panel = CreateFrame("Frame", nil, self)
+		panel:CreatePanel("", 1, 13, "BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
+		panel:SetPoint("BOTTOMRIGHT")
+		
+		-- power
+		local power = CreateFrame('StatusBar', nil, self)
+		power:Height(2)
+		power:Point("BOTTOMLEFT", panel, "TOPLEFT", 2, 1)
+		power:Point("BOTTOMRIGHT", panel, "TOPRIGHT", -2, 1)
+		power:SetStatusBarTexture(normTex)
+		
+		power.frequentUpdates = true
+		if C["unitframes"].showsmooth == true then
+			power.Smooth = true
 		end
+		
+		if C["unitframes"].unicolor == true then
+			power.colorTapping = true
+			power.colorClass = true			
+		else
+			power.colorPower = true
+		end
+
+		local powerBG = power:CreateTexture(nil, 'BORDER')
+		powerBG:SetAllPoints(power)
+		powerBG:SetTexture(normTex)
+		powerBG.multiplier = 0.3
+		
+		power.value = panel:CreateFontString(nil, "OVERLAY")
+		power.value:SetFont(font1, fontsize, "THINOUTLINE")
+		power.value:Point("RIGHT", -4, 0)
+		power.PreUpdate = T.PreUpdatePower
+		power.PostUpdate = T.PostUpdatePower
+				
+		self.Power = power
+		self.Power.bg = powerBG
+		
+		-- health
+		local health = CreateFrame('StatusBar', nil, self)
+		health:Height(19)
+		health:Point("BOTTOMLEFT", power, "TOPLEFT", 0 , 3)
+		health:Point("BOTTOMRIGHT", power, "TOPRIGHT", 0 , 3)
 		health:SetStatusBarTexture(normTex)
 
 		health.frequentUpdates = true
@@ -1073,12 +1052,9 @@ local function Shared(self, unit)
 		local healthBG = health:CreateTexture(nil, 'BORDER')
 		healthBG:SetAllPoints()
 
-		health.value = T.SetFontString(health, font1,fontsize, "THINOUTLINE")
-		if lafo then
-			health.value:Point("LEFT", health, "LEFT", 2, 0)
-		else
-			health.value:Point("RIGHT", -2, 0)
-		end
+		health.value = health:CreateFontString(nil, "OVERLAY")
+		health.value:SetFont(font1,fontsize, "THINOUTLINE")
+		health.value:Point("LEFT", 4, 0)
 		health.PostUpdate = T.PostUpdateHealth
 				
 		self.Health = health
@@ -1103,12 +1079,9 @@ local function Shared(self, unit)
 		end
 		
 		-- names
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-		if lafo then
-			Name:Point("BOTTOMLEFT", health, "TOPLEFT", 2, nameoffset)
-		else
-			Name:Point("LEFT", health, "LEFT", 4, 0)
-		end
+		local Name = panel:CreateFontString(nil, "OVERLAY")
+		Name:SetFont(font1, fontsize, "THINOUTLINE")
+		Name:Point("LEFT", 4, 0)
 		Name:SetJustifyH("LEFT")
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namelong] [Tukui:diffcolor][level] [shortclassification]')
@@ -1116,102 +1089,56 @@ local function Shared(self, unit)
 	
 		-- create castbar
 		local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
-		-- power
-		if lafo then
-			local power = CreateFrame('StatusBar', nil, self)
-			power:Height(2)
-			power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -3)
-			power:Point("TOPRIGHT", health, "BOTTOMRIGHT", 0, -3)
-			power:SetStatusBarTexture(normTex)
 			
-			power.frequentUpdates = true
-			if C["unitframes"].showsmooth == true then
-				power.Smooth = true
-			end
-			
-			if C["unitframes"].unicolor == true then
-				power.colorTapping = true
-				power.colorClass = true			
-			else
-				power.colorPower = true
-			end
-
-			local powerBG = power:CreateTexture(nil, 'BORDER')
-			powerBG:SetAllPoints(power)
-			powerBG:SetTexture(normTex)
-			powerBG.multiplier = 0.3
-			
-			power.value = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-			power.value:Point("BOTTOMRIGHT", health, "TOPRIGHT", -2, nameoffset)
-			power.PreUpdate = T.PreUpdatePower
-			power.PostUpdate = T.PostUpdatePower
-					
-			self.Power = power
-			self.Power.bg = powerBG
-			
-			-- Border
-			health.border = CreateFrame("Frame", nil,health)
-			health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-			health.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
-			health.border:CreateShadow("Default")
-			
-			power.border = CreateFrame("Frame", nil, power)
-			power.border:CreatePanel("Default",1,1,"TOPLEFT", power, "TOPLEFT", -2, 2)
-			power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
-			
-			-- Auratracker Frame
-			local TrackBorder = CreateFrame("Frame", "TrackBorder", self)
-			TrackBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
-			TrackBorder:CreateShadow("Default")
-			
-			local AuraTracker = CreateFrame("Frame", nil, self)
-			AuraTracker:SetFrameLevel(9)
-			self.AuraTracker = AuraTracker
-			
-			AuraTracker.icon = AuraTracker:CreateTexture(nil, "OVERLAY")
-			AuraTracker.icon:Point("TOPLEFT", TrackBorder, 2, -2)
-			AuraTracker.icon:Point("BOTTOMRIGHT", TrackBorder, -2, 2)
-			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
-			
-			AuraTracker.text = T.SetFontString(AuraTracker, font2, 15, "THINOUTLINE")
-			AuraTracker.text:SetPoint("CENTER", TrackBorder, 0, 0)
-			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
-			
-			-- Portrait
-			local portrait = CreateFrame("PlayerModel", nil, TrackBorder)
-			portrait:SetFrameLevel(8)
-			portrait:Point("TOPLEFT", 2, -2)
-			portrait:Point("BOTTOMRIGHT", -2, 2)
-			self.Portrait = portrait
-		end
-		
 		-- Border
-		if not lafo then
-			health.border = CreateFrame("Frame", nil,health)
-			health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-			health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
-			health.border:CreateShadow("Default")
-		end
+		health.border = CreateFrame("Frame", nil,health)
+		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
+		health.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+		
+		power.border = CreateFrame("Frame", nil, power)
+		power.border:CreatePanel("Default",1,1,"TOPLEFT", power, "TOPLEFT", -2, 2)
+		power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+		
+		local shd = CreateFrame("Frame", nil, health.border)
+		shd:SetPoint("TOPLEFT")
+		shd:SetPoint("BOTTOMRIGHT", panel)
+		shd:CreateShadow("")
+		
+		-- Auratracker Frame
+		local TrackBorder = CreateFrame("Frame", "TrackBorder", self)
+		TrackBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
+		TrackBorder:CreateShadow("Default")
+		
+		local AuraTracker = CreateFrame("Frame", nil, self)
+		AuraTracker:SetFrameLevel(9)
+		self.AuraTracker = AuraTracker
+		
+		AuraTracker.icon = AuraTracker:CreateTexture(nil, "OVERLAY")
+		AuraTracker.icon:Point("TOPLEFT", TrackBorder, 2, -2)
+		AuraTracker.icon:Point("BOTTOMRIGHT", TrackBorder, -2, 2)
+		AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
+		
+		AuraTracker.text = T.SetFontString(AuraTracker, font2, 15, "THINOUTLINE")
+		AuraTracker.text:SetPoint("CENTER", TrackBorder, 0, 0)
+		AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
+		
+		-- Portrait
+		local portrait = CreateFrame("PlayerModel", nil, TrackBorder)
+		portrait:SetFrameLevel(8)
+		portrait:Point("TOPLEFT", 2, -2)
+		portrait:Point("BOTTOMRIGHT", -2, 2)
+		self.Portrait = portrait
 
 		-- create debuffs
 		if C.unitframes.focusdebuffs then
 			local debuffs = CreateFrame("Frame", nil, self)
 			debuffs.spacing = 3
-			if lafo then
-				debuffs.size = 26
-				debuffs:SetHeight(22)
-				debuffs:Point('LEFT', health, 'RIGHT', 5, -3)
-				debuffs.initialAnchor = 'LEFT'
-				debuffs["growth-x"] = "RIGHT"
-				debuffs.num = (playerwidth-20)/(debuffs.size+debuffs.spacing)
-			else
-				debuffs:Point("RIGHT", self, "LEFT", -5, 0)
-				debuffs.initialAnchor = 'RIGHT'
-				debuffs["growth-x"] = "LEFT"
-				debuffs.num = 5
-				debuffs.size = 20
-				debuffs:SetHeight(20)
-			end
+			debuffs.size = 28
+			debuffs:SetHeight(28)
+			debuffs:Point('LEFT', self, "RIGHT", 3, 0)
+			debuffs.initialAnchor = 'LEFT'
+			debuffs["growth-x"] = "RIGHT"
+			debuffs.num = 4
 			debuffs:SetWidth(debuffs:GetHeight() * debuffs.num)
 			debuffs.PostCreateIcon = T.PostCreateAura
 			debuffs.PostUpdateIcon = T.PostUpdateAura
@@ -1266,11 +1193,10 @@ local function Shared(self, unit)
 	------------------------------------------------------------------------
 
 	if (unit == "focustarget") then
-		local lafo = C.unitframes.largefocus
 		-- health 
 		local health = CreateFrame('StatusBar', nil, self)
-		health:SetPoint("TOPLEFT")
-		health:SetPoint("BOTTOMRIGHT")
+		health:SetPoint("TOPLEFT", 2, -2)
+		health:SetPoint("BOTTOMRIGHT", -2, 2)
 		health:SetStatusBarTexture(normTex)
 
 		health.frequentUpdates = true
@@ -1304,18 +1230,28 @@ local function Shared(self, unit)
 		end
 			
 		-- names
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
+		local Name = health:CreateFontString(nil, "OVERLAY")
+		Name:SetFont(font1, fontsize, "THINOUTLINE")
+		Name:SetPoint("CENTER")
 		Name:SetJustifyH("CENTER")
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:nameshort]')
 		self.Name = Name
 		
 		-- Border
-		health.border = CreateFrame("Frame", nil, self)
-		health.border:CreatePanel("Default",1,1,"TOPLEFT", self, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", self, "BOTTOMRIGHT", 2, -2)
+		health.border = CreateFrame("Frame", nil, health)
+		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
+		health.border:Point("BOTTOMRIGHT", 2, -2)
 		health.border:CreateShadow("Default")	
+		
+		-- Lines
+		if C.unitframes.totandpetlines then
+			line1 = CreateFrame("Frame", nil, health)
+			line1:CreatePanel("Default", 10, 2, "RIGHT", self, "LEFT", -1, 0)
+			
+			line2 = CreateFrame("Frame", nil, health)
+			line2:CreatePanel("Default", 2, 11, "BOTTOM", line1, "LEFT", 0, -1)
+		end
 	end
 
 	------------------------------------------------------------------------
@@ -1326,11 +1262,48 @@ local function Shared(self, unit)
 		-- Right-click focus on arena or boss units
 		self:SetAttribute("type2", "focus")
 		
+		local panel = CreateFrame("Frame", nil, self)
+		panel:CreatePanel("", 1, 13, "BOTTOMLEFT", self, "BOTTOMLEFT", 0, 0)
+		panel:SetPoint("BOTTOMRIGHT", self, "BOTTOMRIGHT")
+		
+		-- power
+		local power = CreateFrame('StatusBar', nil, self)
+		power:Height(2)
+		power:Point("BOTTOMLEFT", panel, "TOPLEFT", 2, 1)
+		power:Point("BOTTOMRIGHT", panel, "TOPRIGHT", -2, 1)
+		power:SetStatusBarTexture(normTex)
+		
+		power.frequentUpdates = true
+		if C["unitframes"].showsmooth == true then
+			power.Smooth = true
+		end
+		
+		if C["unitframes"].unicolor == true then
+			power.colorTapping = true
+			power.colorClass = true			
+		else
+			power.colorPower = true
+		end
+
+		local powerBG = power:CreateTexture(nil, 'BORDER')
+		powerBG:SetAllPoints(power)
+		powerBG:SetTexture(normTex)
+		powerBG.multiplier = 0.3
+		
+		power.value = panel:CreateFontString(nil, "OVERLAY")
+		power.value:SetFont(font1, fontsize, "THINOUTLINE")
+		power.value:Point("RIGHT", -4, 0)
+		power.PreUpdate = T.PreUpdatePower
+		power.PostUpdate = T.PostUpdatePower
+				
+		self.Power = power
+		self.Power.bg = powerBG
+		
 		-- health 
 		local health = CreateFrame('StatusBar', nil, self)
 		health:Height(19)
-		health:Point("TOPLEFT",0 ,-15)
-		health:Point("TOPRIGHT",0 ,-15)
+		health:Point("BOTTOMLEFT", power, "TOPLEFT", 0, 3)
+		health:Point("BOTTOMRIGHT", power, "TOPRIGHT", 0, 3)
 		health:SetStatusBarTexture(normTex)
 
 		health.frequentUpdates = true
@@ -1370,52 +1343,25 @@ local function Shared(self, unit)
 			health.colorReaction = true
 			healthBG:SetTexture(.1, .1, .1)	
 		end
-	
-		-- power
-		local power = CreateFrame('StatusBar', nil, self)
-		power:Height(2)
-		power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -3)
-		power:Point("TOPRIGHT", health, "BOTTOMRIGHT", 0, -3)
-		power:SetStatusBarTexture(normTex)
-		
-		power.frequentUpdates = true
-		if C["unitframes"].showsmooth == true then
-			power.Smooth = true
-		end
-		
-		if C["unitframes"].unicolor == true then
-			power.colorTapping = true
-			power.colorClass = true			
-		else
-			power.colorPower = true
-		end
-
-		local powerBG = power:CreateTexture(nil, 'BORDER')
-		powerBG:SetAllPoints(power)
-		powerBG:SetTexture(normTex)
-		powerBG.multiplier = 0.3
-		
-		power.value = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-		power.value:Point("BOTTOMRIGHT", health, "TOPRIGHT", -2, nameoffset)
-		power.PreUpdate = T.PreUpdatePower
-		power.PostUpdate = T.PostUpdatePower
-				
-		self.Power = power
-		self.Power.bg = powerBG
 		
 		-- Border
 		health.border = CreateFrame("Frame", nil,health)
 		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
 		health.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
-		health.border:CreateShadow("Default")
 		
 		power.border = CreateFrame("Frame", nil, power)
 		power.border:CreatePanel("Default",1,1,"TOPLEFT", power, "TOPLEFT", -2, 2)
 		power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
 		
+		local shd = CreateFrame("Frame", nil, health.border)
+		shd:SetPoint("TOPLEFT")
+		shd:SetPoint("BOTTOMRIGHT", panel)
+		shd:CreateShadow("")
+		
 		-- names
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-		Name:Point("BOTTOMLEFT", health, "TOPLEFT", 2, nameoffset)
+		local Name = panel:CreateFontString(nil, "OVERLAY")
+		Name:SetFont(font1, fontsize, "THINOUTLINE")
+		Name:Point("LEFT", 4, 0)
 		Name:SetJustifyH("LEFT")
 		Name.frequentUpdates = 0.2
 		
@@ -1440,7 +1386,7 @@ local function Shared(self, unit)
 			
 			-- Portrait Border
 			local PBorder = CreateFrame("Frame", nil, self)
-			PBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
+			PBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
 			PBorder:CreateShadow("Default")
 			
 			local portrait = CreateFrame("PlayerModel", nil, PBorder)
@@ -1454,7 +1400,7 @@ local function Shared(self, unit)
 			local buffs = CreateFrame("Frame", nil, self)
 			buffs:SetHeight(40)
 			buffs:SetWidth(252)
-			buffs:Point("BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
+			buffs:Point("BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
 			buffs.size = 40
 			buffs.num = 3
 			buffs.spacing = 2
@@ -1468,14 +1414,15 @@ local function Shared(self, unit)
 			self:HookScript("OnShow", T.updateAllElements)
 		end
 
-		-- create debuff for arena units
+		-- create debuff 
 		local debuffs = CreateFrame("Frame", nil, self)
-		debuffs:SetHeight(22)
+		debuffs:SetHeight(28)
 		debuffs:SetWidth(200)
-		debuffs:Point('LEFT', health, 'RIGHT', 4, -3)
-		debuffs.size = 25
-		debuffs.num = 5
-		debuffs.spacing = 2
+		debuffs.size = 28
+		debuffs:SetHeight(28)
+		debuffs:Point('LEFT', self, "RIGHT", 3, 0)
+		debuffs.num = 4
+		debuffs.spacing = 3
 		debuffs.initialAnchor = 'LEFT'
 		debuffs["growth-x"] = "RIGHT"
 		debuffs.PostCreateIcon = T.PostCreateAura
@@ -1489,7 +1436,7 @@ local function Shared(self, unit)
 			-- Auratracker Frame
 			local AuraTracker = CreateFrame("Frame", nil, self)
 			AuraTracker:Size(40)
-			AuraTracker:Point("BOTTOMRIGHT", health.border, "BOTTOMLEFT", -3, 0)
+			AuraTracker:Point("BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
 			AuraTracker:SetTemplate("Default")
 			AuraTracker:CreateShadow("Default")
 			self.AuraTracker = AuraTracker
@@ -1501,7 +1448,7 @@ local function Shared(self, unit)
 			AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
 			
 			AuraTracker.text = T.SetFontString(AuraTracker, font2, 15, "THINOUTLINE")
-			AuraTracker.text:SetPoint("CENTER", AuraTracker, 0, 0)
+			AuraTracker.text:SetPoint("CENTER")
 			AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
 			
 			-- ClassIcon			
@@ -1531,7 +1478,7 @@ local function Shared(self, unit)
 			
 			-- Spec info
 			Talents = T.SetFontString(health.border, font1, fontsize)
-			Talents:Point("TOPRIGHT", health.border, "BOTTOMRIGHT", -2, -3)
+			Talents:Point("TOPRIGHT", self, "BOTTOMRIGHT", -1, -2)
 			Talents:SetTextColor(1,1,1,.6)
 			self.Talents = Talents
 		end
@@ -1541,8 +1488,8 @@ local function Shared(self, unit)
 		castbar:SetHeight(12)
 		castbar:SetStatusBarTexture(normTex)
 		castbar:SetFrameLevel(10)
-		castbar:Point("TOPLEFT", power, "TOPLEFT", 19, -9)
-		castbar:Point("TOPRIGHT", power, "TOPRIGHT", 0, -9)
+		castbar:Point("TOPLEFT", panel, "BOTTOMLEFT", 21, -5)
+		castbar:Point("TOPRIGHT", panel, "BOTTOMRIGHT", -2, -5)
 		
 		castbar.border = CreateFrame("Frame", nil, castbar)
 		castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
@@ -1611,8 +1558,9 @@ local function Shared(self, unit)
 		end
 		
 		-- names
-		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
-		Name:SetPoint("CENTER", health, "CENTER", 0, 0)
+		local Name = health:CreateFontString(nil, "OVERLAY")
+		Name:SetFont(font1, fontsize, "THINOUTLINE")
+		Name:SetPoint("CENTER")
 		Name:SetJustifyH("CENTER")
 		
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:nameshort]')
@@ -1640,7 +1588,7 @@ if T.lowversion then
 else
 	player:Point("BOTTOMLEFT", TukuiBar1, "TOPLEFT", 2,140)
 end
-player:Size(playerwidth, 44)
+player:Size(playerwidth, 43)
 
 -- target
 local target = oUF:Spawn('target', "TukuiTarget")
@@ -1649,40 +1597,25 @@ if T.lowversion then
 else
 	target:Point("BOTTOMRIGHT", TukuiBar1, "TOPRIGHT", -2,140)
 end
-target:Size(playerwidth, 44)
+target:Size(playerwidth, 43)
 
 -- tot
 local tot = oUF:Spawn('targettarget', "TukuiTargetTarget")
-tot:Point("TOPRIGHT", TukuiTarget, "BOTTOMRIGHT", 0,-7)
-tot:Size(125, 18)
+tot:Point("TOPLEFT", TukuiTarget, "BOTTOMLEFT", 0, -18)
+tot:Size(playerwidth-56, 16)
 
 -- pet
 local pet = oUF:Spawn('pet', "TukuiPet")
-if ShardBarBorder or RuneBarBorder or TotemBarBorder then
-	pet:Point("TOPLEFT", ShardBarBorder or RuneBarBorder or TotemBarBorder, "BOTTOMLEFT", 2, -5)
-else
-	pet:Point("TOPLEFT", TukuiPlayer, "BOTTOMLEFT", 0,-7)
-end
-pet:Size(125, 18)
+pet:Point("TOPRIGHT", TukuiPlayer, "BOTTOMRIGHT", 0, -18)
+pet:Size(playerwidth-56, 16)
 
 -- focus & focustarget
 local focus = oUF:Spawn('focus', "TukuiFocus")
 local focustarget = oUF:Spawn("focustarget", "TukuiFocusTarget")	
-if C.unitframes.largefocus then
-	focus:Size(playerwidth-20, 39)
-	focus:Point("TOPLEFT", UIParent, "TOPLEFT", 560, -370)
-	focustarget:Size(110, 14)
-	focustarget:Point("TOPRIGHT", TukuiFocus, "BOTTOMRIGHT", 0, -7)
-else
-	focustarget:Size(80, 16)
-	focustarget:Point("BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0,6)
-	focus:Point("BOTTOMRIGHT", TukuiFocusTarget, "BOTTOMLEFT", -7, 0)
-	if C["unitframes"].charportrait ~= true then
-		focus:Size((playerwidth - 7) - 80, 16)
-	else
-		focus:Size((playerwidth + 55) - 80, 16)
-	end
-end
+focus:Size(playerwidth-20, 40)
+focus:Point("TOPLEFT", UIParent, "TOPLEFT", 560, -370)
+focustarget:Size(playerwidth-20-56, 16)
+focustarget:Point("TOPRIGHT", TukuiFocus, "BOTTOMRIGHT", 0, -3)
 
 if C.arena.unitframes then
 	local arena = {}
@@ -1693,7 +1626,7 @@ if C.arena.unitframes then
 		else
 			arena[i]:SetPoint("BOTTOM", arena[i-1], "TOP", 0, 27)
 		end
-		arena[i]:Size(playerwidth-20, 39)
+		arena[i]:Size(playerwidth-20, 40)
 	end
 end
 
@@ -1715,7 +1648,7 @@ if C["unitframes"].showboss then
 		else
 			boss[i]:SetPoint('BOTTOM', boss[i-1], 'TOP', 0, 27)             
 		end
-		boss[i]:Size(playerwidth-20, 39)
+		boss[i]:Size(playerwidth-20, 40)
 	end
 end
 

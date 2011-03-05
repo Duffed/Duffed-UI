@@ -113,7 +113,7 @@ local function moving()
 	-- don't allow moving while in combat
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 	
-	SlashCmdList.MOVESCOMBO() -- :s
+	if C.sCombo.enable then SlashCmdList.MOVESCOMBO() end
 	for i = 1, getn(T.MoverFrames) do
 		if T.MoverFrames[i] then		
 			if enable then

@@ -7,7 +7,7 @@ if not C["datatext"].friends or C["datatext"].friends == 0 then return end
 
 local Stat = CreateFrame("Frame")
 Stat:EnableMouse(true)
-Stat:SetFrameStrata("MEDIUM")
+Stat:SetFrameStrata("BACKGROUND")
 Stat:SetFrameLevel(3)
 
 local Text  = TukuiInfoLeft:CreateFontString(nil, "OVERLAY")

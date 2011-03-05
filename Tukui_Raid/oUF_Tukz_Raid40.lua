@@ -123,7 +123,7 @@ oUF:Factory(function(self)
 		"groupingOrder", 
 		"1,2,3,4,5,6,7,8", 
 		"groupBy", "GROUP", 
-		"yOffset", T.Scale(-8),
+		"yOffset", T.Scale(8),
 		"point", "BOTTOM"
 	)
 	if ChatBG1 then

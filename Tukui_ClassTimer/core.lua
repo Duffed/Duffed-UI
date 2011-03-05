@@ -427,6 +427,7 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 84747 ), -- Deep Insight
             },
             player = {
+				CreateSpellEntry( 13750 ), -- adrenalin stuff
                 CreateSpellEntry( 32645 ), -- Envenom
                 CreateSpellEntry( 2983 ), -- Sprint
                 CreateSpellEntry( 5277 ), -- Evasion

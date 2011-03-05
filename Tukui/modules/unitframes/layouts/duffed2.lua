@@ -18,7 +18,6 @@ local glowTex = C["media"].glowTex
 local bubbleTex = C["media"].bubbleTex
 local fontsize = C["media"].uffontsize
 local playerwidth = 214
--- if T.lowversion and not C.general.overridehightolow then playerwidth = C["unitframes"].framewidth - 25 end 
 local nameoffset = 4
 
 local backdrop = {
@@ -1103,31 +1102,6 @@ local function Shared(self, unit)
 		shd:SetPoint("TOPLEFT")
 		shd:SetPoint("BOTTOMRIGHT", panel)
 		shd:CreateShadow("")
-		
-		-- Auratracker Frame
-		local TrackBorder = CreateFrame("Frame", "TrackBorder", self)
-		TrackBorder:CreatePanel("Default", 40, 40, "BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
-		TrackBorder:CreateShadow("Default")
-		
-		local AuraTracker = CreateFrame("Frame", nil, self)
-		AuraTracker:SetFrameLevel(9)
-		self.AuraTracker = AuraTracker
-		
-		AuraTracker.icon = AuraTracker:CreateTexture(nil, "OVERLAY")
-		AuraTracker.icon:Point("TOPLEFT", TrackBorder, 2, -2)
-		AuraTracker.icon:Point("BOTTOMRIGHT", TrackBorder, -2, 2)
-		AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
-		
-		AuraTracker.text = T.SetFontString(AuraTracker, font2, 15, "THINOUTLINE")
-		AuraTracker.text:SetPoint("CENTER", TrackBorder, 0, 0)
-		AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
-		
-		-- Portrait
-		local portrait = CreateFrame("PlayerModel", nil, TrackBorder)
-		portrait:SetFrameLevel(8)
-		portrait:Point("TOPLEFT", 2, -2)
-		portrait:Point("BOTTOMRIGHT", -2, 2)
-		self.Portrait = portrait
 
 		-- create debuffs
 		if C.unitframes.focusdebuffs then
@@ -1186,6 +1160,36 @@ local function Shared(self, unit)
 			self.Castbar.Time = castbar.time
 			self.Castbar.Icon = castbar.icon
 		end
+		
+		-- portrait
+		local pb = CreateFrame("Frame", self:GetName().."_PortraitBorder", self)
+		pb:CreateShadow("")
+		pb:CreatePanel("", 40, 40, "BOTTOMRIGHT", panel, "BOTTOMLEFT", -3, 0)
+		
+		if C.unitframes.portraitstyle == "MODEL" then
+			local portrait = CreateFrame("PlayerModel", self:GetName().."_Portrait", pb)
+			portrait:SetFrameLevel(1)
+			portrait:Point("TOPLEFT", 2, -2)
+			portrait:Point("BOTTOMRIGHT", -2, 2)
+			self.Portrait = portrait
+		else			
+			local class = pb:CreateTexture(self:GetName().."_ClassIcon", "ARTWORK")
+			class:Point("TOPLEFT", 2, -2)
+			class:Point("BOTTOMRIGHT", -2, 2)
+			self.ClassIcon = class
+		end
+		
+		local AuraTracker = CreateFrame("Frame")
+		self.AuraTracker = AuraTracker
+		
+		AuraTracker.icon = pb:CreateTexture(nil, "OVERLAY")
+		AuraTracker.icon:Point("TOPLEFT", 2, -2)
+		AuraTracker.icon:Point("BOTTOMRIGHT", -2, 2)
+		AuraTracker.icon:SetTexCoord(0.07,0.93,0.07,0.93)
+		
+		AuraTracker.text = T.SetFontString(pb, font2, 15, "THINOUTLINE")
+		AuraTracker.text:SetPoint("CENTER")
+		AuraTracker:SetScript("OnUpdate", updateAuraTrackerTime)
 	end
 	
 	------------------------------------------------------------------------

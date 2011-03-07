@@ -121,7 +121,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)			
+			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorTapping = true	
@@ -129,7 +133,7 @@ local function Shared(self, unit)
 			health.colorReaction = true
 			healthBG:SetTexture(.1, .1, .1)			
 		end
-
+		
 		-- power
 		local power = CreateFrame('StatusBar', nil, self)
 		power:Size(playerwidth-60, 5)
@@ -816,7 +820,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)			
+			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end			
 		else
 			health.colorDisconnected = true
 			health.colorTapping = true	
@@ -906,7 +914,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)			
+			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end			
 		else
 			health.colorDisconnected = true	
 			health.colorClass = true
@@ -932,13 +944,8 @@ local function Shared(self, unit)
 		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium] [Tukui:diffcolor][level]')
 		self.Name = Name
 		
-		if C["unitframes"].unicolor then
-			self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]  [Tukui:diffcolor][level]')
-			self.Name = Name
-		else
-			self:Tag(Name, '[Tukui:namemedium]  [Tukui:diffcolor][level]')
-			self.Name = Name
-		end
+		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]  [Tukui:diffcolor][level]')
+		self.Name = Name
 		
 		if (C["castbar"].enable == true) then
 			local castbar = CreateFrame("StatusBar", self:GetName().."CastBar", self)
@@ -1070,6 +1077,10 @@ local function Shared(self, unit)
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
 			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true
@@ -1225,7 +1236,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)	
+			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true
@@ -1239,7 +1254,7 @@ local function Shared(self, unit)
 		Name:SetPoint("CENTER")
 		Name:SetJustifyH("CENTER")
 		
-		self:Tag(Name, '[Tukui:getnamecolor][Tukui:nameshort]')
+		self:Tag(Name, '[Tukui:getnamecolor][Tukui:namemedium]')
 		self.Name = Name
 		
 		-- Border
@@ -1340,7 +1355,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)		
+			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true
@@ -1482,7 +1501,7 @@ local function Shared(self, unit)
 			
 			-- Spec info
 			Talents = T.SetFontString(health.border, font1, fontsize)
-			Talents:Point("TOPRIGHT", self, "BOTTOMRIGHT", -1, -2)
+			Talents:Point("TOPRIGHT", self, "BOTTOMRIGHT", -1, -3)
 			Talents:SetTextColor(1,1,1,.6)
 			self.Talents = Talents
 		end
@@ -1553,7 +1572,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)	
+			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true

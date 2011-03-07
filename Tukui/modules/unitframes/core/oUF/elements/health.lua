@@ -2,7 +2,7 @@ local parent, ns = ...
 local oUF = ns.oUF
 
 oUF.colors.health = {49/255, 207/255, 37/255}
-
+local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 local Update = function(self, event, unit, powerType)
 	if(self.unit ~= unit or (event == 'UNIT_POWER' and powerType ~= 'HAPPINESS')) then return end
 	local health = self.Health
@@ -36,7 +36,7 @@ local Update = function(self, event, unit, powerType)
 	elseif(health.colorReaction and UnitReaction(unit, 'player')) then
 		t = self.colors.reaction[UnitReaction(unit, "player")]
 	elseif(health.colorSmooth) then
-		r, g, b = self.ColorGradient(min / max, unpack(health.smoothGradient or self.colors.smooth))
+		r, g, b = self.ColorGradient(min/max, .9, 0, 0, .9, .9, 0, unpack(C.unitframes.healthbarcolor))
 	elseif(health.colorHealth) then
 		t = self.colors.health
 	end

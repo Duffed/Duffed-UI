@@ -40,6 +40,8 @@ local function Local(o)
 	if o == "TukuiConfigUIgeneralblizzardsct" then o = "Skin Blizzard SCT" end
 	if o == "TukuiConfigUIgeneralnormalfont" then o = "Use the Normal/Old Font instead of pixelfont." end
 	if o == "TukuiConfigUIgeneraloverridehightolow" then o = "Use Low-res Version on High-res (Experimental)" end
+	if o == "TukuiConfigUIgeneralbordercolor" then o = "Bordercolor (Tukui Panels)" end
+	if o == "TukuiConfigUIgeneralbackdropcolor" then o = "Backdropcolor (Tukui Panels)" end
 	
 	if o == "TukuiConfigUIdatatextcolor" then o = "Text Color (datatext, chat etc.)" end
 	if o == "TukuiConfigUIdatatextclasscolored" then o = "Classcolored Text" end
@@ -69,6 +71,7 @@ local function Local(o)
 	if o == "TukuiConfigUIunitframesdebuffrows" then o = "Debuff-rows above Target" end
 	if o == "TukuiConfigUIunitframesportraitstyle" then o = "Portrait Style: ICON or MODEL (Layout 2 only)" end
 	if o == "TukuiConfigUIunitframeslayout" then o = "Layout (1 or 2)" end
+	if o == "TukuiConfigUIunitframesColorGradient" then o = "Add Color-Gradient to healthbar (from red to healthbarcolor u set in config)" end
 	
 	if o == "TukuiConfigUIcastbar" then o = "Castbar" end
 	if o == "TukuiConfigUIcastbarcolor"  then o = "Castbarcolor for not-player (if not classcolored)" end

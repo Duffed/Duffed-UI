@@ -43,7 +43,11 @@ local function Shared(self, unit)
 		health.colorClass = false
 		health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 		health.bg:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-		health.bg:SetTexture(.6, .6, .6)	
+		health.bg:SetTexture(.6, .6, .6)
+		if C.unitframes.ColorGradient then
+			health.colorSmooth = true
+			health.bg:SetTexture(.2, .2, .2)
+		end
 	else
 		health.colorDisconnected = true
 		health.colorClass = true

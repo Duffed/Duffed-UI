@@ -125,7 +125,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)			
+			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end			
 		else
 			health.colorDisconnected = true
 			health.colorTapping = true	
@@ -794,7 +798,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)			
+			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end			
 		else
 			health.colorDisconnected = true
 			health.colorTapping = true	
@@ -912,7 +920,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)			
+			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end			
 		else
 			health.colorDisconnected = true	
 			health.colorClass = true
@@ -1095,6 +1107,10 @@ local function Shared(self, unit)
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
 			healthBG:SetTexture(.6, .6, .6)
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true
@@ -1203,16 +1219,16 @@ local function Shared(self, unit)
 				debuffs:Point('LEFT', health, 'RIGHT', 5, -3)
 				debuffs.initialAnchor = 'LEFT'
 				debuffs["growth-x"] = "RIGHT"
-				debuffs.num = (playerwidth-20)/(debuffs.size+debuffs.spacing)
+				debuffs.num = 4
 			else
 				debuffs:Point("RIGHT", self, "LEFT", -5, 0)
 				debuffs.initialAnchor = 'RIGHT'
 				debuffs["growth-x"] = "LEFT"
-				debuffs.num = 5
+				debuffs.num = 4
 				debuffs.size = 20
 				debuffs:SetHeight(20)
 			end
-			debuffs:SetWidth(debuffs:GetHeight() * debuffs.num)
+			debuffs:SetWidth((debuffs.size + debuffs.spacing) * debuffs.num)
 			debuffs.PostCreateIcon = T.PostCreateAura
 			debuffs.PostUpdateIcon = T.PostUpdateAura
 			self.Debuffs = debuffs
@@ -1296,6 +1312,10 @@ local function Shared(self, unit)
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
 			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true
@@ -1363,7 +1383,11 @@ local function Shared(self, unit)
 			health.colorClass = false
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
-			healthBG:SetTexture(.6, .6, .6)		
+			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true
@@ -1603,6 +1627,10 @@ local function Shared(self, unit)
 			health:SetStatusBarColor(unpack(C["unitframes"].healthbarcolor))
 			healthBG:SetVertexColor(unpack(C["unitframes"].deficitcolor))	
 			healthBG:SetTexture(.6, .6, .6)	
+			if C.unitframes.ColorGradient then
+				health.colorSmooth = true
+				healthBG:SetTexture(.2, .2, .2)
+			end
 		else
 			health.colorDisconnected = true
 			health.colorClass = true

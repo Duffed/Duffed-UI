@@ -82,8 +82,7 @@ local function SetChatStyle(frame)
 	_G[chat]:SetClampedToScreen(false)
 	
 	-- set min height/width to original tukui size
-	_G[chat]:SetMinResize(371,111)
-	_G[chat]:SetMinResize(T.InfoLeftRightWidth + 1,111)
+	_G[chat]:SetMinResize(150, 70)
 	
 	-- move the chat edit box
 	_G[chat.."EditBox"]:ClearAllPoints()
@@ -172,6 +171,8 @@ local function SetChatStyle(frame)
 		origs[_G[chat]] = _G[chat].AddMessage
 		_G[chat].AddMessage = AddMessage
 	end
+	
+	frame.skinned = true
 end
 
 -- Setup chatframes 1 to 10 on login.
@@ -243,11 +244,9 @@ end)
 -- Setup temp chat (BN, WHISPER) when needed.
 local function SetupTempChat()
 	local frame = FCF_GetCurrentChatFrame()
-	local id = frame:GetID()
-	local buttonup = _G[format("ChatFrame%sButtonFrameUpButton", id)]
 		
 	-- do a check if we already did a skinning earlier for this temp chat frame
-	if not buttonup:IsShown() then return end
+	if frame.skinned then return end
 	
 	SetChatStyle(frame)
 end

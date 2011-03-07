@@ -13,7 +13,6 @@ local CreateSpellEntry = function( id, castByAnyone, color, unitType, castSpellI
 end
 
 -- Configuration starts here:
-local IgnoreFocusFrame = false				-- (Duffed UI) Ignore the Focus Frame? So it will overlap (true/false)
 local targetdebuffs = C.classtimer.targetdebuffs -- display target debuffs above target
 local BAR_HEIGHT = 15						-- Bar height
 local BAR_SPACING = 1						-- Distance between bars
@@ -1148,10 +1147,20 @@ local playerFrame = CreateAuraBarFrame( playerDataSource, TukuiPlayer );
 playerFrame:SetHiddenHeight( -yOffset );
 
 if C.unitframes.layout ~= 2 then
-	if IgnoreFocusFrame or C.unitframes.largefocus then
-		playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset )
+	if C.unitframes.largefocus then
+		playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, 6 )
 	else
-		playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
+		if TukuiFocus:IsShown() then
+			playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
+		else
+			playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, 6 )
+		end
+		TukuiFocus:HookScript("OnShow", function()
+			playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, yOffset + TukuiFocus:GetHeight() +6)
+		end)
+		TukuiFocus:HookScript("OnHide", function()
+			playerFrame:Point( "BOTTOMLEFT", TukuiPlayer, "TOPLEFT", xOffset, 6 )
+		end)	
 	end
 	playerFrame:Point( "BOTTOMRIGHT", TukuiPlayer, "TOPRIGHT", 0, yOffset )
 else
@@ -1173,7 +1182,6 @@ else
 		end)
 	end
 end
-
 
 local trinketFrame = CreateAuraBarFrame( trinketDataSource, TukuiPlayer )
 trinketFrame:SetHiddenHeight( -yOffset )

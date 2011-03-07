@@ -46,3 +46,19 @@ SlashCmdList["RAIDDISBAND"] = function()
 	end
 	LeaveParty()
 end
+
+-- layout via slash command
+SLASH_DUFFEDLAYOUT1 = "/layout"
+SlashCmdList["DUFFEDLAYOUT"] = function(msg) 
+	if not IsAddOnLoaded("Tukui_ConfigUI") then print("|cffff0000Required: Tukui Config UI.") return end
+	if TukuiConfigSettings.unitframes == nil then TukuiConfigSettings.unitframes = {} end
+	if msg == "1" then
+		TukuiConfigSettings.unitframes.layout = 1
+		ReloadUI()
+	elseif msg == "2" then
+		TukuiConfigSettings.unitframes.layout = 2
+		ReloadUI()
+	else
+		print("|cffff0000/layout|r 1 or 2")
+	end
+end

@@ -41,6 +41,12 @@ T.remindbuffs = {
 		6673, -- battle Shout
 		93435, -- roar of courage (hunter pet)
 	},
+	PALADIN = {
+		20154, -- seal of righteousness
+		20164, -- seal of justice
+		20165, -- seal of insight
+		31801, -- seal of truth
+	},
 }
 
 -- Nasty stuff below. Don't touch.

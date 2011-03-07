@@ -4,6 +4,8 @@ C["general"] = {
 	["blizzardsct"] = true,								-- Skin also Blizzard SCT Font(put it in generel now)
 	["normalfont"] = false,								-- Use the normal/old font + fontsize instead of pixelfont :>
 	["overridehightolow"] = false,						-- even that is experimental only! :> .. use lowres version on high resolution.
+	["backdropcolor"] = { .05,.05,.05 }, 				-- background color of tukui panels
+	["bordercolor"] = { .15, .15, .15 }, 				-- border color of tukui panels
 
 	["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
 	["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
@@ -15,8 +17,8 @@ C["unitframes"] = {
 	["layout"] = 1,										-- Layout 1 (default) or 2
 
 	["fontsize"] = 8,									-- Fontsize on Unitframes
-	["healthbarcolor"] = {.2, .2, .2, 1},				-- Healthbar color (if unicolor = true)
-	["deficitcolor"] = {0, 0, 0, 1},					-- Healthbar deficit color (if unicolor = true)
+	["healthbarcolor"] = {.2, .2, .2},					-- Healthbar color (if unicolor = true) 
+	["deficitcolor"] = {0, 0, 0},						-- Healthbar deficit color (if unicolor = true)
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
 	["framewidth"] = 218,								-- Width of Player & Target Frame (affect also arena- & bossframes)
@@ -31,6 +33,7 @@ C["unitframes"] = {
 	["buffrows"] = 1,									-- Buff rows above Target (and Player if u enable it)
 	["debuffrows"] = 2, 								-- Debuff rows above Target (and Player if u enable it)
 	["portraitstyle"] = "ICON",							-- "ICON" or "MODEL" (Layout 2 only)
+	["ColorGradient"] = false,							-- Add Color-Gradient to healthbar from healthbarcolor to red
 	
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?

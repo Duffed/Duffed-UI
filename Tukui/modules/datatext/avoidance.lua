@@ -61,7 +61,7 @@ if C["datatext"].avd and C["datatext"].avd > 0 then
 	Stat:RegisterEvent("PLAYER_ENTERING_WORLD")
 	Stat:SetScript("OnEvent", Update)
 	Stat:SetScript("OnEnter", function(self)
-		if not InCombatLockdown() then
+		-- if not InCombatLockdown() then
 			local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
 			if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
 				GameTooltip:SetOwner(panel, anchor, xoff, yoff)
@@ -83,7 +83,7 @@ if C["datatext"].avd and C["datatext"].avd > 0 then
 			GameTooltip:AddDoubleLine(L.datatext_parry,format("%.2f",parry) .. "%",1,1,1,  1,1,1)
 			GameTooltip:AddDoubleLine(L.datatext_block,format("%.2f",block) .. "%",1,1,1,  1,1,1)
 			GameTooltip:Show()
-		end
+		-- end
 	end)
 	Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
 end

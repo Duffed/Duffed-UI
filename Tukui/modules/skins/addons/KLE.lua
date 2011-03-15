@@ -122,10 +122,10 @@ AddonSkins_Mod:RegisterSkin("KLE",function(Skin, skin, Layout, layout, config)
 	if not KLEDB["profiles"] then KLEDB["profiles"] = {} end
 	if not KLEDB["profiles"][T.myname.." - "..GetRealmName()] then KLEDB["profiles"][T.myname.." - "..GetRealmName()] = {} end
 	if not KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"] then KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"] = {} end
-	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["BackgroundTexture"] = "Elvui Blank"
-	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["BarTexture"] = "Elvui Gloss"
+	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["BackgroundTexture"] = "Tukui Blank"
+	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["BarTexture"] = "Tukui Statusbar"
 	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["Border"] = "None"
-	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["Font"] = "Elvui Font"
-	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["TimerFont"] = "Elvui Font"
+	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["Font"] = "Tukui Font"
+	KLEDB["profiles"][T.myname.." - "..GetRealmName()]["Globals"]["TimerFont"] = "Tukui Font"
 end)
 

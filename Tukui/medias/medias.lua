@@ -5,7 +5,6 @@ C["media"] = {
 	["font"] = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=], -- general font of tukui
 	["uffont"] = [[Interface\AddOns\Tukui\medias\fonts\uf_font.ttf]], -- general font of unitframes
 	["dmgfont"] = [[Interface\AddOns\Tukui\medias\fonts\combat_font.ttf]], -- general font of dmg / sct
-	["uffontsize"] = C.unitframes.fontsize,
 	
 	-- fonts (TAIWAN ONLY)
 	["tw_font"] = [=[Fonts\bLEI00D.ttf]=], -- general font of tukui
@@ -21,10 +20,9 @@ C["media"] = {
 	["normTex"] = [[Interface\AddOns\Tukui\medias\textures\normTex]], -- texture used for tukui healthbar/powerbar/etc
 	["glowTex"] = [[Interface\AddOns\Tukui\medias\textures\glowTex]], -- the glow text around some frame.
 	["bubbleTex"] = [[Interface\AddOns\Tukui\medias\textures\bubbleTex]], -- unitframes combo points
-	["copyicon"] = [[Interface\AddOns\Tukui\medias\textures\copy]], -- copy icon
 	["blank"] = [[Interface\AddOns\Tukui\medias\textures\blank]], -- the main texture for all borders/panels
-	["bordercolor"] = C.general.bordercolor, -- border color of tukui panels
-	["backdropcolor"] = C.general.backdropcolor, -- background color of tukui panels
+	["bordercolor"] = { .15, .15, .15 }, -- border color of tukui panels
+	["backdropcolor"] = { .05,.05,.05 }, -- background color of tukui panels
 	["buttonhover"] = [[Interface\AddOns\Tukui\medias\textures\button_hover]],
 	
 	-- sound
@@ -37,7 +35,9 @@ if not LibStub then return end
 local LSM = LibStub("LibSharedMedia-3.0", true)
 if not LSM then return end
 
+LSM:Register("statusbar","Tukui Blank", C.media.blank)
 LSM:Register("statusbar","Tukui Statusbar", C.media.normTex)
 LSM:Register("border","Tukui Glow", C.media.glowTex)
 LSM:Register("font","Tukui Datatext Font", C.datatext.font)
 LSM:Register("font","Tukui UF Font", C.media.uffont)
+LSM:Register("font","Tukui Normal Font", C.media.font)

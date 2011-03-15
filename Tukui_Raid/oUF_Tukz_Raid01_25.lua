@@ -10,7 +10,7 @@ if not C["unitframes"].enable == true then return end
 
 local font2 = C["media"].uffont
 local font1 = C["media"].font
-local fontsize = C["media"].uffontsize
+local fontsize = C["unitframes"].fontsize
 
 local function Shared(self, unit)
 	self.colors = T.oUF_colors

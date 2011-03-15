@@ -238,7 +238,7 @@ end
 
 Stat:SetScript("OnMouseDown", function(self, btn) if btn == "LeftButton" then ToggleFriendsFrame(1) end end)
 Stat:SetScript("OnEnter", function(self)
-	if InCombatLockdown() then return end
+	-- if InCombatLockdown() then return end
 		
 	local totalonline = totalOnline + BNTotalOnline
 	local totalfriends = #friendTable + #BNTable

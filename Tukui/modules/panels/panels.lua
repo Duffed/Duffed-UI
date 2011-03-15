@@ -85,6 +85,7 @@ if C["chat"].leftchatbackground == true then
 	copy1:CreatePanel("Transparent", 20, 20, "LEFT", tabchat1, "RIGHT", 3, 0)
 	copy1:CreateShadow("Default")
 end
+
 if C["chat"].rightchatbackground == true then
 	-- Chat 4 Background
 	local chatbg2 = CreateFrame("Frame", "ChatBG2", UIParent)

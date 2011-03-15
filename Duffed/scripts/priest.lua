@@ -47,24 +47,3 @@ p:SetScript("OnUpdate", function(self, elapsed)
 		p.text:SetFormattedText("%.1f", p.timeleft)
 	end
 end)
-
--- Slash command
-local move = false
-SLASH_DPRIEST1 = "/dpriest"
-SlashCmdList["DPRIEST"] = function()
-	if move == false then
-		move = true
-		p:Show()
-		p:EnableMouse(true)
-		p:SetScript("OnMouseDown", function() p:StartMoving() end)
-		p:SetScript("OnMouseUp", function() p:StopMovingOrSizing() end)
-		print("|cffce3a19dStuff|r - Frame unlocked.")
-		p:UnregisterEvent("UNIT_AURA")
-	elseif move == true then
-		move = false
-		p:Hide()
-		p:EnableMouse(false)
-		print("|cffce3a19dStuff|r - Frame locked.")
-		p:RegisterEvent("UNIT_AURA")
-	end
-end

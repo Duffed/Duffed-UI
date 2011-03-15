@@ -2,6 +2,7 @@ if dStuff.sayinterrupt ~= true then return end
 
 -- Say interrupt
 local function Update(self, event, ...)
+	if not DuffedC.sayinterrupt then return end
 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		if UnitInRaid("player") and GetNumRaidMembers() > 5 then channel = "RAID" elseif GetNumPartyMembers() > 0 then channel = "PARTY" else return end
 		-- local channel = "SAY"

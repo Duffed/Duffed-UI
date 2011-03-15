@@ -23,27 +23,3 @@ f:SetScript("OnEvent", function(self, event, ...)
 		f:AddMessage("- "..dStuff.dispelannouncement.textcolor..select(13, ...), 1, 1, 1)
 	end
 end)
-
--- slash command
-local move = false
-SLASH_DUFFEDDISPELLYEAH1 = "/ddispel"
-SlashCmdList.DUFFEDDISPELLYEAH = function()
-	if not move then
-		move = true
-		f:AddMessage("- "..dStuff.dispelannouncement.textcolor.."around!", 1, 1, 1)
-		f:AddMessage("- "..dStuff.dispelannouncement.textcolor.."Dispelframe", 1, 1, 1)
-		f:AddMessage("- "..dStuff.dispelannouncement.textcolor.."Move", 1, 1, 1)
-		f:SetTimeVisible(999)
-		f:EnableMouse(true)
-		f:SetScript("OnMouseDown", function() f:StartMoving() end)
-		f:SetScript("OnMouseUp", function() f:StopMovingOrSizing() end)
-		f:SetBackdropColor(0.1, 0.1, 0.1, 0.6)
-		print("|cffce3a19dStuff|r - Frame unlocked.")
-	else
-		f:SetTimeVisible(2)
-		move = false
-		f:EnableMouse(false)
-		f:SetBackdropColor(0,0,0,0)
-		print("|cffce3a19dStuff|r - Frame locked.")
-	end
-end

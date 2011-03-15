@@ -80,6 +80,7 @@ local function Local(o)
 	if o == "TukuiConfigUIcastbarfocus-y-offset"  then o = "Focus Castbar offset from the TOP" end
 	if o == "TukuiConfigUIcastbarenable" then o = TukuiL.option_unitframes_castbar end
 	if o == "TukuiConfigUIcastbarcblatency" then o = TukuiL.option_unitframes_latency end
+	if o == "TukuiConfigUIcastbarcbicons" then o = TukuiL.option_unitframes_icon end
 	
 	if o == "TukuiConfigUIactionbarswapbar1and3"  then o = "Swap Mainbar with 3. (on top)" end
 	if o == "TukuiConfigUIactionbarrightbarsmouseover"  then o = "Rightbars on mouseover" end
@@ -92,7 +93,7 @@ local function Local(o)
 	if o == "TukuiConfigUIpvpdrinkannouncement"  then o = "Announce 'drinking' in  Arena" end
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end
 	if o == "TukuiConfigUIpvpsayinterrupt"  then o = "Announce when u interrupt someone" end
-	if o == "TukuiConfigUIpvpdispelannouncement" then o = "Announce Dispels in a movable Frame (/ddispel)" end
+	if o == "TukuiConfigUIpvpdispelannouncement" then o = "Announce Dispels in a movable Frame (/duffed)" end
 	
 	if o == "TukuiConfigUIclasstimer" then o = "ClassTimer" end
 	if o == "TukuiConfigUIclasstimerplayercolor" then o = "Player-Bar Color" end
@@ -107,7 +108,7 @@ local function Local(o)
 	if o == "TukuiConfigUIchatrightchatnumber" then o = "(For Rightchat-Background) Chat Number X" end
 	if o == "TukuiConfigUIchatfading" then o = "Enable fading" end
 	
-	if o == "TukuiConfigUIAddon_Skins" then o = "AddOn Skins" end
+	if o == "TukuiConfigUIAddon_Skins" then o = "Addon Skins" end
 	if o == "TukuiConfigUIAddon_Skinsbackground" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
 	if o == "TukuiConfigUIAddon_Skinscombat_toggle" then o = "Toggle Addonbackground, Recount, Omen & Skada in-/outfight (NOTE: Turn off auto-hide functions in these Addons)" end
 	if o == "TukuiConfigUIAddon_SkinsSkada" then o = "Enable Skada Skin" end
@@ -122,6 +123,8 @@ local function Local(o)
 	if o == "TukuiConfigUIsCombo" then o = "ComboBar (sCombo)" end
 	if o == "TukuiConfigUIsComboenable" then o = "Enable sCombo-Addon for combopoints instead of default cp-display" end
 	if o == "TukuiConfigUIsComboenergybar" then o = "Show Energy-Bar below Combopoints" end
+	
+	if o == "TukuiConfigUImerchantautoguildrepair" then o = "Autorepair from Guild Bank if possible." end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

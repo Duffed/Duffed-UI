@@ -11,7 +11,7 @@ if not C["unitframes"].enable == true or C["unitframes"].gridonly == true then r
 local font2 = C["media"].uffont
 local font1 = C["media"].font
 local normTex = C["media"].normTex
-local fontsize = C["media"].uffontsize
+local fontsize = C["unitframes"].fontsize
 
 local function Shared(self, unit)
 	self.colors = T.oUF_colors

@@ -83,7 +83,7 @@ end
 
 Stat:SetScript("OnMouseDown", function () collectgarbage("collect") Update(Stat, 10) end)
 Stat:SetScript("OnEnter", function(self)
-	if not InCombatLockdown() then
+	-- if not InCombatLockdown() then
 		self.tooltip = true
 		local bandwidth = GetAvailableBandwidth()
 		local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
@@ -109,7 +109,7 @@ Stat:SetScript("OnEnter", function(self)
 			end						
 		end
 		GameTooltip:Show()
-	end
+	-- end
 end)
 Stat:SetScript("OnLeave", function(self) self.tooltip = false GameTooltip:Hide() end)
 Stat:SetScript("OnUpdate", Update)

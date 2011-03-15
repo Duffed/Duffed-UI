@@ -4,8 +4,6 @@ C["general"] = {
 	["blizzardsct"] = true,								-- Skin also Blizzard SCT Font(put it in generel now)
 	["normalfont"] = false,								-- Use the normal/old font + fontsize instead of pixelfont :>
 	["overridehightolow"] = false,						-- even that is experimental only! :> .. use lowres version on high resolution.
-	["backdropcolor"] = { .05,.05,.05 }, 				-- background color of tukui panels
-	["bordercolor"] = { .15, .15, .15 }, 				-- border color of tukui panels
 
 	["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
 	["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
@@ -14,7 +12,7 @@ C["general"] = {
 }
 
 C["unitframes"] = {
-	["layout"] = 1,										-- Layout 1 (default) or 2
+	["layout"] = 1,										-- Layout 1 or 2
 
 	["fontsize"] = 8,									-- Fontsize on Unitframes
 	["healthbarcolor"] = {.2, .2, .2},					-- Healthbar color (if unicolor = true) 
@@ -38,7 +36,6 @@ C["unitframes"] = {
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
 	["enemyhcolor"] = false,                            -- enemy target (players) color by hostility, very useful for healer.´
-	["cbicons"] = true,                                 -- enable icons on castbar
 	["auratimer"] = true,                               -- enable timers on buffs/debuffs
 	["auratextscale"] = 8,                             -- the font size of buffs/debuffs timers on unitframes
 	["playerauras"] = false,                            -- enable auras
@@ -79,6 +76,7 @@ C["unitframes"] = {
 
 C["castbar"] = {
 	["enable"] = true,
+	["cbicons"] = true,
 	["cblatency"] = false,                              -- enable castbar latency
 	["classcolored"] = true,
 		["color"] = { 0.9, 0.9, 0.9, 0.9 },				-- Castbar color for everything except player (if classcolored = false)
@@ -112,7 +110,7 @@ C["pvp"] = {
 	["drinkannouncement"] = true,						-- Drink announcement for arena
 	["ccannouncement"] = true,							-- Announce CC/Buffs/Debuffs (config in AddOns/Stuff/Config.lua)
 	["sayinterrupt"] = true,							-- Interrupt announce
-	["dispelannouncement"] = false,						-- Announce dispels in a movable frame (/ddispel)
+	["dispelannouncement"] = false,						-- Announce dispels in a movable frame (/duffed)
 }
 
 C["Addon_Skins"] = {
@@ -233,6 +231,7 @@ C["tooltip"] = {
 C["merchant"] = {
 	["sellgrays"] = true,                               -- automaticly sell grays?
 	["autorepair"] = true,                              -- automaticly repair?
+		["autoguildrepair"] = true,						-- automaticly repair from guild bank is possible
 	["sellmisc"] = true,                                -- sell defined items automatically
 }
 

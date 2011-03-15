@@ -50,6 +50,58 @@ TukuiSkin:RegisterEvent("ADDON_LOADED")
 TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 	if IsAddOnLoaded("Skinner") or IsAddOnLoaded("Aurora") then return end
 	
+	if addon == "Blizzard_DebugTools" then
+		local noscalemult = T.mult * C["general"].uiscale
+		local bg = {
+		  bgFile = C["media"].blank, 
+		  edgeFile = C["media"].blank, 
+		  tile = false, tileSize = 0, edgeSize = noscalemult, 
+		  insets = { left = -noscalemult, right = -noscalemult, top = -noscalemult, bottom = -noscalemult}
+		}
+		
+		ScriptErrorsFrame:SetBackdrop(bg)
+		ScriptErrorsFrame:SetBackdropColor(unpack(C.media.backdropcolor))
+		ScriptErrorsFrame:SetBackdropBorderColor(unpack(C.media.bordercolor))	
+
+		EventTraceFrame:SetTemplate("Transparent")
+		
+		local texs = {
+			"TopLeft",
+			"TopRight",
+			"Top",
+			"BottomLeft",
+			"BottomRight",
+			"Bottom",
+			"Left",
+			"Right",
+			"TitleBG",
+			"DialogBG",
+		}
+		
+		for i=1, #texs do
+			_G["ScriptErrorsFrame"..texs[i]]:SetTexture(nil)
+			_G["EventTraceFrame"..texs[i]]:SetTexture(nil)
+		end
+		
+		local bg = {
+		  bgFile = C["media"].blank, 
+		  edgeFile = C["media"].blank, 
+		  tile = false, tileSize = 0, edgeSize = noscalemult, 
+		  insets = { left = -noscalemult, right = -noscalemult, top = -noscalemult, bottom = -noscalemult}
+		}
+		
+		for i=1, ScriptErrorsFrame:GetNumChildren() do
+			local child = select(i, ScriptErrorsFrame:GetChildren())
+			if child:GetObjectType() == "Button" and not child:GetName() then
+				
+				SkinButton(child)
+				child:SetBackdrop(bg)
+				child:SetBackdropColor(unpack(C.media.backdropcolor))
+				child:SetBackdropBorderColor(unpack(C.media.bordercolor))	
+			end
+		end	
+	end
+	
 	-- stuff not in Blizzard load-on-demand
 	if addon == "Tukui" then
 		-- Blizzard frame we want to reskin
@@ -212,6 +264,10 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		_G["ReadyCheckListenerFrame"]:SetAlpha(0)
 		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator
 		_G["StackSplitFrame"]:GetRegions():Hide()
+		_G["StaticPopup1EditBox"]:SetTemplate("Default")
+		_G["StaticPopup1EditBoxLeft"]:SetTexture(nil)
+		_G["StaticPopup1EditBoxMid"]:SetTexture(nil)
+		_G["StaticPopup1EditBoxRight"]:SetTexture(nil)
 	end
 	
 	-- mac menu/option panel, made by affli.

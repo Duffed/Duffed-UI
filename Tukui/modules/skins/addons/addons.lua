@@ -97,3 +97,36 @@ if C.Addon_Skins.background then
 		end
 	end)
 end
+
+-- Tiny CooldownToGo Skin (we dont need an config entry for that..)
+if IsAddOnLoaded("CooldownToGo") then
+	local iconborder = CreateFrame("Frame", nil, CooldownToGoFrame)
+	iconborder:CreatePanel("",1,1,"TOPLEFT", CDTGIcon, "TOPLEFT", -2, 2)
+	iconborder:Point("BOTTOMRIGHT", CDTGIcon, "BOTTOMRIGHT", 2, -2)
+	CDTGIcon:SetTexCoord(0.1, 0.9, 0.1, 0.9)
+	CDTGText:SetPoint("LEFT", CooldownToGoFrame, "CENTER", 3, 0)
+end
+
+if IsAddOnLoaded("spellstealer") then
+	SSFrame:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background"})
+	SSFrame:SetBackdropColor(0,0,0,0)
+	SSFrameList:SetBackdropColor(0,0,0,0)
+
+	local sslist = CreateFrame("Frame", nil, SSFrameList)
+	sslist:CreatePanel("", 1, 1, "TOPLEFT", SSFrameList, "TOPLEFT", -2, 2)
+	sslist:Point("BOTTOMRIGHT", 2, -2)
+	sslist:CreateShadow("")
+	
+	local ssframeb = CreateFrame("Frame", nil, sslist)
+	ssframeb:CreatePanel("", 1, 16, "BOTTOMLEFT", sslist, "TOPLEFT", 0, 3)
+	ssframeb:Point("BOTTOMRIGHT", sslist, "TOPRIGHT", 0, 3)
+	ssframeb:CreateShadow("")
+	
+	SSFrametitletext:SetFont(C.media.font, 12)
+	SSFrametitletext:SetTextColor(unpack(C.datatext.color))
+	SSFrameListText:SetFont(C.media.font, 10)
+	
+	SSFrameListText:Point("LEFT", 2, 0)
+	SSFrametitletext:ClearAllPoints()
+	SSFrametitletext:Point("LEFT", ssframeb, "LEFT", 2, 0)
+end

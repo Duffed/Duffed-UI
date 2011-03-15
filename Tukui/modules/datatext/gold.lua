@@ -74,7 +74,7 @@ if C["datatext"].gold and C["datatext"].gold > 0 then
 	Stat:SetScript("OnMouseDown", function() OpenAllBags() end)
 	Stat:SetScript("OnEvent", OnEvent)
 	Stat:SetScript("OnEnter", function(self)
-		if not InCombatLockdown() then
+		-- if not InCombatLockdown() then
 			local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)
 			if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
 				GameTooltip:SetOwner(panel, anchor, xoff, yoff)
@@ -114,7 +114,7 @@ if C["datatext"].gold and C["datatext"].gold > 0 then
 				if name and count then GameTooltip:AddDoubleLine(name, count, r, g, b, 1, 1, 1) end
 			end
 			GameTooltip:Show()
-		end
+		-- end
 	end)
 	Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)	
 	-- reset gold data

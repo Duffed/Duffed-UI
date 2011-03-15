@@ -21,8 +21,8 @@ local CAST_SEPARATOR = true					-- Show cast separator
 local CAST_SEPARATOR_COLOR = { 0, 0, 0, .5 } -- Sets cast separator color
 local TEXT_MARGIN = 5						-- Sets distance between right edge of bar and name and left edge of bar and time left
 
-MASTER_FONT = { C["media"].uffont, C.media.uffontsize }; -- Sets font for all texts
-STACKS_FONT = { C["media"].uffont, C.media.uffontsize , "THINOUTLINE"}; -- Sets font for stack count
+MASTER_FONT = { C["media"].uffont, C.unitframes.fontsize }; -- Sets font for all texts
+STACKS_FONT = { C["media"].uffont, C.unitframes.fontsize , "THINOUTLINE"}; -- Sets font for stack count
 
 local PERMANENT_AURA_VALUE = 1				-- Permanent aura bars 1 = filled 0 = empty
 
@@ -47,7 +47,7 @@ local TRINKET_FILTER = {
 		CreateSpellEntry( 91832 ), -- Fury of Angerforge stacks
 		
 		-- Racials
-		CreateSpellEntry( 20954 ), -- Stoneform (Dwarf)
+		CreateSpellEntry( 65116 ), -- Stoneform (Dwarf)
 		CreateSpellEntry( 59752 ), -- Every Man for Himself (Human)
 		CreateSpellEntry( 57901 ), -- Gift of the Naaru (Draenei)
 		CreateSpellEntry( 68992 ), -- Darkflight (Worgen)
@@ -262,7 +262,7 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 34490 ), -- Silencing Shot
 				CreateSpellEntry( 37506 ), -- Scatter Shot
 				CreateSpellEntry( 88691 ), -- Marker for death
-				CreateSpellEntry( 1130 ), -- Hunters mark
+				CreateSpellEntry( 1130, true ), -- Hunters mark
 			},
 			player = {
 				CreateSpellEntry( 82749 ), -- killing streak
@@ -328,25 +328,25 @@ local CLASS_FILTERS = {
 		},
 		PALADIN = { 
 			target = {
-                CreateSpellEntry( 31803 ), -- Censure --
-                CreateSpellEntry( 20066 ), -- Repentance --
-                CreateSpellEntry( 853 ), -- Hammer of Justice --
-                CreateSpellEntry( 31935 ), -- Avenger's Shield --
-                CreateSpellEntry( 20170 ), -- Seal of Justice --
-                CreateSpellEntry( 26017 ), -- Vindication --
-                CreateSpellEntry( 68055 ), -- Judgements of the Just --
+				CreateSpellEntry( 31803 ), -- Censure --
+				CreateSpellEntry( 20066 ), -- Repentance --
+				CreateSpellEntry( 853 ), -- Hammer of Justice --
+				CreateSpellEntry( 31935 ), -- Avenger's Shield --
+				CreateSpellEntry( 20170 ), -- Seal of Justice --
+				CreateSpellEntry( 26017 ), -- Vindication --
+				CreateSpellEntry( 68055 ), -- Judgements of the Just --
 				CreateSpellEntry( 86273 ), -- Illuminated Healing
-            },
-            player = {
-                CreateSpellEntry( 642 ), -- Divine Shield
-                CreateSpellEntry( 31850 ), -- Ardent Defender
-                CreateSpellEntry( 498 ), -- Divine Protection
-                CreateSpellEntry( 31884 ), -- Avenging Wrath
-                CreateSpellEntry( 85696 ), -- Zealotry
-                CreateSpellEntry( 25771 ), -- Debuff: Forbearance
-                CreateSpellEntry( 1044 ), -- Hand of Freedom
-                CreateSpellEntry( 1022 ), -- Hand of Protection
-                CreateSpellEntry( 1038 ), -- Hand of Salvation
+			},
+			player = {
+				CreateSpellEntry( 642 ), -- Divine Shield
+				CreateSpellEntry( 31850 ), -- Ardent Defender
+				CreateSpellEntry( 498 ), -- Divine Protection
+				CreateSpellEntry( 31884 ), -- Avenging Wrath
+				CreateSpellEntry( 85696 ), -- Zealotry
+				CreateSpellEntry( 25771 ), -- Debuff: Forbearance
+				CreateSpellEntry( 1044 ), -- Hand of Freedom
+				CreateSpellEntry( 1022 ), -- Hand of Protection
+				CreateSpellEntry( 1038 ), -- Hand of Salvation
 				CreateSpellEntry( 53657 ), -- Judgements of the Pure
 				CreateSpellEntry( 53563 ), -- Beacon of Light
 				CreateSpellEntry( 31821 ), -- Aura Mastery
@@ -354,11 +354,11 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 31482 ), -- Divine Favor
 				CreateSpellEntry( 6940 ), -- Hand of Sacrifice
 				CreateSpellEntry( 84963 ), -- Inquisition
-            },
-            procs = {
-                CreateSpellEntry( 59578 ), -- The Art of War
-                CreateSpellEntry( 90174 ), -- Hand of Light
-                CreateSpellEntry( 71396 ), -- Rage of the Fallen		
+			},
+			procs = {
+				CreateSpellEntry( 59578 ), -- The Art of War
+				CreateSpellEntry( 90174 ), -- Hand of Light
+				CreateSpellEntry( 71396 ), -- Rage of the Fallen		
 				CreateSpellEntry( 53672 ), CreateSpellEntry( 54149 ), -- Infusion of Light (Rank1/Rank2)
 				CreateSpellEntry( 85496 ), -- Speed of Light
 				CreateSpellEntry( 88819 ), -- Daybreak
@@ -368,35 +368,35 @@ local CLASS_FILTERS = {
 		PRIEST = { 
 			target = { 
 				CreateSpellEntry( 17 ), -- Power Word: Shield
-                CreateSpellEntry( 6788, true, nil, 1 ), -- Weakened Soul
-                CreateSpellEntry( 139 ), -- Renew
-                CreateSpellEntry( 33076 ), -- Prayer of Mending
-                CreateSpellEntry( 552 ), -- Abolish Disease
-                CreateSpellEntry( 63877 ), -- Pain Suppression
-                CreateSpellEntry( 34914, false, nil, nil, 34914 ), -- Vampiric Touch
-                CreateSpellEntry( 589 ), -- Shadow Word: Pain
-                CreateSpellEntry( 2944 ), -- Devouring Plague
-                CreateSpellEntry( 48153 ), -- Guardian Spirit
+				CreateSpellEntry( 6788, true, nil, 1 ), -- Weakened Soul
+				CreateSpellEntry( 139 ), -- Renew
+				CreateSpellEntry( 33076 ), -- Prayer of Mending
+				CreateSpellEntry( 552 ), -- Abolish Disease
+				CreateSpellEntry( 63877 ), -- Pain Suppression
+				CreateSpellEntry( 34914, false, nil, nil, 34914 ), -- Vampiric Touch
+				CreateSpellEntry( 589 ), -- Shadow Word: Pain
+				CreateSpellEntry( 2944 ), -- Devouring Plague
+				CreateSpellEntry( 48153 ), -- Guardian Spirit
 				CreateSpellEntry( 77489 ), -- Echo of Light
-            },
-            player = {
+			},
+			player = {
 				CreateSpellEntry( 96219 ), -- Strength of Soul (silence immun)
 				CreateSpellEntry( 89489 ), -- priest slow immun
 				CreateSpellEntry( 139 ), -- Renew
-                CreateSpellEntry( 10060 ), -- Power Infusion
-                CreateSpellEntry( 47585 ), -- Dispersion
+				CreateSpellEntry( 10060 ), -- Power Infusion
+				CreateSpellEntry( 47585 ), -- Dispersion
 				CreateSpellEntry( 81700 ), -- Archangel
 				CreateSpellEntry( 14751 ), -- Chakra
 				CreateSpellEntry( 81208 ), -- Chakra Heal
 				CreateSpellEntry( 81207 ), -- Chakra Renew
 				CreateSpellEntry( 81209 ), -- Chakra Smite
 				CreateSpellEntry( 81206 ), -- Prayer of Healing
-            },
-            procs = {
-                CreateSpellEntry( 63735 ), -- Serendipity
-                CreateSpellEntry( 88690 ), -- Surge of Light
-                CreateSpellEntry( 77487 ), -- Shadow Orb
-                CreateSpellEntry( 71572 ), -- Cultivated Power
+			},
+			procs = {
+				CreateSpellEntry( 63735 ), -- Serendipity
+				CreateSpellEntry( 88690 ), -- Surge of Light
+				CreateSpellEntry( 77487 ), -- Shadow Orb
+				CreateSpellEntry( 71572 ), -- Cultivated Power
 				CreateSpellEntry( 81661 ), -- Evangelism
 				CreateSpellEntry( 72418 ), -- Kuhlendes Wissen
 				CreateSpellEntry( 71584 ), -- Revitalize
@@ -407,40 +407,40 @@ local CLASS_FILTERS = {
 		ROGUE = { 
 			target = { 
 				CreateSpellEntry( 1833 ), -- Cheap Shot
-                CreateSpellEntry( 408 ), -- Kidney Shot
-                CreateSpellEntry( 1776 ), -- Gouge
-                CreateSpellEntry( 2094 ), -- Blind
-                CreateSpellEntry( 8647 ), -- Expose Armor
-                CreateSpellEntry( 51722 ), -- Dismantle
-                CreateSpellEntry( 2818 ), -- Deadly Poison
-                CreateSpellEntry( 13218 ), -- Wound Posion
-                CreateSpellEntry( 3409 ),  -- Crippling Poison 
-                CreateSpellEntry( 5760 ), -- Mind-Numbing Poison
-                CreateSpellEntry( 6770 ), -- Sap
-                CreateSpellEntry( 1943 ), -- Rupture
-                CreateSpellEntry( 703 ), -- Garrote
-                CreateSpellEntry( 79140 ), -- vendetta
-                CreateSpellEntry( 16511 ), -- Hemorrhage
+				CreateSpellEntry( 408 ), -- Kidney Shot
+				CreateSpellEntry( 1776 ), -- Gouge
+				CreateSpellEntry( 2094 ), -- Blind
+				CreateSpellEntry( 8647 ), -- Expose Armor
+				CreateSpellEntry( 51722 ), -- Dismantle
+				CreateSpellEntry( 2818 ), -- Deadly Poison
+				CreateSpellEntry( 13218 ), -- Wound Posion
+				CreateSpellEntry( 3409 ),  -- Crippling Poison 
+				CreateSpellEntry( 5760 ), -- Mind-Numbing Poison
+				CreateSpellEntry( 6770 ), -- Sap
+				CreateSpellEntry( 1943 ), -- Rupture
+				CreateSpellEntry( 703 ), -- Garrote
+				CreateSpellEntry( 79140 ), -- vendetta
+				CreateSpellEntry( 16511 ), -- Hemorrhage
 				CreateSpellEntry( 84745 ), -- Shallow Insight
 				CreateSpellEntry( 84746 ), -- Moderate Insight
 				CreateSpellEntry( 84747 ), -- Deep Insight
-            },
-            player = {
+			},
+			player = {
 				CreateSpellEntry( 13750 ), -- adrenalin stuff
-                CreateSpellEntry( 32645 ), -- Envenom
-                CreateSpellEntry( 2983 ), -- Sprint
-                CreateSpellEntry( 5277 ), -- Evasion
-                CreateSpellEntry( 1776 ), -- Gouge
-                CreateSpellEntry( 51713 ), -- Shadow Dance
-                CreateSpellEntry( 1966 ), -- Feint
-                CreateSpellEntry( 73651 ), -- Recuperate
-                CreateSpellEntry( 5171 ), -- Slice and Dice
-                CreateSpellEntry( 55503 ), -- Lifeblood
+				CreateSpellEntry( 32645 ), -- Envenom
+				CreateSpellEntry( 2983 ), -- Sprint
+				CreateSpellEntry( 5277 ), -- Evasion
+				CreateSpellEntry( 1776 ), -- Gouge
+				CreateSpellEntry( 51713 ), -- Shadow Dance
+				CreateSpellEntry( 1966 ), -- Feint
+				CreateSpellEntry( 73651 ), -- Recuperate
+				CreateSpellEntry( 5171 ), -- Slice and Dice
+				CreateSpellEntry( 55503 ), -- Lifeblood
 				CreateSpellEntry( 13877 ), -- Blade Flurry
 				CreateSpellEntry( 74001 ), -- Combat Readiness
-            },
-            procs = {
-                CreateSpellEntry( 71396 ), -- Rage of the Fallen
+			},
+			procs = {
+				CreateSpellEntry( 71396 ), -- Rage of the Fallen
 			},
 		},
 		SHAMAN = {
@@ -468,37 +468,39 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 16246 ), -- Clearcasting				
 			},
 		},
-		WARLOCK = { 
+		WARLOCK = {
 			target = {
-				CreateSpellEntry( 48181, false, nil, nil, 48181 ), -- Haunt
-				CreateSpellEntry( 32389 ), -- Shadow Embrace 
-				CreateSpellEntry( 172 ), -- Corruption
-				CreateSpellEntry( 30108, false, nil, nil, 30108 ), -- Unstable Affliction
-				CreateSpellEntry( 603 ), -- Curse of Doom
-				CreateSpellEntry( 980 ), -- Curse of Agony
-				CreateSpellEntry( 1490 ), -- Curse of the Elements 
-				CreateSpellEntry( 17962 ), -- Conflagration
-				CreateSpellEntry( 348, false, nil, nil, 348 ), -- Immolate
-				CreateSpellEntry( 27243, false, nil, nil, 27243 ), -- Seed of Corruption
-				CreateSpellEntry( 17941 ), -- Shadow trance
-				CreateSpellEntry( 64371 ), -- Eradication
-				CreateSpellEntry( 85383, false, nil, nil, 6353 ), -- Imp Soul Fire
-				CreateSpellEntry( 1714 ), -- Curse of Tongue
-				CreateSpellEntry( 18223 ), -- Curse of Exhaustion
-				CreateSpellEntry( 702 ), -- Curse of Weakness
+				CreateSpellEntry( 980 ), -- Bane of Agony
+				CreateSpellEntry( 603 ), -- Bane of Doom
+				CreateSpellEntry( 80240 ), -- Bane of Havoc
+				CreateSpellEntry( 1490 ), -- Curse of the Elements
 				CreateSpellEntry( 86105 ), -- Jinx: Curse of the Elements
+				CreateSpellEntry( 18223 ), -- Curse of Exhaustion
+				CreateSpellEntry( 1714 ), -- Curse of Tongue
+				CreateSpellEntry( 702 ), -- Curse of Weakness
+				CreateSpellEntry( 172 ), -- Corruption
+				CreateSpellEntry( 27243, false, nil, nil, 27243 ), -- Seed of Corruption
+				CreateSpellEntry( 48181, false, nil, nil, 48181 ), -- Haunt
+				CreateSpellEntry( 32389 ), -- Shadow Embrace
+				CreateSpellEntry( 30108, false, nil, nil, 30108 ), -- Unstable Affliction
+				CreateSpellEntry( 348, false, nil, nil, 348 ), -- Immolate
+				CreateSpellEntry( 5782 ), -- Fear
+				CreateSpellEntry( 710 ), -- Banish
+				CreateSpellEntry( 5484 ), -- Howl of Terror
+				CreateSpellEntry( 6789 ), -- Deathcoil
 			},
-				player = {            
-				CreateSpellEntry( 17941 ), -- Shadow trance 
+				player = {
+				CreateSpellEntry( 17941 ), -- Shadow Trance
 				CreateSpellEntry( 64371 ), -- Eradication
 				CreateSpellEntry( 85383 ), -- Improved Soul Fire
+				CreateSpellEntry( 79459 ),  CreateSpellEntry( 79463 ),  CreateSpellEntry( 79460 ),  CreateSpellEntry( 79462 ),  CreateSpellEntry( 79464 ), -- Demon Soul
 			},
 			procs = {
 				CreateSpellEntry( 86121 ), -- Soul Swap
 				CreateSpellEntry( 54274 ), CreateSpellEntry( 54276 ), CreateSpellEntry( 54277 ), -- Backdraft rank 1/2/3
-				CreateSpellEntry( 71165 ), -- Molten Cor
+				CreateSpellEntry( 71165 ), -- Molten Core
 				CreateSpellEntry( 63167 ), -- Decimation
-				CreateSpellEntry( 47283 ), -- Empowered Imp         
+				CreateSpellEntry( 47283 ), -- Empowered Imp
 			},
 		},
 		WARRIOR = { 
@@ -528,7 +530,7 @@ local CLASS_FILTERS = {
 				CreateSpellEntry( 1719 ), -- Recklessness
 				CreateSpellEntry( 20230 ), -- Retaliation
 				CreateSpellEntry( 2565 ), -- Shield Block
-                CreateSpellEntry( 12976 ), -- Last Stand
+				CreateSpellEntry( 12976 ), -- Last Stand
 				CreateSpellEntry( 90806 ), -- Executioner
 				CreateSpellEntry( 32216 ), -- Victorious (Victory Rush enabled)
 				CreateSpellEntry( 12292 ), -- Death Wish

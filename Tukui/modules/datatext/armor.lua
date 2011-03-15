@@ -26,7 +26,7 @@ if C["datatext"].armor and C["datatext"].armor > 0 then
 	Stat:SetScript("OnMouseDown", function() ToggleCharacter("PaperDollFrame") end)
 	Stat:SetScript("OnEvent", Update)
 	Stat:SetScript("OnEnter", function(self)
-		if not InCombatLockdown() then
+		-- if not InCombatLockdown() then
 			local anchor, panel, xoff, yoff = T.DataTextTooltipAnchor(Text)	
 			if panel == TukuiMinimapStatsLeft or panel == TukuiMinimapStatsRight then
 				GameTooltip:SetOwner(panel, anchor, xoff, yoff)
@@ -53,7 +53,7 @@ if C["datatext"].armor and C["datatext"].armor > 0 then
 				GameTooltip:AddDoubleLine(UnitLevel("target"),format("%.2f", mitigation*100) .. "%",1,1,1)
 			end
 			GameTooltip:Show()
-		end
+		-- end
 	end)
 	Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
 end

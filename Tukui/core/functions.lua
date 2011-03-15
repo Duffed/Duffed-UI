@@ -301,14 +301,16 @@ T.panelcolor = ("|cff%.2x%.2x%.2x"):format(dr * 255, dg * 255, db * 255)
 T.cbSize = function()
 	if C["unitframes"].enable ~= true or C["castbar"].enable ~= true then return end
 
+	local x = 4
+	if C.castbar.cbicons then x = 32 end
 	if C["actionbar"].petbarhorizontal == true then
 		if TukuiPetBar:IsShown() then
-			TukuiPlayerCastBar:Width(TukuiPetBar:GetWidth() - 32)
+			TukuiPlayerCastBar:Width(TukuiPetBar:GetWidth() - x)
 		else
-			TukuiPlayerCastBar:Width(TukuiBar2:GetWidth() - 32)
+			TukuiPlayerCastBar:Width(TukuiBar2:GetWidth() - x)
 		end
 	else
-		TukuiPlayerCastBar:Width(TukuiBar2:GetWidth() - 32)
+		TukuiPlayerCastBar:Width(TukuiBar2:GetWidth() - x)
 	end
 end
 
@@ -317,16 +319,18 @@ T.cbPosition = function()
 	if C["unitframes"].enable ~= true or C["castbar"].enable ~= true then return end
 
 	T.cbSize()
+	local x = 0
+	if C.castbar.cbicons then x = 14 end
 	if TukuiDataPerChar.hidebar2 == true then
 		TukuiPlayerCastBar:ClearAllPoints()
 		if C["actionbar"].petbarhorizontal == true then
 			if TukuiPetBar:IsShown() then
 				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, 6)
 			else
-				TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", 14, 6)
+				TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", x, 6)
 			end
 		else
-			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", 14, 6)
+			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", x, 6)
 		end
 	else
 		TukuiPlayerCastBar:ClearAllPoints()
@@ -344,7 +348,7 @@ end
 
 -- Petbarposition
 T.petBarPosition = function()
-if C["actionbar"].petbarhorizontal ~= true then return end
+if C["actionbar"].petbarhorizontal ~= true or InCombatLockdown() then return end
 	TukuiPetBar:ClearAllPoints()
 	if TukuiDataPerChar.hidebar2 == true then
 		TukuiPetBar:Point("BOTTOM", TukuiBar1, "TOP", 0, 4)

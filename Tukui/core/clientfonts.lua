@@ -7,10 +7,10 @@ if T.client == "zhTW" then
 	C["media"].uffont = C["media"].tw_uffont
 	C["media"].font = C["media"].tw_font
 	C["media"].dmgfont = C["media"].tw_dmgfont
-	C["media"].uffontsize = 12
+	if C["unitframes"].fontsize == 8 then C["unitframes"].fontsize = 11 end
 elseif T.client == "koKR" then
 	C["media"].uffont = C["media"].kr_uffont
 	C["media"].font = C["media"].kr_font
 	C["media"].dmgfont = C["media"].kr_dmgfont
-	C["media"].uffontsize = 12
+	if C["unitframes"].fontsize == 8 then C["unitframes"].fontsize = 11 end
 end

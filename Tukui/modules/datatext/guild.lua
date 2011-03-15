@@ -189,7 +189,7 @@ Stat:SetScript("OnMouseUp", function(self, btn)
 end)
 
 Stat:SetScript("OnEnter", function(self)
-	if InCombatLockdown() or not IsInGuild() then return end
+	-- if InCombatLockdown() or not IsInGuild() then return end
 		
 	local name, rank, level, zone, note, officernote, connected, status, class
 	local zonec, classc, levelc

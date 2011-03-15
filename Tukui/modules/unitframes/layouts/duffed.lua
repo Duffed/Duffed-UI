@@ -16,7 +16,7 @@ local font2 = C["media"].font
 local normTex = C["media"].normTex
 local glowTex = C["media"].glowTex
 local bubbleTex = C["media"].bubbleTex
-local fontsize = C["media"].uffontsize
+local fontsize = C.unitframes.fontsize
 local playerwidth = C["unitframes"].framewidth
 if T.lowversion and not C.general.overridehightolow then playerwidth = C["unitframes"].framewidth - 25 end 
 local nameoffset = 4
@@ -682,22 +682,24 @@ local function Shared(self, unit)
 			castbar.border:Point("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
 			castbar.border:CreateShadow("Default")
 			
-			castbar.button = CreateFrame("Frame", nil, castbar)
-			castbar.button:SetTemplate("Default")
-			castbar.button:CreateShadow("Default")
-			
-			if unit == "player" then
-				castbar.button:Size(25)
-				castbar.button:Point("RIGHT",castbar,"LEFT", -5, 0)
-			elseif unit == "target" then
-				castbar.button:Size(27)
-				castbar.button:Point("BOTTOM", castbar, "TOP", 0, 5)
-			end
+			if C.castbar.cbicons then
+				castbar.button = CreateFrame("Frame", nil, castbar)
+				castbar.button:SetTemplate("Default")
+				castbar.button:CreateShadow("Default")
+				
+				if unit == "player" then
+					castbar.button:Size(25)
+					castbar.button:Point("RIGHT",castbar,"LEFT", -5, 0)
+				elseif unit == "target" then
+					castbar.button:Size(27)
+					castbar.button:Point("BOTTOM", castbar, "TOP", 0, 5)
+				end
 
-			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
-			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
-			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+				castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+				castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
+				castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
+				castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+			end
 			
 			-- cast bar latency on player
 			if unit == "player" and C["castbar"].cblatency == true then
@@ -867,7 +869,7 @@ local function Shared(self, unit)
 			line1:CreatePanel("Default", 15, 2, "RIGHT", health.border, "LEFT", -1, 0)
 			
 			line2 = CreateFrame("Frame", nil, health)
-			line2:CreatePanel("Default", 2, 15, "BOTTOM", line1, "LEFT", 0, -1)
+			line2:CreatePanel("Default", 2, 14, "BOTTOM", line1, "LEFT", 0, -1)
 		end
 		
 		-- portrait
@@ -984,7 +986,7 @@ local function Shared(self, unit)
 			line1:CreatePanel("Default", 15, 2, "LEFT", health.border, "RIGHT", 1, 0)
 			
 			line2 = CreateFrame("Frame", nil, health)
-			line2:CreatePanel("Default", 2, 15, "BOTTOM", line1, "RIGHT", 0, -1)
+			line2:CreatePanel("Default", 2, 14, "BOTTOM", line1, "RIGHT", 0, -1)
 		end
 		
 		if (C["castbar"].enable == true) then
@@ -1260,16 +1262,18 @@ local function Shared(self, unit)
 			castbar.CustomDelayText = T.CustomCastDelayText
 			castbar.PostCastStart = T.CheckCast
 			castbar.PostChannelStart = T.CheckChannel
-									
-			castbar.button = CreateFrame("Frame", nil, castbar)
-			castbar.button:Size(31)
-			castbar.button:Point("BOTTOM", castbar, "TOP",0,5)
-			castbar.button:SetTemplate("Default")
-			castbar.button:CreateShadow("Default")
-			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
-			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
-			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+	
+			if C.castbar.cbicons == true then
+				castbar.button = CreateFrame("Frame", nil, castbar)
+				castbar.button:Size(31)
+				castbar.button:Point("BOTTOM", castbar, "TOP",0,5)
+				castbar.button:SetTemplate("Default")
+				castbar.button:CreateShadow("Default")
+				castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+				castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
+				castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
+				castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+			end
 
 			self.Castbar = castbar
 			self.Castbar.Time = castbar.time
@@ -1565,8 +1569,6 @@ local function Shared(self, unit)
 		castbar:SetHeight(12)
 		castbar:SetStatusBarTexture(normTex)
 		castbar:SetFrameLevel(10)
-		castbar:Point("TOPLEFT", power, "TOPLEFT", 19, -9)
-		castbar:Point("TOPRIGHT", power, "TOPRIGHT", 0, -9)
 		
 		castbar.border = CreateFrame("Frame", nil, castbar)
 		castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
@@ -1581,15 +1583,21 @@ local function Shared(self, unit)
 		castbar.CustomDelayText = T.CustomCastDelayText
 		castbar.PostCastStart = T.CheckCast
 		castbar.PostChannelStart = T.CheckChannel
-								
-		castbar.button = CreateFrame("Frame", nil, castbar)
-		castbar.button:CreatePanel("Default", 16, 16, "BOTTOMRIGHT", castbar, "BOTTOMLEFT",-5,-2)
-		castbar.button:CreateShadow("Default")
+		
+		local Ax = 0
+		if C.castbar.cbicons == true then
+			Ax = 19
+			castbar.button = CreateFrame("Frame", nil, castbar)
+			castbar.button:CreatePanel("Default", 16, 16, "BOTTOMRIGHT", castbar, "BOTTOMLEFT",-5,-2)
+			castbar.button:CreateShadow("Default")
 
-		castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
-		castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
-		castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
-		castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+			castbar.icon = castbar.button:CreateTexture(nil, "ARTWORK")
+			castbar.icon:Point("TOPLEFT", castbar.button, 2, -2)
+			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
+			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
+		end
+		castbar:Point("TOPLEFT", power, "TOPLEFT", Ax, -9)
+		castbar:Point("TOPRIGHT", power, "TOPRIGHT", 0, -9)
 
 		self.Castbar = castbar
 		self.Castbar.Icon = castbar.icon

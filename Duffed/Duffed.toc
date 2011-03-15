@@ -4,6 +4,7 @@
 ## Author: Duffed
 ## OptionalDeps: Tukui
 Config.lua
+scripts\slashcommand.lua
 scripts\Settings.lua
 scripts\Stuff.lua
 scripts\movable.lua

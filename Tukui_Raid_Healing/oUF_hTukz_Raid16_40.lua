@@ -11,7 +11,7 @@ if not C["unitframes"].enable == true then return end
 local font2 = C["media"].uffont
 local font1 = C["media"].font
 local normTex = C["media"].normTex
-local fontsize = C["media"].uffontsize
+local fontsize = C["unitframes"].fontsize
 
 local function Shared(self, unit)
 	self.colors = T.oUF_colors
@@ -46,9 +46,7 @@ local function Shared(self, unit)
 	if not unit:find("partypet") then
 		health.value:Point("BOTTOM", health, 1, 2)
 	end
-	health.value:SetFont(font2, fontsize)
-	health.value:SetTextColor(1,1,1)
-	health.value:SetShadowOffset(1, -1)
+	health.value:SetFont(font2, fontsize, "THINOUTLINE")
 	self.Health.value = health.value
 	
 	health.PostUpdate = T.PostUpdateHealthRaid

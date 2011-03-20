@@ -4,18 +4,18 @@ if IsAddOnLoaded("Tukui") then
 	if C["unitframes"].enable == true then return end
 end
 
-local targethp = CreateFrame("Frame", nil, TargetFrame)
-targethp:SetPoint("RIGHT", "TargetFrameHealthBar", "LEFT", -3, 0)
-targethp:SetSize(30, 12)
-
-local hptext = targethp:CreateFontString("TargetHealthPercentageFontString", "OVERLAY", "GameFontNormalSmall")
-hptext:SetPoint("CENTER", targethp, "CENTER")
+local hptext = TargetFrameHealthBar:CreateFontString("TargetHealthPercentageFontString", "OVERLAY")
+hptext:SetPoint("RIGHT", TargetFrameHealthBar, "LEFT", -5, 0)
+hptext:SetFont(dStuff.font, 12)
+hptext:SetShadowColor(0,0,0)
+hptext:SetShadowOffset(1,-1)
+hptext:SetTextColor(1,1,1)
 hptext:SetJustifyH("RIGHT")
 
-targethp:RegisterEvent("PLAYER_TARGET_CHANGED")
-targethp:RegisterEvent("UNIT_HEALTH")
+TargetFrameHealthBar:RegisterEvent("PLAYER_TARGET_CHANGED")
+TargetFrameHealthBar:RegisterEvent("UNIT_HEALTH")
 
-targethp:SetScript("OnEvent", function (self, event, ...)
+TargetFrameHealthBar:SetScript("OnEvent", function (self, event, ...)
 	if ((event == "UNIT_HEALTH") and ((...) ~= "target")) then
 		return
 	end

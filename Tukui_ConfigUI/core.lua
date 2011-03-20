@@ -42,6 +42,7 @@ local function Local(o)
 	if o == "TukuiConfigUIgeneraloverridehightolow" then o = "Use Low-res Version on High-res (Experimental)" end
 	if o == "TukuiConfigUIgeneralbordercolor" then o = "Bordercolor (Tukui Panels)" end
 	if o == "TukuiConfigUIgeneralbackdropcolor" then o = "Backdropcolor (Tukui Panels)" end
+	if o == "TukuiConfigUIgeneralclasscoloredborder" then o = "Tukui-Panel-Border classcolored" end
 	
 	if o == "TukuiConfigUIdatatextcolor" then o = "Text Color (datatext, chat etc.)" end
 	if o == "TukuiConfigUIdatatextclasscolored" then o = "Classcolored Text" end
@@ -125,6 +126,8 @@ local function Local(o)
 	if o == "TukuiConfigUIsComboenergybar" then o = "Show Energy-Bar below Combopoints" end
 	
 	if o == "TukuiConfigUImerchantautoguildrepair" then o = "Autorepair from Guild Bank if possible." end
+	
+	if o == "TukuiConfigUInameplateclassicons" then o = "Display Classicon on nameplates for enemys" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

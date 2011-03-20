@@ -36,7 +36,8 @@ local Update = function(self, event, unit, powerType)
 	elseif(health.colorReaction and UnitReaction(unit, 'player')) then
 		t = self.colors.reaction[UnitReaction(unit, "player")]
 	elseif(health.colorSmooth) then
-		r, g, b = self.ColorGradient(min/max, .9, 0, 0, .9, .9, 0, unpack(C.unitframes.healthbarcolor))
+		local hr, hg, hb = unpack(C.unitframes.healthbarcolor)
+		r, g, b = self.ColorGradient(min/max, .9, 0, 0, .9, .9, 0, hr, hg, hb)
 	elseif(health.colorHealth) then
 		t = self.colors.health
 	end

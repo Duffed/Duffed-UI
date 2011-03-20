@@ -54,7 +54,12 @@ local conditions = setmetatable({
 	Resting = IsResting,
 	Combat = InCombatLockdown,
 	PlayerNotMaxHealth = function(obj, unit) return unit and UnitHealth("player") ~= UnitHealthMax("player") end,
-	PlayerNotMaxMana = function(obj, unit) return unit and UnitPower("player") ~= UnitPowerMax("player") end,
+	PlayerNotMaxMana = function(obj, unit)
+		local powerType, powerTypeString = UnitPowerType("player")
+		if powerTypeString ~= "RAGE" and powerTypeString ~= "RUNIC_POWER" then
+			return unit and UnitPower("player") ~= UnitPowerMax("player")
+		end
+	end,
 	Arena = function(obj, unit) return unit and GetZonePVPInfo() == "arena" end, 
 	Instance = function(obj, unit) return unit and IsInInstance() ~= nil end,
 }, {__index = function(t, k)

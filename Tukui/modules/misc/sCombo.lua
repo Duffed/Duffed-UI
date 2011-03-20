@@ -1,10 +1,10 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
--- sCombo
+-- sCombo (Minimal Combo Bar Replacement)
 -- Author: Smelly
--- Minimal Combo Bar Replacement.
 
-if not C.sCombo.enable then return end
+if not C.sCombo.enable or not C.unitframes.enable then return end
+
 TukuiTarget:DisableElement('CPoints') 
 local Options = {
 	comboWidth = T.Scale(40),

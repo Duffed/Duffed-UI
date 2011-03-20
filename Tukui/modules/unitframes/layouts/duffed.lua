@@ -853,7 +853,7 @@ local function Shared(self, unit)
 			debuffs:SetWidth(127)
 			debuffs.size = 19.5
 			debuffs.spacing = 4
-			debuffs.num = 6
+			debuffs.num = 5
 
 			debuffs:Point("TOPLEFT", power, "BOTTOMLEFT", -2, -5)
 			debuffs.initialAnchor = "TOPLEFT"
@@ -1410,13 +1410,6 @@ local function Shared(self, unit)
 		if C["unitframes"].showsmooth == true then
 			power.Smooth = true
 		end
-		
-		if C["unitframes"].unicolor == true then
-			power.colorTapping = true
-			power.colorClass = true			
-		else
-			power.colorPower = true
-		end
 
 		local powerBG = power:CreateTexture(nil, 'BORDER')
 		powerBG:SetAllPoints(power)
@@ -1438,8 +1431,9 @@ local function Shared(self, unit)
 		health.border:CreateShadow("Default")
 		
 		power.border = CreateFrame("Frame", nil, power)
-		power.border:CreatePanel("Default",1,1,"TOPLEFT", power, "TOPLEFT", -2, 2)
-		power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+		power.border:CreateLine(power:GetWidth(), 1)
+		power.border:Point("BOTTOMLEFT", power, "TOPLEFT", -1, 1)
+		power.border:Point("BOTTOMRIGHT", power, "TOPRIGHT", 1, 1)
 		
 		-- names
 		local Name = T.SetFontString(health, font1, fontsize, "THINOUTLINE")
@@ -1451,6 +1445,8 @@ local function Shared(self, unit)
 		self.Name = Name
 		
 		if (unit and unit:find("boss%d")) then
+			power.colorPower = true
+		
 			-- alt power bar
 			local AltPowerBar = CreateFrame("StatusBar", nil, self.Health)
 			AltPowerBar:SetFrameLevel(self.Health:GetFrameLevel() + 1)
@@ -1513,6 +1509,13 @@ local function Shared(self, unit)
 				
 		-- trinket feature via trinket plugin
 		if (C.arena.unitframes) and (unit and unit:find('arena%d')) then
+			if C.unitframes.unicolor then
+				power.colorTapping = true
+				power.colorClass = true	
+			else
+				power.colorPower = true
+			end
+		
 			RaidIcon:Hide()
 			-- Auratracker Frame
 			local AuraTracker = CreateFrame("Frame", nil, self)
@@ -1821,7 +1824,7 @@ local testui = TestUI or function() end
 TestUI = function(msg)
 	if msg == "a" or msg == "arena" then
 		TukuiArena1:Show(); TukuiArena1.Hide = function() end; TukuiArena1.unit = "player"
-		TukuiArena2:Show(); TukuiArena2.Hide = function() end; TukuiArena2.unit = "player"
+		TukuiArena2:Show(); TukuiArena2.Hide = function() end; TukuiArena2.unit = "target"
 		TukuiArena3:Show(); TukuiArena3.Hide = function() end; TukuiArena3.unit = "player"
 	elseif msg == "boss" or msg == "b" then
 		TukuiBoss1:Show(); TukuiBoss1.Hide = function() end; TukuiBoss1.unit = "player"

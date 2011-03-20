@@ -301,7 +301,7 @@ local function UpdateObjects(frame)
 	for class, color in pairs(RAID_CLASS_COLORS) do
 		if RAID_CLASS_COLORS[class].r == r and RAID_CLASS_COLORS[class].g == g and RAID_CLASS_COLORS[class].b == b then
 			classname = class
-			break
+			
 		end
 	end
 	if (classname) then
@@ -309,14 +309,22 @@ local function UpdateObjects(frame)
 		if texcoord then
 			frame.hasclass = true
 		else
+			texcoord = {0.5, 0.75, 0.5, 0.75}
 			frame.hasclass = false
 		end
 	else
+		texcoord = {0.5, 0.75, 0.5, 0.75}
 		frame.hasclass = false
 	end
-
+	
 	if frame.hp.rcolor == 0 and frame.hp.gcolor == 0 and frame.hp.bcolor ~= 0 then
+		texcoord = {0.5, 0.75, 0.5, 0.75}
 		frame.hasclass = true
+	end
+	frame.class:SetTexCoord(texcoord[1],texcoord[2],texcoord[3],texcoord[4])
+	
+	if C.nameplate.classicons ~= true then
+		frame.class:SetAlpha(0)
 	end
 
 	--create variable for original colors
@@ -520,6 +528,13 @@ local function SkinObjects(frame)
 	name:SetShadowOffset(T.mult, -T.mult)
 	frame.oldname = oldname
 	frame.name = name
+	
+	--Create Class Icon
+	local cIconTex = hp:CreateTexture(nil, "OVERLAY")
+	cIconTex:Point("LEFT", hp, "LEFT", -22, 0)
+	cIconTex:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
+	cIconTex:Size(iconSize)
+	frame.class = cIconTex
 
 	--Reposition and Resize RaidIcon
 	raidicon:ClearAllPoints()

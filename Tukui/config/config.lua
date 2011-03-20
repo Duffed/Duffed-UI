@@ -4,6 +4,7 @@ C["general"] = {
 	["blizzardsct"] = true,								-- Skin also Blizzard SCT Font(put it in generel now)
 	["normalfont"] = false,								-- Use the normal/old font + fontsize instead of pixelfont :>
 	["overridehightolow"] = false,						-- even that is experimental only! :> .. use lowres version on high resolution.
+	["classcoloredborder"] = false, 						-- 
 
 	["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
 	["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off
@@ -15,7 +16,7 @@ C["unitframes"] = {
 	["layout"] = 1,										-- Layout 1 or 2
 
 	["fontsize"] = 8,									-- Fontsize on Unitframes
-	["healthbarcolor"] = {.2, .2, .2},					-- Healthbar color (if unicolor = true) 
+	["healthbarcolor"] = {.2, .2, .2, 1},					-- Healthbar color (if unicolor = true) 
 	["deficitcolor"] = {0, 0, 0},						-- Healthbar deficit color (if unicolor = true)
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
@@ -208,6 +209,8 @@ C["chat"] = {
 }
 
 C["nameplate"] = {
+	["classicons"] = false,
+
 	["enable"] = true,                                  -- enable nice skinned nameplates that fit into tukui
 	["showhealth"] = false,				                -- show health text on nameplate
 	["enhancethreat"] = false,			                -- threat features based on if your a tank or not

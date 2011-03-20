@@ -1334,13 +1334,6 @@ local function Shared(self, unit)
 			power.Smooth = true
 		end
 		
-		if C["unitframes"].unicolor == true then
-			power.colorTapping = true
-			power.colorClass = true			
-		else
-			power.colorPower = true
-		end
-
 		local powerBG = power:CreateTexture(nil, 'BORDER')
 		powerBG:SetAllPoints(power)
 		powerBG:SetTexture(normTex)
@@ -1429,6 +1422,8 @@ local function Shared(self, unit)
 		self.Name = Name
 		
 		if (unit and unit:find("boss%d")) then
+			power.colorPower = true
+		
 			-- alt power bar
 			local AltPowerBar = CreateFrame("StatusBar", nil, self.Health)
 			AltPowerBar:SetFrameLevel(self.Health:GetFrameLevel() + 1)
@@ -1492,6 +1487,13 @@ local function Shared(self, unit)
 				
 		-- trinket feature via trinket plugin
 		if (C.arena.unitframes) and (unit and unit:find('arena%d')) then
+			if C.unitframes.unicolor then
+				power.colorTapping = true
+				power.colorClass = true	
+			else
+				power.colorPower = true
+			end
+		
 			RaidIcon:Hide()
 			-- Auratracker Frame
 			local AuraTracker = CreateFrame("Frame", nil, self)
@@ -1575,8 +1577,8 @@ local function Shared(self, unit)
 			castbar.icon:Point("BOTTOMRIGHT", castbar.button, -2, 2)
 			castbar.icon:SetTexCoord(0.08, 0.92, 0.08, .92)
 		end
-		castbar:Point("TOPLEFT", power, "TOPLEFT", Ax, -9)
-		castbar:Point("TOPRIGHT", power, "TOPRIGHT", 0, -9)
+		castbar:Point("TOPLEFT", panel, "BOTTOMLEFT", Ax, -5)
+		castbar:Point("TOPRIGHT", panel, "BOTTOMRIGHT", -2, -5)
 
 		self.Castbar = castbar
 		self.Castbar.Icon = castbar.icon

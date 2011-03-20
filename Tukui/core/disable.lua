@@ -38,10 +38,15 @@ if (IsAddOnLoaded("Gladius")) then
 	C["arena"].unitframes = false
 end
 
+-- doesnt really fit into "disable".lua but anyways
 if C.general.normalfont then
 	C.media.uffont = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=]
 	if C.unitframes.fontsize == 8 then C.unitframes.fontsize = 11 end
 	C.datatext.font = [=[Interface\Addons\Tukui\medias\fonts\normal_font.ttf]=]
 	if C.datatext.fontsize == 8 then C.datatext.fontsize = 12 end
 	if C.unitframes.auratextscale == 8 then C.unitframes.auratextscale = 11 end
+end
+
+if C.general.classcoloredborder then
+	C.media.bordercolor = T.oUF_colors.class[T.myclass]
 end

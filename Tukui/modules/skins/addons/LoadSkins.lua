@@ -64,7 +64,6 @@ AddonSkins_Mod.skins = {}
 -- Dummy function expected by some skins
 function dummy() end
 
-
 function AddonSkins_Mod:RegisterSkin(name, initFunc)
 	self = AddonSkins_Mod -- Static function
 	if type(initFunc) ~= "function" then error("initFunc must be a function!",2) end

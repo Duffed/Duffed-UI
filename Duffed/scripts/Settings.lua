@@ -15,6 +15,8 @@ PartyMemberFrame3:SetScale(scale)
 PartyMemberFrame2:SetScale(scale)
 PartyMemberFrame1:SetScale(scale)
 
+-- [[Interface\TargetingFrame\UI-Statusbar]] = [[Interface\BUTTONS\WHITE8X8]]
+
 -- Name in classcolor
 hooksecurefunc("UnitFrame_Update", function(self)
 	if UnitIsPlayer(self.unit) then

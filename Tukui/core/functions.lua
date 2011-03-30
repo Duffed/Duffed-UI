@@ -320,28 +320,29 @@ T.cbPosition = function()
 
 	T.cbSize()
 	local x = 0
+	local y = 5
 	if C.castbar.cbicons then x = 14 end
 	if TukuiDataPerChar.hidebar2 == true then
 		TukuiPlayerCastBar:ClearAllPoints()
 		if C["actionbar"].petbarhorizontal == true then
 			if TukuiPetBar:IsShown() then
-				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, 6)
+				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, y)
 			else
-				TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", x, 6)
+				TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", x, y)
 			end
 		else
-			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", x, 6)
+			TukuiPlayerCastBar:Point("BOTTOM", TukuiBar1, "TOP", x, y)
 		end
 	else
 		TukuiPlayerCastBar:ClearAllPoints()
 		if C["actionbar"].petbarhorizontal == true then
 			if TukuiPetBar:IsShown() then
-				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, 6)
+				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiPetBar, "TOPRIGHT", -2, y)
 			else
-				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, 6)
+				TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, y)
 			end
 		else
-			TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, 6)
+			TukuiPlayerCastBar:Point("BOTTOMRIGHT", TukuiBar2, "TOPRIGHT", -2, y)
 		end
 	end
 end
@@ -470,13 +471,13 @@ T.PostUpdateHealth = function(health, unit, min, max)
 			r, g, b = oUF.ColorGradient(min/max, 0.69, 0.31, 0.31, 0.65, 0.63, 0.35, 0.33, 0.59, 0.33)
 			if unit == "player" and health:GetAttribute("normalUnit") ~= "pet" then
 				if C["unitframes"].showtotalhpmp == true then
-					health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
+					health.value:SetFormattedText("|cff%02x%02x%02x%d%%|r - |cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", r * 255, g * 255, b * 255, floor(min / max * 100), ShortValue(min), ShortValue(max))
 				else
-					health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%d%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
+					health.value:SetFormattedText("|cff%02x%02x%02x%d%%|r |cffD7BEA5-|r |cffAF5050%s|r", r * 255, g * 255, b * 255, floor(min / max * 100), ShortValue(min))
 				end
 			elseif unit == "target" or unit == "focus" or (unit and unit:find("boss%d")) then
 				if C["unitframes"].showtotalhpmp == true then
-					health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r", ShortValue(min), ShortValue(max))
+					health.value:SetFormattedText("|cff559655%s|r |cffD7BEA5|||r |cff559655%s|r - |cff%02x%02x%02x%d%%|r", ShortValue(min), ShortValue(max), r * 255, g * 255, b * 255, floor(min / max * 100))
 				else
 					health.value:SetFormattedText("|cffAF5050%s|r |cffD7BEA5-|r |cff%02x%02x%02x%s%%|r", ShortValue(min), r * 255, g * 255, b * 255, floor(min / max * 100))
 				end
@@ -565,7 +566,7 @@ T.PostUpdatePower = function(power, unit, min, max)
 			if pType == 0 then
 				if unit == "target" then
 					if C["unitframes"].showtotalhpmp == true then
-						power.value:SetFormattedText("%s |cffD7BEA5|||r %s", ShortValue(max - (max - min)), ShortValue(max))
+						power.value:SetFormattedText("%s%% |cffD7BEA5-|r %s |cffD7BEA5|||r %s", floor(min / max * 100), ShortValue(max - (max - min)), ShortValue(max))
 					else
 						power.value:SetFormattedText("%d%% |cffD7BEA5-|r %s", floor(min / max * 100), ShortValue(max - (max - min)))
 					end
@@ -579,20 +580,16 @@ T.PostUpdatePower = function(power, unit, min, max)
 					power.value:SetText(ShortValue(min))
 				else
 					if C["unitframes"].showtotalhpmp == true then
-						power.value:SetFormattedText("%s |cffD7BEA5|||r %s", ShortValue(max - (max - min)), ShortValue(max))
+						power.value:SetFormattedText("%s |cffD7BEA5|||r %s |cffD7BEA5-|r %s%%", ShortValue(max - (max - min)), ShortValue(max), floor(min / max * 100))
 					else
-						power.value:SetFormattedText("%d%% |cffD7BEA5-|r %d", floor(min / max * 100), max - (max - min))
+						power.value:SetFormattedText("%s |cffD7BEA5-|r %d%%", ShortValue(max - (max - min)), floor(min / max * 100))
 					end
 				end
 			else
 				power.value:SetText(max - (max - min))
 			end
 		else
-			if unit == "pet" or unit == "target" or unit == "focus" or unit == "focustarget" or (unit and unit:find("arena%d")) then
-				power.value:SetText(ShortValue(min))
-			else
-				power.value:SetText(min)
-			end
+			power.value:SetText(min)
 		end
 	end
 end
@@ -690,6 +687,12 @@ T.PostUpdateAura = function(icons, unit, icon, index, offset, filter, isDebuff, 
 			local color = DebuffTypeColor[dtype] or DebuffTypeColor.none
 			icon:SetBackdropBorderColor(color.r * 0.6, color.g * 0.6, color.b * 0.6)
 			icon.icon:SetDesaturated(false)
+		end
+	else 
+		if (isStealable or ((T.myclass == "MAGE" or T.myclass == "PRIEST" or T.myclass == "SHAMAN") and dtype == "Magic")) and not UnitIsFriend("player", unit) then 
+			icon:SetBackdropBorderColor(1, 0.85, 0, 1)
+		else
+			icon:SetBackdropBorderColor(unpack(C.media.bordercolor))
 		end
 	end
 	

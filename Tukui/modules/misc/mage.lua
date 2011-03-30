@@ -1,16 +1,5 @@
-if (select(2, UnitClass("player")) ~= "MAGE") then return end
+if (select(2, UnitClass("player")) ~= "MAGE") or not TukuiMinimapStatsLeft then return end
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
- 
--- grab skin function out of skin.lua
-local function SetModifiedBackdrop(self)
-	local r,g,b = unpack(C["datatext"].color)
-	self:SetBackdropColor(r,g,b, 0.15)
-	self:SetBackdropBorderColor(r,g,b)
-end
-local function SetOriginalBackdrop(self)
-	self:SetBackdropColor(unpack(C["media"].backdropcolor))
-	self:SetBackdropBorderColor(unpack(C["media"].bordercolor))
-end
 
 local spells = (UnitFactionGroup("player") == "Horde") and {
 	--  Tepelort id, Portal id
@@ -40,8 +29,8 @@ f:CreateShadow("Default")
  
 local r = CreateFrame("Frame", nil, f)
 r:CreatePanel("Default",TukuiMinimap:GetWidth()-4,20,"TOPLEFT",f,"TOPLEFT",2,-2)
-local l = r:CreateFontString("TeleportMenuReagentText","OVERLAY",nil)
-l:SetFont(C["media"].font,12,"OUTLINE")
+local l = r:CreateFontString("TeleportMenuReagentText","OVERLAY")
+l:SetFont(C.datatext.font, C.datatext.fontsize, "THINOUTLINE")
 l:SetPoint("CENTER",r,"CENTER")
 r:SetFrameStrata("HIGH") 
  
@@ -52,8 +41,8 @@ for i,spell in pairs(spells) do
 	b:CreatePanel("Default",TukuiMinimap:GetWidth()-4,20, "TOPLEFT", f, "TOPLEFT", 2, -(i*21)-2)
 	b:SetFrameStrata("HIGH") 
  
-	local l = b:CreateFontString(nil,"OVERLAY",nil)
-	l:SetFont(C["media"].font,12,"OUTLINE")
+	local l = b:CreateFontString(nil,"OVERLAY")
+	l:SetFont(C.datatext.font, C.datatext.fontsize, "THINOUTLINE")
 	l:SetText(string.sub(teleport, string.find(teleport,":")+1))
 	b:SetFontString(l)
  
@@ -63,22 +52,29 @@ for i,spell in pairs(spells) do
 	b:SetAttribute("type2","spell")
 	b:SetAttribute("spell2",GetSpellInfo(spell[2]))
 	
-	b:HookScript("OnEnter", SetModifiedBackdrop)
-	b:HookScript("OnLeave", SetOriginalBackdrop)
+	b:HookScript("OnEnter", function(self)
+		local r,g,b = unpack(C["datatext"].color)
+		self:SetBackdropColor(r,g,b, 0.15)
+		self:SetBackdropBorderColor(r,g,b)
+	end)
+
+	b:HookScript("OnLeave", function(self)
+		self:SetBackdropColor(unpack(C["media"].backdropcolor))
+		self:SetBackdropBorderColor(unpack(C["media"].bordercolor))
+	end)
 end
 f:Hide()
  
 local b = CreateFrame("Button", nil, TukuiMinimapStatsLeft)
-b:SetAllPoints(_G["TukuiMinimapStatsLeft"])
-b:SetScript("OnClick",
-function(self)
-	if _G["TukuiTeleportMenu"]:IsShown() then
-		_G["TukuiTeleportMenu"]:Hide()
+b:SetAllPoints(TukuiMinimapStatsLeft)
+b:SetScript("OnClick", function(self)
+	if TukuiTeleportMenu:IsShown() then
+		TukuiTeleportMenu:Hide()
 	else
-		_G["TeleportMenuReagentText"]:SetText(T.panelcolor.."Teleport|r [ "..GetItemCount(17031).." ]"..T.panelcolor.." Portal|r [ "..GetItemCount(17032).." ]")
-		_G["TukuiTeleportMenu"]:Show()
+		TeleportMenuReagentText:SetText(T.panelcolor.."Teleport|r [ "..GetItemCount(17031).." ]"..T.panelcolor.." Portal|r [ "..GetItemCount(17032).." ]")
+		TukuiTeleportMenu:Show()
 	end
-end);
+end)
  
 f:RegisterEvent("UNIT_SPELLCAST_START")
 f:SetScript("OnEvent",

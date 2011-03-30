@@ -2,7 +2,6 @@
 	(C)2010 Darth Android / Telroth-Black Dragonflight
 ]]
 -- TelUI_AddonSkins
--- do return end
 AddonSkins_Mod = CreateFrame("Frame")
 local AddonSkins_Mod = AddonSkins_Mod
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales

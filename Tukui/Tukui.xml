@@ -113,6 +113,7 @@
 	<Script file="modules\chat\copychat.lua"/>
 	<Script file="modules\chat\mousescroll.lua"/>
 	<Script file="modules\chat\sounds.lua"/>
+	<Script file="modules\chat\blizzfixrealidlink.lua"/>
 	
 	<Script file="modules\tooltip\tooltip.lua"/>
 	<Script file="modules\tooltip\hyperlink.lua"/>

@@ -76,7 +76,6 @@ local function Shared(self, unit)
 		end
 		self.NormalAlpha = 1
 	end
-	
 	------------------------------------------------------------------------
 	--	Player and Target units layout (mostly mirror'd)
 	------------------------------------------------------------------------
@@ -171,7 +170,7 @@ local function Shared(self, unit)
 			power.Smooth = true
 		end
 		
-		if C["unitframes"].unicolor == true then
+		if C.unitframes.powerClasscolored then
 			power.colorTapping = true
 			power.colorClass = true		
 		else
@@ -866,25 +865,6 @@ local function Shared(self, unit)
 			debuffs.PostUpdateIcon = T.PostUpdateAura
 			self.Debuffs = debuffs
 		end
-		
-		-- portrait
-		if C["unitframes"].charportrait == true then
-		do return end
-			local portrait = CreateFrame("PlayerModel", nil, self)
-			portrait:SetFrameLevel(8)
-			portrait:Width(21)
-			portrait:Point("TOPLEFT", health,"TOPRIGHT",7,0)
-			portrait:Point("BOTTOMLEFT", power,"BOTTOMRIGHT",7,0)
-
-			table.insert(self.__elements, T.HidePortrait)
-			self.Portrait = portrait
-			
-			-- Portrait Border
-			portrait.bg = CreateFrame("Frame",nil,portrait)
-			portrait.bg:CreatePanel("Default",1,1,"BOTTOMLEFT",portrait,"BOTTOMLEFT",-2,-2)
-			portrait.bg:SetPoint("TOPRIGHT",portrait,"TOPRIGHT",2,2)
-			portrait.bg:CreateShadow("Default")
-		end
 	end
 	
 	------------------------------------------------------------------------
@@ -968,10 +948,6 @@ local function Shared(self, unit)
 			castbar.CustomDelayText = T.CustomCastDelayText
 			castbar.PostCastStart = T.CheckCast
 			castbar.PostChannelStart = T.CheckChannel
-
-			castbar.Text = T.SetFontString(castbar, font1, fontsize)
-			castbar.Text:Point("LEFT", castbar, "LEFT", 4, 0)
-			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
 			
 			self.Castbar.Time = castbar.time
 			
@@ -979,6 +955,7 @@ local function Shared(self, unit)
 			castbar.border = CreateFrame("Frame", nil,castbar)
 			castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
 			castbar.border:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
+			castbar.border:CreateShadow("")
 		end
 		
 		if C["unitframes"].totdebuffs == true then
@@ -1023,9 +1000,9 @@ local function Shared(self, unit)
 				power.Smooth = true
 			end
 			
-			if C["unitframes"].unicolor == true then
+			if C.unitframes.powerClasscolored then
 				power.colorTapping = true
-				power.colorClass = true			
+				power.colorClass = true		
 			else
 				power.colorPower = true
 			end
@@ -1487,9 +1464,9 @@ local function Shared(self, unit)
 				
 		-- trinket feature via trinket plugin
 		if (C.arena.unitframes) and (unit and unit:find('arena%d')) then
-			if C.unitframes.unicolor then
+			if C.unitframes.powerClasscolored then
 				power.colorTapping = true
-				power.colorClass = true	
+				power.colorClass = true		
 			else
 				power.colorPower = true
 			end

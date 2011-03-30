@@ -13,10 +13,10 @@ C["general"] = {
 }
 
 C["unitframes"] = {
-	["layout"] = 1,										-- Layout 1 or 2
+	["layout"] = 2,										-- Layout 1 or 2
 
 	["fontsize"] = 8,									-- Fontsize on Unitframes
-	["healthbarcolor"] = {.2, .2, .2, 1},					-- Healthbar color (if unicolor = true) 
+	["healthbarcolor"] = {.2, .2, .2, 1},				-- Healthbar color (if unicolor = true) 
 	["deficitcolor"] = {0, 0, 0},						-- Healthbar deficit color (if unicolor = true)
 	["totandpetlines"] = true,							-- Show the small Lines on pet & Target of Target
 	["priestarmor"] = false,							-- Display which Armor is currently up on ur priest
@@ -33,6 +33,7 @@ C["unitframes"] = {
 	["debuffrows"] = 2, 								-- Debuff rows above Target (and Player if u enable it)
 	["portraitstyle"] = "ICON",							-- "ICON" or "MODEL" (Layout 2 only)
 	["ColorGradient"] = false,							-- Add Color-Gradient to healthbar from healthbarcolor to red
+	["powerClasscolored"] = true,						-- Color in Class-color instead of power-color :>
 	
 	-- general options
 	["enable"] = true,                                  -- do i really need to explain this?
@@ -42,7 +43,7 @@ C["unitframes"] = {
 	["playerauras"] = false,                            -- enable auras
 	["targetauras"] = true,                             -- enable auras on target unit frame
 	["lowThreshold"] = 20,                              -- global low threshold, for low mana warning.
-	["totdebuffs"] = false,                             -- enable tot debuffs (high reso only)
+	["totdebuffs"] = true,                             -- enable tot debuffs (high reso only)
 	["showtotalhpmp"] = false,                          -- change the display of info text on player and target with XXXX/Total.
 	["showsmooth"] = true,                              -- enable smooth bar
 	["charportrait"] = true,                           	-- do i really need to explain this?

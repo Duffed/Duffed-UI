@@ -62,3 +62,12 @@ SlashCmdList["DUFFEDLAYOUT"] = function(msg)
 		print("|cffff0000/layout|r 1 or 2")
 	end
 end
+
+-- 
+COPPER_AMOUNT = "%d|cFF954F28"..COPPER_AMOUNT_SYMBOL.."|r"
+SILVER_AMOUNT = "%d|cFFC0C0C0"..SILVER_AMOUNT_SYMBOL.."|r"
+GOLD_AMOUNT = "%d|cFFF0D440"..GOLD_AMOUNT_SYMBOL.."|r"
+YOU_LOOT_MONEY = "+ %s"
+YOU_LOOT_MONEY_GUILD = "+ %s (%s)"
+LOOT_MONEY_SPLIT = "+ %s"
+LOOT_MONEY_SPLIT_GUILD = "+ %s (%s)"

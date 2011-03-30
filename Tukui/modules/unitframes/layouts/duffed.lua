@@ -76,7 +76,6 @@ local function Shared(self, unit)
 		end
 		self.NormalAlpha = 1
 	end
-	
 	------------------------------------------------------------------------
 	--	Player and Target units layout (mostly mirror'd)
 	------------------------------------------------------------------------
@@ -169,7 +168,7 @@ local function Shared(self, unit)
 			power.Smooth = true
 		end
 		
-		if C["unitframes"].unicolor == true then
+		if C.unitframes.powerClasscolored then
 			power.colorTapping = true
 			power.colorClass = true		
 		else
@@ -831,9 +830,9 @@ local function Shared(self, unit)
 			power.Smooth = true
 		end
 		
-		if C["unitframes"].unicolor == true then
+		if C.unitframes.powerClasscolored then
 			power.colorTapping = true
-			power.colorClass = true			
+			power.colorClass = true		
 		else
 			power.colorPower = true
 		end
@@ -1147,9 +1146,9 @@ local function Shared(self, unit)
 				power.Smooth = true
 			end
 			
-			if C["unitframes"].unicolor == true then
+			if C.unitframes.powerClasscolored then
 				power.colorTapping = true
-				power.colorClass = true			
+				power.colorClass = true		
 			else
 				power.colorPower = true
 			end
@@ -1509,9 +1508,9 @@ local function Shared(self, unit)
 				
 		-- trinket feature via trinket plugin
 		if (C.arena.unitframes) and (unit and unit:find('arena%d')) then
-			if C.unitframes.unicolor then
+			if C.unitframes.powerClasscolored then
 				power.colorTapping = true
-				power.colorClass = true	
+				power.colorClass = true		
 			else
 				power.colorPower = true
 			end

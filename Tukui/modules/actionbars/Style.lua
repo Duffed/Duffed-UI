@@ -30,7 +30,7 @@ local function style(self)
  
 	Count:ClearAllPoints()
 	Count:Point("BOTTOMRIGHT", 0, 2)
-	Count:SetFont(C["media"].font, 12, "OUTLINE")
+	Count:SetFont(C.media.uffont, C.unitframes.fontsize, "OUTLINE")
  
 	if not C["actionbar"].macrotext == true then
 		Btname:SetText("")

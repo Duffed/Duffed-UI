@@ -2,9 +2,9 @@ local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, vari
 -- just some random skin, not everything is skinned atm.
 
 local function SetModifiedBackdrop(self)
-	local r,g,b = unpack(C["datatext"].color)
-	self:SetBackdropColor(r,g,b, 0.15)
-	self:SetBackdropBorderColor(r,g,b)
+	local color = RAID_CLASS_COLORS[T.myclass]
+	self:SetBackdropColor(color.r, color.g, color.b, 0.15)
+	self:SetBackdropBorderColor(color.r, color.g, color.b)
 end
 
 local function SetOriginalBackdrop(self)
@@ -125,6 +125,9 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"GhostFrameContentsFrame",
 			"ColorPickerFrame",
 			"StackSplitFrame",
+			"ChannelPullout",
+			"ChannelPulloutTab",
+			"RolePollPopup",
 		}
 
 		-- reskin popup buttons
@@ -135,7 +138,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		end
 		
 		for i = 1, getn(skins) do
-			_G[skins[i]]:SetTemplate("Transparent")
+			_G[skins[i]]:SetTemplate("Default")
 			if _G[skins[i]] ~= _G["AutoCompleteBox"] and _G[skins[i]] ~= _G["BNToastFrame"] then -- frame to blacklist from create shadow function
 				_G[skins[i]]:CreateShadow("Default")
 			end
@@ -150,13 +153,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
  
 		for i = 1, getn(ChatMenus) do
 			if _G[ChatMenus[i]] == _G["ChatMenu"] then
-				_G[ChatMenus[i]]:HookScript("OnShow", function(self) self:SetTemplate("Default") self:ClearAllPoints() 
-					if ChatBG1 then
-						self:Point("BOTTOMRIGHT", ChatBG1, "TOPRIGHT", 0, 3)
-					else
-						self:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 30)
-					end
-				end)
+				_G[ChatMenus[i]]:HookScript("OnShow", function(self) self:SetTemplate("Default") self:ClearAllPoints() self:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 0, 30) end)
 			else
 				_G[ChatMenus[i]]:HookScript("OnShow", function(self) self:SetTemplate("Default") end)
 			end
@@ -174,7 +171,8 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"Logout", 
 			"Quit", 
 			"Continue", 
-			"MacOptions"
+			"MacOptions",
+			"Help",
 		}
 		
 		for i = 1, getn(BlizzardMenuButtons) do
@@ -227,7 +225,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"ColorPickerCancelButton",
 			"StackSplitOkayButton",
 			"StackSplitCancelButton",
-			"WatchFrameCollapseExpandButton",
+			"RolePollPopupAcceptButton"
 		}
 		
 		for i = 1, getn(BlizzardButtons) do
@@ -258,8 +256,11 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		_G["ColorPickerCancelButton"]:ClearAllPoints()
 		_G["ColorPickerOkayButton"]:ClearAllPoints()
 		_G["ColorPickerCancelButton"]:SetPoint("BOTTOMRIGHT", ColorPickerFrame, "BOTTOMRIGHT", -6, 6)
-		_G["ColorPickerOkayButton"]:SetPoint("RIGHT",_G["ColorPickerCancelButton"],"LEFT", -4,0)		
-		
+		_G["ColorPickerOkayButton"]:SetPoint("RIGHT",_G["ColorPickerCancelButton"],"LEFT", -4,0)
+		_G["ChannelPulloutTab"]:SetHeight(20)
+		_G["ChannelPulloutTabText"]:ClearAllPoints()
+		_G["ChannelPulloutTabText"]:SetPoint("TOP",0,-6)
+				
 		-- others
 		_G["ReadyCheckListenerFrame"]:SetAlpha(0)
 		_G["ReadyCheckFrame"]:HookScript("OnShow", function(self) if UnitIsUnit("player", self.initiator) then self:Hide() end end) -- bug fix, don't show it if initiator
@@ -268,6 +269,10 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 		_G["StaticPopup1EditBoxLeft"]:SetTexture(nil)
 		_G["StaticPopup1EditBoxMid"]:SetTexture(nil)
 		_G["StaticPopup1EditBoxRight"]:SetTexture(nil)
+		_G["ChannelPulloutBackground"]:Kill()
+		_G["ChannelPulloutTabLeft"]:SetTexture(nil)
+		_G["ChannelPulloutTabMiddle"]:SetTexture(nil)
+		_G["ChannelPulloutTabRight"]:SetTexture(nil)
 	end
 	
 	-- mac menu/option panel, made by affli.

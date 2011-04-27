@@ -43,6 +43,14 @@ _G.CHAT_FLAG_GM = "|cff4154F5"..L.chat_FLAG_GM.."|r "
 _G.ERR_FRIEND_ONLINE_SS = "|Hplayer:%s|h[%s]|h "..L.chat_ERR_FRIEND_ONLINE_SS.."!"
 _G.ERR_FRIEND_OFFLINE_S = "%s "..L.chat_ERR_FRIEND_OFFLINE_S.."!"
 
+-- Adding brackets to Blizzard timestamps
+_G.TIMESTAMP_FORMAT_HHMM = "[%I:%M] "
+_G.TIMESTAMP_FORMAT_HHMMSS = "[%I:%M:%S] "
+_G.TIMESTAMP_FORMAT_HHMMSS_24HR = "[%H:%M:%S] "
+_G.TIMESTAMP_FORMAT_HHMMSS_AMPM = "[%I:%M:%S %p] "
+_G.TIMESTAMP_FORMAT_HHMM_24HR = "[%H:%M] "
+_G.TIMESTAMP_FORMAT_HHMM_AMPM = "[%I:%M %p] "
+
 -- Hide friends micro button (added in 3.3.5)
 FriendsMicroButton:Kill()
 
@@ -59,7 +67,7 @@ local function SetChatStyle(frame)
 	tab:SetAlpha(1)
 	tab.SetAlpha = UIFrameFadeRemoveFrame
 	
-	if not C.chat.leftchatbackground then
+	if not C.chat.leftchatbackground and not frame.temp then
 		-- hide text when setting chat
 		_G[chat.."TabText"]:Hide()
 		
@@ -127,6 +135,10 @@ local function SetChatStyle(frame)
 
 	-- Kill off editbox artwork
 	local a, b, c = select(6, _G[chat.."EditBox"]:GetRegions()) a:Kill() b:Kill() c:Kill()
+	
+	-- bubble tex & glow killing from privates
+	if tab.glow then tab.glow:Kill() end
+	if tab.conversationIcon then tab.conversationIcon:Kill() end
 				
 	-- Disable alt key usage
 	_G[chat.."EditBox"]:SetAltArrowKeyMode(false)
@@ -248,6 +260,7 @@ local function SetupTempChat()
 	-- do a check if we already did a skinning earlier for this temp chat frame
 	if frame.skinned then return end
 	
+	frame.temp = true
 	SetChatStyle(frame)
 end
 hooksecurefunc("FCF_OpenTemporaryWindow", SetupTempChat)

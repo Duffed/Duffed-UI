@@ -214,6 +214,7 @@ local function Shared(self, unit)
 				portrait:SetFrameLevel(1)
 				portrait:Point("TOPLEFT", 2, -2)
 				portrait:Point("BOTTOMRIGHT", -2, 2)
+				portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 				self.Portrait = portrait
 			else			
 				local class = pb:CreateTexture(self:GetName().."_ClassIcon", "ARTWORK")
@@ -856,7 +857,7 @@ local function Shared(self, unit)
 			debuffs:Width(200)
 			debuffs.size = 19.5
 			debuffs.spacing = 3
-			debuffs.num = (self:GetWidth()+debuffs.spacing)/debuffs.size
+			debuffs.num = 5
 
 			debuffs:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -3)
 			debuffs.initialAnchor = "TOPLEFT"
@@ -1195,6 +1196,7 @@ local function Shared(self, unit)
 				portrait:SetFrameLevel(1)
 				portrait:Point("TOPLEFT", 2, -2)
 				portrait:Point("BOTTOMRIGHT", -2, 2)
+				portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 				self.Portrait = portrait
 			else			
 				local class = pb:CreateTexture(self:GetName().."_ClassIcon", "ARTWORK")
@@ -1426,6 +1428,7 @@ local function Shared(self, unit)
 			portrait:Point("TOPLEFT", 2, -2)
 			portrait:Point("BOTTOMRIGHT", -2, 2)
 			table.insert(self.__elements, T.HidePortrait)
+			portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 			self.Portrait = portrait
 			
 			-- create buff at left of unit if they are boss units

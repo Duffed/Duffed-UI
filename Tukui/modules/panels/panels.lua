@@ -38,7 +38,11 @@ if C["actionbar"].petbarhorizontal == true then ltpetbg1:Hide() end
 local ileft = CreateFrame("Frame", "TukuiInfoLeft", TukuiBar1)
 ileft:CreatePanel("Default", T.InfoLeftRightWidth, 19, "BOTTOMRIGHT", UIParent, "BOTTOM", -12, 4)
 ileft:SetFrameLevel(2)
-if T.lowversion then ileft:ClearAllPoints() ileft:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 14, 3) end
+if T.lowversion then 
+	ileft:ClearAllPoints() 
+	ileft:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 14, 3)
+	ileft:Width(T.InfoLeftRightWidth-21)
+end
 
 -- INFO RIGHT (FOR STATS)
 local iright = CreateFrame("Frame", "TukuiInfoRight", TukuiBar1)

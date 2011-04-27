@@ -722,6 +722,12 @@ T.HidePortrait = function(self, unit)
 	end
 end
 
+T.PortraitUpdate = function(self, unit)
+	if self:GetModel() and self:GetModel().find and self:GetModel():find("worgenmale") then
+		self:SetCamera(1)
+	end
+end	
+
 local CheckInterrupt = function(self, unit)
 	if unit == "vehicle" then unit = "player" end
 	if self.interrupt and UnitCanAttack("player", unit) then
@@ -1022,8 +1028,8 @@ T.createAuraWatch = function(self, unit)
 			local icon = CreateFrame("Frame", nil, auras)
 			icon.spellID = spell[1]
 			icon.anyUnit = spell[4]
-			icon:SetWidth(T.Scale(6*C["unitframes"].gridscale))
-			icon:SetHeight(T.Scale(6*C["unitframes"].gridscale))
+			icon:Width(6*C["unitframes"].gridscale)
+			icon:Height(6*C["unitframes"].gridscale)
 			icon:SetPoint(spell[2], 0, 0)
 
 			local tex = icon:CreateTexture(nil, "OVERLAY")

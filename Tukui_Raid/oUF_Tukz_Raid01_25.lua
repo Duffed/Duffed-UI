@@ -59,7 +59,7 @@ local function Shared(self, unit)
 	local power = CreateFrame("StatusBar", nil, self)
 	power:Height(2)
 	power:Point("TOPLEFT", health, "BOTTOMLEFT", 0, -1)
-	power:SetPoint("TOPRIGHT", health, "BOTTOMRIGHT", 0, -1)
+	power:Point("TOPRIGHT", health, "BOTTOMRIGHT", 0, -1)
 	power:SetStatusBarTexture(C["media"].normTex)
 	self.Power = power
 	
@@ -163,8 +163,8 @@ oUF:Factory(function(self)
 		"point", "BOTTOM"
 	)
 	if ChatBG1 then
-		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
+		raid:Point("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
 	else
-		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
+		raid:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
 	end
 end)

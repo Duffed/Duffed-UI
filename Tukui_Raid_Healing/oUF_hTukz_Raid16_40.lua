@@ -100,9 +100,9 @@ local function Shared(self, unit)
 	local panel = CreateFrame("Frame", nil, self)
 	panel:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
 	if unit:find("partypet") then
-		panel:SetPoint("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
+		panel:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
 	else
-		panel:SetPoint("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+		panel:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
 	end
 	panel:CreateShadow("Default")
 	self.panel = panel
@@ -120,7 +120,7 @@ local function Shared(self, unit)
 	if unit:find("partypet") then
 		name:SetPoint("CENTER")
 	else
-		name:SetPoint("CENTER", health, "TOP", 0, -7)
+		name:Point("CENTER", health, "TOP", 0, -7)
 	end
 	self:Tag(name, "[Tukui:getnamecolor][Tukui:nameshort]")
 	self.Name = name
@@ -219,12 +219,12 @@ local function Shared(self, unit)
 		RaidDebuffs.icon:Point("BOTTOMRIGHT", -2, 2)
 		
 		RaidDebuffs:FontString('time', C["media"].font, 10, "THINOUTLINE")
-		RaidDebuffs.time:SetPoint('CENTER', 1, 0)
+		RaidDebuffs.time:Point('CENTER', 1, 0)
 		RaidDebuffs.time:SetTextColor(1, .9, 0)
 		
 		RaidDebuffs.count = RaidDebuffs:CreateFontString(nil, 'OVERLAY')
 		RaidDebuffs.count:SetFont(C["media"].uffont, 9*C["unitframes"].gridscale, "THINOUTLINE")
-		RaidDebuffs.count:SetPoint('BOTTOMRIGHT', RaidDebuffs, 'BOTTOMRIGHT', 0, 2)
+		RaidDebuffs.count:Point('BOTTOMRIGHT', RaidDebuffs, 'BOTTOMRIGHT', 0, 2)
 		RaidDebuffs.count:SetTextColor(1, .9, 0)
 		
 		self.RaidDebuffs = RaidDebuffs
@@ -271,9 +271,9 @@ oUF:Factory(function(self)
 		"showSolo", C.unitframes.gridsolo
 	)
 	if ChatBG1 then
-		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
+		raid:Point("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
 	else
-		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
+		raid:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
 	end
 	
 	if C.unitframes.gridpets and not C.unitframes.gridvertical then

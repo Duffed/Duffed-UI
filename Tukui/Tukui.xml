@@ -91,6 +91,7 @@
 	<Script file="modules\datatext\micromenu.lua"/>
 	<Script file="modules\datatext\mastery.lua"/>
 	<Script file="modules\datatext\misc.lua"/>
+	<Script file="modules\datatext\regen.lua"/>
 	
 	<Script file="modules\actionbars\Bind.lua"/>
 	<Script file="modules\actionbars\Hide.lua"/>
@@ -140,7 +141,6 @@
 	<Script file="modules\unitframes\tags\tags.lua"/>
 	<Script file="modules\unitframes\layouts\duffed.lua"/>
 	<Script file="modules\unitframes\layouts\duffed2.lua"/>
-	<Script file="modules\notifications\hunterpethappiness.lua"/>
 	<Script file="modules\misc\sCombo.lua"/>
 	
 	<Script file="modules\misc\altpowerbar.lua"/>

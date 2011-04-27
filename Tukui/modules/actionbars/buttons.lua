@@ -106,6 +106,7 @@ local TukuiBar2Button = CreateFrame("Button", "TukuiBar2Button", UIParent)
 TukuiBar2Button:SetTemplate("Default")
 TukuiBar2Button:CreateShadow("Default")
 TukuiBar2Button:RegisterForClicks("AnyUp")
+TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.datatext.font, C.datatext.fontsize)
 TukuiBar2Button:SetScript("OnClick", function(self, btn)
 	if btn == "RightButton" then
 		if TukuiInfoLeftBattleGround and UnitInBattleground("player") then
@@ -116,16 +117,16 @@ TukuiBar2Button:SetScript("OnClick", function(self, btn)
 	end
 end)
 if T.lowversion then
-	TukuiBar2Button:Size(18,18)
-	TukuiBar2Button:Point("BOTTOMRIGHT", TukuiBar1, "BOTTOMLEFT", -4, 0)
+	TukuiBar2Button:Size(TukuiInfoLeft:GetHeight())
+	TukuiBar2Button:Point("LEFT", TukuiInfoLeft, "RIGHT", 3, 0)
+	TukuiBar2Button.text:Point("CENTER", 1, 0)
 else
 	TukuiBar2Button:Point("TOPLEFT", TukuiInfoLeft, "TOPRIGHT", 2, 0)
 	TukuiBar2Button:Point("BOTTOMRIGHT", TukuiInfoRight, "BOTTOMLEFT", -2, 0)
+	TukuiBar2Button.text:Point("CENTER", 0, 0)
 end
 TukuiBar2Button:SetScript("OnEnter", function(self) self:SetBackdropBorderColor(unpack(C.datatext.color)) end)
 TukuiBar2Button:SetScript("OnLeave", function(self) self:SetBackdropBorderColor(unpack(C.media.bordercolor)) end)
-TukuiBar2Button.text = T.SetFontString(TukuiBar2Button, C.datatext.font, C.datatext.fontsize)
-TukuiBar2Button.text:Point("CENTER", 0, 0)
 TukuiBar2Button.text:SetText(cm.."-|r")
 
 -- >/< 1

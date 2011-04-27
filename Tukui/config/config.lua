@@ -191,6 +191,7 @@ C["datatext"] = {
 	["hit"] = 0,										-- show your current hit rating on panels.
 	["mastery"] = 0,									-- show your current mastery rating on panels.
 	["micromenu"] = 0,									-- Micromenu on panels (toggle the same menu as on minimap).
+	["regen"] = 0,
 
 	["battleground"] = true,                            -- enable 3 stats in battleground only that replace stat1,stat2,stat3.
 	["time24"] = true,                                  -- set time to 24h format.
@@ -215,7 +216,6 @@ C["nameplate"] = {
 	["enable"] = true,                                  -- enable nice skinned nameplates that fit into tukui
 	["showhealth"] = false,				                -- show health text on nameplate
 	["enhancethreat"] = false,			                -- threat features based on if your a tank or not
-	["overlap"] = false,				                -- allow nameplates to overlap
 	["combat"] = false,					                -- only show enemy nameplates in-combat.
 	["goodcolor"] = {75/255,  175/255, 76/255},	        -- good threat color (tank shows this with threat, everyone else without)
 	["badcolor"] = {0.78, 0.25, 0.25},			        -- bad threat color (opposite of above)

@@ -63,6 +63,10 @@ SlashCmdList["DUFFEDLAYOUT"] = function(msg)
 	end
 end
 
+-- ready check shortcut
+SlashCmdList.RCSLASH = DoReadyCheck
+SLASH_RCSLASH1 = "/rc"
+
 -- 
 COPPER_AMOUNT = "%d|cFF954F28"..COPPER_AMOUNT_SYMBOL.."|r"
 SILVER_AMOUNT = "%d|cFFC0C0C0"..SILVER_AMOUNT_SYMBOL.."|r"

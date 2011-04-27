@@ -35,7 +35,15 @@ if C["datatext"].micromenu and C["datatext"].micromenu > 0 then
 			{text = SPELLBOOK_ABILITIES_BUTTON,
 			func = function() ToggleFrame(SpellBookFrame) end},
 			{text = TALENTS_BUTTON,
-			func = function() if not PlayerTalentFrame then LoadAddOn("Blizzard_TalentUI") end if not GlyphFrame then LoadAddOn("Blizzard_GlyphUI") end PlayerTalentFrame_Toggle() end},
+			func = function() 
+				if not PlayerTalentFrame then 
+					LoadAddOn("Blizzard_TalentUI") 
+				end
+				if not GlyphFrame then 
+					LoadAddOn("Blizzard_GlyphUI") 
+				end
+				PlayerTalentFrame_Toggle() 
+			end},
 			{text = ACHIEVEMENT_BUTTON,
 			func = function() ToggleAchievementFrame() end},
 			{text = QUESTLOG_BUTTON,

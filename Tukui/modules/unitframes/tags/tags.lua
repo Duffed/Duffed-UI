@@ -117,10 +117,7 @@ end
 oUF.TagEvents['Tukui:getnamecolor'] = 'UNIT_POWER'
 oUF.Tags['Tukui:getnamecolor'] = function(unit)
 	local reaction = UnitReaction(unit, 'player')
-	if (unit == 'pet' and SPELL_POWER_HAPPINESS and GetPetHappiness()) then
-		local c = T.oUF_colors.happiness[GetPetHappiness()]
-		return string.format('|cff%02x%02x%02x', c[1] * 255, c[2] * 255, c[3] * 255)
-	elseif (UnitIsPlayer(unit)) then
+	if (UnitIsPlayer(unit)) then
 		return _TAGS['raidcolor'](unit)
 	elseif (reaction) then
 		local c = T.oUF_colors.reaction[reaction]
@@ -134,7 +131,7 @@ end
 oUF.TagEvents['Tukui:nameshort'] = 'UNIT_NAME_UPDATE'
 oUF.Tags['Tukui:nameshort'] = function(unit)
 	local name = UnitName(unit)
-	return utf8sub(name, 7, false)
+	return utf8sub(name, 10, false)
 end
 
 oUF.TagEvents['Tukui:namemedium'] = 'UNIT_NAME_UPDATE'

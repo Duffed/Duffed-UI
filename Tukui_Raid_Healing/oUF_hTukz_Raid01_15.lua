@@ -38,7 +38,7 @@ local function Shared(self, unit)
 	self.Health.bg = health.bg
 		
 	health.value = health:CreateFontString(nil, "OVERLAY")
-	health.value:SetPoint("RIGHT", health, -3, 1)
+	health.value:Point("RIGHT", health, -3, 1)
 	health.value:SetFont(font2, fontsize, "THINOUTLINE")
 	health.value:SetTextColor(1,1,1)
 	health.value:SetShadowOffset(1, -1)
@@ -90,7 +90,7 @@ local function Shared(self, unit)
 	end
 	
 	local name = health:CreateFontString(nil, "OVERLAY")
-    name:SetPoint("LEFT", health, 3, 0)
+    name:Point("LEFT", health, 3, 0)
 	name:SetFont(font2, fontsize, "THINOUTLINE")
 	name:SetShadowOffset(1, -1)
 	self:Tag(name, "[Tukui:namemedium]")
@@ -99,7 +99,7 @@ local function Shared(self, unit)
     local leader = health:CreateTexture(nil, "OVERLAY")
     leader:Height(12*T.raidscale)
     leader:Width(12*T.raidscale)
-    leader:SetPoint("TOPLEFT", 0, 6)
+    leader:Point("TOPLEFT", 0, 6)
 	self.Leader = leader
 	
     local LFDRole = health:CreateTexture(nil, "OVERLAY")
@@ -139,7 +139,7 @@ local function Shared(self, unit)
 	self.ReadyCheck = ReadyCheck
 	
     local debuffs = CreateFrame('Frame', nil, self)
-    debuffs:SetPoint('LEFT', self, 'RIGHT', 4, 0)
+    debuffs:Point('LEFT', self, 'RIGHT', 4, 0)
     debuffs:SetHeight(26)
     debuffs:SetWidth(200)
     debuffs.size = 26
@@ -210,18 +210,18 @@ oUF:Factory(function(self)
 	'initial-height', T.Scale(32*T.raidscale),	
 	"showParty", true, "showPlayer", C["unitframes"].showplayerinparty, "showRaid", true, "groupFilter", "1,2,3,4,5,6,7,8", "groupingOrder", "1,2,3,4,5,6,7,8", "groupBy", "GROUP", "yOffset", T.Scale(-8))
 	if ChatBG1 then
-		raid:SetPoint("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
+		raid:Point("BOTTOMLEFT", ChatBG1, "TOPLEFT", 2, 6)
 	else
-		raid:SetPoint("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
+		raid:Point("BOTTOMLEFT", ChatFrame1, "TOPLEFT", 2, 21)
 	end
 	
 	local pets = {} 
 		pets[1] = oUF:Spawn('partypet1', 'oUF_TukuiPartyPet1') 
-		pets[1]:SetPoint('BOTTOMLEFT', raid, 'TOPLEFT', 0, 24*T.raidscale)
+		pets[1]:Point('BOTTOMLEFT', raid, 'TOPLEFT', 0, 24*T.raidscale)
 		pets[1]:Size(150*T.raidscale, 32*T.raidscale)
 	for i =2, 4 do 
 		pets[i] = oUF:Spawn('partypet'..i, 'oUF_TukuiPartyPet'..i) 
-		pets[i]:SetPoint('BOTTOM', pets[i-1], 'TOP', 0, 8)
+		pets[i]:Point('BOTTOM', pets[i-1], 'TOP', 0, 8)
 		pets[i]:Size(150*T.raidscale, 32*T.raidscale)
 	end
 		

@@ -68,6 +68,18 @@ local function UpdateTooltip(self)
 		self:Hide()
 	end
 	
+	if name and (TukuiPlayerBuffs or TukuiPlayerDebuffs) then
+		if (TukuiPlayerBuffs:GetPoint():match("LEFT") or TukuiPlayerDebuffs:GetPoint():match("LEFT")) and (name:match("TukuiPlayerBuffs") or name:match("TukuiPlayerDebuffs")) then
+			self:SetAnchorType("ANCHOR_BOTTOMRIGHT", x, -x)
+		end
+	end
+		
+	if (owner == MiniMapBattlefieldFrame or owner == MiniMapMailFrame) and TukuiMinimap then
+		if TukuiMinimap:GetPoint():match("LEFT") then 
+			self:SetAnchorType("ANCHOR_TOPRIGHT", x, -x)
+		end
+	end
+	
 	if self:GetAnchorType() == "ANCHOR_NONE" and TukuiTooltipAnchor then
 		local point = TukuiTooltipAnchor:GetPoint()
 		if point == "TOPLEFT" then
@@ -210,7 +222,6 @@ healthBarBG:SetFrameLevel(healthBar:GetFrameLevel() - 1)
 healthBarBG:Point("TOPLEFT", -2, 2)
 healthBarBG:Point("BOTTOMRIGHT", 2, -2)
 healthBarBG:SetTemplate("Default")
-healthBarBG:CreateShadow("Default")
 
 GameTooltip:HookScript("OnTooltipSetUnit", function(self)
 	local lines = self:NumLines()
@@ -340,79 +351,56 @@ local BorderColor = function(self)
 end
 
 local SetStyle = function(self)
-	self:SetTemplate("Transparent")
+	self:SetTemplate("Default")
 	BorderColor(self)
-	self:CreateShadow("Default")
 end
 
 TukuiTooltip:RegisterEvent("PLAYER_ENTERING_WORLD")
-TukuiTooltip:SetScript("OnEvent", function(self)
-	for _, tt in pairs(Tooltips) do
-		tt:HookScript("OnShow", SetStyle)
-	end
-	
-	ItemRefTooltip:HookScript("OnTooltipSetItem", SetStyle)
-	ItemRefTooltip:HookScript("OnShow", SetStyle)	
-	FriendsTooltip:SetTemplate("Default")
+TukuiTooltip:RegisterEvent("ADDON_LOADED")
+TukuiTooltip:SetScript("OnEvent", function(self, event, addon)
+	if event == "PLAYER_ENTERING_WORLD" then
+		for _, tt in pairs(Tooltips) do
+			tt:HookScript("OnShow", SetStyle)
+		end
 		
-	self:UnregisterEvent("PLAYER_ENTERING_WORLD")
-	self:SetScript("OnEvent", nil)
-	
-	-- move health status bar if anchor is found at top
-	local position = TukuiTooltipAnchor:GetPoint()
-	if position:match("TOP") then
-		healthBar:ClearAllPoints()
-		healthBar:Point("TOPLEFT", healthBar:GetParent(), "BOTTOMLEFT", 2, -5)
-		healthBar:Point("TOPRIGHT", healthBar:GetParent(), "BOTTOMRIGHT", -2, -5)
-	end
-	
-	-- Hide tooltips in combat for actions, pet actions and shapeshift
-	if C["tooltip"].hidebuttons == true then
-		local CombatHideActionButtonsTooltip = function(self)
-			if not IsShiftKeyDown() then
-				self:Hide()
-			end
+		ItemRefTooltip:HookScript("OnTooltipSetItem", SetStyle)
+		ItemRefTooltip:HookScript("OnShow", SetStyle)	
+		FriendsTooltip:SetTemplate("Default")
+			
+		self:UnregisterEvent("PLAYER_ENTERING_WORLD")
+		
+		-- move health status bar if anchor is found at top
+		local position = TukuiTooltipAnchor:GetPoint()
+		if position:match("TOP") then
+			healthBar:ClearAllPoints()
+			healthBar:Point("TOPLEFT", healthBar:GetParent(), "BOTTOMLEFT", 2, -5)
+			healthBar:Point("TOPRIGHT", healthBar:GetParent(), "BOTTOMRIGHT", -2, -5)
 		end
-	 
-		hooksecurefunc(GameTooltip, "SetAction", CombatHideActionButtonsTooltip)
-		hooksecurefunc(GameTooltip, "SetPetAction", CombatHideActionButtonsTooltip)
-		hooksecurefunc(GameTooltip, "SetShapeshift", CombatHideActionButtonsTooltip)
-	end
-end)
-
--- Average Item Level by Gsuz
-local SlotName = {
-	"Head","Neck","Shoulder","Back","Chest","Wrist",
-	"Hands","Waist","Legs","Feet","Finger0","Finger1",
-	"Trinket0","Trinket1","MainHand","SecondaryHand","Ranged","Ammo"
-}
-
-local function GetItemLVL(unit)
-local total, item = 0, 0;
-	for i in pairs(SlotName) do
-		local slot = GetInventoryItemLink(unit, GetInventorySlotInfo(SlotName[i] .. "Slot"));
-		if (slot ~= nil) then
-			item = item + 1;
-			total = total + select(4, GetItemInfo(slot))
-		end
-	end
-	if (item > 0) then
-		return floor(total / item);
-	end
-	return 0;
-end
-
-GameTooltip:HookScript("OnTooltipSetUnit", function(self, ...)
-	if (IsShiftKeyDown()) then
-		local garbagecount = 0;
-		local _, unit = GameTooltip:GetUnit();
-		if (unit and CanInspect(unit)) then
-			if (not ((InspectFrame and InspectFrame:IsShown()) or (Examiner and Examiner:IsShown()))) then
-				NotifyInspect(unit);
-				GameTooltip:AddLine("Item Level: " .. GetItemLVL(unit));
-				ClearInspectPlayer(unit);
-				GameTooltip:Show();
+		
+		-- Hide tooltips in combat for actions, pet actions and shapeshift
+		if C["tooltip"].hidebuttons == true then
+			local CombatHideActionButtonsTooltip = function(self)
+				if not IsShiftKeyDown() then
+					self:Hide()
+				end
 			end
+		 
+			hooksecurefunc(GameTooltip, "SetAction", CombatHideActionButtonsTooltip)
+			hooksecurefunc(GameTooltip, "SetPetAction", CombatHideActionButtonsTooltip)
+			hooksecurefunc(GameTooltip, "SetShapeshift", CombatHideActionButtonsTooltip)
+		end
+	else
+		if addon ~= "Blizzard_DebugTools" then return end
+		
+		if FrameStackTooltip then
+			FrameStackTooltip:SetScale(C.general.uiscale)
+			
+			-- Skin it
+			FrameStackTooltip:HookScript("OnShow", function(self) self:SetTemplate("Default") end)
+		end
+		
+		if EventTraceTooltip then
+			EventTraceTooltip:HookScript("OnShow", function(self) self:SetTemplate("Default") end)
 		end
 	end
 end)

@@ -1,5 +1,5 @@
 local T, C, L = unpack(Tukui)
-if C["unitframes"].enable ~= true then return end
+if ( C == nil or C["unitframes"] == nil or not C["unitframes"]["enable"] ) then return end
 
 --[[ Configuration functions - DO NOT TOUCH
 	id - spell id

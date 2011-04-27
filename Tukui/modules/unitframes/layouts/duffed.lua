@@ -192,6 +192,7 @@ local function Shared(self, unit)
 				portrait:Point("BOTTOMLEFT", power, "BOTTOMRIGHT", 5, 0)
 			end
 			-- table.insert(self.__elements, T.HidePortrait)
+			portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 			self.Portrait = portrait
 			
 			-- Portrait Border
@@ -880,6 +881,7 @@ local function Shared(self, unit)
 			portrait:Point("BOTTOMLEFT", power,"BOTTOMRIGHT",7,0)
 
 			table.insert(self.__elements, T.HidePortrait)
+			portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 			self.Portrait = portrait
 			
 			-- Portrait Border
@@ -1027,6 +1029,7 @@ local function Shared(self, unit)
 			portrait:Point("BOTTOMRIGHT", power,"BOTTOMLEFT",-7,0)
 
 			table.insert(self.__elements, T.HidePortrait)
+			portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 			self.Portrait = portrait
 			
 			-- Portrait Border
@@ -1199,6 +1202,7 @@ local function Shared(self, unit)
 			portrait:SetFrameLevel(8)
 			portrait:Point("TOPLEFT", 2, -2)
 			portrait:Point("BOTTOMRIGHT", -2, 2)
+			portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 			self.Portrait = portrait
 		end
 		
@@ -1471,6 +1475,7 @@ local function Shared(self, unit)
 			portrait:Point("TOPLEFT", 2, -2)
 			portrait:Point("BOTTOMRIGHT", -2, 2)
 			table.insert(self.__elements, T.HidePortrait)
+			portrait.PostUpdate = T.PortraitUpdate --Worgen Fix (Hydra)
 			self.Portrait = portrait
 			
 			-- create buff at left of unit if they are boss units

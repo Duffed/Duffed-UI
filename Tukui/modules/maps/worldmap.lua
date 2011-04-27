@@ -181,55 +181,45 @@ addon:SetScript("OnEvent", function(self, event)
 		ShowUIPanel(WorldMapFrame)
 		HideUIPanel(WorldMapFrame)
 	elseif event == "PLAYER_REGEN_DISABLED" then
+		local miniWorldMap = GetCVarBool("miniWorldMap")
+		if not miniWorldMap and WatchFrame.showObjectives then
+			-- prevent a taint on fullscreen map when opening fullscreen map in combat
+			WorldMapFrame_SetFullMapView()
+		end
+
+		WorldMapFrameSizeDownButton:Disable() 
+		WorldMapFrameSizeUpButton:Disable()
+		HideUIPanel(WorldMapFrame)
+		WatchFrame.showObjectives = nil
+		WorldMapQuestShowObjectives:SetChecked(false)
+		WorldMapQuestShowObjectives:Hide()
+		WorldMapTitleButton:Hide()
+		WorldMapBlobFrame:Hide()
+		WorldMapPOIFrame:Hide()
+
+		WorldMapQuestShowObjectives.Show = T.dummy
+		WorldMapTitleButton.Show = T.dummy
+		WorldMapBlobFrame.Show = T.dummy
+		WorldMapPOIFrame.Show = T.dummy       
+
 		WatchFrame_Update()
 	elseif event == "PLAYER_REGEN_ENABLED" then
+		WorldMapFrameSizeDownButton:Enable()
+		WorldMapFrameSizeUpButton:Enable()
+		WorldMapQuestShowObjectives.Show = WorldMapQuestShowObjectives:Show()
+		WorldMapTitleButton.Show = WorldMapTitleButton:Show()
+		WorldMapBlobFrame.Show = WorldMapBlobFrame:Show()
+		WorldMapPOIFrame.Show = WorldMapPOIFrame:Show()
+
+		WorldMapQuestShowObjectives:Show()
+		WorldMapTitleButton:Show()
+
+		WatchFrame.showObjectives = true
+		WorldMapQuestShowObjectives:SetChecked(true)
+
+		WorldMapBlobFrame:Show()
+		WorldMapPOIFrame:Show()
+
 		WatchFrame_Update()
-	end
-end)
-
--- coords
-local coords = CreateFrame("Frame", "CoordsFrame", WorldMapFrame)
-local fontheight = select(2, WorldMapQuestShowObjectivesText:GetFont())*1.1
-coords.PlayerText = T.SetFontString(CoordsFrame, C["media"].font, fontheight, "THINOUTLINE")
-coords.MouseText = T.SetFontString(CoordsFrame, C["media"].font, fontheight, "THINOUTLINE")
-coords.PlayerText:SetTextColor(WorldMapQuestShowObjectivesText:GetTextColor())
-coords.MouseText:SetTextColor(WorldMapQuestShowObjectivesText:GetTextColor())
-coords.PlayerText:SetPoint("TOPLEFT", WorldMapButton, "TOPLEFT", 5, -5)
-coords.PlayerText:SetText("Player:   0, 0")
-coords.MouseText:SetPoint("TOPLEFT", coords.PlayerText, "BOTTOMLEFT", 0, -5)
-coords.MouseText:SetText("Mouse:   0, 0")
-
-local int = 0
-coords:SetScript("OnUpdate", function(self, elapsed)
-	int = int + 1
-	
-	if int >= 3 then
-		local inInstance, _ = IsInInstance()
-		local x,y = GetPlayerMapPosition("player")
-		x = math.floor(100 * x)
-		y = math.floor(100 * y)
-		if x ~= 0 and y ~= 0 then
-			self.PlayerText:SetText(PLAYER..":   "..x..", "..y)
-		else
-			self.PlayerText:SetText(" ")
-		end
-
-		local scale = WorldMapDetailFrame:GetEffectiveScale()
-		local width = WorldMapDetailFrame:GetWidth()
-		local height = WorldMapDetailFrame:GetHeight()
-		local centerX, centerY = WorldMapDetailFrame:GetCenter()
-		local x, y = GetCursorPosition()
-		local adjustedX = (x / scale - (centerX - (width/2))) / width
-		local adjustedY = (centerY + (height/2) - y / scale) / height	
-		
-		if (adjustedX >= 0  and adjustedY >= 0 and adjustedX <= 1 and adjustedY <= 1) then
-			adjustedX = math.floor(100 * adjustedX)
-			adjustedY = math.floor(100 * adjustedY)
-			coords.MouseText:SetText(MOUSE_LABEL..":   "..adjustedX..", "..adjustedY)
-		else
-			coords.MouseText:SetText(" ")
-		end
-		
-		int = 0
 	end
 end)

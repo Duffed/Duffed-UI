@@ -118,19 +118,11 @@ local function Update(self, event, ...)
 			BuildGuildTable(total)
 		end
 		
-		self:SetAllPoints(Text)
 		Text:SetFormattedText(displayString, L.datatext_guild, totalOnline)
-		
-		if not Stat:GetScript("OnMouseDown") then
-			Stat:SetScript("OnMouseDown", function(self, btn)
-				if btn ~= "LeftButton" then return end
-				ToggleGuildFrame()
-			end)
-		end
 	else
 		Text:SetText(T.panelcolor..L.datatext_noguild)
-		Stat:SetScript("OnMouseDown", nil)
 	end
+	self:SetAllPoints(Text)
 	self.update = false
 end
 	
@@ -152,13 +144,18 @@ local function whisperClick(self,arg1,arg2,checked)
 end
 
 local function ToggleGuildFrame()
-	if not GuildFrame and IsInGuild() then LoadAddOn("Blizzard_GuildUI") end
-	GuildFrame_Toggle() 
-	GuildFrame_TabClicked(GuildFrameTab2)
+	if IsInGuild() then 
+		if not GuildFrame then LoadAddOn("Blizzard_GuildUI") end 
+		GuildFrame_Toggle()
+		GuildFrame_TabClicked(GuildFrameTab2)
+	else
+		if not LookingForGuildFrame then LoadAddOn("Blizzard_LookingForGuildUI") end 
+		LookingForGuildFrame_Toggle() 
+	end
 end
 
 Stat:SetScript("OnMouseUp", function(self, btn)
-	if btn ~= "RightButton" then return end
+	if btn ~= "RightButton" or not IsInGuild() then return end
 	
 	GameTooltip:Hide()
 
@@ -217,7 +214,7 @@ Stat:SetScript("OnEnter", function(self)
 	end
 	
 	local _, _, standingID, barMin, barMax, barValue = GetGuildFactionInfo()
-	if standingID ~= 4 then -- Not Max Rep
+	if standingID ~= 8 then -- Not Max Rep
 		barMax = barMax - barMin
 		barValue = barValue - barMin
 		barMin = 0
@@ -251,6 +248,10 @@ Stat:SetScript("OnEnter", function(self)
 end)
 
 Stat:SetScript("OnLeave", function() GameTooltip:Hide() end)
+Stat:SetScript("OnMouseDown", function(self, btn)
+	if btn ~= "LeftButton" then return end
+	ToggleGuildFrame()
+end)
 
 Stat:RegisterEvent("GUILD_ROSTER_SHOW")
 Stat:RegisterEvent("PLAYER_ENTERING_WORLD")

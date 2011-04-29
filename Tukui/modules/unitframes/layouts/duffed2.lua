@@ -854,10 +854,10 @@ local function Shared(self, unit)
 		if C["unitframes"].totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
 			debuffs:Height(20)
-			debuffs:Width(200)
+			debuffs:Width(300)
 			debuffs.size = 19.5
 			debuffs.spacing = 3
-			debuffs.num = 5
+			debuffs.num = 7
 
 			debuffs:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -3)
 			debuffs.initialAnchor = "TOPLEFT"
@@ -962,10 +962,10 @@ local function Shared(self, unit)
 		if C["unitframes"].totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
 			debuffs:Height(20)
-			debuffs:Width(self:GetWidth())
+			debuffs:Width(300)
 			debuffs.size = 19.5
 			debuffs.spacing = 3
-			debuffs.num = (self:GetWidth()+debuffs.spacing)/debuffs.size
+			debuffs.num = 7
 
 			debuffs:Point("TOPLEFT", self, "BOTTOMLEFT", 0, -3)
 			debuffs.initialAnchor = "TOPLEFT"
@@ -1135,7 +1135,7 @@ local function Shared(self, unit)
 				debuffs["growth-x"] = "LEFT"
 			end
 			debuffs.num = 4
-			debuffs:SetWidth(debuffs:GetHeight() * debuffs.num)
+			debuffs:SetWidth(debuffs:GetHeight() * (debuffs.num + debuffs.spacing))
 			debuffs.PostCreateIcon = T.PostCreateAura
 			debuffs.PostUpdateIcon = T.PostUpdateAura
 			self.Debuffs = debuffs

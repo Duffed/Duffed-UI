@@ -137,7 +137,7 @@ function tInterruptIcons.Print(msg, ...)
 	DEFAULT_CHAT_FRAME:AddMessage("|cFFFFFF33[Tukui Interrupt Icons]|r "..format(msg, ...))
 end
 
-function tInterruptIcons.COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags, spellID)
+function tInterruptIcons.COMBAT_LOG_EVENT_UNFILTERED(timestamp, event, hideCaster, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags, spellID)
 	if (event == "SPELL_CAST_SUCCESS" and not tInterruptIcons.Icons[1]:IsMouseEnabled() and (bit.band(sourceFlags,COMBATLOG_OBJECT_REACTION_HOSTILE) == COMBATLOG_OBJECT_REACTION_HOSTILE)) then 
 		if (sourceName ~= UnitName("player")) then
 			if (tInterruptIcons.Spells[spellID]) then

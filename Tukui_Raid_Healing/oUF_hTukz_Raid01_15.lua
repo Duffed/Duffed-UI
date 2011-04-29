@@ -82,9 +82,9 @@ local function Shared(self, unit)
 	power.bg.multiplier = 0.4
 	self.Power.bg = power.bg
 	
-	if C.unitframes.unicolor == true then
+	if C.unitframes.powerClasscolored then
 		power.colorClass = true
-		power.bg.multiplier = 0.1				
+		power.bg.multiplier = 0.1			
 	else
 		power.colorPower = true
 	end

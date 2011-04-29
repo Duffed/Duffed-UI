@@ -853,7 +853,7 @@ local function Shared(self, unit)
 			debuffs:SetWidth(127)
 			debuffs.size = 19.5
 			debuffs.spacing = 4
-			debuffs.num = 5
+			debuffs.num = 6
 
 			debuffs:Point("TOPLEFT", power, "BOTTOMLEFT", -2, -5)
 			debuffs.initialAnchor = "TOPLEFT"
@@ -1041,10 +1041,10 @@ local function Shared(self, unit)
 		
 		if C["unitframes"].totdebuffs == true then
 			local debuffs = CreateFrame("Frame", nil, health)
-			debuffs:Height(20)
-			debuffs:Width(127)
+			debuffs:SetHeight(20)
+			debuffs:SetWidth(127)
 			debuffs.size = 19.5
-			debuffs.spacing = 3
+			debuffs.spacing = 4
 			debuffs.num = 6
 
 			debuffs:Point("TOPLEFT", power, "BOTTOMLEFT", -2, -5)

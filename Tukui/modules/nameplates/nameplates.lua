@@ -197,7 +197,6 @@ end
 --Color Nameplate
 local function Colorize(frame)
 	local r,g,b = frame.hp:GetStatusBarColor()
-	
 	for class, color in pairs(RAID_CLASS_COLORS) do
 		local r, g, b = floor(r*100+.5)/100, floor(g*100+.5)/100, floor(b*100+.5)/100
 		if RAID_CLASS_COLORS[class].r == r and RAID_CLASS_COLORS[class].g == g and RAID_CLASS_COLORS[class].b == b then
@@ -222,6 +221,7 @@ local function Colorize(frame)
 	else -- enemy player
 		frame.isFriendly = false
 	end
+	
 	frame.hasClass = false
 	
 	frame.hp:SetStatusBarColor(r,g,b)
@@ -327,6 +327,13 @@ local function SkinObjects(frame)
 	
 	hp:HookScript('OnShow', UpdateObjects)
 	frame.hp = hp
+	
+	--Class Icon
+	-- local cicon = hp:CreateTexture(nil, "OVERLAY")
+	-- cicon:Point("LEFT", hp, "LEFT", -22, 0)
+	-- cicon:SetTexture("Interface\\WorldStateFrame\\Icons-Classes")
+	-- cicon:Size(iconSize)
+	-- frame.class = cicon
 	
 	--Cast Bar
 	cb:SetFrameLevel(1)

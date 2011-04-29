@@ -73,11 +73,11 @@ local function Shared(self, unit)
 	power.bg.multiplier = 0.3
 	self.Power.bg = power.bg
 	
-	if C.unitframes.unicolor == true then
-		power.colorClass = true				
-	else
-		power.colorPower = true
-	end
+		if C.unitframes.powerClasscolored then
+			power.colorClass = true		
+		else
+			power.colorPower = true
+		end
 		
 	local name = health:CreateFontString(nil, 'OVERLAY')
 	name:SetFont(font2, fontsize, "THINOUTLINE")

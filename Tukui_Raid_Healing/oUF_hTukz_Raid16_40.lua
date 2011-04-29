@@ -90,8 +90,8 @@ local function Shared(self, unit)
 	power.bg:SetAlpha(1)
 	power.bg.multiplier = 0.3
 	
-	if C.unitframes.unicolor == true then
-		power.colorClass = true				
+	if C.unitframes.powerClasscolored then
+		power.colorClass = true		
 	else
 		power.colorPower = true
 	end

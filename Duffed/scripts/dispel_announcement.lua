@@ -18,8 +18,8 @@ f:SetClampedToScreen(true)
 f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 
 f:SetScript("OnEvent", function(self, event, ...)
-	local timestamp, type, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags = ...
-	if (type == "SPELL_DISPEL" or type == "SPELL_STOLEN") and sourceName == UnitName("player") then
-		f:AddMessage("- "..dStuff.dispelannouncement.textcolor..select(13, ...), 1, 1, 1)
+	local timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags = ...
+	if (eventType == "SPELL_DISPEL" or eventType == "SPELL_STOLEN") and sourceName == UnitName("player") then
+		f:AddMessage("- "..dStuff.dispelannouncement.textcolor..select(14, ...), 1, 1, 1)
 	end
 end)

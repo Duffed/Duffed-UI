@@ -100,10 +100,7 @@ local function Shared(self, unit)
 		self.Range = range
 	end
 	
-	local border = CreateFrame("Frame", nil, health)
-	border:CreatePanel("Default", 1, 1, "TOPLEFT", health, "TOPLEFT", -2, 2)
-	border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
-	border:CreateShadow("Default")
+	health:CreateBorder()
 	self.panel = border
 	
 	return self

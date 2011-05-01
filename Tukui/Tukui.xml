@@ -35,6 +35,7 @@
 	<Script file="modules\unitframes\plugins\oUF_Priest_SoS\oUF_Priest_SoS.lua"/>
 	<Script file="modules\unitframes\plugins\oUF_Fader\oUF_Fader.lua"/>
 	<Script file="modules\unitframes\plugins\oUF_Vengeance\oUF_Vengeance.lua"/>
+	<Script file="modules\unitframes\plugins\oUF_Swing\oUF_Swing.lua"/>
 	<Script file="modules\unitframes\templates\colors.lua"/>
 	
 	<Script file="core\uiscale.lua"/>

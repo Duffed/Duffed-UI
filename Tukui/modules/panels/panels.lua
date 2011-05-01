@@ -131,7 +131,7 @@ if C["chat"].rightchatbackground == true then
 			_G["ChatFrame"..C.chat.rightchatnumber]:Hide()
 			_G["ChatFrame"..C.chat.rightchatnumber.."Tab"]:Hide()
 			AddonBGPanel:Show()
-			if IsAddOnLoaded("Recount") then Recount_MainWindow:Show() end
+			if IsAddOnLoaded("Recount") then _G.Recount.MainWindow:Show() end
 			if IsAddOnLoaded("Omen") then OmenAnchor:Show() end
 			if IsAddOnLoaded("Skada") then Skada:SetActive(true) end
 		end)

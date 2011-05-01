@@ -114,6 +114,16 @@ local function moving()
 	if InCombatLockdown() then print(ERR_NOT_IN_COMBAT) return end
 	
 	if C.sCombo.enable and C.unitframes.enable then SlashCmdList.MOVESCOMBO() end
+	if C.swingtimer.enable and C.unitframes.enable then 
+		if TukuiSwingtimerHolder:IsShown() then
+			TukuiSwingtimerHolder:Hide()
+			TukuiSwingtimerHolder:EnableMouse(false)
+		else
+			TukuiSwingtimerHolder:Show()
+			TukuiSwingtimerHolder:EnableMouse(true)
+		end
+	end
+	
 	for i = 1, getn(T.MoverFrames) do
 		if T.MoverFrames[i] then		
 			if enable then

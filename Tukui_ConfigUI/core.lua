@@ -26,6 +26,7 @@ local ALLOWED_GROUPS = {
 	["Addon_Skins"]=1,
 	["sCombo"]=1,
 	["auras"]=1,
+	["swingtimer"]=1,
 }
 
 --List of "Table Names" that we do not want to show in the config
@@ -129,6 +130,12 @@ local function Local(o)
 	if o == "TukuiConfigUImerchantautoguildrepair" then o = "Autorepair from Guild Bank if possible." end
 	
 	if o == "TukuiConfigUInameplateclassicons" then o = "Display Classicon on nameplates for enemys" end
+	
+	if o == "TukuiConfigUIswingtimer" then o = "SwingTimer" end
+	if o == "TukuiConfigUIswingtimerenable" then o = "Enable SwingTimer" end
+	if o == "TukuiConfigUIswingtimerwidth" then o = "Width" end
+	if o == "TukuiConfigUIswingtimerheight" then o = "Height" end
+	if o == "TukuiConfigUIswingtimercolor" then o = "Bar-Color" end
 	
 	-- general
 	if o == "TukuiConfigUIgeneral" then o = TukuiL.option_general end

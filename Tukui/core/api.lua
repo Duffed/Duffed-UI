@@ -156,6 +156,17 @@ local function CreateLine(f, w, h) -- was thinking about something completely di
 	f:SetBackdropColor(unpack(C["media"].bordercolor))
 end
 
+local function CreateBorder(f, p)
+	if f.border then return end
+
+	border = CreateFrame("Frame", nil, p or f)
+	border:CreatePanel("", 1, 1, "TOPLEFT", f, "TOPLEFT", -2, 2)
+	border:Point("BOTTOMRIGHT", f, "BOTTOMRIGHT", 2, -2)
+	border:CreateShadow("")
+	
+	f.border = border
+end
+
 local function Kill(object)
 	if object.UnregisterAllEvents then
 		object:UnregisterAllEvents()
@@ -258,6 +269,7 @@ local function addapi(object)
 	if not object.FontString then mt.FontString = FontString end
 	if not object.CreateLine then mt.CreateLine = CreateLine end
 	if not object.HighlightUnit then mt.HighlightUnit = HighlightUnit end
+	if not object.CreateBorder then mt.CreateBorder = CreateBorder end
 end
 
 local handled = {["Frame"] = true}

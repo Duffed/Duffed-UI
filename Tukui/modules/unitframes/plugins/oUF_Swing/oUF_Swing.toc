@@ -1,0 +1,8 @@
+## Interface: 40100
+## Author: p3lim, Thalyra
+## Version: 40100.1
+## Title: oUF Swing
+## Notes: Swing timer plug-in for oUF
+## RequiredDeps: oUF
+
+oUF_Swing.lua

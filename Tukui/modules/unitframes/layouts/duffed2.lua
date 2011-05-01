@@ -178,16 +178,10 @@ local function Shared(self, unit)
 		end
 		
 		-- Healthbar Border
-		health.border = CreateFrame("Frame", nil, health)
-		health.border:CreatePanel("Default",1,1, "TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
-		health.border:CreateShadow("Default")
+		health:CreateBorder()
 		
 		-- Powerbar Border
-		power.border = CreateFrame("Frame", nil, power)
-		power.border:CreatePanel("Default", 1, 1, "TOPLEFT", power, "TOPLEFT", -2, 2)
-		power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT",  2,  -2)
-		power.border:CreateShadow("")
+		power:CreateBorder()
 		
 		local l1 = CreateFrame("Frame", nil, power)
 		local l2 = CreateFrame("Frame", nil, l1)
@@ -345,6 +339,44 @@ local function Shared(self, unit)
 				self.Priest_SoS = sos
 			end
 
+			-- SwingTimer
+			if C.swingtimer.enable then
+				local sh = CreateFrame("Frame", "TukuiSwingtimerHolder", UIParent)
+				sh:CreatePanel("", C.swingtimer.width, 13, "CENTER", UIParent, "CENTER", 0, -50)
+				sh:SetMovable(true)
+				sh:Hide()
+				sh:SetBackdropBorderColor(1,0,0)
+				sh:SetScript("OnMouseDown", function(self) self:StartMoving() end)
+				sh:SetScript("OnMouseUp", function(self) self:StopMovingOrSizing() end)
+				sh.text = sh:CreateFontString(nil, "OVERLAY")
+				sh.text:SetFont(C.datatext.font, C.datatext.fontsize)
+				sh.text:SetPoint("CENTER")
+				sh.text:SetText("Move SwingTimer")
+				sh:CreateShadow("")
+
+				Swing = CreateFrame("Frame", "TukuiSwingtimer", self)
+				Swing:Point("TOPLEFT", sh, "BOTTOMLEFT", 0, -5)
+				Swing:Point("TOPRIGHT", sh, "BOTTOMRIGHT", 0, -5)
+				Swing:Height(C.swingtimer.height)
+				Swing.texture = C["media"].normTex 
+				Swing.color = C.swingtimer.color
+				Swing.textureBG = C["media"].blank
+				Swing.colorBG = {0, 0, 0, 0.8}
+				Swing.hideOoc = true
+
+				Swing:CreateBorder()
+				Swing.border:Hide()
+				Swing.border:RegisterEvent("PLAYER_REGEN_ENABLED")
+				Swing.border:RegisterEvent("PLAYER_REGEN_DISABLED")
+				Swing.border:SetScript("OnEvent", function(self, event)
+					if event == "PLAYER_REGEN_ENABLED" then self:Hide()
+					else self:Show()
+					end
+				end)
+
+				self.Swing = Swing
+			end
+
 			-- experience bar on player via mouseover for player currently levelling a character
 			if T.level ~= MAX_PLAYER_LEVEL and C["unitframes"].charportrait == true then
 				local Experience = CreateFrame("StatusBar", self:GetName().."_Experience", self)
@@ -471,10 +503,7 @@ local function Shared(self, unit)
 					if eclipseBar and eclipseBar:IsShown() then FlashInfo.ManaLevel:SetAlpha(0) end
 					
 					-- border
-					eclipseBar.border = CreateFrame("Frame", "EclipseBarBorder", eclipseBar)
-					eclipseBar.border:CreatePanel("Default", 1, 1, "TOPLEFT", eclipseBar, "TOPLEFT", -2, 2)
-					eclipseBar.border:Point("BOTTOMRIGHT", eclipseBar, "BOTTOMRIGHT", 2, -2)
-					eclipseBar.border:CreateShadow("Default")
+					eclipseBar:CreateBorder()
 
 					self.EclipseBar = eclipseBar
 					self.EclipseBar.Text = eclipseBarText
@@ -487,10 +516,7 @@ local function Shared(self, unit)
 					bars:Size(playerwidth-4, 5)
 					
 					-- border
-					bars.border = CreateFrame("Frame", "ShardBarBorder",bars)
-					bars.border:CreatePanel("Default",1,1,"TOPLEFT", bars, "TOPLEFT", -2, 2)
-					bars.border:Point("BOTTOMRIGHT", bars, "BOTTOMRIGHT", 2, -2)
-					bars.border:CreateShadow("Default")
+					bars:CreateBorder()
 					
 					for i = 1, 3 do					
 						bars[i]=CreateFrame("StatusBar", self:GetName().."_Shard"..i, self)
@@ -538,10 +564,7 @@ local function Shared(self, unit)
 					Runes:Size(playerwidth-4, 5)
 					
 					-- border
-					Runes.border = CreateFrame("Frame", "RuneBarBorder",Runes)
-					Runes.border:CreatePanel("Default",1,1,"TOPLEFT", Runes, "TOPLEFT", -2, 2)
-					Runes.border:Point("BOTTOMRIGHT", Runes, "BOTTOMRIGHT", 2, -2)
-					Runes.border:CreateShadow("Default")
+					Runes:CreateBorder()
 
 					for i = 1, 6 do
 						Runes[i] = CreateFrame("StatusBar", self:GetName().."_Runes"..i, health)
@@ -701,10 +724,7 @@ local function Shared(self, unit)
 			castbar.Text:SetTextColor(0.84, 0.75, 0.65)
 			
 			-- Border
-			castbar.border = CreateFrame("Frame", nil, castbar)
-			castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
-			castbar.border:Point("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
-			castbar.border:CreateShadow("Default")
+			castbar:CreateBorder()
 			
 			if C.castbar.cbicons then
 				castbar.button = CreateFrame("Frame", nil, castbar)
@@ -837,10 +857,7 @@ local function Shared(self, unit)
 		end
 		
 		-- Healthbar Border
-		health.border = CreateFrame("Frame", nil,health)
-		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
-		health.border:CreateShadow("Default")
+		health:CreateBorder()
 		
 		-- Unit name
 		local Name = health:CreateFontString(nil, "OVERLAY")
@@ -914,10 +931,7 @@ local function Shared(self, unit)
 		end
 		
 		-- Healthbar Border
-		health.border = CreateFrame("Frame", nil,health)
-		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", health, "BOTTOMRIGHT", 2, -2)
-		health.border:CreateShadow("Default")
+		health:CreateBorder()
 				
 		-- Unit name
 		local Name = health:CreateFontString(nil, "OVERLAY")
@@ -953,10 +967,7 @@ local function Shared(self, unit)
 			self.Castbar.Time = castbar.time
 			
 			-- Border
-			castbar.border = CreateFrame("Frame", nil,castbar)
-			castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
-			castbar.border:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
-			castbar.border:CreateShadow("")
+			castbar:CreateBorder()
 		end
 		
 		if C["unitframes"].totdebuffs == true then
@@ -1103,9 +1114,7 @@ local function Shared(self, unit)
 			health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
 			health.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
 		
-			power.border = CreateFrame("Frame", nil, power)
-			power.border:CreatePanel("Default",1,1,"TOPLEFT", power, "TOPLEFT", -2, 2)
-			power.border:Point("BOTTOMRIGHT", power, "BOTTOMRIGHT", 2, -2)
+			power:CreateBorder()
 			
 			local shd = CreateFrame("Frame", nil, health.border)
 			shd:SetPoint("TOPLEFT")
@@ -1149,10 +1158,7 @@ local function Shared(self, unit)
 			castbar:Width(240)
 			castbar:Point("TOP", UIParent, "TOP", 0, C["castbar"]["focus-y-offset"])
 			
-			castbar.border = CreateFrame("Frame", nil, castbar)
-			castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
-			castbar.border:SetPoint("BOTTOMRIGHT", castbar, "BOTTOMRIGHT", 2, -2)
-			castbar.border:CreateShadow("Default")
+			castbar:CreateBorder()
 			
 			castbar.time = T.SetFontString(castbar, font1, fontsize)
 			castbar.time:Point("RIGHT", castbar, "RIGHT", -4, 0)
@@ -1274,10 +1280,7 @@ local function Shared(self, unit)
 		self.Name = Name
 		
 		-- Border
-		health.border = CreateFrame("Frame", nil, health)
-		health.border:CreatePanel("Default",1,1,"TOPLEFT", health, "TOPLEFT", -2, 2)
-		health.border:Point("BOTTOMRIGHT", 2, -2)
-		health.border:CreateShadow("Default")	
+		health:CreateBorder()	
 		
 		-- Lines
 		if C.unitframes.totandpetlines and lafo then
@@ -1531,10 +1534,7 @@ local function Shared(self, unit)
 		castbar:SetStatusBarTexture(normTex)
 		castbar:SetFrameLevel(10)
 		
-		castbar.border = CreateFrame("Frame", nil, castbar)
-		castbar.border:CreatePanel("Default",1,1,"TOPLEFT", castbar, "TOPLEFT", -2, 2)
-		castbar.border:SetPoint("BOTTOMRIGHT",castbar, "BOTTOMRIGHT", 2, -2)
-		castbar.border:CreateShadow("Default")
+		castbar:CreateBorder()
 		castbar.border:SetFrameLevel(9)
 
 		castbar.Text = T.SetFontString(castbar, font1, fontsize)

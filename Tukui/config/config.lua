@@ -131,6 +131,13 @@ C["sCombo"] = {
 	["energybar"] = false,								-- show energy-Bar below cp bar
 }
 
+C["swingtimer"] = {
+	["enable"] = true,
+	["width"] = 210,
+	["height"] = 6,
+	["color"] = {1, 0, 0, 0.8},
+}
+
 C["classtimer"] = {
 	["targetdebuffs"] = false,							-- target debuffs above target (looks crappy imo)
 	["playercolor"] = {.2, .2, .2, 1 },

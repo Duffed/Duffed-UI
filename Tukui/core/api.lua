@@ -156,10 +156,10 @@ local function CreateLine(f, w, h) -- was thinking about something completely di
 	f:SetBackdropColor(unpack(C["media"].bordercolor))
 end
 
-local function CreateBorder(f, p)
+local function CreateBorder(f, n, p)
 	if f.border then return end
 
-	border = CreateFrame("Frame", nil, p or f)
+	border = CreateFrame("Frame", n or nil, p or f)
 	border:CreatePanel("", 1, 1, "TOPLEFT", f, "TOPLEFT", -2, 2)
 	border:Point("BOTTOMRIGHT", f, "BOTTOMRIGHT", 2, -2)
 	border:CreateShadow("")

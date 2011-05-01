@@ -480,7 +480,7 @@ local function Shared(self, unit)
 					if eclipseBar and eclipseBar:IsShown() then FlashInfo.ManaLevel:SetAlpha(0) end
 					
 					-- border
-					eclipseBar:CreateBorder()
+					eclipseBar:CreateBorder("EclipseBarBorder")
 
 					self.EclipseBar = eclipseBar
 					self.EclipseBar.Text = eclipseBarText
@@ -495,7 +495,7 @@ local function Shared(self, unit)
 					bars:SetBackdropBorderColor(0,0,0,0)
 					
 					-- border
-					bars:CreateBorder()
+					bars:CreateBorder("ShardBarBorder")
 					
 					for i = 1, 3 do					
 						bars[i]=CreateFrame("StatusBar", self:GetName().."_Shard"..i, self)
@@ -544,7 +544,7 @@ local function Shared(self, unit)
 					Runes:Size(playerwidth, 5)
 					
 					-- border
-					Runes:CreateBorder()
+					Runes:CreateBorder("RuneBarBorder")
 
 					for i = 1, 6 do
 						Runes[i] = CreateFrame("StatusBar", self:GetName().."_Runes"..i, health)

@@ -5,6 +5,8 @@ dStuff = {						-- true/false
 	priest_SoS = true,			-- Priest Soul of Strength Icon
 	tbtimer = false,			-- Show Watchframe when entering tb (abuse :<)
 	
+	arenaonly = true,
+	
 	["dispelannouncement"] = {
 		enable = true,			-- Announce dispels in a movable frame
 		justify = "CENTER",
@@ -66,6 +68,7 @@ if IsAddOnLoaded("Tukui") then
 		dStuff.sayinterrupt = C["pvp"].sayinterrupt
 		dStuff.dispelannouncement.enable = C["pvp"].dispelannouncement
 		dStuff.priest_SoS = false
+		dStuff.arenaonly = C["pvp"].arenaonly
 	end
 	dStuff.font = C.media.font
 end

@@ -1,3 +1,5 @@
+local WoW41 = select(4, GetBuildInfo()) == 40100
+if not WoW41 then return end
 local function GetLinkColor(data)
 	local type, id, arg1 = string.match(data, '(%w+):(%d+):(%d+)')
 	if(type == 'item') then

@@ -48,6 +48,7 @@ local function GetAuras()
 		[GetSpellInfo(49203)] 	= 3,	-- Hungering Cold
 		[GetSpellInfo(47481)]	= 3,	-- Gnaw (dk pet stun)
 		[GetSpellInfo(88625)]	= 3,	-- Holy Word: Chastise
+		[GetSpellInfo(85388)]	= 3,	-- Warrior stun
 		
 		-- Silences
 		[GetSpellInfo(18469)] 	= 1,	-- Improved Counterspell

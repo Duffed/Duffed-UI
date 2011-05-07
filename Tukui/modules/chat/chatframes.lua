@@ -137,7 +137,6 @@ local function SetChatStyle(frame)
 	local a, b, c = select(6, _G[chat.."EditBox"]:GetRegions()) a:Kill() b:Kill() c:Kill()
 	
 	-- bubble tex & glow killing from privates
-	if tab.glow then tab.glow:Kill() end
 	if tab.conversationIcon then tab.conversationIcon:Kill() end
 				
 	-- Disable alt key usage

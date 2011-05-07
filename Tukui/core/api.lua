@@ -118,6 +118,23 @@ local function CreatePanel(f, t, w, h, a1, p, a2, x, y)
 	f:SetBackdropBorderColor(borderr, borderg, borderb)
 end
 
+local function CreateBackdrop(f, t, tex)
+	if not t then t = "Default" end
+	
+	local b = CreateFrame("Frame", nil, f)
+	b:Point("TOPLEFT", -2, 2)
+	b:Point("BOTTOMRIGHT", 2, -2)
+	b:SetTemplate(t, tex)
+	
+	if f:GetFrameLevel() - 1 >= 0 then
+		b:SetFrameLevel(f:GetFrameLevel() - 1)
+	else
+		b:SetFrameLevel(0)
+	end
+	
+	f.backdrop = b
+end
+
 local function CreateShadow(f, t)
 	if f.shadow then return end -- we seriously don't want to create shadow 2 times in a row on the same frame.
 	
@@ -255,6 +272,19 @@ local function HighlightUnit(f, r, g, b)
 	f:RegisterEvent("PLAYER_TARGET_CHANGED", HighlightTarget)
 end
 
+local function StripTextures(object, kill)
+	for i=1, object:GetNumRegions() do
+		local region = select(i, object:GetRegions())
+		if region:GetObjectType() == "Texture" then
+			if kill then
+				region:Kill()
+			else
+				region:SetTexture(nil)
+			end
+		end
+	end
+end
+
 local function addapi(object)
 	local mt = getmetatable(object).__index
 	if not object.Size then mt.Size = Size end
@@ -270,6 +300,8 @@ local function addapi(object)
 	if not object.CreateLine then mt.CreateLine = CreateLine end
 	if not object.HighlightUnit then mt.HighlightUnit = HighlightUnit end
 	if not object.CreateBorder then mt.CreateBorder = CreateBorder end
+	if not object.CreateBackdrop then mt.CreateBackdrop = CreateBackdrop end
+	if not object.StripTextures then mt.StripTextures = StripTextures end
 end
 
 local handled = {["Frame"] = true}

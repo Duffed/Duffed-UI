@@ -113,6 +113,8 @@ C["pvp"] = {
 	["ccannouncement"] = true,							-- Announce CC/Buffs/Debuffs (config in AddOns/Stuff/Config.lua)
 	["sayinterrupt"] = true,							-- Interrupt announce
 	["dispelannouncement"] = false,						-- Announce dispels in a movable frame (/duffed)
+	
+	["arenaonly"] = true,								-- Aura and Interrupt announce in arena only
 }
 
 C["Addon_Skins"] = {
@@ -132,10 +134,10 @@ C["sCombo"] = {
 }
 
 C["swingtimer"] = {
-	["enable"] = true,
-	["width"] = 210,
-	["height"] = 6,
-	["color"] = {1, 0, 0, 0.8},
+	["enable"] = false,									-- enable ouf_Swing Swingtimer Plugin (movable bar)
+	["width"] = 210,									-- bar width
+	["height"] = 6,										-- bar height
+	["color"] = {1, 0, 0, 0.8},							-- bar color
 }
 
 C["classtimer"] = {

@@ -248,6 +248,8 @@ local function UpdateObjects(frame)
 	
 	if C["nameplate"].enhancethreat == true then
 		frame.hp.name:SetTextColor(frame.hp.rcolor, frame.hp.gcolor, frame.hp.bcolor)
+	-- else
+		-- frame.hp.name:SetTextColor(1,1,0)
 	end
 	
 	--Set the name text

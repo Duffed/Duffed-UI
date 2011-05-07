@@ -36,6 +36,8 @@
 	Functions that can be overridden from within a layout:
 	 - :OverrideText(now)
 --]]
+local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
+if not C.swingtimer.enable then return end
 
 local addon, ns = ...
 local oUF = oUF or ns.oUF
@@ -152,6 +154,7 @@ local function MeleeChange(self, event, unit)
 			swingOH:Show()
 			swingOH:SetMinMaxValues(swingOH.min, swingMH.max)
 			swingOH:SetScript("OnUpdate", OnDurationUpdate)
+			if bar.border then bar.border:Show() end
 		else
 			swing.min = GetTime()
 			swing.max = swing.min + mhspeed
@@ -160,6 +163,7 @@ local function MeleeChange(self, event, unit)
 			swing:Show()
 			swing:SetMinMaxValues(swing.min, swing.max)
 			swing:SetScript("OnUpdate", OnDurationUpdate)
+			if bar.border then bar.border:Show() end
 		end
 			
 		lasthit = now
@@ -266,6 +270,7 @@ local function Melee(self, event, _, subevent, _, GUID)
 		swing:Hide()
 		swingMH:Hide()
 		swingOH:Hide()
+		if bar.border then bar.border:Hide() end
 		
 		swing:SetScript("OnUpdate", nil)
 		swingMH:SetScript("OnUpdate", nil)
@@ -289,6 +294,7 @@ local function Melee(self, event, _, subevent, _, GUID)
 			swingOH:Show()
 			swingOH:SetMinMaxValues(swingOH.min, swingOH.max)
 			swingOH:SetScript("OnUpdate", OnDurationUpdate)
+			if bar.border then bar.border:Show() end
 		else
 			swing.min = GetTime()
 			swing.max = swing.min + mhspeed
@@ -297,6 +303,7 @@ local function Melee(self, event, _, subevent, _, GUID)
 			swing:Show()
 			swing:SetMinMaxValues(swing.min, swing.max)
 			swing:SetScript("OnUpdate", OnDurationUpdate)
+			if bar.border then bar.border:Show() end
 		end
 		
 		meleeing = true
@@ -373,6 +380,7 @@ local function Ooc(self)
 	bar.Twohand:Hide()
 	bar.Mainhand:Hide()
 	bar.Offhand:Hide()
+	if bar.border then bar.border:Hide() end
 end
 
 local function Enable(self, unit)
@@ -403,6 +411,7 @@ local function Enable(self, unit)
 			bar.Twohand:SetStatusBarColor(r, g, b, a)
 			bar.Twohand:SetFrameLevel(20)
 			bar.Twohand:Hide()
+			if bar.border then bar.border:Hide() end
 			
 			bar.Twohand.bg = bar.Twohand:CreateTexture(nil, "BACKGROUND") -- change?
 			bar.Twohand.bg:SetAllPoints(bar.Twohand)
@@ -418,6 +427,7 @@ local function Enable(self, unit)
 			bar.Mainhand:SetStatusBarColor(r, g, b, a)
 			bar.Mainhand:SetFrameLevel(20)
 			bar.Mainhand:Hide()
+			if bar.border then bar.border:Hide() end
 			
 			bar.Mainhand.bg = bar.Mainhand:CreateTexture(nil, "BACKGROUND") -- change?
 			bar.Mainhand.bg:SetAllPoints(bar.Mainhand)
@@ -433,6 +443,7 @@ local function Enable(self, unit)
 			bar.Offhand:SetStatusBarColor(r, g, b, a)
 			bar.Offhand:SetFrameLevel(20)
 			bar.Offhand:Hide()
+			if bar.border then bar.border:Hide() end
 			
 			bar.Offhand.bg = bar.Offhand:CreateTexture(nil, "BACKGROUND") -- change?
 			bar.Offhand.bg:SetAllPoints(bar.Offhand)

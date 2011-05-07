@@ -3,6 +3,14 @@ if dStuff.ccannouncement ~= true then return end
 -- Buff/Debuff Announcement
 local function Update(self, event, ...)
 	if not DuffedC.auraannounce then return end
+	
+	local pvpType = GetZonePVPInfo()
+	if dStuff.arenaonly then
+		if pvpType ~= "arena" then return end
+	else
+		UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+	end
+
 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		if UnitInRaid("player") and GetNumRaidMembers() > 5 then channel = "RAID" elseif GetNumPartyMembers() > 0 then channel = "PARTY" else return end
 		-- local channel = "SAY"
@@ -31,4 +39,5 @@ end
 
 local f = CreateFrame("Frame")
 f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
+f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 f:SetScript("OnEvent", Update)

@@ -97,6 +97,7 @@ local function Local(o)
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end
 	if o == "TukuiConfigUIpvpsayinterrupt"  then o = "Announce when u interrupt someone" end
 	if o == "TukuiConfigUIpvpdispelannouncement" then o = "Announce Dispels in a movable Frame (/duffed)" end
+	if o == "TukuiConfigUIpvparenaonly" then o = "Aura & Interrupt announcement in arena only." end
 	
 	if o == "TukuiConfigUIclasstimer" then o = "ClassTimer" end
 	if o == "TukuiConfigUIclasstimerplayercolor" then o = "Player-Bar Color" end

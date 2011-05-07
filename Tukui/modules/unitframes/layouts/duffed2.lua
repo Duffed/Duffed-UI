@@ -366,13 +366,6 @@ local function Shared(self, unit)
 
 				Swing:CreateBorder()
 				Swing.border:Hide()
-				Swing.border:RegisterEvent("PLAYER_REGEN_ENABLED")
-				Swing.border:RegisterEvent("PLAYER_REGEN_DISABLED")
-				Swing.border:SetScript("OnEvent", function(self, event)
-					if event == "PLAYER_REGEN_ENABLED" then self:Hide()
-					else self:Show()
-					end
-				end)
 
 				self.Swing = Swing
 			end

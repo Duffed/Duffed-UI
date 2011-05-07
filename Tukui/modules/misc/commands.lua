@@ -67,7 +67,13 @@ end
 SlashCmdList.RCSLASH = DoReadyCheck
 SLASH_RCSLASH1 = "/rc"
 
--- 
+-- Leave party chat command
+SlashCmdList["LEAVEPARTY"] = function()
+	LeaveParty()
+end
+SLASH_LEAVEPARTY1 = '/leaveparty'
+
+-- dunno where to place this
 COPPER_AMOUNT = "%d|cFF954F28"..COPPER_AMOUNT_SYMBOL.."|r"
 SILVER_AMOUNT = "%d|cFFC0C0C0"..SILVER_AMOUNT_SYMBOL.."|r"
 GOLD_AMOUNT = "%d|cFFF0D440"..GOLD_AMOUNT_SYMBOL.."|r"

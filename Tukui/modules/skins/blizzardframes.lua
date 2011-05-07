@@ -227,6 +227,7 @@ TukuiSkin:SetScript("OnEvent", function(self, event, addon)
 			"StackSplitCancelButton",
 			"RolePollPopupAcceptButton",
 			"WatchFrameCollapseExpandButton",
+			"HelpOpenTicketButton",
 		}
 		
 		for i = 1, getn(BlizzardButtons) do

@@ -1,6 +1,7 @@
 if dStuff.sayinterrupt ~= true then return end
 
 -- Say interrupt
+local f = CreateFrame("Frame")
 local function Update(self, event, ...)
 	if not DuffedC.sayinterrupt then return end
 	
@@ -8,7 +9,7 @@ local function Update(self, event, ...)
 	if dStuff.arenaonly then
 		if pvpType ~= "arena" then return end
 	else
-		UnregisterEvent("ZONE_CHANGED_NEW_AREA")
+		f:UnregisterEvent("ZONE_CHANGED_NEW_AREA")
 	end
 	
 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
@@ -20,8 +21,6 @@ local function Update(self, event, ...)
 		end
 	end
 end
-
-local f = CreateFrame("Frame")
 f:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED")
 f:RegisterEvent("ZONE_CHANGED_NEW_AREA")
 f:SetScript("OnEvent", Update)

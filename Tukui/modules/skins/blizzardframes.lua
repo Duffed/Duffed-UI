@@ -1,5 +1,3 @@
-if IsAddOnLoaded("Tukui_SkinFrames") then return end -- not needed if its loaded
-
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 -- just some random skin, not everything is skinned atm.
 

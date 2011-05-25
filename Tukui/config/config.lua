@@ -4,7 +4,10 @@ C["general"] = {
 	["blizzardsct"] = true,								-- Skin also Blizzard SCT Font(put it in generel now)
 	["normalfont"] = false,								-- Use the normal/old font + fontsize instead of pixelfont :>
 	["overridehightolow"] = false,						-- even that is experimental only! :> .. use lowres version on high resolution.
-	["classcoloredborder"] = false, 						-- 
+	["classcoloredborder"] = false, 					-- 
+	
+	["bordercolor"] = { .15, .15, .15 },				-- border color of tukui panels
+	["backdropcolor"] = { .05,.05,.05 },				-- background color of tukui panels
 
 	["autoscale"] = true,                               -- mainly enabled for users that don't want to mess with the config file
 	["uiscale"] = 0.71,                                 -- set your value (between 0.64 and 1) of your uiscale if autoscale is off

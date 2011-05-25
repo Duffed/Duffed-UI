@@ -123,6 +123,9 @@ local function moving()
 			TukuiSwingtimerHolder:EnableMouse(true)
 		end
 	end
+	if TukuiRaidUtilityAnchor then
+		if TukuiRaidUtilityAnchor:IsShown() then TukuiRaidUtilityAnchor:Hide() else TukuiRaidUtilityAnchor:Show() end
+	end
 	
 	for i = 1, getn(T.MoverFrames) do
 		if T.MoverFrames[i] then		

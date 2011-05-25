@@ -43,14 +43,6 @@ _G.CHAT_FLAG_GM = "|cff4154F5"..L.chat_FLAG_GM.."|r "
 _G.ERR_FRIEND_ONLINE_SS = "|Hplayer:%s|h[%s]|h "..L.chat_ERR_FRIEND_ONLINE_SS.."!"
 _G.ERR_FRIEND_OFFLINE_S = "%s "..L.chat_ERR_FRIEND_OFFLINE_S.."!"
 
--- Adding brackets to Blizzard timestamps
-_G.TIMESTAMP_FORMAT_HHMM = "[%I:%M] "
-_G.TIMESTAMP_FORMAT_HHMMSS = "[%I:%M:%S] "
-_G.TIMESTAMP_FORMAT_HHMMSS_24HR = "[%H:%M:%S] "
-_G.TIMESTAMP_FORMAT_HHMMSS_AMPM = "[%I:%M:%S %p] "
-_G.TIMESTAMP_FORMAT_HHMM_24HR = "[%H:%M] "
-_G.TIMESTAMP_FORMAT_HHMM_AMPM = "[%I:%M %p] "
-
 -- Hide friends micro button (added in 3.3.5)
 FriendsMicroButton:Kill()
 

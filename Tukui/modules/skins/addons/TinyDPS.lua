@@ -1,6 +1,6 @@
 ﻿-- Credits to Dajova :-*
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
-if not IsAddOnLoaded("TinyDPS") or not C.Addon_Skins.TinyDPS then return end
+if not IsAddOnLoaded("TinyDPS") or not C.skins.TinyDPS then return end
 
 local TinyDPS = CreateFrame("Frame")
 TinyDPS:RegisterEvent("ADDON_LOADED")

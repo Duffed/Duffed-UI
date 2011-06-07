@@ -120,7 +120,8 @@ C["pvp"] = {
 	["arenaonly"] = true,								-- Aura and Interrupt announce in arena only
 }
 
-C["Addon_Skins"] = {
+C["skins"] = {
+	["blizzardframes"] = true,							-- Skin Blizzard Frames
 	["background"] = false,								-- Create a Panel that has the exactly same size as the left chat, placed at the bottomright (for addon placement)
 		["combat_toggle"] = false,						-- Shows the Addon Background, Omen, Recount & Skada infight, hides outfight
 	["Recount"] = true,									-- Enable Recount Skin

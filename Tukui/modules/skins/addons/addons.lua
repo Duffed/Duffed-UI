@@ -1,6 +1,6 @@
 local T, C, L = unpack(select(2, ...)) -- Import: T - functions, constants, variables; C - config; L - locales
 
-if C.Addon_Skins.background then
+if C.skins.background then
 	-- Addons Background (same size as right chat background)
 	local bg = CreateFrame("Frame", "AddonBGPanel", UIParent)
 	bg:CreatePanel("Transparent", 376, 151, "BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", -4, 4)
@@ -49,12 +49,12 @@ if C.Addon_Skins.background then
 	-- toggle in-/outfight (NOTE: This will only toggle ChatFrameX (chat config))
 	bg:RegisterEvent("PLAYER_ENTERING_WORLD")
 	bg:RegisterEvent("PLAYER_LOGIN")
-	if C.Addon_Skins.combat_toggle then
+	if C.skins.combat_toggle then
 		bg:RegisterEvent("PLAYER_REGEN_ENABLED")
 		bg:RegisterEvent("PLAYER_REGEN_DISABLED")
 	end
 	bg:SetScript("OnEvent", function(self, event)
-		if C.chat.rightchatbackground or C.Addon_Skins.combat_toggle then
+		if C.chat.rightchatbackground or C.skins.combat_toggle then
 			if event == "PLAYER_LOGIN" then
 				-- Hide
 				bg:Hide()
@@ -76,7 +76,7 @@ if C.Addon_Skins.background then
 				ChatFrame_AddMessageGroup(_G["ChatFrame"..C.chat.rightchatnumber], "SKILL")
 			end
 		end
-		if C.Addon_Skins.combat_toggle then
+		if C.skins.combat_toggle then
 			if event == "PLAYER_REGEN_ENABLED" then
 				self:Hide()
 				if ChatBG2 then ChatBG2:Show() end

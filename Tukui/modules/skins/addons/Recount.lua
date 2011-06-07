@@ -14,7 +14,7 @@
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
 
 
-if not IsAddOnLoaded("Recount") or not C.Addon_Skins.Recount then return end
+if not IsAddOnLoaded("Recount") or not C.skins.Recount then return end
 local Recount = _G.Recount
 
 AddonSkins_Mod:RegisterSkin("Recount",function(Skin, skin, Layout, layout, config)

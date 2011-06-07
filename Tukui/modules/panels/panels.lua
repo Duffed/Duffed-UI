@@ -111,7 +111,7 @@ if C["chat"].rightchatbackground == true then
 	copy2:CreatePanel("Transparent", 20, 20, "LEFT", tabchat2, "RIGHT", 3, 0)
 	copy2:CreateShadow("Default")
 
-	if C.Addon_Skins.background then
+	if C.skins.background then
 		tabchat2:ClearAllPoints()
 		tabchat2:Point("TOPLEFT", chatbg2, "TOPLEFT", 5, -5)
 		tabchat2:Point("TOPRIGHT", chatbg2, "TOPRIGHT", -51, -5)

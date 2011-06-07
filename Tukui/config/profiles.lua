@@ -49,7 +49,7 @@ if IsAddOnLoaded("a") or IsAddOnLoaded("b") then
 end
 
 if IsAddOnLoaded("b") then 
-	C.Addon_Skins.background = true
+	C.skins.background = true
 	C.actionbar.hotkey = true
 	C.datatext.classcolored = true
 	C.castbar.classcolored = true

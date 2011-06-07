@@ -8,7 +8,7 @@
 	(C)2010 Darth Android / Telroth-The Venture Co.
 	File version v91.109
 ]]
-if not C.Addon_Skins.Quartz or not IsAddOnLoaded("Quartz") then return end
+if not C.skins.Quartz or not IsAddOnLoaded("Quartz") then return end
 local Q3 = LibStub("AceAddon-3.0"):GetAddon("Quartz3")
 if not Q3 then return end
 

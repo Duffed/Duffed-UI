@@ -11,7 +11,7 @@
 	(C)2010 Darth Android / Telroth - Black Dragonflight
 ]]
 local T, C, L = unpack(select(2, ...)) -- Import Functions/Constants, Config, Locales
-if not IsAddOnLoaded("Omen") or not C.Addon_Skins.Omen then return end
+if not IsAddOnLoaded("Omen") or not C.skins.Omen then return end
 
 local Omen = LibStub("AceAddon-3.0"):GetAddon("Omen")
 AddonSkins_Mod:RegisterSkin("Omen",function(Skin, skin, Layout, layout, config)

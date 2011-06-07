@@ -23,7 +23,7 @@ local ALLOWED_GROUPS = {
 	["pvp"]=1,
 	["castbar"]=1,
 	["classtimer"]=1,
-	["Addon_Skins"]=1,
+	["skins"]=1,
 	["sCombo"]=1,
 	["auras"]=1,
 	["swingtimer"]=1,
@@ -112,15 +112,16 @@ local function Local(o)
 	if o == "TukuiConfigUIchatrightchatnumber" then o = "(For Rightchat-Background) Chat Number X" end
 	if o == "TukuiConfigUIchatfading" then o = "Enable fading" end
 	
-	if o == "TukuiConfigUIAddon_Skins" then o = "Addon Skins" end
-	if o == "TukuiConfigUIAddon_Skinsbackground" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
-	if o == "TukuiConfigUIAddon_Skinscombat_toggle" then o = "Toggle Addonbackground, Recount, Omen & Skada in-/outfight (NOTE: Turn off auto-hide functions in these Addons)" end
-	if o == "TukuiConfigUIAddon_SkinsSkada" then o = "Enable Skada Skin" end
-	if o == "TukuiConfigUIAddon_SkinsRecount" then o = "Enable Recount Skin" end
-	if o == "TukuiConfigUIAddon_SkinsOmen" then o = "Enable Omen Skin" end
-	if o == "TukuiConfigUIAddon_SkinsKLE" then o = "Enable KLE Skin" end
-	if o == "TukuiConfigUIAddon_SkinsTinyDPS" then o = "Enable TinyDPS Skin" end
-	if o == "TukuiConfigUIAddon_SkinsQuartz" then o = "Enable Quartz Skin" end
+	if o == "TukuiConfigUIskins" then o = "Skins" end
+	if o == "TukuiConfigUIskinsbackground" then o = "Create Panel that looks exactly like the left chat (by default) at the BOTTOMRIGHT" end
+	if o == "TukuiConfigUIskinscombat_toggle" then o = "Toggle Addonbackground, Recount, Omen & Skada in-/outfight (NOTE: Turn off auto-hide functions in these Addons)" end
+	if o == "TukuiConfigUIskinsSkada" then o = "Enable Skada Skin" end
+	if o == "TukuiConfigUIskinsRecount" then o = "Enable Recount Skin" end
+	if o == "TukuiConfigUIskinsOmen" then o = "Enable Omen Skin" end
+	if o == "TukuiConfigUIskinsKLE" then o = "Enable KLE Skin" end
+	if o == "TukuiConfigUIskinsTinyDPS" then o = "Enable TinyDPS Skin" end
+	if o == "TukuiConfigUIskinsQuartz" then o = "Enable Quartz Skin" end
+	if o == "TukuiConfigUIskinsblizzardframes" then o = "Skin Blizzard-Frames" end
 	
 	if o == "TukuiConfigUItooltipshowspellid" then o = "Show SpellID on Tooltip" end
 	

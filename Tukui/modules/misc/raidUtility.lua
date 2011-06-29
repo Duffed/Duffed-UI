@@ -11,7 +11,7 @@ local function CreateUtilities(self, event, addon)
 	if addon == "Tukui_Raid_Healing" or addon == "Tukui_Raid" then
 		-- it need the Tukui minimap
 		if not TukuiMinimap then return end
-
+		
 		-- Anchor
 		local anchor = CreateFrame("Frame", "TukuiRaidUtilityAnchor", UIParent)
 		anchor:SetMovable(true)
@@ -29,7 +29,7 @@ local function CreateUtilities(self, event, addon)
 		anchor.text:SetFont(C.datatext.font, C.datatext.fontsize)
 		anchor.text:SetPoint("CENTER")
 		anchor.text:SetText("Move RaidUtility")
-		
+
 		--Create main frame
 		local TukuiRaidUtility = CreateFrame("Frame", "TukuiRaidUtility", UIParent)
 		TukuiRaidUtility:CreatePanel("Default", TukuiMinimap:GetWidth(), panel_height, "TOPLEFT", anchor, "TOPLEFT", 0 , 0)

@@ -1,4 +1,4 @@
-## Interface: 40100
+## Interface: 40200
 ## Title: |cffce3a19Duffed|r
 ## Notes: Duffed's Trickkiste
 ## Author: Duffed

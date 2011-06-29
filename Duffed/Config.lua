@@ -20,7 +20,7 @@ dStuff = {						-- true/false
 -- spelllist for the buff/debuff/spell announcement
 SpellsAN = {
 	aura = { -- true means you announce start and end of aura; false only start
-		-- [GetSpellInfo(139)]		= false, 	-- test
+		-- [GetSpellInfo(139)]		= false, 	-- test (renew)
 		-- CC
 		[GetSpellInfo(6770)] 	= false, 	-- Sap
 		[GetSpellInfo(118)] 	= false, 	-- Polymorph

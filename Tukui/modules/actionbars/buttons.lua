@@ -125,6 +125,11 @@ else
 	TukuiBar2Button:Point("BOTTOMRIGHT", TukuiInfoRight, "BOTTOMLEFT", -2, 0)
 	TukuiBar2Button.text:Point("CENTER", 0, 0)
 end
+if C["actionbar"].hideplusminus == true then
+	TukuiBar2Button:SetAlpha(0)
+else
+	TukuiBar2Button:SetAlpha(1)
+end
 TukuiBar2Button:SetScript("OnEnter", function(self) self:SetBackdropBorderColor(unpack(C.datatext.color)) end)
 TukuiBar2Button:SetScript("OnLeave", function(self) self:SetBackdropBorderColor(unpack(C.media.bordercolor)) end)
 TukuiBar2Button.text:SetText(cm.."-|r")

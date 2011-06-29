@@ -1,9 +1,9 @@
-﻿## Interface: 40100
+﻿## Interface: 40200
 ## Author: Tukz
 ## Project Collaborators: Elv22, Nightcracker
 ## Credits to: Caith, Caellian, Shestak, Haste, Tekkub, Alza, Roth, P3lim, Tulla, Hungtar, hankthetank, Ishtara and others...
 ## Special Thanks to: Admins, Moderator and VIP's from tukui.org
-## Version: 13.13 (Duffed UI v5.51)
+## Version: 13.13 (Duffed UI v5.52)
 ## Title: |cffC495DDTukui|r
 ## Notes: UI of awesomeness!
 ## SavedVariables: TukuiData

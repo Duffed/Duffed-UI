@@ -92,6 +92,7 @@ local function Local(o)
 	if o == "TukuiConfigUIactionbarmacrotext"  then o = "Display Macrotext" end
 	if o == "TukuiConfigUIactionbarpetbaralwaysvisible"  then o = "Always show Petbar even if rightbarsmouseover = true" end
 	if o == "TukuiConfigUIactionbarpetbarhorizontal"  then o = "Petbar horizontal on top of Bar2/1" end
+	if o == "TukuiConfigUIactionbarhideplusminus" then o = "Hide +/- button at the bottom (between both datatext panels)" end
 	
 	if o == "TukuiConfigUIpvpdrinkannouncement"  then o = "Announce 'drinking' in  Arena" end
 	if o == "TukuiConfigUIpvpccannouncement"  then o = "Announce CC/Buffs/Debuffs" end

@@ -97,6 +97,7 @@ C["actionbar"] = {
 	["macrotext"] = false,								-- display macro text on buttons
 	["petbaralwaysvisible"] = true,						-- Always show petbar even if rightbarsmouseover = true
 	["petbarhorizontal"] = false,						-- Petbar horizontal on top of Bar1/2
+	["hideplusminus"] = false,							-- Hide +/- button at the bottom between both datatext panels
 
 	["enable"] = true,                                  -- enable tukui action bars
 	["hotkey"] = false,                                 -- enable hotkey display because it was a lot requested

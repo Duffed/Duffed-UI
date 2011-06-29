@@ -15,8 +15,8 @@ local function Update(self, event, ...)
 	if event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		if UnitInRaid("player") and GetNumRaidMembers() > 5 then channel = "RAID" elseif GetNumPartyMembers() > 0 then channel = "PARTY" else return end
 		-- local channel = "SAY"
-		local timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags = ...
-		local spellName = select(11, ...)
+		local timestamp, eventType, hideCaster, sourceGUID, sourceName, sourceFlags, sourceRaidFlags, destGUID, destName, destFlags = ...
+		local spellName = select(13, ...)
 		for spell, check in pairs(SpellsAN.aura) do
 			if (eventType == "SPELL_AURA_APPLIED") and destName == UnitName("player") then
 				if spellName == spell and check == true then

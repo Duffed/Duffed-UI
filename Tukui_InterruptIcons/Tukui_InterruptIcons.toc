@@ -1,4 +1,4 @@
-## Interface: 40100
+## Interface: 40200
 ## Title: |cffC495DDTukui Interrupt Icons|r
 ## Notes: Display Enemy Interrupt as icons on screen. (/ii)
 ## Author: Tukz

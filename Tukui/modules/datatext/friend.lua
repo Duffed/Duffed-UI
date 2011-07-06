@@ -134,7 +134,7 @@ local function BuildBNTable(total)
 	for i = 1, total do
 		presenceID, givenName, surname, toonName, toonID, client, isOnline, _, isAFK, isDND, _, noteText = BNGetFriendInfo(i)
 		if T.toc < 40200 then
-			_, _, _, realmName, faction, race, class, _, zoneName, level = BNGetToonInfo(presenceID)
+			_, _, _, realmName, _, faction, race, class, _, zoneName, level = BNGetToonInfo(presenceID)
 		else
 			_, _, _, realmName, faction, _, race, class, _, zoneName, level = BNGetToonInfo(presenceID)
 		end
@@ -158,7 +158,7 @@ local function UpdateBNTable(total)
 	for i = 1, #BNTable do
 		-- get guild roster information
 		presenceID, givenName, surname, toonName, toonID, client, isOnline, _, isAFK, isDND, _, noteText = BNGetFriendInfo(i)
-		_, _, _, realmName, faction, _, race, class, _, zoneName, level = BNGetToonInfo(presenceID)
+		_, _, _, realmName, _, faction, _, race, class, _, zoneName, level = BNGetToonInfo(presenceID)
 		for k,v in pairs(LOCALIZED_CLASS_NAMES_MALE) do if class == v then class = k end end
 		
 		-- get the correct index in our table		

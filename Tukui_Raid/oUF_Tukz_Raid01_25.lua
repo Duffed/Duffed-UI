@@ -11,6 +11,10 @@ if not C["unitframes"].enable == true then return end
 local font2 = C["media"].uffont
 local font1 = C["media"].font
 local fontsize = C["unitframes"].fontsize
+local backdrop = {
+	bgFile = C["media"].blank,
+	insets = {top = -T.mult, left = -T.mult, bottom = -T.mult, right = -T.mult},
+}
 
 local function Shared(self, unit)
 	self.colors = T.oUF_colors
